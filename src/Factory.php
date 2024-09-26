@@ -5,18 +5,18 @@
  */
 declare(strict_types=1);
 
-namespace Workbunny\WebmanSwow;
+namespace Workbunny\WebmanCoroutine;
 
 use Webman\App;
 use Webman\Http\Request;
-use Workbunny\WebmanSwow\Events\SwooleEvent;
-use Workbunny\WebmanSwow\Events\SwowEvent;
-use Workbunny\WebmanSwow\Handlers\DefaultHandler;
-use Workbunny\WebmanSwow\Handlers\HandlerInterface;
-use Workbunny\WebmanSwow\Handlers\SwooleHandler;
-use Workbunny\WebmanSwow\Handlers\SwooleWorkerman5Handler;
-use Workbunny\WebmanSwow\Handlers\SwowHandler;
-use Workbunny\WebmanSwow\Handlers\SwowWorkerman5Handler;
+use Workbunny\WebmanCoroutine\Events\SwooleEvent;
+use Workbunny\WebmanCoroutine\Events\SwowEvent;
+use Workbunny\WebmanCoroutine\Handlers\DefaultHandler;
+use Workbunny\WebmanCoroutine\Handlers\HandlerInterface;
+use Workbunny\WebmanCoroutine\Handlers\SwooleHandler;
+use Workbunny\WebmanCoroutine\Handlers\SwooleWorkerman5Handler;
+use Workbunny\WebmanCoroutine\Handlers\SwowHandler;
+use Workbunny\WebmanCoroutine\Handlers\SwowWorkerman5Handler;
 use Workerman\Connection\ConnectionInterface;
 
 class Factory

@@ -1,8 +1,8 @@
-# webman-swow
+# webman-coroutine
 
 ## 简介
 
-webman-swow是一个webman开发框架生态下的协程基建支撑插件，主要实现以下功能：
+webman-coroutine是一个webman开发框架生态下的协程基建支撑插件，主要实现以下功能：
 
 1. 支持workerman 4.x的swow协程驱动能力，兼容workerman 5.x版本自带的swow协程驱动；
 2. 支持workerman 4.x的swoole协程驱动能力，兼容workerman 5.x版本自带的swoole协程驱动；
@@ -18,9 +18,9 @@ webman-swow是一个webman开发框架生态下的协程基建支撑插件，主
 
 ### swow
 
-1. 使用`composer require workbunny/webman-swow`安装插件包
+1. 使用`composer require workbunny/webman-coroutine`安装插件包
 2. 使用`./vendor/bin/swow-builder`安装swow拓展，注意请关闭swoole环境
-3. 修改`config/server.php`中`'event_loop' => \Workbunny\WebmanSwow\event_loop()`，
+3. 修改`config/server.php`中`'event_loop' => \Workbunny\WebmanCoroutine\event_loop()`，
 `event_loop()`函数会根据当前环境自行判断当前的workerman版本，自动选择合适的事件驱动
    - 当开启swow拓展时，workerman 4.x下使用SwowEvent事件驱动
    - 当开启swow拓展时，workerman 5.x下使用workerman自带的Swow事件驱动
@@ -28,16 +28,16 @@ webman-swow是一个webman开发框架生态下的协程基建支撑插件，主
 4. 使用`php -d extension=swow webman start`启动
 5. webman自带的webServer协程化，可以关闭启动的CoroutineWebServer
 
-**Tips：CoroutineWebServer可以在`config/plugin/workbunny/webman-swow/app.php`中通过`enable=false`关闭启动**
+**Tips：CoroutineWebServer可以在`config/plugin/workbunny/webman-coroutine/app.php`中通过`enable=false`关闭启动**
 
 ### swoole
 
 1. 使用`pecl install swoole`安装稳定版swoole拓展
 2. 建议不要将swoole加入php.ini配置文件
-3. 修改`config/server.php`中`'event_loop' => \Workbunny\WebmanSwow\event_loop()`，
+3. 修改`config/server.php`中`'event_loop' => \Workbunny\WebmanCoroutine\event_loop()`，
    `event_loop()`函数会根据当前环境自行判断当前的workerman版本，自动选择合适的事件驱动
    - 当开启swoole拓展时，workerman 4.x下使用SwooleEvent事件驱动
    - 当开启swoole拓展时，workerman 5.x下使用workerman自带的Swoole事件驱动
    - 当未开启swoole时，使用workerman自带的Event事件驱动
 4. 使用`php -d extension=swoole webman start`启动
-5. 通过`config/plugin/workbunny/webman-swow/process.php`启动的CoroutineWebServer可以用于协程环境开发，原服务还是BIO模式
+5. 通过`config/plugin/workbunny/webman-coroutine/process.php`启动的CoroutineWebServer可以用于协程环境开发，原服务还是BIO模式

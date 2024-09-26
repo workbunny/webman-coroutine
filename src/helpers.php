@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Workbunny\WebmanSwow;
+namespace Workbunny\WebmanCoroutine;
 
 /**
  * 根据环境加载event-loop

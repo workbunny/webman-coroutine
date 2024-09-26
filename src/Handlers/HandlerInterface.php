@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Workbunny\WebmanSwow\Handlers;
+namespace Workbunny\WebmanCoroutine\Handlers;
 
 use Webman\App;
 use Webman\Http\Request;

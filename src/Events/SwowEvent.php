@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Workbunny\WebmanSwow\Events;
+namespace Workbunny\WebmanCoroutine\Events;
 
 use Swow\Coroutine;
 use Swow\Signal;

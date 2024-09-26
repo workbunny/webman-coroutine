@@ -1,8 +1,8 @@
 {
-  "name": "workbunny/webman-swow",
+  "name": "workbunny/webman-coroutine",
   "type": "library",
   "license": "MIT",
-  "description": "Webman plugin workbunny/webman-swow",
+  "description": "Webman plugin workbunny/webman-coroutine",
   "authors": [
     {
       "name": "chaz6chez",
@@ -11,8 +11,8 @@
     }
   ],
   "support": {
-    "issues": "https://github.com/workbunny/webman-swow/issues",
-    "source": "https://github.com/workbunny/webman-swow"
+    "issues": "https://github.com/workbunny/webman-coroutine/issues",
+    "source": "https://github.com/workbunny/webman-coroutine"
   },
   "require": {
     "php": "^8.0",
@@ -29,7 +29,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Workbunny\\WebmanSwow\\": "src"
+      "Workbunny\\WebmanCoroutine\\": "src"
     },
     "classmap": [
       "src/"

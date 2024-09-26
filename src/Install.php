@@ -1,6 +1,6 @@
 <?php
 
-namespace Workbunny\WebmanSwow;
+namespace Workbunny\WebmanCoroutine;
 
 class Install
 {
@@ -10,7 +10,7 @@ class Install
      * @var array
      */
     protected static array $pathRelation = [
-        'config/plugin/workbunny/webman-swow' => 'config/plugin/workbunny/webman-swow',
+        'config/plugin/workbunny/webman-coroutine' => 'config/plugin/workbunny/webman-coroutine',
     ];
 
     /**

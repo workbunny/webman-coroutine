@@ -5,7 +5,7 @@
  */
 declare(strict_types=1);
 
-namespace Workbunny\WebmanSwow;
+namespace Workbunny\WebmanCoroutine;
 
 use Webman\App;
 use Workerman\Worker;
@@ -15,7 +15,7 @@ class CoroutineWebServer extends App
     /** @inheritdoc  */
     public function onWorkerStart($worker)
     {
-        if (!\config('plugin.workbunny.webman-swow.app.enable', false)) {
+        if (!\config('plugin.workbunny.webman-coroutine.app.enable', false)) {
             return;
         }
         parent::onWorkerStart($worker);

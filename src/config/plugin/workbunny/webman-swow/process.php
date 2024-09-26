@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 use support\Log;
 use Webman\Http\Request;
-use Workbunny\WebmanSwow\CoroutineWebServer;
+use Workbunny\WebmanCoroutine\CoroutineWebServer;
 
-return config('plugin.workbunny.webman-swow.app.enable', false) ? [
+return config('plugin.workbunny.webman-coroutine.app.enable', false) ? [
     'coroutine-web-server' => [
         'handler'     => CoroutineWebServer::class,
-        'listen'      => 'http://[::]:' . config('plugin.workbunny.webman-swow.app.port', 8717),
+        'listen'      => 'http://[::]:' . config('plugin.workbunny.webman-coroutine.app.port', 8717),
         'count'       => cpu_count(),
         'user'        => '',
         'group'       => '',
