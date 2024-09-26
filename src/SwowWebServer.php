@@ -19,6 +19,9 @@ class SwowWebServer extends App
 {
     public function onWorkerStart($worker)
     {
+        if (!\config('plugin.workbunny.webman-swow.app.enable', false)) {
+            return;
+        }
         if ($worker instanceof Worker) {
             if ($worker::$globalEvent::class !== SwowEvent::class) {
                 throw new \RuntimeException('Non-support event ' . $worker::$globalEvent::class);
