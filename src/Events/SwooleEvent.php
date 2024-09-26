@@ -155,7 +155,7 @@ class SwooleEvent implements EventInterface
         $this->clearAllTimer();
         Event::exit();
         $this->_reads = $this->_writes = [];
-        exit(0);
+        posix_kill(posix_getpid(), SIGINT);
     }
 
 
