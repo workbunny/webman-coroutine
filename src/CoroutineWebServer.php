@@ -12,12 +12,6 @@ use Workerman\Worker;
 
 class CoroutineWebServer extends App
 {
-    public const WORKERMAN_SWOW   = 'Workerman\Events\Swow';
-    public const WORKBUNNY_SWOW   = SwowEvent::class;
-    public const WORKERMAN_SWOOLE = 'Workerman\Events\Swoole';
-    public const WORKBUNNY_SWOOLE = SwooleEvent::class;
-
-
     /** @inheritdoc  */
     public function onWorkerStart($worker)
     {
@@ -30,53 +24,11 @@ class CoroutineWebServer extends App
     /** @inheritdoc  */
     public function onMessage($connection, $request)
     {
-        switch (Worker::$globalEvent::class) {
-            case self::WORKBUNNY_SWOW:
-            case self::WORKERMAN_SWOW:
-                $requestChannel = new \Swow\Channel(1);
-                $requestChannel->push([
-                    $connection,
-                    $request,
-                ]);
-                $waitGroup = new \Swow\Sync\WaitGroup();
-                $waitGroup->add();
-                \Swow\Coroutine::run(function () use ($requestChannel, $waitGroup) {
-                    while (1) {
-                        if (!$data = $requestChannel->pop()) {
-                            break;
-                        }
-                        [$connection, $request] = $data;
-                        parent::onMessage($connection, $request);
-                    }
-                    $waitGroup->done();
-                });
-                $waitGroup->wait();
-                break;
-            case self::WORKBUNNY_SWOOLE:
-            case self::WORKERMAN_SWOOLE:
-                $requestChannel = new \Swoole\Coroutine\Channel();
-                $requestChannel->push([
-                    $connection,
-                    $request,
-                ]);
-                $waitGroup = new \Swoole\Coroutine\WaitGroup();
-                $waitGroup->add();
-                \Swoole\Coroutine::create(function () use ($requestChannel, $waitGroup) {
-                    while (1) {
-                        if (!$data = $requestChannel->pop()) {
-                            break;
-                        }
-                        [$connection, $request] = $data;
-                        parent::onMessage($connection, $request);
-                    }
-                    $waitGroup->done();
-                });
-                $waitGroup->wait();
-                break;
-            default:
-                return parent::onMessage($connection, $request);
+        try {
+            return Factory::run($this, $connection, $request, Worker::$globalEvent::class);
+        } catch (\Throwable $e) {
+            Worker::log($e->getMessage());
         }
-        // 交还控制权给event-loop
         return null;
     }
 }

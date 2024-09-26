@@ -1,0 +1,19 @@
+<?php
+/**
+ * @author workbunny/Chaz6chez
+ * @email chaz6chez1993@outlook.com
+ */
+declare(strict_types=1);
+
+namespace Workbunny\WebmanSwow\Handlers;
+
+use Workerman\Worker;
+
+class SwowWorkerman5Handler extends SwowHandler
+{
+    /** @inheritdoc  */
+    public static function available(): bool
+    {
+        return version_compare(Worker::VERSION, '5.0.0', '>=') and extension_loaded('swow');
+    }
+}

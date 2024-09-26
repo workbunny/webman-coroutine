@@ -6,7 +6,7 @@
 
 declare(strict_types=1);
 
-namespace Workbunny\WebmanSwow;
+namespace Workbunny\WebmanSwow\Events;
 
 use Swoole\Event;
 use Swoole\Runtime;
