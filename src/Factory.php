@@ -14,7 +14,9 @@ use Workbunny\WebmanSwow\Events\SwowEvent;
 use Workbunny\WebmanSwow\Handlers\DefaultHandler;
 use Workbunny\WebmanSwow\Handlers\HandlerInterface;
 use Workbunny\WebmanSwow\Handlers\SwooleHandler;
+use Workbunny\WebmanSwow\Handlers\SwooleWorkerman5Handler;
 use Workbunny\WebmanSwow\Handlers\SwowHandler;
+use Workbunny\WebmanSwow\Handlers\SwowWorkerman5Handler;
 use Workerman\Connection\ConnectionInterface;
 
 class Factory
@@ -30,9 +32,9 @@ class Factory
      * @var string[]
      */
     protected static array $_handlers = [
-        self::WORKERMAN_SWOW   => SwowHandler::class,
+        self::WORKERMAN_SWOW   => SwowWorkerman5Handler::class,
         self::WORKBUNNY_SWOW   => SwowHandler::class,
-        self::WORKERMAN_SWOOLE => SwooleHandler::class,
+        self::WORKERMAN_SWOOLE => SwooleWorkerman5Handler::class,
         self::WORKBUNNY_SWOOLE => SwooleHandler::class,
     ];
 
