@@ -39,6 +39,20 @@ class Factory
     ];
 
     /**
+     * 当前的处理器
+     *
+     * @var string|null
+     */
+    protected static ?string $_currentHandler = null;
+
+    /**
+     * @return string|null
+     */
+    public static function getCurrentHandler(): ?string
+    {
+        return self::$_currentHandler;
+    }
+    /**
      * 注册事件处理器
      *
      * @param string $eventLoopClass 事件循环类名
@@ -115,6 +129,7 @@ class Factory
     public static function find(bool $returnEventLoopClass = false): string
     {
         foreach (self::getAll() as $eventLoopClass => $handlerClass) {
+            // 通常不会执行到此逻辑，只是为了ide友好
             if (!method_exists($handlerClass, 'available')) {
                 throw new \RuntimeException("handlerClass $handlerClass error [available]! ");
             }
@@ -137,10 +152,17 @@ class Factory
      */
     public static function run(App $app, mixed $connection, mixed $request, ?string $eventLoopClass = null): mixed
     {
-        $handlerClass = $eventLoopClass ? self::get($eventLoopClass, true) : self::find();
-        if (method_exists($handlerClass, 'run')) {
-            return $handlerClass::run($app, $connection, $request);
+        // 获取当前处理器
+        $handlerClass = self::getCurrentHandler() ?:
+            // 赋值，避免重复获取
+            self::$_currentHandler = (
+                // 如果没有就自动获取
+                $eventLoopClass ? self::get($eventLoopClass, true) : self::find()
+            );
+        // 通常不会执行到此逻辑，只是为了ide友好
+        if (!method_exists($handlerClass, 'run')) {
+            throw new \RuntimeException('handlerClass error [run]! ');
         }
-        throw new \RuntimeException('handlerClass error [run]! ');
+        return $handlerClass::run($app, $connection, $request);
     }
 }
