@@ -16,10 +16,22 @@ function event_loop(): string
 {
     // supported workerman 5.x
     if (version_compare(Worker::VERSION, '5.0.0', '>=')) {
-        return extension_loaded('swow') ? 'Workerman\Events\Swow' : '';
+        if (extension_loaded('swow')) {
+            return CoroutineWebServer::WORKERMAN_SWOW;
+        }
+        if (extension_loaded('swoole')) {
+            return CoroutineWebServer::WORKERMAN_SWOOLE;
+        }
     }
     // supported version < workerman 5.x
     else {
-        return extension_loaded('swow') ? SwowEvent::class : '';
+        if (extension_loaded('swow')) {
+            return CoroutineWebServer::WORKBUNNY_SWOW;
+        }
+        if (extension_loaded('swoole')) {
+            return CoroutineWebServer::WORKBUNNY_SWOOLE;
+        }
     }
+
+    return '';
 }

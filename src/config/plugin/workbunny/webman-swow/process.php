@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 use support\Log;
 use Webman\Http\Request;
-use Workbunny\WebmanSwow\SwowWebServer;
+use Workbunny\WebmanSwow\CoroutineWebServer;
 
 return config('plugin.workbunny.webman-swow.app.enable', false) ? [
-    'swow-web-server' => [
-        'handler'     => SwowWebServer::class,
+    'coroutine-web-server' => [
+        'handler'     => CoroutineWebServer::class,
         'listen'      => 'http://[::]:' . config('plugin.workbunny.webman-swow.app.port', 8717),
         'count'       => cpu_count(),
         'user'        => '',

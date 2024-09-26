@@ -24,7 +24,8 @@
     "symfony/var-dumper": "^6.0",
     "phpunit/phpunit": "^9.6",
     "phpstan/phpstan": "^1.0",
-    "friendsofphp/php-cs-fixer": "^3.0"
+    "friendsofphp/php-cs-fixer": "^3.0",
+    "swoole/ide-helper": "^5.1"
   },
   "autoload": {
     "psr-4": {
