@@ -20,8 +20,8 @@ class SwowWebServer extends App
     public function onWorkerStart($worker)
     {
         if ($worker instanceof Worker) {
-            if ($worker::$globalEvent !== SwowEvent::class) {
-                throw new \RuntimeException('Non-support event ' . $worker::$globalEvent);
+            if ($worker::$globalEvent::class !== SwowEvent::class) {
+                throw new \RuntimeException('Non-support event ' . $worker::$globalEvent::class);
             }
         }
         parent::onWorkerStart($worker);
