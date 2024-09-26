@@ -1,0 +1,47 @@
+{
+  "name": "workbunny/webman-swow",
+  "type": "library",
+  "license": "MIT",
+  "description": "Webman plugin workbunny/webman-swow",
+  "authors": [
+    {
+      "name": "chaz6chez",
+      "email": "chaz6chez1993@outlook.com",
+      "homepage": "https://chaz6chez.cn"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/workbunny/webman-swow/issues",
+    "source": "https://github.com/workbunny/webman-swow"
+  },
+  "require": {
+    "php": "^8.0",
+    "webman/console": "^1.0",
+    "swow/swow": "^1.5"
+  },
+  "require-dev": {
+    "workerman/webman-framework": "^1.0",
+    "symfony/var-dumper": "^6.0",
+    "phpunit/phpunit": "^9.6",
+    "phpstan/phpstan": "^1.0",
+    "friendsofphp/php-cs-fixer": "^3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Workbunny\\WebmanSwow\\": "src"
+    },
+    "classmap": [
+      "src/"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Workbunny\\Tests\\": "tests"
+    }
+  },
+  "scripts": {
+    "cs-fix": "./vendor/bin/php-cs-fixer fix",
+    "php-stan": "./vendor/bin/phpstan analyse --memory-limit=512MB",
+    "unit-test": "./vendor/bin/phpunit"
+  }
+}

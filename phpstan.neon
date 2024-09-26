@@ -1,0 +1,9 @@
+parameters:
+    level: 6
+    phpVersion: 70400
+    bootstrapFiles:
+        - vendor/autoload.php
+    parallel:
+    	processTimeout: 600.0
+    paths:
+        - src
