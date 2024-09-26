@@ -52,6 +52,7 @@ class Factory
     {
         return self::$_currentHandler;
     }
+
     /**
      * 注册事件处理器
      *
@@ -163,6 +164,7 @@ class Factory
         if (!method_exists($handlerClass, 'run')) {
             throw new \RuntimeException('handlerClass error [run]! ');
         }
+
         return $handlerClass::run($app, $connection, $request);
     }
 }
