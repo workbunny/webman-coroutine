@@ -16,6 +16,8 @@ webman-coroutine是一个webman开发框架生态下的协程基建支撑插件�
 
 ## 使用
 
+**Tips: 目前在开发阶段，体验请使用dev-main分支**
+
 ### swow
 
 1. 使用`composer require workbunny/webman-coroutine`安装插件包
