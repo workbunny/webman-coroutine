@@ -12,7 +12,6 @@ use Workerman\Worker;
 
 class SwooleHandler implements HandlerInterface
 {
-
     /** @inheritdoc  */
     public static function available(): bool
     {
@@ -41,6 +40,7 @@ class SwooleHandler implements HandlerInterface
             $waitGroup->done();
         });
         $waitGroup->wait();
+
         return $res;
     }
 }

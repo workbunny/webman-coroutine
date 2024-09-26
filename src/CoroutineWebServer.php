@@ -29,6 +29,7 @@ class CoroutineWebServer extends App
         } catch (\Throwable $e) {
             Worker::log($e->getMessage());
         }
+
         return null;
     }
 }

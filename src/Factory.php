@@ -21,8 +21,8 @@ use Workerman\Connection\ConnectionInterface;
 
 class Factory
 {
-    public const WORKERMAN_SWOW   = 'Workerman\Events\Swow';
-    public const WORKBUNNY_SWOW   = SwowEvent::class;
+    public const WORKERMAN_SWOW = 'Workerman\Events\Swow';
+    public const WORKBUNNY_SWOW = SwowEvent::class;
     public const WORKERMAN_SWOOLE = 'Workerman\Events\Swoole';
     public const WORKBUNNY_SWOOLE = SwooleEvent::class;
 
@@ -52,8 +52,10 @@ class Factory
         }
         if (is_a($handlerClass, HandlerInterface::class, true)) {
             self::$_handlers[$eventLoopClass] = $handlerClass;
+
             return true;
         }
+
         return false;
     }
 
@@ -67,8 +69,10 @@ class Factory
     {
         if (isset(self::$_handlers[$eventLoopClass])) {
             unset(self::$_handlers[$eventLoopClass]);
+
             return true;
         }
+
         return false;
     }
 
@@ -98,8 +102,8 @@ class Factory
             }
             $handlerClass = $handlerClass::available() ? $handlerClass : DefaultHandler::class;
         }
-        return $handlerClass;
 
+        return $handlerClass;
     }
 
     /**
@@ -118,6 +122,7 @@ class Factory
                 return $returnEventLoopClass ? $eventLoopClass : $handlerClass;
             }
         }
+
         return $returnEventLoopClass ? '' : DefaultHandler::class;
     }
 

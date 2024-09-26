@@ -13,7 +13,6 @@ use Workerman\Connection\ConnectionInterface;
 
 interface HandlerInterface
 {
-
     /**
      * 用于判断当前环境是否可用
      *

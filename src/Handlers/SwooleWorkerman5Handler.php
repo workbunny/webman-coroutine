@@ -11,7 +11,6 @@ use Workerman\Worker;
 
 class SwooleWorkerman5Handler extends SwooleHandler
 {
-
     /** @inheritdoc  */
     public static function available(): bool
     {
