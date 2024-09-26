@@ -27,12 +27,11 @@ class SwowEvent implements EventInterface
     /** @var Coroutine[] Timer id to timer info. */
     protected array $_timer = [];
 
-    /** @var int */
+    /** @var int 定时器id */
     protected int $_timerId = 0;
 
+    /** @var WaitGroup|null 阻塞 */
     protected null|WaitGroup $_waitGroup = null;
-
-    protected null|Coroutine $_mainCoroutine = null;
 
     public function __construct()
     {
@@ -204,24 +203,26 @@ class SwowEvent implements EventInterface
     /** @inheritdoc  */
     public function loop()
     {
+        // workerman 4.x时，如果不阻塞，则会返回event-loop exited错误
+        // waitAll方法并不会阻塞
+        // 目前使用waitGroup->wait阻塞等待
         $this->_waitGroup = new WaitGroup();
         $this->_waitGroup->add();
-        $this->_mainCoroutine = Coroutine::run(function (): void {
-            while (1) {
-                msleep(0);
-            }
-        });
         $this->_waitGroup->wait();
+        // 保证当前进程在此退出
         exit(0);
+        // 不执行之后逻辑
     }
 
     /** @inheritdoc  */
     public function destroy()
     {
-        $this->_mainCoroutine?->kill();
+        // 杀死所有协程
         Coroutine::killAll();
+        // 退出阻塞等待
         $this->_waitGroup?->done();
         $this->_waitGroup = null;
+        // 清理数据
         $this->_timer = $this->_signals = $this->_reads = $this->_writes = [];
     }
 
