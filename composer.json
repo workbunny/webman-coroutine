@@ -44,6 +44,10 @@
       "Workbunny\\Tests\\": "tests"
     }
   },
+  "suggest": {
+    "ext-swoole": "For supporting Swoole handler. ",
+    "cclilshy/p-ripple-drive": "For supporting Ripple handler. "
+  },
   "scripts": {
     "cs-fix": "./vendor/bin/php-cs-fixer fix",
     "php-stan": "./vendor/bin/phpstan analyse --memory-limit=512MB",
