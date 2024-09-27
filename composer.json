@@ -25,7 +25,8 @@
     "phpunit/phpunit": "^9.6",
     "phpstan/phpstan": "^1.0",
     "friendsofphp/php-cs-fixer": "^3.0",
-    "swoole/ide-helper": "^5.1"
+    "swoole/ide-helper": "^5.1",
+    "cclilshy/p-ripple-drive": "^1.0"
   },
   "autoload": {
     "psr-4": {

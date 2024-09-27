@@ -13,6 +13,7 @@ use Workbunny\WebmanCoroutine\Events\SwooleEvent;
 use Workbunny\WebmanCoroutine\Events\SwowEvent;
 use Workbunny\WebmanCoroutine\Handlers\DefaultHandler;
 use Workbunny\WebmanCoroutine\Handlers\HandlerInterface;
+use Workbunny\WebmanCoroutine\Handlers\RippleHandler;
 use Workbunny\WebmanCoroutine\Handlers\SwooleHandler;
 use Workbunny\WebmanCoroutine\Handlers\SwooleWorkerman5Handler;
 use Workbunny\WebmanCoroutine\Handlers\SwowHandler;
@@ -25,6 +26,7 @@ class Factory
     public const WORKBUNNY_SWOW = SwowEvent::class;
     public const WORKERMAN_SWOOLE = 'Workerman\Events\Swoole';
     public const WORKBUNNY_SWOOLE = SwooleEvent::class;
+    public const RIPPLE_FIBER = 'Psc\Drive\Workerman\PDrive';
 
     /**
      * 默认支持的处理器
@@ -36,6 +38,7 @@ class Factory
         self::WORKBUNNY_SWOW   => SwowHandler::class,
         self::WORKERMAN_SWOOLE => SwooleWorkerman5Handler::class,
         self::WORKBUNNY_SWOOLE => SwooleHandler::class,
+        self::RIPPLE_FIBER     => RippleHandler::class,
     ];
 
     /**
