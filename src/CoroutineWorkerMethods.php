@@ -23,7 +23,8 @@ trait CoroutineWorkerMethods
     {
         try {
             if (!$this instanceof CoroutineWorkerInterface) {
-                throw new \RuntimeException("{$this::class} must implement CoroutineWorkerInterface. ");
+                $classname = $this::class;
+                throw new \RuntimeException("$classname must implement CoroutineWorkerInterface. ");
             }
             return Factory::start($this, $worker, Worker::$globalEvent::class);
         } catch (\Throwable $e) {
@@ -43,13 +44,14 @@ trait CoroutineWorkerMethods
     {
         // 获取当前类的父类名称
         $parentClassName = get_parent_class($this);
+        $classname = $this::class;
         // 检查是否有父类
         if ($parentClassName === false) {
-            throw new \RuntimeException("Class [{$this::class}] does not have a parent class.");
+            throw new \RuntimeException("$classname does not have a parent class.");
         }
         // 检查父类是否实现了 onWorkerStart 方法
         if (!method_exists($parentClassName, 'onWorkerStart')) {
-            throw new \RuntimeException("parent::onWorkerStart must be implemented [{$this::class}].");
+            throw new \RuntimeException("parent::onWorkerStart must be implemented [$classname].");
         }
 
         return parent::onWorkerStart($worker);

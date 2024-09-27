@@ -30,10 +30,11 @@ trait CoroutineServerMethods
     {
         try {
             if ($this->_coroutineServerMethodsCheckClass === null) {
-                $this->_coroutineServerMethodsCheckClass = $this instanceof CoroutineServerInterface;
+                $this->_coroutineServerMethodsCheckClass = ($this instanceof CoroutineServerInterface);
             }
             if (!$this->_coroutineServerMethodsCheckClass) {
-                throw new \RuntimeException("{$this::class} must implement CoroutineServerInterface. ");
+                $classname = $this::class;
+                throw new \RuntimeException("$classname must implement CoroutineServerInterface. ");
             }
             return Factory::run($this, $connection, $request, Worker::$globalEvent::class);
         } catch (\Throwable $e) {
@@ -56,7 +57,8 @@ trait CoroutineServerMethods
             $this->_coroutineServerMethodsCheckParent = $parentClass && method_exists($parentClass, 'onMessage');
         }
         if (!$this->_coroutineServerMethodsCheckParent) {
-            throw new \RuntimeException("parent::onMessage must be implemented [{$this::class}].");
+            $classname = $this::class;
+            throw new \RuntimeException("parent::onMessage must be implemented [$classname].");
         }
         return parent::onMessage($connection, $request);
     }
