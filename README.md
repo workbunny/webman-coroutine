@@ -74,6 +74,7 @@ composer require workbunny/webman-coroutine
 4. 启动CoroutineWebServer，接受处理协程请求
 
 **Tips：`\Workbunny\WebmanCoroutine\event_loop()`自动判断加载顺序按`\Workbunny\WebmanCoroutine\Factory::$_handlers`的顺序执行available()择先**
+
 **Tips：因为eventLoopClass与HandlerClass是一一对应的，所以建议不管是否存在相同的事件循环或者相同的处理器都需要继承后重命名**
 
 ## 自定义协程化
