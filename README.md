@@ -80,6 +80,8 @@ composer require workbunny/webman-coroutine
 
 webman-coroutine提供了用于让自己的自定义服务/进程协程化的基础工具
 
+**Tips：考虑到webman框架默认不会启用注解代理，所以这里没有使用注解代理来处理协程化代理**
+
 ### 1. 自定义进程
 
 - 假设我们已经存在一个自定义服务类，如`MyProcess.php`
