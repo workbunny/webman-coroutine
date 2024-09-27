@@ -24,6 +24,11 @@ composer require workbunny/webman-coroutine
 
 **Tips: 目前在开发阶段，体验请使用dev-main分支**
 
+- 配置说明
+  - enable : (true/false), 是否启用协程webServer
+  - port : (int), 协程webServer默认端口
+  - channel_size : (int), 协程webServer默认每个stream的channel容量
+
 ### swow环境
 
 1. 使用`./vendor/bin/swow-builder`安装swow拓展，注意请关闭swoole环境
