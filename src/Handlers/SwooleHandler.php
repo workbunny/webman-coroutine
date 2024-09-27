@@ -68,15 +68,19 @@ class SwooleHandler implements HandlerInterface
             self::$_enable = true;
             \Swoole\Runtime::enableCoroutine();
         }
+        // 为每一个连接创建一个通道
         $connectionChannels = self::_createChannel($id = spl_object_hash($connection));
+        // 将请求信息推送到通道
         $connectionChannels->push([
             $connection,
             $request,
         ]);
         $waitGroup = new \Swoole\Coroutine\WaitGroup();
         $waitGroup->add();
+        // 协程监听通道，消费
         \Swoole\Coroutine::create(function () use ($app, $connectionChannels, $waitGroup) {
             while (true) {
+                // 通道为空或者关闭时退出协程
                 if (
                     $connectionChannels->isEmpty() or
                     !$data = $connectionChannels->pop()
@@ -89,6 +93,7 @@ class SwooleHandler implements HandlerInterface
             $waitGroup->done();
         });
         $waitGroup->wait();
+        // 关闭通道
         self::_closeChannel($id);
 
         return null;

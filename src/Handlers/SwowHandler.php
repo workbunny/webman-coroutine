@@ -58,15 +58,19 @@ class SwowHandler implements HandlerInterface
         if (!is_object($connection)) {
             return null;
         }
+        // 为每一个连接创建一个通道
         $connectionChannel = self::_createChannel($id = spl_object_hash($connection));
+        // 请求生产
         $connectionChannel->push([
             $connection,
             $request,
         ]);
         $waitGroup = new \Swow\Sync\WaitGroup();
         $waitGroup->add();
+        // 请求消费协程
         \Swow\Coroutine::run(function () use ($app, $connectionChannel, $waitGroup) {
             while (true) {
+                // 通道为空或者关闭时退出协程
                 if (
                     $connectionChannel->isEmpty() or
                     !$data = $connectionChannel->pop()
@@ -79,6 +83,7 @@ class SwowHandler implements HandlerInterface
             $waitGroup->done();
         });
         $waitGroup->wait();
+        // 关闭通道
         self::_closeChannel($id);
 
         return null;
