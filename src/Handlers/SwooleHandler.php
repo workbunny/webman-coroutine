@@ -76,22 +76,26 @@ class SwooleHandler implements HandlerInterface
             $request,
         ]);
         $waitGroup = new \Swoole\Coroutine\WaitGroup();
-        $waitGroup->add();
-        // 协程监听通道，消费
-        \Swoole\Coroutine::create(function () use ($app, $connectionChannels, $waitGroup) {
-            while (true) {
-                // 通道为空或者关闭时退出协程
-                if (
-                    $connectionChannels->isEmpty() or
-                    !$data = $connectionChannels->pop()
-                ) {
-                    break;
+        // 根据request consumer数量创建协程
+        $consumerCount = config('plugin.workbunny.webman-coroutine.app.consumer_count', 1);
+        foreach (range(1, $consumerCount) as $ignored) {
+            $waitGroup->add();
+            // 协程监听通道，消费
+            \Swoole\Coroutine::create(function () use ($app, $connectionChannels, $waitGroup) {
+                while (true) {
+                    // 通道为空或者关闭时退出协程
+                    if (
+                        $connectionChannels->isEmpty() or
+                        !$data = $connectionChannels->pop()
+                    ) {
+                        break;
+                    }
+                    [$connection, $request] = $data;
+                    $app->parentOnMessage($connection, $request);
                 }
-                [$connection, $request] = $data;
-                $app->parentOnMessage($connection, $request);
-            }
-            $waitGroup->done();
-        });
+                $waitGroup->done();
+            });
+        }
         $waitGroup->wait();
         // 关闭通道
         self::_closeChannel($id);

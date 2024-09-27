@@ -13,9 +13,11 @@ declare(strict_types=1);
 
 return [
     // coroutine-web-server 开关
-    'enable'        => true,
+    'enable'         => true,
     // coroutine-web-server 监听端口
-    'port'          => 8717,
-    // 每stream回调的channel容量
-    'channel_size'  => 1,
+    'port'           => 8717,
+    // connection channel 容量
+    'channel_size'   => 1,
+    // request consumer 数量
+    'consumer_count' => 1
 ];

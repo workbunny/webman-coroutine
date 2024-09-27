@@ -66,22 +66,26 @@ class SwowHandler implements HandlerInterface
             $request,
         ]);
         $waitGroup = new \Swow\Sync\WaitGroup();
-        $waitGroup->add();
-        // 请求消费协程
-        \Swow\Coroutine::run(function () use ($app, $connectionChannel, $waitGroup) {
-            while (true) {
-                // 通道为空或者关闭时退出协程
-                if (
-                    $connectionChannel->isEmpty() or
-                    !$data = $connectionChannel->pop()
-                ) {
-                    break;
+        // 根据request consumer数量创建协程
+        $consumerCount = config('plugin.workbunny.webman-coroutine.app.consumer_count', 1);
+        foreach (range(1, $consumerCount) as $ignored) {
+            $waitGroup->add();
+            // 请求消费协程
+            \Swow\Coroutine::run(function () use ($app, $connectionChannel, $waitGroup) {
+                while (true) {
+                    // 通道为空或者关闭时退出协程
+                    if (
+                        $connectionChannel->isEmpty() or
+                        !$data = $connectionChannel->pop()
+                    ) {
+                        break;
+                    }
+                    [$connection, $request] = $data;
+                    $app->parentOnMessage($connection, $request);
                 }
-                [$connection, $request] = $data;
-                $app->parentOnMessage($connection, $request);
-            }
-            $waitGroup->done();
-        });
+                $waitGroup->done();
+            });
+        }
         $waitGroup->wait();
         // 关闭通道
         self::_closeChannel($id);
