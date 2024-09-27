@@ -22,11 +22,12 @@ use Workerman\Worker;
 
 class Factory
 {
-    public const WORKERMAN_SWOW = 'Workerman\Events\Swow';
-    public const WORKBUNNY_SWOW = SwowEvent::class;
-    public const WORKERMAN_SWOOLE = 'Workerman\Events\Swoole';
-    public const WORKBUNNY_SWOOLE = SwooleEvent::class;
-    public const RIPPLE_FIBER = 'Psc\Drive\Workerman\PDrive';
+    public const WORKERMAN_SWOW     = 'Workerman\Events\Swow';
+    public const WORKBUNNY_SWOW     = SwowEvent::class;
+    public const WORKERMAN_SWOOLE   = 'Workerman\Events\Swoole';
+    public const WORKBUNNY_SWOOLE   = SwooleEvent::class;
+    public const RIPPLE_FIBER       = 'Psc\Drive\Workerman\PDrive';
+    public const WORKERMAN_DEFAULT  = '';
 
     /**
      * 默认支持的处理器
@@ -34,11 +35,12 @@ class Factory
      * @var string[]
      */
     protected static array $_handlers = [
-        self::WORKERMAN_SWOW   => SwowWorkerman5Handler::class,
-        self::WORKBUNNY_SWOW   => SwowHandler::class,
-        self::WORKERMAN_SWOOLE => SwooleWorkerman5Handler::class,
-        self::WORKBUNNY_SWOOLE => SwooleHandler::class,
-        self::RIPPLE_FIBER     => RippleHandler::class,
+        self::WORKERMAN_SWOW    => SwowWorkerman5Handler::class,
+        self::WORKBUNNY_SWOW    => SwowHandler::class,
+        self::WORKERMAN_SWOOLE  => SwooleWorkerman5Handler::class,
+        self::WORKBUNNY_SWOOLE  => SwooleHandler::class,
+        self::RIPPLE_FIBER      => RippleHandler::class,
+        self::WORKERMAN_DEFAULT => DefaultHandler::class,
     ];
 
     /**
@@ -109,16 +111,20 @@ class Factory
      *
      * @param string $eventLoopClass
      * @param bool $available
+     * @param bool $returnEventLoopClass 只在available=true时生效
      * @return string
      */
-    public static function get(string $eventLoopClass, bool $available = false): string
+    public static function get(string $eventLoopClass, bool $available = false, bool $returnEventLoopClass = false): string
     {
         $handlerClass = self::$_handlers[$eventLoopClass] ?? DefaultHandler::class;
         if ($available) {
             if (!method_exists($handlerClass, 'available')) {
                 throw new \RuntimeException("handlerClass $handlerClass error [available]! ");
             }
-            $handlerClass = $handlerClass::available() ? $handlerClass : DefaultHandler::class;
+            // 当$returnEventLoopClass=true时，返回的是eventloop classname而不是handler classname
+            $handlerClass = $handlerClass::available()
+                ? ($returnEventLoopClass ? $eventLoopClass : $handlerClass)
+                : ($returnEventLoopClass ? self::WORKERMAN_DEFAULT : DefaultHandler::class);
         }
 
         return $handlerClass;
@@ -146,7 +152,7 @@ class Factory
             }
         }
 
-        return $returnEventLoopClass ? '' : DefaultHandler::class;
+        return $returnEventLoopClass ? self::WORKERMAN_DEFAULT : DefaultHandler::class;
     }
 
     /**
