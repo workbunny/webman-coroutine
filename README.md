@@ -15,7 +15,7 @@ webman-coroutine是一个webman开发框架生态下的协程基建支撑插件�
 2. workerman 4.x下还未有官方支持的swow协程驱动，本插件提供SwowEvent事件驱动支撑workerman 4.x下的协程能力
 3. 由于配置event-loop等操作相较于普通开发会存在一定的心智负担，所以本插件提供了`event_loop()`函数，用于根据当前环境自动选择合适的事件驱动
 
-## 使用
+## 安装
 
 - 安装插件包
 ```shell
@@ -29,7 +29,9 @@ composer require workbunny/webman-coroutine
   - port : (int), 协程webServer默认端口
   - channel_size : (int), 协程webServer默认每个stream的channel容量
 
-### swow环境
+## 使用
+
+### 1. swow环境
 
 1. 使用`./vendor/bin/swow-builder`安装swow拓展，注意请关闭swoole环境
 2. 修改`config/server.php`中`'event_loop' => \Workbunny\WebmanCoroutine\event_loop()`，
@@ -42,7 +44,7 @@ composer require workbunny/webman-coroutine
 
 **Tips：CoroutineWebServer可以在`config/plugin/workbunny/webman-coroutine/app.php`中通过`enable=false`关闭启动**
 
-### swoole环境
+### 2. swoole环境
 
 1. 使用`pecl install swoole`安装稳定版swoole拓展
 2. 建议不要将swoole加入php.ini配置文件
@@ -54,7 +56,7 @@ composer require workbunny/webman-coroutine
 4. 使用`php -d extension=swoole webman start`启动
 5. 通过`config/plugin/workbunny/webman-coroutine/process.php`启动的CoroutineWebServer可以用于协程环境开发，原服务还是BIO模式
 
-### ripple环境
+### 3. ripple环境
 
 1. 使用`composer require cclilshy/p-ripple-drive`安装ripple驱动插件
 2. 修改`config/server.php`配置
@@ -64,7 +66,7 @@ composer require workbunny/webman-coroutine
 
 **Tips：该环境协程依赖php-fiber，并没有自动hook系统的阻塞函数，但支持所有支持php-fiber的插件**
 
-### 自定义环境
+### 4. 自定义环境
 
 1. 实现`Workbunny\WebmanCoroutine\Handlers\HandlerInterface`接口，实现自定义协程处理逻辑
 2. 通过`Workbunny\WebmanCoroutine\Factory::register(HandlerInterface $handler)`注册你的协程处理器
@@ -73,3 +75,82 @@ composer require workbunny/webman-coroutine
 
 **Tips：`\Workbunny\WebmanCoroutine\event_loop()`自动判断加载顺序按`\Workbunny\WebmanCoroutine\Factory::$_handlers`的顺序执行available()择先**
 **Tips：因为eventLoopClass与HandlerClass是一一对应的，所以建议不管是否存在相同的事件循环或者相同的处理器都需要继承后重命名**
+
+## 自定义协程化
+
+webman-coroutine提供了用于让自己的自定义服务/进程协程化的基础工具
+
+### 1. 自定义进程
+
+- 假设我们已经存在一个自定义服务类，如`MyProcess.php`
+
+```php
+namespace process;
+
+class MyProcess {
+    public function onWorkerStart() {
+        // 具体业务逻辑
+    }
+    // ...
+}
+```
+
+- 在webman/workerman环境中，`onWorkerStart()`是一个worker进程所必不可少的方法，
+假设我们想要将它协程化，在不改动`MyProcess`的情况下，只需要新建一个`MyCoroutineProcess.php`
+
+```php
+namespace process;
+
+use Workbunny\WebmanCoroutine\CoroutineWorkerInterface;
+use Workbunny\WebmanCoroutine\CoroutineWorkerMethods;
+
+class MyCoroutineProcess extends MyProcess implements CoroutineWorkerInterface {
+    
+    // 引入协程代理方法
+    use CoroutineWorkerMethods;
+}
+```
+
+- 此时的`MyCoroutineProcess`将拥有协程化的`onWorkerStart()`
+
+- 将新建的`MyCoroutineProcess`添加到webman的自定义进程配置`config/process.php`中启动即可
+
+
+### 2. 自定义服务
+
+代码样例：[CoroutineWebServer.php](src%2FCoroutineWebServer.php)
+
+- 假设我们已经存在一个自定义服务类，如`MyServer.php`
+
+```php
+namespace process;
+
+class MyServer {
+    
+    public function onMessage($connection, $data) {
+        // 具体业务逻辑
+    }
+    
+    // ...
+}
+```
+
+- 在webman/workerman环境中，`onMessage()`是一个具备监听能力的进程所必不可少的方法，
+  假设我们想要将它协程化，在不改动`MyServer`的情况下，只需要新建一个`MyCoroutineServer.php`
+
+```php
+namespace process;
+
+use Workbunny\WebmanCoroutine\CoroutineServerInterface;
+use Workbunny\WebmanCoroutine\CoroutineServerMethods;
+
+class MyCoroutineServer extends MyServer implements CoroutineServerInterface {
+    
+    // 引入协程代理方法
+    use CoroutineServerMethods;
+}
+```
+
+- 此时的`MyCoroutineServer`将拥有协程化的`onMessage()`
+
+- 将新建的`MyCoroutineServer`添加到webman的自定义进程配置`config/process.php`中启动即可
