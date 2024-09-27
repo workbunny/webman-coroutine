@@ -18,6 +18,7 @@ use Workbunny\WebmanCoroutine\Handlers\SwooleWorkerman5Handler;
 use Workbunny\WebmanCoroutine\Handlers\SwowHandler;
 use Workbunny\WebmanCoroutine\Handlers\SwowWorkerman5Handler;
 use Workerman\Connection\ConnectionInterface;
+use Workerman\Worker;
 
 class Factory
 {
@@ -173,5 +174,31 @@ class Factory
         }
 
         return $handlerClass::run($app, $connection, $request);
+    }
+
+    /**
+     * 根据当前环境运行处理器
+     *
+     * @param CoroutineWorkerInterface $app
+     * @param mixed|Worker|null $worker
+     * @param string|null $eventLoopClass
+     * @return mixed
+     */
+    public static function start(CoroutineWorkerInterface $app, mixed $worker = null, ?string $eventLoopClass = null): mixed
+    {
+        // 获取当前处理器
+        /** @var HandlerInterface $handlerClass */
+        $handlerClass = self::getCurrentHandler() ?:
+            // 赋值，避免重复获取
+            self::$_currentHandler = (
+                // 如果没有就自动获取
+            $eventLoopClass ? self::get($eventLoopClass, true) : self::find()
+            );
+        // 通常不会执行到此逻辑，只是为了ide友好
+        if (!method_exists($handlerClass, 'start')) {
+            throw new \RuntimeException('handlerClass error [start]! ');
+        }
+
+        return $handlerClass::start($app, $worker);
     }
 }
