@@ -49,6 +49,16 @@ composer require workbunny/webman-coroutine
 4. 使用`php -d extension=swoole webman start`启动
 5. 通过`config/plugin/workbunny/webman-coroutine/process.php`启动的CoroutineWebServer可以用于协程环境开发，原服务还是BIO模式
 
+### ripple环境
+
+1. 使用`composer require cclilshy/p-ripple-drive`安装ripple驱动插件
+2. 修改`config/server.php`配置
+   - `'event_loop' => \Workbunny\WebmanCoroutine\event_loop()`自动判断，请勿开启swow、swoole，
+   - `'event_loop' => \Workbunny\WebmanCoroutine\Factory::RIPPLE_FIBER`手动指定
+3. 使用`php webman start`启动
+
+**Tips：该环境协程依赖php-fiber，并没有自动hook系统的阻塞函数，但支持所有支持php-fiber的插件**
+
 ### 自定义环境
 
 1. 实现`Workbunny\WebmanCoroutine\Handlers\HandlerInterface`接口，实现自定义协程处理逻辑
