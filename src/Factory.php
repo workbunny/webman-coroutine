@@ -134,7 +134,7 @@ class Factory
     {
         /**
          * @var string $eventLoopClass
-         * @var HandlerInterface  $handlerClass
+         * @var HandlerInterface $handlerClass
          */
         foreach (self::getAll() as $eventLoopClass => $handlerClass) {
             // 通常不会执行到此逻辑，只是为了ide友好
@@ -192,7 +192,7 @@ class Factory
             // 赋值，避免重复获取
             self::$_currentHandler = (
                 // 如果没有就自动获取
-            $eventLoopClass ? self::get($eventLoopClass, true) : self::find()
+                $eventLoopClass ? self::get($eventLoopClass, true) : self::find()
             );
         // 通常不会执行到此逻辑，只是为了ide友好
         if (!method_exists($handlerClass, 'start')) {

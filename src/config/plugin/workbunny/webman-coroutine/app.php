@@ -17,5 +17,5 @@ return [
     // coroutine-web-server 监听端口
     'port'          => 8717,
     // 每stream回调的channel容量
-    'channel_size'  => 1
+    'channel_size'  => 1,
 ];

@@ -21,5 +21,4 @@ class CoroutineWebServer extends App implements CoroutineServerInterface
         }
         parent::onWorkerStart($worker);
     }
-
 }

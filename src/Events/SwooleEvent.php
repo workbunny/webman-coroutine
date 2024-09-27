@@ -46,6 +46,7 @@ class SwooleEvent implements EventInterface
                     if ($res = Process::signal($fd, $func)) {
                         $this->_signals[$fd] = $func;
                     }
+
                     return $res;
                 }
 
@@ -66,21 +67,24 @@ class SwooleEvent implements EventInterface
                     if ($this->_reads[$key = (int) $fd] ?? null) {
                         $this->del($fd, EventInterface::EV_READ);
                     }
-                    if ($res = Event::add($fd, $func,null,SWOOLE_EVENT_READ)) {
+                    if ($res = Event::add($fd, $func, null, SWOOLE_EVENT_READ)) {
                         $this->_reads[$key] = 1;
                     }
-                    return (bool)$res;
+
+                    return (bool) $res;
                 }
+
                 return false;
             case self::EV_WRITE:
                 if (\is_resource($fd)) {
                     if ($this->_writes[$key = (int) $fd] ?? null) {
                         $this->del($fd, EventInterface::EV_WRITE);
                     }
-                    if ($res = Event::add($fd, $func,null,SWOOLE_EVENT_WRITE)) {
+                    if ($res = Event::add($fd, $func, null, SWOOLE_EVENT_WRITE)) {
                         $this->_writes[$key] = 1;
                     }
-                    return (bool)$res;
+
+                    return (bool) $res;
                 }
 
                 return false;
@@ -97,6 +101,7 @@ class SwooleEvent implements EventInterface
                 if ($this->_signals[$fd] ?? null) {
                     if (Process::signal($fd, null)) {
                         unset($this->_signals[$fd]);
+
                         return true;
                     }
                 }
@@ -107,6 +112,7 @@ class SwooleEvent implements EventInterface
                 if ($id = $this->_timer[$fd] ?? null) {
                     if (Timer::clear($id)) {
                         unset($this->_timer[$fd]);
+
                         return true;
                     }
                 }
@@ -115,11 +121,12 @@ class SwooleEvent implements EventInterface
             case self::EV_READ:
                 if (
                     \is_resource($fd) and
-                    isset($this->_reads[$key = (int)$fd]) and
-                    Event::isset($fd,SWOOLE_EVENT_READ)
+                    isset($this->_reads[$key = (int) $fd]) and
+                    Event::isset($fd, SWOOLE_EVENT_READ)
                 ) {
                     if (Event::del($fd)) {
                         unset($this->_reads[$key]);
+
                         return true;
                     }
                 }
@@ -128,11 +135,12 @@ class SwooleEvent implements EventInterface
             case self::EV_WRITE:
                 if (
                     \is_resource($fd) and
-                    isset($this->_writes[$key = (int)$fd]) and
-                    Event::isset($fd,SWOOLE_EVENT_WRITE)
+                    isset($this->_writes[$key = (int) $fd]) and
+                    Event::isset($fd, SWOOLE_EVENT_WRITE)
                 ) {
                     if (Event::del($fd)) {
                         unset($this->_writes[$key]);
+
                         return true;
                     }
                 }
@@ -159,7 +167,6 @@ class SwooleEvent implements EventInterface
         Event::exit();
         $this->_reads = $this->_writes = [];
     }
-
 
     /** @inheritdoc  */
     public function clearAllTimer()
