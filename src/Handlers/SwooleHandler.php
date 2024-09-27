@@ -14,9 +14,43 @@ use Workerman\Worker;
 class SwooleHandler implements HandlerInterface
 {
     /**
+     * 启用标识
+     *
      * @var bool
      */
-    protected static bool $enable = false;
+    protected static bool $_enable = false;
+
+    /**
+     * connection channel
+     *
+     * @var array
+     */
+    protected static array $_connectionChannels = [];
+
+    /**
+     * 创建通道
+     *
+     * @param string $id
+     * @return \Swoole\Coroutine\Channel
+     */
+    protected static function _createChannel(string $id): \Swoole\Coroutine\Channel
+    {
+        return self::$_connectionChannels[$id] ?? new \Swoole\Coroutine\Channel(config('plugin.workbunny.webman-coroutine.app.channel_size', 1));
+    }
+
+    /**
+     * 关闭通道
+     *
+     * @param string $id
+     * @return void
+     */
+    protected static function _closeChannel(string $id): void
+    {
+        if (self::$_connectionChannels[$id] ?? null) {
+            self::$_connectionChannels[$id]?->close();
+            unset(self::$_connectionChannels[$id]);
+        }
+    }
 
     /** @inheritdoc  */
     public static function available(): bool
@@ -27,38 +61,44 @@ class SwooleHandler implements HandlerInterface
     /** @inheritdoc  */
     public static function run(CoroutineServerInterface $app, mixed $connection, mixed $request): mixed
     {
-        if (!self::$enable) {
-            self::$enable = true;
+        if (!is_object($connection)) {
+            return null;
+        }
+        if (!self::$_enable) {
+            self::$_enable = true;
             \Swoole\Runtime::enableCoroutine();
         }
-        $requestChannel = new \Swoole\Coroutine\Channel(config('plugin.workbunny.webman-coroutine.app.channel_size', 1));
-        $requestChannel->push([
+        $connectionChannels = self::_createChannel($id = spl_object_hash($connection));
+        $connectionChannels->push([
             $connection,
             $request,
         ]);
         $waitGroup = new \Swoole\Coroutine\WaitGroup();
         $waitGroup->add();
-        $res = null;
-        \Swoole\Coroutine::create(function () use (&$res, $app, $requestChannel, $waitGroup) {
-            while (1) {
-                if (!$data = $requestChannel->pop()) {
+        \Swoole\Coroutine::create(function () use ($app, $connectionChannels, $waitGroup) {
+            while (true) {
+                if (
+                    $connectionChannels->isEmpty() or
+                    !$data = $connectionChannels->pop()
+                ) {
                     break;
                 }
                 [$connection, $request] = $data;
-                $res = $app->parentOnMessage($connection, $request);
+                $app->parentOnMessage($connection, $request);
             }
             $waitGroup->done();
         });
         $waitGroup->wait();
+        self::_closeChannel($id);
 
-        return $res;
+        return null;
     }
 
     /** @inheritdoc  */
     public static function start(CoroutineWorkerInterface $app, mixed $worker): mixed
     {
-        if (!self::$enable) {
-            self::$enable = true;
+        if (!self::$_enable) {
+            self::$_enable = true;
             \Swoole\Runtime::enableCoroutine();
         }
         $waitGroup = new \Swoole\Coroutine\WaitGroup();
