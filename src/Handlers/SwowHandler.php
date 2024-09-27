@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace Workbunny\WebmanCoroutine\Handlers;
 
 use Workbunny\WebmanCoroutine\CoroutineServerInterface;
+use Workbunny\WebmanCoroutine\CoroutineWorkerInterface;
 use Workerman\Worker;
 
 class SwowHandler implements HandlerInterface
@@ -37,6 +38,21 @@ class SwowHandler implements HandlerInterface
                 [$connection, $request] = $data;
                 $res = $app->parentOnMessage($connection, $request);
             }
+            $waitGroup->done();
+        });
+        $waitGroup->wait();
+
+        return $res;
+    }
+
+    /** @inheritdoc  */
+    public static function start(CoroutineWorkerInterface $app, mixed $worker): mixed
+    {
+        $waitGroup = new \Swow\Sync\WaitGroup();
+        $res = null;
+        $waitGroup->add();
+        \Swow\Coroutine::run(function () use (&$res, $app, $worker, $waitGroup) {
+            $res = $app->parentOnWorkerStart($worker);
             $waitGroup->done();
         });
         $waitGroup->wait();

@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace Workbunny\WebmanCoroutine\Handlers;
 
 use Workbunny\WebmanCoroutine\CoroutineServerInterface;
+use Workbunny\WebmanCoroutine\CoroutineWorkerInterface;
 use Workerman\Worker;
 
 class SwooleHandler implements HandlerInterface
@@ -46,6 +47,25 @@ class SwooleHandler implements HandlerInterface
                 [$connection, $request] = $data;
                 $res = $app->parentOnMessage($connection, $request);
             }
+            $waitGroup->done();
+        });
+        $waitGroup->wait();
+
+        return $res;
+    }
+
+    /** @inheritdoc  */
+    public static function start(CoroutineWorkerInterface $app, mixed $worker): mixed
+    {
+        if (!self::$enable) {
+            self::$enable = true;
+            \Swoole\Runtime::enableCoroutine();
+        }
+        $waitGroup = new \Swoole\Coroutine\WaitGroup();
+        $waitGroup->add();
+        $res = null;
+        \Swoole\Coroutine::create(function () use (&$res, $app, $worker, $waitGroup) {
+            $res = $app->parentOnWorkerStart($worker);
             $waitGroup->done();
         });
         $waitGroup->wait();

@@ -9,6 +9,7 @@ namespace Workbunny\WebmanCoroutine\Handlers;
 
 use Webman\Http\Request;
 use Workbunny\WebmanCoroutine\CoroutineServerInterface;
+use Workbunny\WebmanCoroutine\CoroutineWorkerInterface;
 use Workerman\Connection\ConnectionInterface;
 
 interface HandlerInterface
@@ -29,4 +30,13 @@ interface HandlerInterface
      * @return mixed
      */
     public static function run(CoroutineServerInterface $app, mixed $connection, mixed $request): mixed;
+
+    /**
+     * 执行协程处理
+     *
+     * @param CoroutineWorkerInterface $app
+     * @param mixed $worker
+     * @return mixed
+     */
+    public static function start(CoroutineWorkerInterface $app, mixed $worker): mixed;
 }
