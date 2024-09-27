@@ -12,6 +12,11 @@ use Workerman\Worker;
 
 class SwooleHandler implements HandlerInterface
 {
+    /**
+     * @var bool
+     */
+    protected static bool $enable = false;
+
     /** @inheritdoc  */
     public static function available(): bool
     {
@@ -21,7 +26,11 @@ class SwooleHandler implements HandlerInterface
     /** @inheritdoc  */
     public static function run(CoroutineWebServer $app, mixed $connection, mixed $request): mixed
     {
-        $requestChannel = new \Swoole\Coroutine\Channel();
+        if (!self::$enable) {
+            self::$enable = true;
+            \Swoole\Runtime::enableCoroutine();
+        }
+        $requestChannel = new \Swoole\Coroutine\Channel(config('plugin.workbunny.webman-coroutine.app.channel_size', 1));
         $requestChannel->push([
             $connection,
             $request,

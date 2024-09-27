@@ -21,7 +21,7 @@ class SwowHandler implements HandlerInterface
     /** @inheritdoc  */
     public static function run(CoroutineWebServer $app, mixed $connection, mixed $request): mixed
     {
-        $requestChannel = new \Swow\Channel(1);
+        $requestChannel = new \Swow\Channel(config('plugin.workbunny.webman-coroutine.app.channel_size', 1));
         $requestChannel->push([
             $connection,
             $request,
