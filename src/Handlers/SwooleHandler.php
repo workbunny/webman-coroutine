@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Handlers;
 
-use Workbunny\WebmanCoroutine\CoroutineWebServer;
+use Workbunny\WebmanCoroutine\CoroutineServerInterface;
 use Workerman\Worker;
 
 class SwooleHandler implements HandlerInterface
@@ -24,7 +24,7 @@ class SwooleHandler implements HandlerInterface
     }
 
     /** @inheritdoc  */
-    public static function run(CoroutineWebServer $app, mixed $connection, mixed $request): mixed
+    public static function run(CoroutineServerInterface $app, mixed $connection, mixed $request): mixed
     {
         if (!self::$enable) {
             self::$enable = true;

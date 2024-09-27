@@ -8,10 +8,11 @@ declare(strict_types=1);
 namespace Workbunny\WebmanCoroutine;
 
 use Webman\App;
-use Workerman\Worker;
 
-class CoroutineWebServer extends App
+class CoroutineWebServer extends App implements CoroutineServerInterface
 {
+    use CoroutineServerMethods;
+
     /** @inheritdoc  */
     public function onWorkerStart($worker)
     {
@@ -21,23 +22,4 @@ class CoroutineWebServer extends App
         parent::onWorkerStart($worker);
     }
 
-    /** @inheritdoc  */
-    public function onMessage($connection, $request)
-    {
-        try {
-            return Factory::run($this, $connection, $request, Worker::$globalEvent::class);
-        } catch (\Throwable $e) {
-            Worker::log($e->getMessage());
-        }
-
-        return null;
-    }
-
-    /**
-     * @link parent::onMessage()
-     */
-    public function parentOnMessage($connection, $request)
-    {
-        return parent::onMessage($connection, $request);
-    }
 }

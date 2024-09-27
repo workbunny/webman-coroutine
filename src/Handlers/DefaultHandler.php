@@ -7,12 +7,12 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Handlers;
 
-use Workbunny\WebmanCoroutine\CoroutineWebServer;
+use Workbunny\WebmanCoroutine\CoroutineServerInterface;
 
 class DefaultHandler implements HandlerInterface
 {
     /** @inheritdoc  */
-    public static function run(CoroutineWebServer $app, mixed $connection, mixed $request): mixed
+    public static function run(CoroutineServerInterface $app, mixed $connection, mixed $request): mixed
     {
         return $app->parentOnMessage($connection, $request);
     }

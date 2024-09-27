@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine;
 
-use Webman\App;
 use Webman\Http\Request;
 use Workbunny\WebmanCoroutine\Events\SwooleEvent;
 use Workbunny\WebmanCoroutine\Events\SwowEvent;
@@ -108,13 +107,13 @@ class Factory
      * 根据事件循环类获取对应处理器
      *
      * @param string $eventLoopClass
-     * @param bool $check
+     * @param bool $available
      * @return string
      */
-    public static function get(string $eventLoopClass, bool $check = false): string
+    public static function get(string $eventLoopClass, bool $available = false): string
     {
         $handlerClass = self::$_handlers[$eventLoopClass] ?? DefaultHandler::class;
-        if ($check) {
+        if ($available) {
             if (!method_exists($handlerClass, 'available')) {
                 throw new \RuntimeException("handlerClass $handlerClass error [available]! ");
             }
@@ -132,6 +131,10 @@ class Factory
      */
     public static function find(bool $returnEventLoopClass = false): string
     {
+        /**
+         * @var string $eventLoopClass
+         * @var HandlerInterface  $handlerClass
+         */
         foreach (self::getAll() as $eventLoopClass => $handlerClass) {
             // 通常不会执行到此逻辑，只是为了ide友好
             if (!method_exists($handlerClass, 'available')) {
@@ -148,15 +151,16 @@ class Factory
     /**
      * 根据当前环境运行处理器
      *
-     * @param CoroutineWebServer $app
+     * @param CoroutineServerInterface $app
      * @param mixed|ConnectionInterface $connection
      * @param mixed|Request $request
      * @param string|null $eventLoopClass
      * @return mixed
      */
-    public static function run(CoroutineWebServer $app, mixed $connection, mixed $request, ?string $eventLoopClass = null): mixed
+    public static function run(CoroutineServerInterface $app, mixed $connection, mixed $request, ?string $eventLoopClass = null): mixed
     {
         // 获取当前处理器
+        /** @var HandlerInterface $handlerClass */
         $handlerClass = self::getCurrentHandler() ?:
             // 赋值，避免重复获取
             self::$_currentHandler = (
