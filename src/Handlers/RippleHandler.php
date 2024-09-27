@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Handlers;
 
-use Webman\App;
+use Workbunny\WebmanCoroutine\CoroutineWebServer;
 use Workerman\Worker;
 use function Co\await;
 use function Co\async;
@@ -22,13 +22,13 @@ class RippleHandler implements HandlerInterface
     }
 
     /** @inheritdoc  */
-    public static function run(App $app, mixed $connection, mixed $request): mixed
+    public static function run(CoroutineWebServer $app, mixed $connection, mixed $request): mixed
     {
 
         try {
             return await(
                 async(function () use ($app, $connection, $request) {
-                    return $app->onMessage($connection, $request);
+                    return $app->parentOnMessage($connection, $request);
                 })
             );
         } catch (\Throwable $e) {

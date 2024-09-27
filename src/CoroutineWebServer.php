@@ -32,4 +32,12 @@ class CoroutineWebServer extends App
 
         return null;
     }
+
+    /**
+     * @link parent::onMessage()
+     */
+    public function parentOnMessage($connection, $request)
+    {
+        return parent::onMessage($connection, $request);
+    }
 }

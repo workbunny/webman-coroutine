@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Handlers;
 
-use Webman\App;
+use Workbunny\WebmanCoroutine\CoroutineWebServer;
 use Workerman\Worker;
 
 class SwowHandler implements HandlerInterface
@@ -19,7 +19,7 @@ class SwowHandler implements HandlerInterface
     }
 
     /** @inheritdoc  */
-    public static function run(App $app, mixed $connection, mixed $request): mixed
+    public static function run(CoroutineWebServer $app, mixed $connection, mixed $request): mixed
     {
         $requestChannel = new \Swow\Channel(1);
         $requestChannel->push([
@@ -35,7 +35,7 @@ class SwowHandler implements HandlerInterface
                     break;
                 }
                 [$connection, $request] = $data;
-                $res = $app->onMessage($connection, $request);
+                $res = $app->parentOnMessage($connection, $request);
             }
             $waitGroup->done();
         });

@@ -148,13 +148,13 @@ class Factory
     /**
      * 根据当前环境运行处理器
      *
-     * @param App $app
+     * @param CoroutineWebServer $app
      * @param mixed|ConnectionInterface $connection
      * @param mixed|Request $request
      * @param string|null $eventLoopClass
      * @return mixed
      */
-    public static function run(App $app, mixed $connection, mixed $request, ?string $eventLoopClass = null): mixed
+    public static function run(CoroutineWebServer $app, mixed $connection, mixed $request, ?string $eventLoopClass = null): mixed
     {
         // 获取当前处理器
         $handlerClass = self::getCurrentHandler() ?:
