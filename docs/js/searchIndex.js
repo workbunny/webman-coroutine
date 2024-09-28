@@ -318,7 +318,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\RippleHandler",
             "name": "RippleHandler",
-            "summary": "",
+            "summary": "\u57FA\u4E8ERipple\u63D2\u4EF6\u7684\u534F\u7A0B\u5904\u7406\u5668\uFF0C\u652F\u6301PHP\u002Dfiber",
             "url": "classes/Workbunny-WebmanCoroutine-Handlers-RippleHandler.html"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\RippleHandler\u003A\u003AisAvailable\u0028\u0029",

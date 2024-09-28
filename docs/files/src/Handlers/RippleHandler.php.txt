@@ -22,6 +22,9 @@ use function Workbunny\WebmanCoroutine\package_installed;
 
 use Workerman\Worker;
 
+/**
+ * 基于Ripple插件的协程处理器，支持PHP-fiber
+ */
 class RippleHandler implements HandlerInterface
 {
     /**
