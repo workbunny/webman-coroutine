@@ -9,6 +9,9 @@ namespace Workbunny\WebmanCoroutine;
 
 use Workerman\Worker;
 
+/**
+ * @desc 自定义worker代理协程化接口
+ */
 interface CoroutineWorkerInterface
 {
     /**

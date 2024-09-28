@@ -27,9 +27,14 @@ composer require workbunny/webman-coroutine
 - 配置说明
   - enable : (true/false), 是否启用协程webServer
   - port : (int), 协程webServer默认端口
-  - channel_size : (int), 协程webServer默认每个stream的channel容量
+  - channel_size : (int), 每个connection的channel容量
+  - consumer_count : (int), 每个connection的消费者数量
 
-## 使用
+## 文档
+
+[API文档](docs%2Findex.html)
+
+## 教程
 
 ### 1. swow环境
 

@@ -18,6 +18,9 @@ use Workbunny\WebmanCoroutine\Exceptions\HandlerException;
 use Workbunny\WebmanCoroutine\Exceptions\SkipWaitGroupDoneException;
 use Workerman\Worker;
 
+/**
+ * @desc 基于swoole实现的协程处理器
+ */
 class SwooleHandler implements HandlerInterface
 {
     /**
@@ -163,6 +166,7 @@ class SwooleHandler implements HandlerInterface
                 $waitGroup->add();
             }
         }
+
         return $res;
     }
 

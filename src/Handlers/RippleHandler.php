@@ -8,15 +8,15 @@ declare(strict_types=1);
 namespace Workbunny\WebmanCoroutine\Handlers;
 
 use Closure;
-use Psc\Core\Coroutine\Promise;
-use Throwable;
-use Workbunny\WebmanCoroutine\CoroutineWorkerInterface;
-use Workbunny\WebmanCoroutine\Exceptions\HandlerException;
-use Workbunny\WebmanCoroutine\Exceptions\SkipWaitGroupDoneException;
+
 use function Co\async;
 use function Co\await;
 
+use Psc\Core\Coroutine\Promise;
+use Throwable;
 use Workbunny\WebmanCoroutine\CoroutineServerInterface;
+use Workbunny\WebmanCoroutine\CoroutineWorkerInterface;
+use Workbunny\WebmanCoroutine\Exceptions\HandlerException;
 
 use function Workbunny\WebmanCoroutine\package_installed;
 
@@ -67,7 +67,6 @@ class RippleHandler implements HandlerInterface
         return null;
     }
 
-
     /**
      * @inheritdoc
      * @param Closure $function
@@ -84,6 +83,7 @@ class RippleHandler implements HandlerInterface
             }
             $waitGroup->promiseList[spl_object_hash($promise)] = $promise;
         }
+
         return $promise;
     }
 
@@ -95,6 +95,7 @@ class RippleHandler implements HandlerInterface
     {
         $waitGroup = new \stdClass();
         self::$_waitGroups[$id = spl_object_hash($waitGroup)] = $waitGroup;
+
         return $id;
     }
 

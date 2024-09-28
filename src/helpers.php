@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * @author workbunny/Chaz6chez
+ * @email chaz6chez1993@outlook.com
+ */
 declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine;
@@ -8,7 +11,7 @@ namespace Workbunny\WebmanCoroutine;
  * 根据环境加载event-loop
  *
  * @param string|null $expectEventLoopClass 如果传入期待的eventloop而判定当前环境不支持则返回空字符串使用默认eventloop
- * @return string
+ * @return string 事件loop类名
  */
 function event_loop(?string $expectEventLoopClass = null): string
 {
@@ -22,8 +25,8 @@ function event_loop(?string $expectEventLoopClass = null): string
 /**
  * 判断是否composer安装了指定包
  *
- * @param string $packageName
- * @return bool
+ * @param string $packageName 包名，如 "workerman/workerman"
+ * @return bool 是否安装
  */
 function package_installed(string $packageName): bool
 {

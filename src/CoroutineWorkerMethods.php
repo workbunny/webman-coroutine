@@ -8,8 +8,8 @@ declare(strict_types=1);
 namespace Workbunny\WebmanCoroutine;
 
 use Webman\App;
-use Workerman\Worker;
 use Workbunny\WebmanCoroutine\Exceptions\RuntimeException;
+use Workerman\Worker;
 
 trait CoroutineWorkerMethods
 {
@@ -27,6 +27,7 @@ trait CoroutineWorkerMethods
                 $classname = $this::class;
                 throw new RuntimeException("$classname must implement CoroutineWorkerInterface. ");
             }
+
             return Factory::start($this, $worker, Worker::$globalEvent::class);
         } catch (\Throwable $e) {
             Worker::log($e->getMessage());

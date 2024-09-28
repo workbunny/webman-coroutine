@@ -17,9 +17,11 @@ use Workbunny\WebmanCoroutine\Exceptions\HandlerException;
 use Workbunny\WebmanCoroutine\Exceptions\SkipWaitGroupDoneException;
 use Workerman\Worker;
 
+/**
+ * @desc 基于swow实现的协程处理器
+ */
 class SwowHandler implements HandlerInterface
 {
-
     /**
      * connection channel
      *
@@ -144,6 +146,7 @@ class SwowHandler implements HandlerInterface
             }
             $waitGroup->add();
         }
+
         return $res;
     }
 

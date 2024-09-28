@@ -9,6 +9,9 @@ namespace Workbunny\WebmanCoroutine;
 
 use Webman\App;
 
+/**
+ * @desc 协程化web服务进程
+ */
 class CoroutineWebServer extends App implements CoroutineServerInterface
 {
     use CoroutineServerMethods;

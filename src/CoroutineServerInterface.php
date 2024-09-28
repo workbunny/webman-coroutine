@@ -10,6 +10,9 @@ namespace Workbunny\WebmanCoroutine;
 use Webman\Http\Request;
 use Workerman\Connection\ConnectionInterface;
 
+/**
+ * @desc 自定义服务代理协程化接口
+ */
 interface CoroutineServerInterface
 {
     /**

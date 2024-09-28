@@ -20,14 +20,17 @@ use Workbunny\WebmanCoroutine\Handlers\SwowWorkerman5Handler;
 use Workerman\Connection\ConnectionInterface;
 use Workerman\Worker;
 
+/**
+ * @desc 工厂化启动器
+ */
 class Factory
 {
-    public const WORKERMAN_SWOW     = 'Workerman\Events\Swow';
-    public const WORKBUNNY_SWOW     = SwowEvent::class;
-    public const WORKERMAN_SWOOLE   = 'Workerman\Events\Swoole';
-    public const WORKBUNNY_SWOOLE   = SwooleEvent::class;
-    public const RIPPLE_FIBER       = 'Psc\Drive\Workerman\PDrive';
-    public const WORKERMAN_DEFAULT  = '';
+    public const WORKERMAN_SWOW = 'Workerman\Events\Swow';
+    public const WORKBUNNY_SWOW = SwowEvent::class;
+    public const WORKERMAN_SWOOLE = 'Workerman\Events\Swoole';
+    public const WORKBUNNY_SWOOLE = SwooleEvent::class;
+    public const RIPPLE_FIBER = 'Psc\Drive\Workerman\PDrive';
+    public const WORKERMAN_DEFAULT = '';
 
     /**
      * 默认支持的处理器
@@ -51,6 +54,8 @@ class Factory
     protected static ?string $_currentHandler = null;
 
     /**
+     * 获取当前使用的处理器类名
+     *
      * @return string|null
      */
     public static function getCurrentHandler(): ?string
@@ -63,7 +68,7 @@ class Factory
      *
      * @param string $eventLoopClass 事件循环类名
      * @param string $handlerClass 处理器
-     * @return bool|null
+     * @return bool|null null:已经存在 bool:是否注册成功
      */
     public static function register(string $eventLoopClass, string $handlerClass): ?bool
     {
@@ -82,8 +87,8 @@ class Factory
     /**
      * 注销事件处理器
      *
-     * @param string $eventLoopClass
-     * @return bool
+     * @param string $eventLoopClass 事件循环类名
+     * @return bool 是否注销成功
      */
     public static function unregister(string $eventLoopClass): bool
     {
@@ -109,8 +114,8 @@ class Factory
     /**
      * 根据事件循环类获取对应处理器
      *
-     * @param string $eventLoopClass
-     * @param bool $available
+     * @param string $eventLoopClass 指定的事件循环类
+     * @param bool $available 是否校验当前环境可用性
      * @param bool $returnEventLoopClass 只在available=true时生效
      * @return string
      */
@@ -153,10 +158,10 @@ class Factory
     /**
      * 根据当前环境运行处理器
      *
-     * @param CoroutineServerInterface $app
-     * @param mixed|ConnectionInterface $connection
-     * @param mixed|Request $request
-     * @param string|null $eventLoopClass
+     * @param CoroutineServerInterface $app 实现CoroutineServerInterface
+     * @param mixed|ConnectionInterface $connection 连接资源
+     * @param mixed|Request $request 请求体
+     * @param string|null $eventLoopClass null:根据环境获取事件循环类
      * @return mixed
      */
     public static function run(CoroutineServerInterface $app, mixed $connection, mixed $request, ?string $eventLoopClass = null): mixed
@@ -176,9 +181,9 @@ class Factory
     /**
      * 根据当前环境运行处理器
      *
-     * @param CoroutineWorkerInterface $app
-     * @param mixed|Worker|null $worker
-     * @param string|null $eventLoopClass
+     * @param CoroutineWorkerInterface $app 实现CoroutineWorkerInterface
+     * @param mixed|Worker|null $worker worker对象
+     * @param string|null $eventLoopClass null:根据环境获取事件循环类
      * @return mixed
      */
     public static function start(CoroutineWorkerInterface $app, mixed $worker = null, ?string $eventLoopClass = null): mixed

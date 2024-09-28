@@ -8,13 +8,15 @@ declare(strict_types=1);
 namespace Workbunny\WebmanCoroutine\Handlers;
 
 use Closure;
-use InvalidArgumentException;
 use Webman\Http\Request;
 use Workbunny\WebmanCoroutine\CoroutineServerInterface;
 use Workbunny\WebmanCoroutine\CoroutineWorkerInterface;
 use Workbunny\WebmanCoroutine\Exceptions\RuntimeException;
 use Workerman\Connection\ConnectionInterface;
 
+/**
+ * @desc 协程处理器接口
+ */
 interface HandlerInterface
 {
     /**
@@ -48,9 +50,9 @@ interface HandlerInterface
     /**
      * 创建一个协程
      *
-     * @param Closure $function
-     * @param string|null $waitGroupId
-     * @return mixed 返回await的期待值
+     * @param Closure $function 协程执行逻辑
+     * @param string|null $waitGroupId null:不使用waitGroup
+     * @return mixed
      * @throws RuntimeException
      */
     public static function coroutineCreate(Closure $function, null|string $waitGroupId = null): mixed;
@@ -58,15 +60,15 @@ interface HandlerInterface
     /**
      * 创建一个waitGroup
      *
-     * @return string
+     * @return string 返回waitGroupId
      */
     public static function waitGroupCreate(): string;
 
     /**
-     * 等待一个waitGroup
+     * 阻塞等待一个waitGroup完成
      *
      * @param string $waitGroupId
-     * @param int $timeout
+     * @param int $timeout 默认无超时时间
      * @return void
      * @throws RuntimeException
      */

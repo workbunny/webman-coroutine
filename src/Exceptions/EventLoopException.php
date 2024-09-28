@@ -7,6 +7,9 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Exceptions;
 
+/**
+ * @desc 事件循环异常
+ */
 class EventLoopException extends RuntimeException
 {
 }

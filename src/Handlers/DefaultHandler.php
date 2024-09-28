@@ -11,6 +11,9 @@ use Closure;
 use Workbunny\WebmanCoroutine\CoroutineServerInterface;
 use Workbunny\WebmanCoroutine\CoroutineWorkerInterface;
 
+/**
+ * @desc 默认处理器，使用workerman基础事件
+ */
 class DefaultHandler implements HandlerInterface
 {
     /** @inheritdoc  */
