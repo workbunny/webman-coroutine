@@ -24,4 +24,4 @@ jobs:
           tools: phpunit:9, composer:v2
           coverage: none
       - run: composer install --no-dev
-      - run: composer unit-test
+      - run: vendor/bin/phpunit
