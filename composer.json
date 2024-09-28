@@ -16,11 +16,11 @@
   },
   "require": {
     "php": "^8.0",
+    "workerman/webman-framework": "^1.0",
     "webman/console": "^1.0",
     "swow/swow": "^1.5"
   },
   "require-dev": {
-    "workerman/webman-framework": "^1.0",
     "phpunit/phpunit": "^9.6",
     "phpstan/phpstan": "^1.0",
     "friendsofphp/php-cs-fixer": "^3.0",
