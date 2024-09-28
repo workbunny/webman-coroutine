@@ -14,6 +14,9 @@ use Workbunny\WebmanCoroutine\Factory;
 use Workerman\Connection\ConnectionInterface;
 use Workerman\Worker;
 
+/**
+ * @runTestsInSeparateProcesses
+ */
 class FactoryTest extends TestCase
 {
     public function testRegister()

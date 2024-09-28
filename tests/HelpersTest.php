@@ -9,6 +9,10 @@ use Workbunny\Tests\mock\TestHandler;
 use Workbunny\WebmanCoroutine\Factory;
 use function Workbunny\WebmanCoroutine\event_loop;
 use function Workbunny\WebmanCoroutine\package_installed;
+
+/**
+ * @runTestsInSeparateProcesses
+ */
 class HelpersTest extends TestCase
 {
     protected function setUp(): void
