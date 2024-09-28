@@ -19,5 +19,5 @@ return [
     // connection channel 容量
     'channel_size'   => 1,
     // request consumer 数量
-    'consumer_count' => 1
+    'consumer_count' => 1,
 ];
