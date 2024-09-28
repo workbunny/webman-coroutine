@@ -19,11 +19,12 @@ class HelpersTest extends TestCase
 
     public function testEventLoopWithExpectedClass()
     {
-        Factory::register('SomeEventLoopClass', TestHandler::class);
-        $expectedClass = 'SomeEventLoopClass';
+        Factory::register(__METHOD__, TestHandler::class);
+        $expectedClass = __METHOD__;
         $result = event_loop($expectedClass);
         $this->assertEquals($expectedClass, $result);
-        Factory::unregister('SomeEventLoopClass');
+
+        Factory::unregister(__METHOD__);
     }
 
     public function testEventLoopWithDefaultClass()
@@ -32,7 +33,7 @@ class HelpersTest extends TestCase
         $result = event_loop();
         $this->assertEquals(Factory::WORKERMAN_DEFAULT, $result);
         // not found class
-        $result = event_loop('SomeEventLoopClass');
+        $result = event_loop(__METHOD__);
         $this->assertEquals(Factory::WORKERMAN_DEFAULT, $result);
     }
 
