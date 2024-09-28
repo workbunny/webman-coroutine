@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdocumentor
+        configVersion="3"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://www.phpdoc.org"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/phpDocumentor/phpDocumentor/master/data/xsd/phpdoc.xsd"
+>
+    <setting name="template.color" value="blue"/>
+    <paths>
+        <output>docs</output>
+        <cache>.phpdoc</cache>
+    </paths>
+    <versions>
+        <version number="latest">
+            <api>
+                <source dsn=".">
+                    <path>src/*.php</path>
+                    <path>src/Events</path>
+                    <path>src/Exceptions</path>
+                    <path>src/Handlers</path>
+                </source>
+                <ignore hidden="true" symlinks="true">
+                    <path>tests</path>
+                    <path>vendor</path>
+                    <path>src/config</path>
+                    <path>src/Install.*</path>
+                </ignore>
+                <extensions>
+                    <extension>php</extension>
+                </extensions>
+                <visibility>public</visibility>
+                <default-package-name>WebmanCoroutine</default-package-name>
+                <include-source>true</include-source>
+                <markers>
+                    <marker>TODO</marker>
+                    <marker>FIXME</marker>
+                </markers>
+            </api>
+        </version>
+    </versions>
+</phpdocumentor>

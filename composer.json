@@ -21,10 +21,10 @@
   },
   "require-dev": {
     "workerman/webman-framework": "^1.0",
-    "symfony/var-dumper": "^6.0",
     "phpunit/phpunit": "^9.6",
     "phpstan/phpstan": "^1.0",
     "friendsofphp/php-cs-fixer": "^3.0",
+    "symfony/var-dumper": "^6.0",
     "swoole/ide-helper": "^5.1",
     "cclilshy/p-ripple-drive": "^1.0"
   },
@@ -51,6 +51,12 @@
   "scripts": {
     "cs-fix": "./vendor/bin/php-cs-fixer fix",
     "php-stan": "./vendor/bin/phpstan analyse --memory-limit=512MB",
-    "unit-test": "./vendor/bin/phpunit"
+    "unit-test": "./vendor/bin/phpunit",
+    "doc-install": "@php -r \"file_exists('/usr/local/bin/phpDocumentor') || shell_exec('curl -sSLf -o /usr/local/bin/phpDocumentor https://phpdoc.org/phpDocumentor.phar && chmod +x /usr/local/bin/phpDocumentor');\""
+  },
+  "config": {
+    "allow-plugins": {
+      "symfony/flex": false
+    }
   }
 }
