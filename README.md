@@ -35,7 +35,7 @@ composer require workbunny/webman-coroutine
 
 ## 📖 文档
 
-[API文档](http://workbunny.cc/webman-coroutine/)
+[API文档](https://workbunny.github.io/webman-coroutine/)
 
 ## 🐜 教程
 
