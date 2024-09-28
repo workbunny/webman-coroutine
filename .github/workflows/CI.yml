@@ -23,5 +23,5 @@ jobs:
           php-version: ${{ matrix.php }}
           tools: phpunit:9, composer:v2
           coverage: none
-      - run: composer install --no-dev
-      - run: vendor/bin/phpunit
+      - run: composer update --no-dev
+      - run: phpunit
