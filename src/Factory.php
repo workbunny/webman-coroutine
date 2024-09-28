@@ -43,7 +43,6 @@ class Factory
         self::WORKERMAN_SWOOLE  => SwooleWorkerman5Handler::class,
         self::WORKBUNNY_SWOOLE  => SwooleHandler::class,
         self::RIPPLE_FIBER      => RippleHandler::class,
-        self::WORKERMAN_DEFAULT => DefaultHandler::class,
     ];
 
     /**
@@ -126,7 +125,9 @@ class Factory
         if ($available) {
             // 当$returnEventLoopClass=true时，返回的是eventloop classname而不是handler classname
             $handlerClass = $handlerClass::isAvailable()
-                ? ($returnEventLoopClass ? $eventLoopClass : $handlerClass)
+                ? ($returnEventLoopClass
+                    ? (isset(self::$_handlers[$eventLoopClass])) ? $eventLoopClass : self::WORKERMAN_DEFAULT
+                    : $handlerClass)
                 : ($returnEventLoopClass ? self::WORKERMAN_DEFAULT : DefaultHandler::class);
         }
 
