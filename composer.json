@@ -1,7 +1,7 @@
 {
   "name": "workbunny/webman-coroutine",
   "type": "library",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "description": "Webman plugin workbunny/webman-coroutine",
   "authors": [
     {
