@@ -9,6 +9,7 @@ namespace Workbunny\WebmanCoroutine;
 
 use Webman\App;
 use Workerman\Worker;
+use Workbunny\WebmanCoroutine\Exceptions\RuntimeException;
 
 trait CoroutineServerMethods
 {
@@ -34,7 +35,7 @@ trait CoroutineServerMethods
             }
             if (!$this->_coroutineServerMethodsCheckClass) {
                 $classname = $this::class;
-                throw new \RuntimeException("$classname must implement CoroutineServerInterface. ");
+                throw new RuntimeException("$classname must implement CoroutineServerInterface. ");
             }
             return Factory::run($this, $connection, $request, Worker::$globalEvent::class);
         } catch (\Throwable $e) {
@@ -58,7 +59,7 @@ trait CoroutineServerMethods
         }
         if (!$this->_coroutineServerMethodsCheckParent) {
             $classname = $this::class;
-            throw new \RuntimeException("parent::onMessage must be implemented [$classname].");
+            throw new RuntimeException("parent::onMessage must be implemented [$classname].");
         }
         return parent::onMessage($connection, $request);
     }
