@@ -11,6 +11,7 @@ use Swow\Coroutine;
 use Swow\Signal;
 use Swow\SignalException;
 use Swow\Sync\WaitGroup;
+use Workbunny\WebmanCoroutine\Exceptions\EventLoopException;
 use Workerman\Events\EventInterface;
 
 class SwowEvent implements EventInterface
@@ -33,10 +34,13 @@ class SwowEvent implements EventInterface
     /** @var WaitGroup|null 阻塞 */
     protected null|WaitGroup $_waitGroup = null;
 
+    /**
+     * @throws EventLoopException 如果没有启用拓展
+     */
     public function __construct()
     {
         if (!extension_loaded('swow')) {
-            throw new \RuntimeException('Not support ext-swow. ');
+            throw new EventLoopException('Not support ext-swow. ');
         }
     }
 
@@ -89,7 +93,7 @@ class SwowEvent implements EventInterface
                                     break;
                                 }
                             }
-                        } catch (\RuntimeException) {
+                        } catch (\Throwable) {
                             $this->del($fd, EventInterface::EV_READ);
                         }
                     });
@@ -115,7 +119,7 @@ class SwowEvent implements EventInterface
                                     break;
                                 }
                             }
-                        } catch (\RuntimeException) {
+                        } catch (\Throwable) {
                             $this->del($fd, EventInterface::EV_WRITE);
                         }
                     });

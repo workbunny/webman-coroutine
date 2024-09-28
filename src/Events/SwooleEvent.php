@@ -11,6 +11,7 @@ namespace Workbunny\WebmanCoroutine\Events;
 use Swoole\Event;
 use Swoole\Process;
 use Swoole\Timer;
+use Workbunny\WebmanCoroutine\Exceptions\EventLoopException;
 use Workerman\Events\EventInterface;
 
 class SwooleEvent implements EventInterface
@@ -30,10 +31,13 @@ class SwooleEvent implements EventInterface
     /** @var int 定时器id */
     protected int $_timerId = 0;
 
+    /**
+     * @throws EventLoopException 如果没有启用拓展
+     */
     public function __construct()
     {
         if (!extension_loaded('swoole')) {
-            throw new \RuntimeException('Not support ext-swoole. ');
+            throw new EventLoopException('Not support ext-swoole. ');
         }
     }
 
