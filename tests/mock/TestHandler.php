@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Workbunny\Tests\mock;
 
-use Workbunny\WebmanCoroutine\Handlers\HandlerInterface;
-use Workbunny\WebmanCoroutine\CoroutineWorkerInterface;
 use Workbunny\WebmanCoroutine\CoroutineServerInterface;
+use Workbunny\WebmanCoroutine\CoroutineWorkerInterface;
+use Workbunny\WebmanCoroutine\Handlers\HandlerInterface;
 
 class TestHandler implements HandlerInterface
 {

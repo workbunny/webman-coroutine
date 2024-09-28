@@ -19,7 +19,7 @@ use Workbunny\WebmanCoroutine\Exceptions\SkipWaitGroupDoneException;
 use Workerman\Worker;
 
 /**
- * @desc 基于swoole实现的协程处理器
+ *  基于swoole实现的协程处理器
  */
 class SwooleHandler implements HandlerInterface
 {

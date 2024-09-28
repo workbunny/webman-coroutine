@@ -10,7 +10,7 @@ namespace Workbunny\WebmanCoroutine\Handlers;
 use Workerman\Worker;
 
 /**
- * @desc 基于swow实现的Workerman5.X的协程处理器
+ *  基于swow实现的Workerman5.X的协程处理器
  */
 class SwowWorkerman5Handler extends SwowHandler
 {

@@ -15,7 +15,7 @@ use Workbunny\WebmanCoroutine\Exceptions\RuntimeException;
 use Workerman\Connection\ConnectionInterface;
 
 /**
- * @desc 协程处理器接口
+ *  协程处理器接口
  */
 interface HandlerInterface
 {

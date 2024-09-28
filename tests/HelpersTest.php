@@ -6,8 +6,11 @@ namespace Workbunny\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Workbunny\Tests\mock\TestHandler;
-use Workbunny\WebmanCoroutine\Factory;
+
 use function Workbunny\WebmanCoroutine\event_loop;
+
+use Workbunny\WebmanCoroutine\Factory;
+
 use function Workbunny\WebmanCoroutine\package_installed;
 
 /**

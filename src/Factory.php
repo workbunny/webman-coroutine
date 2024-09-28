@@ -21,7 +21,7 @@ use Workerman\Connection\ConnectionInterface;
 use Workerman\Worker;
 
 /**
- * @desc 工厂化启动器
+ *  工厂化启动器
  */
 class Factory
 {

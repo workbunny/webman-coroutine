@@ -12,23 +12,35 @@ use Workbunny\WebmanCoroutine\CoroutineServerInterface;
 use Workbunny\WebmanCoroutine\CoroutineWorkerInterface;
 
 /**
- * @desc 默认处理器，使用workerman基础事件
+ *  默认处理器，使用workerman基础事件
  */
 class DefaultHandler implements HandlerInterface
 {
-    /** @inheritdoc  */
+    /**
+     * default handler永远返回true
+     *
+     * @inheritdoc
+     */
     public static function isAvailable(): bool
     {
         return true;
     }
 
-    /** @inheritdoc  */
+    /**
+     * default handler不会创建协程
+     *
+     * @inheritdoc
+     */
     public static function onMessage(CoroutineServerInterface $app, mixed $connection, mixed $request): mixed
     {
         return $app->parentOnMessage($connection, $request);
     }
 
-    /** @inheritdoc  */
+    /**
+     * default handler不会创建协程
+     *
+     * @inheritdoc
+     */
     public static function onWorkerStart(CoroutineWorkerInterface $app, mixed $worker): mixed
     {
         return $app->parentOnWorkerStart($worker);

@@ -3,7 +3,7 @@ Search.appendIndex(
                 {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\CoroutineServerInterface",
             "name": "CoroutineServerInterface",
-            "summary": "",
+            "summary": "\u81EA\u5B9A\u4E49\u670D\u52A1\u4EE3\u7406\u534F\u7A0B\u5316\u63A5\u53E3",
             "url": "classes/Workbunny-WebmanCoroutine-CoroutineServerInterface.html"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\CoroutineServerInterface\u003A\u003AonMessage\u0028\u0029",
@@ -33,7 +33,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\CoroutineWebServer",
             "name": "CoroutineWebServer",
-            "summary": "",
+            "summary": "\u534F\u7A0B\u5316web\u670D\u52A1\u8FDB\u7A0B",
             "url": "classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\CoroutineWebServer\u003A\u003AonWorkerStart\u0028\u0029",
@@ -43,7 +43,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\CoroutineWorkerInterface",
             "name": "CoroutineWorkerInterface",
-            "summary": "",
+            "summary": "\u81EA\u5B9A\u4E49worker\u4EE3\u7406\u534F\u7A0B\u5316\u63A5\u53E3",
             "url": "classes/Workbunny-WebmanCoroutine-CoroutineWorkerInterface.html"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\CoroutineWorkerInterface\u003A\u003AonWorkerStart\u0028\u0029",
@@ -153,27 +153,27 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Exceptions\\EventLoopException",
             "name": "EventLoopException",
-            "summary": "\u8FD0\u884C\u65F6\u5F02\u5E38\uFF0C\u63D2\u4EF6\u6240\u6709\u5F02\u5E38\u90FD\u7EE7\u627F\u4E8E\u8BE5\u5F02\u5E38",
+            "summary": "\u4E8B\u4EF6\u5FAA\u73AF\u5F02\u5E38",
             "url": "classes/Workbunny-WebmanCoroutine-Exceptions-EventLoopException.html"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Exceptions\\HandlerException",
             "name": "HandlerException",
-            "summary": "\u8FD0\u884C\u65F6\u5F02\u5E38\uFF0C\u63D2\u4EF6\u6240\u6709\u5F02\u5E38\u90FD\u7EE7\u627F\u4E8E\u8BE5\u5F02\u5E38",
+            "summary": "\u5904\u7406\u5668\u5F02\u5E38",
             "url": "classes/Workbunny-WebmanCoroutine-Exceptions-HandlerException.html"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Exceptions\\RuntimeException",
             "name": "RuntimeException",
-            "summary": "\u8FD0\u884C\u65F6\u5F02\u5E38\uFF0C\u63D2\u4EF6\u6240\u6709\u5F02\u5E38\u90FD\u7EE7\u627F\u4E8E\u8BE5\u5F02\u5E38",
+            "summary": "",
             "url": "classes/Workbunny-WebmanCoroutine-Exceptions-RuntimeException.html"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Exceptions\\SkipWaitGroupDoneException",
             "name": "SkipWaitGroupDoneException",
-            "summary": "\u8FD0\u884C\u65F6\u5F02\u5E38\uFF0C\u63D2\u4EF6\u6240\u6709\u5F02\u5E38\u90FD\u7EE7\u627F\u4E8E\u8BE5\u5F02\u5E38",
+            "summary": "\u7279\u6B8A\u5F02\u5E38\u7C7B\uFF0C\u7528\u4E8E\u8DF3\u8FC7\u0020WaitGroup\u7684done\uFF0C\u7528\u4E8E\u7279\u6B8A\u60C5\u51B5\u7684\u963B\u585E",
             "url": "classes/Workbunny-WebmanCoroutine-Exceptions-SkipWaitGroupDoneException.html"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Factory",
             "name": "Factory",
-            "summary": "",
+            "summary": "\u5DE5\u5382\u5316\u542F\u52A8\u5668",
             "url": "classes/Workbunny-WebmanCoroutine-Factory.html"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Factory\u003A\u003AgetCurrentHandler\u0028\u0029",
@@ -248,22 +248,22 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\DefaultHandler",
             "name": "DefaultHandler",
-            "summary": "",
+            "summary": "\u9ED8\u8BA4\u5904\u7406\u5668\uFF0C\u4F7F\u7528workerman\u57FA\u7840\u4E8B\u4EF6",
             "url": "classes/Workbunny-WebmanCoroutine-Handlers-DefaultHandler.html"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\DefaultHandler\u003A\u003AisAvailable\u0028\u0029",
             "name": "isAvailable",
-            "summary": "\u7528\u4E8E\u5224\u65AD\u5F53\u524D\u73AF\u5883\u662F\u5426\u53EF\u7528",
+            "summary": "default\u0020handler\u6C38\u8FDC\u8FD4\u56DEtrue",
             "url": "classes/Workbunny-WebmanCoroutine-Handlers-DefaultHandler.html#method_isAvailable"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\DefaultHandler\u003A\u003AonMessage\u0028\u0029",
             "name": "onMessage",
-            "summary": "\u6267\u884C\u534F\u7A0B\u5904\u7406",
+            "summary": "default\u0020handler\u4E0D\u4F1A\u521B\u5EFA\u534F\u7A0B",
             "url": "classes/Workbunny-WebmanCoroutine-Handlers-DefaultHandler.html#method_onMessage"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\DefaultHandler\u003A\u003AonWorkerStart\u0028\u0029",
             "name": "onWorkerStart",
-            "summary": "\u6267\u884C\u534F\u7A0B\u5904\u7406",
+            "summary": "default\u0020handler\u4E0D\u4F1A\u521B\u5EFA\u534F\u7A0B",
             "url": "classes/Workbunny-WebmanCoroutine-Handlers-DefaultHandler.html#method_onWorkerStart"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\DefaultHandler\u003A\u003AcoroutineCreate\u0028\u0029",
@@ -283,7 +283,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\HandlerInterface",
             "name": "HandlerInterface",
-            "summary": "",
+            "summary": "\u534F\u7A0B\u5904\u7406\u5668\u63A5\u53E3",
             "url": "classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\HandlerInterface\u003A\u003AisAvailable\u0028\u0029",
@@ -353,7 +353,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\SwooleHandler",
             "name": "SwooleHandler",
-            "summary": "",
+            "summary": "\u57FA\u4E8Eswoole\u5B9E\u73B0\u7684\u534F\u7A0B\u5904\u7406\u5668",
             "url": "classes/Workbunny-WebmanCoroutine-Handlers-SwooleHandler.html"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\SwooleHandler\u003A\u003AisAvailable\u0028\u0029",
@@ -388,7 +388,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\SwooleWorkerman5Handler",
             "name": "SwooleWorkerman5Handler",
-            "summary": "",
+            "summary": "\u57FA\u4E8Eswoole\u5B9E\u73B0\u7684Workerman5.x\u7248\u672C\u534F\u7A0B\u5904\u7406\u5668",
             "url": "classes/Workbunny-WebmanCoroutine-Handlers-SwooleWorkerman5Handler.html"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\SwooleWorkerman5Handler\u003A\u003AisAvailable\u0028\u0029",
@@ -398,7 +398,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\SwowHandler",
             "name": "SwowHandler",
-            "summary": "",
+            "summary": "\u57FA\u4E8Eswow\u5B9E\u73B0\u7684\u534F\u7A0B\u5904\u7406\u5668",
             "url": "classes/Workbunny-WebmanCoroutine-Handlers-SwowHandler.html"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\SwowHandler\u003A\u003AisAvailable\u0028\u0029",
@@ -433,7 +433,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\SwowWorkerman5Handler",
             "name": "SwowWorkerman5Handler",
-            "summary": "",
+            "summary": "\u57FA\u4E8Eswow\u5B9E\u73B0\u7684Workerman5.X\u7684\u534F\u7A0B\u5904\u7406\u5668",
             "url": "classes/Workbunny-WebmanCoroutine-Handlers-SwowWorkerman5Handler.html"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\SwowWorkerman5Handler\u003A\u003AisAvailable\u0028\u0029",
