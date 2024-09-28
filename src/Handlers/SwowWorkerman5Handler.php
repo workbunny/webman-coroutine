@@ -12,7 +12,7 @@ use Workerman\Worker;
 class SwowWorkerman5Handler extends SwowHandler
 {
     /** @inheritdoc  */
-    public static function available(): bool
+    public static function isAvailable(): bool
     {
         return version_compare(Worker::VERSION, '5.0.0', '>=') and extension_loaded('swow');
     }

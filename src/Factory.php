@@ -116,13 +116,11 @@ class Factory
      */
     public static function get(string $eventLoopClass, bool $available = false, bool $returnEventLoopClass = false): string
     {
+        /** @var HandlerInterface $handlerClass */
         $handlerClass = self::$_handlers[$eventLoopClass] ?? DefaultHandler::class;
         if ($available) {
-            if (!method_exists($handlerClass, 'available')) {
-                throw new \RuntimeException("handlerClass $handlerClass error [available]! ");
-            }
             // 当$returnEventLoopClass=true时，返回的是eventloop classname而不是handler classname
-            $handlerClass = $handlerClass::available()
+            $handlerClass = $handlerClass::isAvailable()
                 ? ($returnEventLoopClass ? $eventLoopClass : $handlerClass)
                 : ($returnEventLoopClass ? self::WORKERMAN_DEFAULT : DefaultHandler::class);
         }
@@ -143,11 +141,8 @@ class Factory
          * @var HandlerInterface $handlerClass
          */
         foreach (self::getAll() as $eventLoopClass => $handlerClass) {
-            // 通常不会执行到此逻辑，只是为了ide友好
-            if (!method_exists($handlerClass, 'available')) {
-                throw new \RuntimeException("handlerClass $handlerClass error [available]! ");
-            }
-            if ($handlerClass::available()) {
+            // 判断当前环境是否可用，相同可用的取优先
+            if ($handlerClass::isAvailable()) {
                 return $returnEventLoopClass ? $eventLoopClass : $handlerClass;
             }
         }
@@ -174,12 +169,8 @@ class Factory
                 // 如果没有就自动获取
                 $eventLoopClass ? self::get($eventLoopClass, true) : self::find()
             );
-        // 通常不会执行到此逻辑，只是为了ide友好
-        if (!method_exists($handlerClass, 'run')) {
-            throw new \RuntimeException('handlerClass error [run]! ');
-        }
 
-        return $handlerClass::run($app, $connection, $request);
+        return $handlerClass::onMessage($app, $connection, $request);
     }
 
     /**
@@ -200,11 +191,7 @@ class Factory
                 // 如果没有就自动获取
                 $eventLoopClass ? self::get($eventLoopClass, true) : self::find()
             );
-        // 通常不会执行到此逻辑，只是为了ide友好
-        if (!method_exists($handlerClass, 'start')) {
-            throw new \RuntimeException('handlerClass error [start]! ');
-        }
 
-        return $handlerClass::start($app, $worker);
+        return $handlerClass::onWorkerStart($app, $worker);
     }
 }
