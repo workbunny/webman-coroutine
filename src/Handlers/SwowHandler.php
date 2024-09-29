@@ -175,5 +175,6 @@ class SwowHandler implements HandlerInterface
             throw new HandlerException("WaitGroup $waitGroupId not found [coroutine create]. ");
         }
         $waitGroup->wait($timeout);
+        unset(self::$_waitGroups[$waitGroupId]);
     }
 }
