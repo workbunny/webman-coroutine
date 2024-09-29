@@ -35,11 +35,12 @@ class SwowEvent implements EventInterface
     protected null|WaitGroup $_waitGroup = null;
 
     /**
+     * @param bool $debug 测试用
      * @throws EventLoopException 如果没有启用拓展
      */
-    public function __construct()
+    public function __construct(bool $debug = false)
     {
-        if (!extension_loaded('swow')) {
+        if (!$debug and !extension_loaded('swow')) {
             throw new EventLoopException('Not support ext-swow. ');
         }
     }
