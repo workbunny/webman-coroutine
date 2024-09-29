@@ -46,11 +46,19 @@ class Factory
     ];
 
     /**
-     * 当前的处理器
+     * 当前的事件循环
      *
      * @var string|null
      */
-    protected static ?string $_currentHandler = null;
+    protected static ?string $_currentEventLoop = null;
+
+    /**
+     * @return string|null
+     */
+    public static function getCurrentEventLoop(): ?string
+    {
+        return self::$_currentEventLoop;
+    }
 
     /**
      * 获取当前使用的处理器类名
@@ -59,7 +67,8 @@ class Factory
      */
     public static function getCurrentHandler(): ?string
     {
-        return self::$_currentHandler;
+        return self::$_handlers[self::getCurrentEventLoop()] ??
+            (self::getCurrentEventLoop() === null ? DefaultHandler::class : null);
     }
 
     /**
@@ -157,6 +166,21 @@ class Factory
     }
 
     /**
+     * @param string|null $eventLoopClass
+     * @return void
+     */
+    protected static function _init(?string $eventLoopClass): void
+    {
+        if (!self::$_currentEventLoop) {
+            // 赋值，避免重复获取
+            self::$_currentEventLoop = (
+                // 如果没有就自动获取
+                $eventLoopClass ? self::get($eventLoopClass, true, true) : self::find(true)
+            );
+        }
+    }
+
+    /**
      * 根据当前环境运行处理器
      *
      * @param CoroutineServerInterface $app 实现CoroutineServerInterface
@@ -167,14 +191,10 @@ class Factory
      */
     public static function run(CoroutineServerInterface $app, mixed $connection, mixed $request, ?string $eventLoopClass = null): mixed
     {
+        self::_init($eventLoopClass);
         // 获取当前处理器
         /** @var HandlerInterface $handlerClass */
-        $handlerClass = self::getCurrentHandler() ?:
-            // 赋值，避免重复获取
-            self::$_currentHandler = (
-                // 如果没有就自动获取
-                $eventLoopClass ? self::get($eventLoopClass, true) : self::find()
-            );
+        $handlerClass = self::getCurrentHandler();
 
         return $handlerClass::onMessage($app, $connection, $request);
     }
@@ -189,14 +209,10 @@ class Factory
      */
     public static function start(CoroutineWorkerInterface $app, mixed $worker = null, ?string $eventLoopClass = null): mixed
     {
+        self::_init($eventLoopClass);
         // 获取当前处理器
         /** @var HandlerInterface $handlerClass */
-        $handlerClass = self::getCurrentHandler() ?:
-            // 赋值，避免重复获取
-            self::$_currentHandler = (
-                // 如果没有就自动获取
-                $eventLoopClass ? self::get($eventLoopClass, true) : self::find()
-            );
+        $handlerClass = self::getCurrentHandler();
 
         return $handlerClass::onWorkerStart($app, $worker);
     }

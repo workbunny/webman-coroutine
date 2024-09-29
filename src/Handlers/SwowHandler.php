@@ -157,7 +157,7 @@ class SwowHandler implements HandlerInterface
     public static function waitGroupCreate(): string
     {
         self::$_waitGroups[
-        $id = spl_object_hash($waitGroup = new WaitGroup())
+            $id = spl_object_hash($waitGroup = new WaitGroup())
         ] = $waitGroup;
 
         return $id;

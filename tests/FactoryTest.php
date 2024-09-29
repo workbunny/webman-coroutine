@@ -64,9 +64,7 @@ class FactoryTest extends TestCase
         $request = $this->createMock(Request::class);
 
         Factory::register(__METHOD__, TestHandler::class);
-        Factory::run($app, $connection, $request, __METHOD__);
-
-        $result = Factory::run($app, $connection, $request);
+        $result = Factory::run($app, $connection, $request, __METHOD__);
         $this->assertEquals('response', $result);
 
         Factory::unregister(__METHOD__);
@@ -78,9 +76,7 @@ class FactoryTest extends TestCase
         $worker = $this->createMock(Worker::class);
 
         Factory::register(__METHOD__, TestHandler::class);
-        Factory::start($app, $worker, __METHOD__);
-
-        $result = Factory::start($app, $worker);
+        $result = Factory::start($app, $worker, __METHOD__);
         $this->assertEquals('response', $result);
 
         Factory::unregister(__METHOD__);
