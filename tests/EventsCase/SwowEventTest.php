@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Workbunny\Tests\EventsCase;
 
-use PHPUnit\Framework\TestCase;
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 use Workbunny\WebmanCoroutine\Events\SwowEvent;
 use Workbunny\WebmanCoroutine\Exceptions\EventLoopException;
 use Workerman\Events\EventInterface;
@@ -183,5 +183,4 @@ class SwowEventTest extends TestCase
 
         $this->assertEquals(0, $swowEvent->getTimerCount());
     }
-
 }

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Workbunny\Tests\EventsCase;
 
-use PHPUnit\Framework\TestCase;
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 use Workbunny\WebmanCoroutine\Events\SwooleEvent;
 use Workbunny\WebmanCoroutine\Exceptions\EventLoopException;
 use Workerman\Events\EventInterface;
