@@ -11,10 +11,6 @@ use InvalidArgumentException;
 
 trait RegisterMethods
 {
-    /**
-     * @var array
-     */
-    protected static array $_handlers = [];
 
     /**
      * 注册

@@ -11,6 +11,17 @@ interface ChannelInterface
 {
 
     /**
+     * 初始化通道
+     *
+     * @param int $capacity 初始容量
+     */
+    public function __construct(int $capacity = -1);
+
+    /**
+     * 摧毁通道
+     */
+    public function __destruct();
+    /**
      * 获取一个数据
      *
      * @param int $timeout

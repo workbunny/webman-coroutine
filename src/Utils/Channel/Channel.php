@@ -10,16 +10,28 @@ namespace Workbunny\WebmanCoroutine\Utils\Channel;
 use Workbunny\WebmanCoroutine\Factory;
 use Workbunny\WebmanCoroutine\Utils\Channel\Handlers\ChannelInterface;
 use Workbunny\WebmanCoroutine\Utils\Channel\Handlers\DefaultChannel;
+use Workbunny\WebmanCoroutine\Utils\Channel\Handlers\SwooleChannel;
+use Workbunny\WebmanCoroutine\Utils\Channel\Handlers\SwowChannel;
 use Workbunny\WebmanCoroutine\Utils\RegisterMethods;
 
 class Channel
 {
     use RegisterMethods;
 
+    /**
+     * @var ChannelInterface
+     */
     protected ChannelInterface $_interface;
 
+    /**
+     * @var string[]
+     */
     protected static array $_handlers = [
-
+        Factory::WORKERMAN_SWOW => SwowChannel::class,
+        Factory::WORKBUNNY_SWOW => SwowChannel::class,
+        Factory::WORKERMAN_SWOOLE => SwooleChannel::class,
+        Factory::WORKBUNNY_SWOOLE => SwooleChannel::class,
+        Factory::RIPPLE_FIBER => DefaultChannel::class,
     ];
 
     /**

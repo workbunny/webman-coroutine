@@ -15,11 +15,13 @@ class SwowChannel implements ChannelInterface
     /** @var Channel|null  */
     protected ?Channel $_channel;
 
+    /** @inheritdoc  */
     public function __construct(int $capacity = -1)
     {
         $this->_channel = new Channel($capacity);
     }
 
+    /** @inheritdoc  */
     public function __destruct()
     {
         $this->close();

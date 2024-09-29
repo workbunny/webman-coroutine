@@ -16,12 +16,14 @@ class DefaultChannel implements ChannelInterface
     /** @var int  */
     protected int $_capacity;
 
+    /** @inheritdoc  */
     public function __construct(int $capacity = -1)
     {
         $this->_queue = new \SplQueue();
         $this->_capacity = $capacity;
     }
 
+    /** @inheritdoc  */
     public function __destruct()
     {
         $this->close();
