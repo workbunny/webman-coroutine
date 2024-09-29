@@ -53,7 +53,7 @@ class MyCoroutineProcess extends MyProcess implements CoroutineWorkerInterface {
 
 #### 2. Server 协程化
 
-> 代码样例：[CoroutineWebServer.php](src%2FCoroutineWebServer.php)
+> 代码样例：[CoroutineWebServer.php](..%2F..%2Fsrc%2FCoroutineWebServer.php)
 
 假设我们已经存在一个自定义服务类，如`MyServer.php`
 
