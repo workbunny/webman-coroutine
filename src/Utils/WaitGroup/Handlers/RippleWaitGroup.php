@@ -7,38 +7,55 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers;
 
-class DefaultWaitGroup implements WaitGroupInterface
+class RippleWaitGroup implements WaitGroupInterface
 {
+    /** @var int  */
+    protected int $_count;
+
     /** @inheritdoc  */
     public function __construct()
     {
+        $this->_count = 0;
     }
 
     /** @inheritdoc  */
     public function __destruct()
     {
+        $this->_count = 0;
     }
 
     /** @inheritdoc  */
     public function add(int $delta = 1): bool
     {
+        $this->_count ++;
         return true;
     }
 
     /** @inheritdoc  */
     public function done(): bool
     {
+        $this->_count --;
         return true;
     }
 
     /** @inheritdoc  */
     public function count(): int
     {
-        return 0;
+        return $this->_count;
     }
 
     /** @inheritdoc  */
     public function wait(int $timeout = -1): void
     {
+        $time = time();
+        while (1) {
+            if ($timeout > 0 and time() - $time >= $timeout) {
+                return;
+            }
+            if ($this->_count <= 0) {
+                return;
+            }
+            \Co\sleep(0);
+        }
     }
 }
