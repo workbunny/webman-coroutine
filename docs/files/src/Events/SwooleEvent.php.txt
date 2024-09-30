@@ -32,11 +32,12 @@ class SwooleEvent implements EventInterface
     protected int $_timerId = 0;
 
     /**
+     * @param bool $debug 测试用
      * @throws EventLoopException 如果没有启用拓展
      */
-    public function __construct()
+    public function __construct(bool $debug = false)
     {
-        if (!extension_loaded('swoole')) {
+        if (!$debug and !extension_loaded('swoole')) {
             throw new EventLoopException('Not support ext-swoole. ');
         }
     }

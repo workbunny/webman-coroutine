@@ -41,6 +41,26 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#method_onWorkerStart"
         },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\CoroutineWebServer\u003A\u003AonWorkerStop\u0028\u0029",
+            "name": "onWorkerStop",
+            "summary": "\u505C\u6B62\u670D\u52A1",
+            "url": "classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#method_onWorkerStop"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\CoroutineWebServer\u003A\u003AonConnect\u0028\u0029",
+            "name": "onConnect",
+            "summary": "\u8FDE\u63A5\u5EFA\u7ACB",
+            "url": "classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#method_onConnect"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\CoroutineWebServer\u003A\u003AonClose\u0028\u0029",
+            "name": "onClose",
+            "summary": "\u8FDE\u63A5\u5173\u95ED",
+            "url": "classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#method_onClose"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\CoroutineWebServer\u003A\u003AonMessage\u0028\u0029",
+            "name": "onMessage",
+            "summary": "",
+            "url": "classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#method_onMessage"
+        },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\CoroutineWorkerInterface",
             "name": "CoroutineWorkerInterface",
             "summary": "\u81EA\u5B9A\u4E49worker\u4EE3\u7406\u534F\u7A0B\u5316\u63A5\u53E3",
@@ -176,6 +196,11 @@ Search.appendIndex(
             "summary": "\u5DE5\u5382\u5316\u542F\u52A8\u5668",
             "url": "classes/Workbunny-WebmanCoroutine-Factory.html"
         },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Factory\u003A\u003AgetCurrentEventLoop\u0028\u0029",
+            "name": "getCurrentEventLoop",
+            "summary": "",
+            "url": "classes/Workbunny-WebmanCoroutine-Factory.html#method_getCurrentEventLoop"
+        },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Factory\u003A\u003AgetCurrentHandler\u0028\u0029",
             "name": "getCurrentHandler",
             "summary": "\u83B7\u53D6\u5F53\u524D\u4F7F\u7528\u7684\u5904\u7406\u5668\u7C7B\u540D",
@@ -205,6 +230,11 @@ Search.appendIndex(
             "name": "find",
             "summary": "\u6839\u636E\u5F53\u524D\u73AF\u5883\u83B7\u53D6\u53EF\u7528\u7684\u5904\u7406\u5668",
             "url": "classes/Workbunny-WebmanCoroutine-Factory.html#method_find"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Factory\u003A\u003Ainit\u0028\u0029",
+            "name": "init",
+            "summary": "\u521D\u59CB\u5316",
+            "url": "classes/Workbunny-WebmanCoroutine-Factory.html#method_init"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Factory\u003A\u003Arun\u0028\u0029",
             "name": "run",

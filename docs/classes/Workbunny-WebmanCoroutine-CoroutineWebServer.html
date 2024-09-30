@@ -110,13 +110,7 @@
                             </ul>
         </div>
     
-            <span class="phpdocumentor-element__implements">
-            implements
-                            <a href="classes/Workbunny-WebmanCoroutine-CoroutineServerInterface.html"><abbr title="\Workbunny\WebmanCoroutine\CoroutineServerInterface">CoroutineServerInterface</abbr></a>                    </span>
     
-            <span class="phpdocumentor-element__extends">
-            uses
-                            <a href="classes/Workbunny-WebmanCoroutine-CoroutineServerMethods.html"><abbr title="\Workbunny\WebmanCoroutine\CoroutineServerMethods">CoroutineServerMethods</abbr></a>                    </span>
     </h2>
 
 <div class="phpdocumentor-label-line">
@@ -127,9 +121,9 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/CoroutineWebServer.php"><a href="files/src-coroutinewebserver.html"><abbr title="src/CoroutineWebServer.php">CoroutineWebServer.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">15</span>
+    <span class="phpdocumentor-element-found-in__line">21</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#source-view.15" class="phpdocumentor-element-found-in__source" data-line="15" data-modal="source-view" data-src="files/src/CoroutineWebServer.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#source-view.21" class="phpdocumentor-element-found-in__source" data-line="21" data-modal="source-view" data-src="files/src/CoroutineWebServer.php.txt"></a>
     </aside>
 
             <p class="phpdocumentor-summary">协程化web服务进程</p>
@@ -150,13 +144,6 @@
 
 
 
-    <h4 id="toc-interfaces">
-        Interfaces
-        <a href="classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#toc-interfaces" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/Workbunny-WebmanCoroutine-CoroutineServerInterface.html"><abbr title="\Workbunny\WebmanCoroutine\CoroutineServerInterface">CoroutineServerInterface</abbr></a></dt><dd>自定义服务代理协程化接口</dd>    </dl>
 
 
 
@@ -171,11 +158,24 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Workbunny-WebmanCoroutine-CoroutineServerMethods.html#method_onMessage">onMessage()</a>
+    <a class="" href="classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#method_onClose">onClose()</a>
     <span>
-                                &nbsp;: mixed|null    </span>
+                                &nbsp;: void    </span>
 </dt>
-<dd>重写onMessage方法</dd>
+<dd>连接关闭</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#method_onConnect">onConnect()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>连接建立</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#method_onMessage">onMessage()</a>
+    <span>
+                                &nbsp;: null    </span>
+</dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#method_onWorkerStart">onWorkerStart()</a>
@@ -184,11 +184,11 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Workbunny-WebmanCoroutine-CoroutineServerMethods.html#method_parentOnMessage">parentOnMessage()</a>
+    <a class="" href="classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#method_onWorkerStop">onWorkerStop()</a>
     <span>
-                                &nbsp;: mixed    </span>
+                                &nbsp;: void    </span>
 </dt>
-<dd>父类onMessage代理</dd>
+<dd>停止服务</dd>
 
     </dl>
 
@@ -210,24 +210,137 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_onMessage">
-        onMessage()
-        <a href="classes/Workbunny-WebmanCoroutine-CoroutineServerMethods.html#method_onMessage" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_onClose">
+        onClose()
+        <a href="classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#method_onClose" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/CoroutineServerMethods.php"><a href="files/src-coroutineservermethods.html"><abbr title="src/CoroutineServerMethods.php">CoroutineServerMethods.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/CoroutineWebServer.php"><a href="files/src-coroutinewebserver.html"><abbr title="src/CoroutineWebServer.php">CoroutineWebServer.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">30</span>
+    <span class="phpdocumentor-element-found-in__line">90</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#source-view.30" class="phpdocumentor-element-found-in__source" data-line="30" data-modal="source-view" data-src="files/src/CoroutineServerMethods.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#source-view.90" class="phpdocumentor-element-found-in__source" data-line="90" data-modal="source-view" data-src="files/src/CoroutineWebServer.php.txt"></a>
     </aside>
 
-        <p class="phpdocumentor-summary">重写onMessage方法</p>
+        <p class="phpdocumentor-summary">连接关闭</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">onMessage</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$connection</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$request</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed|null</span></code>
+                    <span class="phpdocumentor-signature__name">onClose</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Workerman\Connection\ConnectionInterface">ConnectionInterface</abbr>|mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$connection</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__variadic-operator">...</span><span class="phpdocumentor-signature__argument__name">$params</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><ul>
+<li>不用返回值和参数标定是为了兼容</li>
+</ul>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$connection</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Workerman\Connection\ConnectionInterface">ConnectionInterface</abbr>|mixed</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$params</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+    
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_onConnect">
+        onConnect()
+        <a href="classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#method_onConnect" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/CoroutineWebServer.php"><a href="files/src-coroutinewebserver.html"><abbr title="src/CoroutineWebServer.php">CoroutineWebServer.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">68</span>
+
+            <a href="classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#source-view.68" class="phpdocumentor-element-found-in__source" data-line="68" data-modal="source-view" data-src="files/src/CoroutineWebServer.php.txt"></a>
+    </aside>
+
+        <p class="phpdocumentor-summary">连接建立</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">onConnect</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Workerman\Connection\ConnectionInterface">ConnectionInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$connection</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__variadic-operator">...</span><span class="phpdocumentor-signature__argument__name">$params</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+        <section class="phpdocumentor-description"><ul>
+<li>不用返回值和参数标定是为了兼容</li>
+</ul>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$connection</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Workerman\Connection\ConnectionInterface">ConnectionInterface</abbr></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$params</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+    
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_onMessage">
+        onMessage()
+        <a href="classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#method_onMessage" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/CoroutineWebServer.php"><a href="files/src-coroutinewebserver.html"><abbr title="src/CoroutineWebServer.php">CoroutineWebServer.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">109</span>
+
+            <a href="classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#source-view.109" class="phpdocumentor-element-found-in__source" data-line="109" data-modal="source-view" data-src="files/src/CoroutineWebServer.php.txt"></a>
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">onMessage</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Workerman\Connection\ConnectionInterface">ConnectionInterface</abbr>|mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$connection</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Webman\Http\Request">Request</abbr>|mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$request</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__variadic-operator">...</span><span class="phpdocumentor-signature__argument__name">$params</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">null</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -237,13 +350,20 @@
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$connection</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Workerman\Connection\ConnectionInterface">ConnectionInterface</abbr>|mixed</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$request</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Webman\Http\Request">Request</abbr>|mixed</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$params</span>
                 : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
@@ -254,7 +374,7 @@
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Workbunny-WebmanCoroutine-CoroutineServerMethods.html#method_onMessage#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#method_onMessage#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -262,7 +382,14 @@
                     <span class="phpdocumentor-tag__name">link</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        <a class="phpdocumentor-tag-link" href="CoroutineServerInterface::onMessage()"> CoroutineServerInterface::onMessage() </a>
+                                                                                                        <a class="phpdocumentor-tag-link" href="parent::onMessage()"> parent::onMessage() </a>
+                    
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="parent::onMessage()"> parent::onMessage() </a>
                     
                                     </dd>
                                             </dl>
@@ -271,7 +398,7 @@
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">mixed|null</span>
+        <span class="phpdocumentor-signature__response_type">null</span>
             </section>
 
 </article>
@@ -289,9 +416,9 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/CoroutineWebServer.php"><a href="files/src-coroutinewebserver.html"><abbr title="src/CoroutineWebServer.php">CoroutineWebServer.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">20</span>
+    <span class="phpdocumentor-element-found-in__line">35</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#source-view.20" class="phpdocumentor-element-found-in__source" data-line="20" data-modal="source-view" data-src="files/src/CoroutineWebServer.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#source-view.35" class="phpdocumentor-element-found-in__source" data-line="35" data-modal="source-view" data-src="files/src/CoroutineWebServer.php.txt"></a>
     </aside>
 
     
@@ -340,40 +467,44 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_parentOnMessage">
-        parentOnMessage()
-        <a href="classes/Workbunny-WebmanCoroutine-CoroutineServerMethods.html#method_parentOnMessage" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_onWorkerStop">
+        onWorkerStop()
+        <a href="classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#method_onWorkerStop" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/CoroutineServerMethods.php"><a href="files/src-coroutineservermethods.html"><abbr title="src/CoroutineServerMethods.php">CoroutineServerMethods.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/CoroutineWebServer.php"><a href="files/src-coroutinewebserver.html"><abbr title="src/CoroutineWebServer.php">CoroutineWebServer.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">55</span>
+    <span class="phpdocumentor-element-found-in__line">52</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#source-view.55" class="phpdocumentor-element-found-in__source" data-line="55" data-modal="source-view" data-src="files/src/CoroutineServerMethods.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#source-view.52" class="phpdocumentor-element-found-in__source" data-line="52" data-modal="source-view" data-src="files/src/CoroutineWebServer.php.txt"></a>
     </aside>
 
-        <p class="phpdocumentor-summary">父类onMessage代理</p>
+        <p class="phpdocumentor-summary">停止服务</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">parentOnMessage</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$connection</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$request</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">onWorkerStop</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Workerman\Worker">Worker</abbr>|mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$worker</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__variadic-operator">...</span><span class="phpdocumentor-signature__argument__name">$params</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
     
-    
+        <section class="phpdocumentor-description"><ul>
+<li>不用返回值和参数标定是为了兼容</li>
+</ul>
+</section>
+
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$connection</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                <span class="phpdocumentor-signature__argument__name">$worker</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Workerman\Worker">Worker</abbr>|mixed</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                 
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$request</span>
+                <span class="phpdocumentor-signature__argument__name">$params</span>
                 : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
@@ -382,28 +513,6 @@
             </dl>
 
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/Workbunny-WebmanCoroutine-CoroutineServerMethods.html#method_parentOnMessage#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        <a class="phpdocumentor-tag-link" href="CoroutineServerInterface::parentOnMessage()"> CoroutineServerInterface::parentOnMessage() </a>
-                    
-                                    </dd>
-                            <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">link</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                                        <a class="phpdocumentor-tag-link" href="App::onMessage()"> <p>例：web服务的父类方法</p>
- </a>
-                    
-                                    </dd>
-                                            </dl>
 
     
 
@@ -522,9 +631,11 @@
                         <li class="phpdocumentor-on-this-page-section__title">Methods</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-CoroutineServerMethods.html#method_onMessage">onMessage()</a></li>
+                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#method_onClose">onClose()</a></li>
+                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#method_onConnect">onConnect()</a></li>
+                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#method_onMessage">onMessage()</a></li>
                                             <li class=""><a href="classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#method_onWorkerStart">onWorkerStart()</a></li>
-                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-CoroutineServerMethods.html#method_parentOnMessage">parentOnMessage()</a></li>
+                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#method_onWorkerStop">onWorkerStop()</a></li>
                                     </ul>
             </li>
                     </ul>

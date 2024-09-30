@@ -157,7 +157,7 @@ class SwowHandler implements HandlerInterface
     public static function waitGroupCreate(): string
     {
         self::$_waitGroups[
-        $id = spl_object_hash($waitGroup = new WaitGroup())
+            $id = spl_object_hash($waitGroup = new WaitGroup())
         ] = $waitGroup;
 
         return $id;
@@ -175,5 +175,6 @@ class SwowHandler implements HandlerInterface
             throw new HandlerException("WaitGroup $waitGroupId not found [coroutine create]. ");
         }
         $waitGroup->wait($timeout);
+        unset(self::$_waitGroups[$waitGroupId]);
     }
 }
