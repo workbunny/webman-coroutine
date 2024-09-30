@@ -46,7 +46,7 @@ class HelpersTest extends TestCase
 
     public function testPackageInstalled()
     {
-        $packageName = 'webman/console';
+        $packageName = 'swow/swow';
         $this->assertTrue(package_installed($packageName));
         $packageName = 'nonexistent/package';
         $this->assertFalse(package_installed($packageName));
