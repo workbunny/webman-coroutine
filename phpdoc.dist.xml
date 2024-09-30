@@ -18,6 +18,7 @@
                     <path>src/Events</path>
                     <path>src/Exceptions</path>
                     <path>src/Handlers</path>
+                    <path>src/Utils</path>
                 </source>
                 <ignore hidden="true" symlinks="true">
                     <path>tests</path>
