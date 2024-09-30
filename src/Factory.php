@@ -166,10 +166,12 @@ class Factory
     }
 
     /**
+     * 初始化
+     *
      * @param string|null $eventLoopClass
      * @return void
      */
-    protected static function _init(?string $eventLoopClass): void
+    public static function init(?string $eventLoopClass): void
     {
         if (!self::$_currentEventLoop) {
             // 赋值，避免重复获取
@@ -191,7 +193,7 @@ class Factory
      */
     public static function run(CoroutineServerInterface $app, mixed $connection, mixed $request, ?string $eventLoopClass = null): mixed
     {
-        self::_init($eventLoopClass);
+        self::init($eventLoopClass);
         // 获取当前处理器
         /** @var HandlerInterface $handlerClass */
         $handlerClass = self::getCurrentHandler();
@@ -209,7 +211,7 @@ class Factory
      */
     public static function start(CoroutineWorkerInterface $app, mixed $worker = null, ?string $eventLoopClass = null): mixed
     {
-        self::_init($eventLoopClass);
+        self::init($eventLoopClass);
         // 获取当前处理器
         /** @var HandlerInterface $handlerClass */
         $handlerClass = self::getCurrentHandler();
