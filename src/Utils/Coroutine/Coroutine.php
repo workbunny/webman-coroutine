@@ -10,11 +10,11 @@ namespace Workbunny\WebmanCoroutine\Utils\Coroutine;
 use Closure;
 use Workbunny\WebmanCoroutine\Factory;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\CoroutineInterface;
+use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\DefaultCoroutine;
+use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\RippleCoroutine;
+use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\SwooleCoroutine;
+use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\SwowCoroutine;
 use Workbunny\WebmanCoroutine\Utils\RegisterMethods;
-use Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers\DefaultWaitGroup;
-use Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers\RippleWaitGroup;
-use Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers\SwooleWaitGroup;
-use Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers\SwowWaitGroup;
 
 
 /**
@@ -34,11 +34,11 @@ class Coroutine
      * @var string[]
      */
     protected static array $_handlers = [
-        Factory::WORKERMAN_SWOW     => SwowWaitGroup::class,
-        Factory::WORKBUNNY_SWOW     => SwowWaitGroup::class,
-        Factory::WORKERMAN_SWOOLE   => SwooleWaitGroup::class,
-        Factory::WORKBUNNY_SWOOLE   => SwooleWaitGroup::class,
-        Factory::RIPPLE_FIBER       => RippleWaitGroup::class,
+        Factory::WORKERMAN_SWOW     => SwowCoroutine::class,
+        Factory::WORKBUNNY_SWOW     => SwowCoroutine::class,
+        Factory::WORKERMAN_SWOOLE   => SwooleCoroutine::class,
+        Factory::WORKBUNNY_SWOOLE   => SwooleCoroutine::class,
+        Factory::RIPPLE_FIBER       => RippleCoroutine::class,
     ];
 
     /**
@@ -46,7 +46,7 @@ class Coroutine
      */
     public function __construct()
     {
-        $this->_interface = new (self::$_handlers[Factory::getCurrentEventLoop()] ?? DefaultWaitGroup::class)();
+        $this->_interface = new (self::$_handlers[Factory::getCurrentEventLoop()] ?? DefaultCoroutine::class)();
     }
 
     /** @inheritdoc  */

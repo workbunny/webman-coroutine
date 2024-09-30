@@ -16,8 +16,8 @@ use Workbunny\WebmanCoroutine\Utils\Channel\Handlers\SwowChannel;
 use Workbunny\WebmanCoroutine\Utils\RegisterMethods;
 
 /**
- * @method mixed pop(int $timeout)
- * @method mixed push(mixed $data, int $timeout)
+ * @method mixed pop(int $timeout = -1)
+ * @method mixed push(mixed $data, int $timeout = -1)
  * @method bool isEmpty()
  * @method bool isFull()
  * @method int capacity()
