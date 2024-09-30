@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Utils\Coroutine;
 
+use Closure;
 use Workbunny\WebmanCoroutine\Factory;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\CoroutineInterface;
 use Workbunny\WebmanCoroutine\Utils\RegisterMethods;
@@ -15,6 +16,11 @@ use Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers\RippleWaitGroup;
 use Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers\SwooleWaitGroup;
 use Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers\SwowWaitGroup;
 
+
+/**
+ * @method string create(Closure $func)
+ * @method mixed query(string $id)
+ */
 class Coroutine
 {
     use RegisterMethods;

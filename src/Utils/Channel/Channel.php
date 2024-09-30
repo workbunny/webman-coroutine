@@ -15,6 +15,14 @@ use Workbunny\WebmanCoroutine\Utils\Channel\Handlers\SwooleChannel;
 use Workbunny\WebmanCoroutine\Utils\Channel\Handlers\SwowChannel;
 use Workbunny\WebmanCoroutine\Utils\RegisterMethods;
 
+/**
+ * @method mixed pop(int $timeout)
+ * @method mixed push(mixed $data, int $timeout)
+ * @method bool isEmpty()
+ * @method bool isFull()
+ * @method int capacity()
+ * @method void close()
+ */
 class Channel
 {
     use RegisterMethods;

@@ -15,6 +15,12 @@ use Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers\SwooleWaitGroup;
 use Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers\SwowWaitGroup;
 use Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers\WaitGroupInterface;
 
+/**
+ * @method bool add(int $delta)
+ * @method bool done()
+ * @method int count()
+ * @method void wait(int $timeout)
+ */
 class WaitGroup
 {
     use RegisterMethods;
