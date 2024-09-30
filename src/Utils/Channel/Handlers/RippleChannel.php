@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Utils\Channel\Handlers;
 
-class DefaultChannel implements ChannelInterface
+class RippleChannel implements ChannelInterface
 {
 
     /** @var \SplQueue|null  */
@@ -32,8 +32,20 @@ class DefaultChannel implements ChannelInterface
     public function pop(int $timeout = -1): mixed
     {
         if ($this->_queue) {
-            return $this->_queue->dequeue();
+        $time = time();
+        while (1) {
+            if (!$this->isEmpty()) {
+                return $this->_queue->dequeue();
+            } else {
+                // timeout
+                if ($timeout > 0 and time() - $time >= $timeout) {
+                    return false;
+                }
+                \Co\sleep(0);
+            }
         }
+
+    }
         return false;
     }
 
@@ -44,8 +56,20 @@ class DefaultChannel implements ChannelInterface
     public function push(mixed $data, int $timeout = -1): bool
     {
         if ($this->_queue) {
-            $this->_queue->enqueue($data);
-            return true;
+            $time = time();
+            while (1) {
+                if (!$this->isFull()) {
+                    $this->_queue->enqueue($data);
+                    return true;
+                } else {
+                    // timeout
+                    if ($timeout > 0 and time() - $time >= $timeout) {
+                        return false;
+                    }
+                    \Co\sleep(0);
+                }
+            }
+
         }
         return false;
     }
