@@ -35,6 +35,13 @@ interface WaitGroupInterface
     public function done(): bool;
 
     /**
+     * 返回计数
+     *
+     * @return int
+     */
+    public function count(): int;
+
+    /**
      * 阻塞等待
      *
      * @param int $timeout

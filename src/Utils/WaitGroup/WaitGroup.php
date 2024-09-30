@@ -10,6 +10,9 @@ namespace Workbunny\WebmanCoroutine\Utils\WaitGroup;
 use Workbunny\WebmanCoroutine\Factory;
 use Workbunny\WebmanCoroutine\Utils\RegisterMethods;
 use Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers\DefaultWaitGroup;
+use Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers\RippleWaitGroup;
+use Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers\SwooleWaitGroup;
+use Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers\SwowWaitGroup;
 use Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers\WaitGroupInterface;
 
 class WaitGroup
@@ -25,11 +28,11 @@ class WaitGroup
      * @var string[]
      */
     protected static array $_handlers = [
-//        Factory::WORKERMAN_SWOW => SwowChannel::class,
-//        Factory::WORKBUNNY_SWOW => SwowChannel::class,
-//        Factory::WORKERMAN_SWOOLE => SwooleChannel::class,
-//        Factory::WORKBUNNY_SWOOLE => SwooleChannel::class,
-        Factory::RIPPLE_FIBER => DefaultWaitGroup::class,
+        Factory::WORKERMAN_SWOW     => SwowWaitGroup::class,
+        Factory::WORKBUNNY_SWOW     => SwowWaitGroup::class,
+        Factory::WORKERMAN_SWOOLE   => SwooleWaitGroup::class,
+        Factory::WORKBUNNY_SWOOLE   => SwooleWaitGroup::class,
+        Factory::RIPPLE_FIBER       => RippleWaitGroup::class,
     ];
 
     /**
