@@ -174,11 +174,8 @@ class Factory
             // 赋值，避免重复获取
             self::$_currentEventLoop = (
                 // 如果没有就自动获取
-                $eventLoopClass ? self::get($eventLoopClass, true, true) : self::find(true)
+            $eventLoopClass ? self::get($eventLoopClass, true, true) : self::find(true)
             );
-            /** @var HandlerInterface $handler */
-            $handler = self::getCurrentHandler();
-            $handler::initEnv();
         }
     }
 }

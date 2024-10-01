@@ -27,13 +27,16 @@ class SwowWaitGroup implements WaitGroupInterface
     /** @inheritdoc  */
     public function __destruct()
     {
-        $count = $this->count();
-        if ($count > 0) {
-            foreach (range(1, $count) as $ignored) {
-                $this->done();
+        try {
+            $count = $this->count();
+            if ($count > 0) {
+                foreach (range(1, $count) as $ignored) {
+                    $this->done();
+                }
             }
+        } catch (\Throwable) {} finally {
+            $this->_count = 0;
         }
-        $this->_count = 0;
     }
 
     /** @inheritdoc  */

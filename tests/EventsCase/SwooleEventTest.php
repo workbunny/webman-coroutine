@@ -6,6 +6,7 @@ namespace Workbunny\Tests\EventsCase;
 
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
+use Swoole\Coroutine;
 use Workbunny\WebmanCoroutine\Events\SwooleEvent;
 use Workbunny\WebmanCoroutine\Exceptions\EventLoopException;
 use Workerman\Events\EventInterface;
@@ -145,6 +146,9 @@ class SwooleEventTest extends TestCase
 
         $eventMock = m::mock('alias:Swoole\Event');
         $eventMock->shouldReceive('exit')->andReturn(true);
+
+        $eventMock = m::mock('alias:Swoole\Coroutine');
+        $eventMock->shouldReceive('listCoroutines')->andReturn([]);
 
         $swooleEvent->destroy();
 

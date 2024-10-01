@@ -9,6 +9,7 @@ namespace Workbunny\WebmanCoroutine;
 
 use Webman\App;
 use Webman\Http\Request;
+use Workbunny\WebmanCoroutine\Handlers\HandlerInterface;
 use Workbunny\WebmanCoroutine\Utils\Channel\Channel;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Coroutine;
 use Workbunny\WebmanCoroutine\Utils\WaitGroup\WaitGroup;
@@ -33,6 +34,9 @@ class CoroutineWebServer extends App
             return;
         }
         parent::onWorkerStart($worker);
+        /** @var HandlerInterface $handler */
+        $handler = Factory::getCurrentHandler();
+        $handler::initEnv();
     }
 
     /**

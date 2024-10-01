@@ -7,6 +7,8 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Utils\Worker;
 
+use Workbunny\WebmanCoroutine\Factory;
+use Workbunny\WebmanCoroutine\Handlers\HandlerInterface;
 use Workerman\Worker;
 
 abstract class AbstractWorker extends Worker
@@ -14,6 +16,10 @@ abstract class AbstractWorker extends Worker
     /** @inheritdoc  */
     public function run(): void
     {
+        // 加载环境
+        /** @var HandlerInterface $handler */
+        $handler = Factory::getCurrentHandler();
+        $handler::initEnv();
         // 加载__runInit__开头的初始化方法
         $traits = class_uses($this, false);
         foreach ($traits as $trait) {
