@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Workbunny\Tests\mock;
 
-use Workbunny\WebmanCoroutine\CoroutineServerInterface;
-use Workbunny\WebmanCoroutine\CoroutineWorkerInterface;
 use Workbunny\WebmanCoroutine\Handlers\HandlerInterface;
 
 class TestHandler implements HandlerInterface
@@ -15,28 +13,8 @@ class TestHandler implements HandlerInterface
         return true;
     }
 
-    public static function onMessage(CoroutineServerInterface $app, mixed $connection, mixed $request): mixed
+    public static function initEnv(): void
     {
-        return 'response';
-    }
-
-    public static function onWorkerStart(CoroutineWorkerInterface $app, mixed $worker): mixed
-    {
-        return 'response';
-    }
-
-    public static function coroutineCreate(\Closure $function, ?string $waitGroupId = null): mixed
-    {
-        return $function();
-    }
-
-    public static function waitGroupCreate(): string
-    {
-        return 'waitGroupId';
-    }
-
-    public static function waitGroupWait(string $waitGroupId, int $timeout = -1): void
-    {
-        // Do nothing
+        echo 'initEnv';
     }
 }
