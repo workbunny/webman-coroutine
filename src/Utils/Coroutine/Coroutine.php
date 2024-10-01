@@ -16,19 +16,17 @@ use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\SwooleCoroutine;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\SwowCoroutine;
 use Workbunny\WebmanCoroutine\Utils\RegisterMethods;
 
-
 /**
- * @method string create(Closure $func)
- * @method mixed query(string $id)
+ * @method mixed origin()
  */
 class Coroutine
 {
     use RegisterMethods;
 
     /**
-     * @var CoroutineInterface
+     * @var CoroutineInterface|null
      */
-    protected CoroutineInterface $_interface;
+    protected ?CoroutineInterface $_interface;
 
     /**
      * @var string[]
@@ -44,9 +42,17 @@ class Coroutine
     /**
      * 构造方法
      */
-    public function __construct()
+    /**
+     * @param Closure $func
+     */
+    public function __construct(Closure $func)
     {
-        $this->_interface = new (self::$_handlers[Factory::getCurrentEventLoop()] ?? DefaultCoroutine::class)();
+        $this->_interface = new (self::$_handlers[Factory::getCurrentEventLoop()] ?? DefaultCoroutine::class)($func);
+    }
+
+    public function __destruct()
+    {
+        $this->_interface = null;
     }
 
     /** @inheritdoc  */

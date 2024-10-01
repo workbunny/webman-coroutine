@@ -12,32 +12,27 @@ use Swow\Coroutine;
 class SwowCoroutine implements CoroutineInterface
 {
     /**
-     * @var array
+     * @var null|Coroutine
      */
-    protected array $_promise;
+    protected ?Coroutine $_coroutine;
 
-    /** @inheritdoc  */
-    public function __construct()
+    /** @inheritdoc
+     * @param \Closure $func
+     */
+    public function __construct(\Closure $func)
     {
-        $this->_promise = [];
+        $this->_coroutine = Coroutine::run($func);
     }
 
     /** @inheritdoc  */
     public function __destruct()
     {
-        $this->_promise = [];
+        $this->_coroutine = null;
     }
 
     /** @inheritdoc  */
-    public function create(\Closure $func): string
+    public function origin(): ?Coroutine
     {
-        $coroutine = Coroutine::run($func);
-        return (string)$coroutine->getId();
-    }
-
-    /** @inheritdoc  */
-    public function query(string $id): ?Coroutine
-    {
-        return Coroutine::get((int)$id);
+        return $this->_coroutine;
     }
 }

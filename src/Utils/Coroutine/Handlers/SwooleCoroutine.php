@@ -12,36 +12,36 @@ use Swoole\Coroutine;
 class SwooleCoroutine implements CoroutineInterface
 {
     /**
+     * @var int|null
+     */
+    protected ?int $_id;
+
+    /**
      * @var array
      */
     protected array $_promise;
 
-    /** @inheritdoc  */
-    public function __construct()
+    /** @inheritdoc
+     * @param \Closure $func
+     */
+    public function __construct(\Closure $func)
     {
-        $this->_promise = [];
+        while (1) {
+            if ($this->_id = Coroutine::create($func)) {
+                break;
+            }
+        }
     }
 
     /** @inheritdoc  */
     public function __destruct()
     {
-        $this->_promise = [];
+        $this->_id = null;
     }
 
     /** @inheritdoc  */
-    public function create(\Closure $func): string
+    public function origin(): ?int
     {
-        while (1) {
-            if ($coroutine = Coroutine::create($func)) {
-                break;
-            }
-        }
-        return (string)$coroutine;
-    }
-
-    /** @inheritdoc  */
-    public function query(string $id): bool
-    {
-        return false;
+        return $this->_id;
     }
 }

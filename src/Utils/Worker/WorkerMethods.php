@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Utils\Worker;
 
+use Workbunny\WebmanCoroutine\Utils\Coroutine\Coroutine;
 use Workbunny\WebmanCoroutine\Utils\WaitGroup\WaitGroup;
 
 trait WorkerMethods
@@ -48,7 +49,7 @@ trait WorkerMethods
         $this->onWorkerStart = function (\Workerman\Worker $worker) {
             $waitGroup = new WaitGroup();
             $waitGroup->add(1);
-            $this->getCoroutine()->create(function () use ($worker, $waitGroup) {
+            new Coroutine(function () use ($worker, $waitGroup) {
                 call_user_func($this->getParentOnWorkerStart(), $worker);
                 $waitGroup->done();
             });
@@ -59,7 +60,7 @@ trait WorkerMethods
         $this->onWorkerStop = function (\Workerman\Worker $worker) {
             $waitGroup = new WaitGroup();
             $waitGroup->add(1);
-            $this->getCoroutine()->create(function () use ($worker, $waitGroup) {
+            new Coroutine(function () use ($worker, $waitGroup) {
                 call_user_func($this->getParentOnWorkerStop(), $worker);
                 $waitGroup->done();
             });

@@ -10,8 +10,9 @@ namespace Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers;
 class DefaultCoroutine implements CoroutineInterface
 {
     /** @inheritdoc  */
-    public function __construct()
+    public function __construct(\Closure $func)
     {
+        call_user_func($func);
     }
 
     /** @inheritdoc  */
@@ -20,15 +21,8 @@ class DefaultCoroutine implements CoroutineInterface
     }
 
     /** @inheritdoc  */
-    public function create(\Closure $func): string
+    public function origin(): mixed
     {
-        call_user_func($func);
-        return 'coroutine_id';
-    }
-
-    /** @inheritdoc  */
-    public function query(string $id): bool
-    {
-        return false;
+        return null;
     }
 }

@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace Workbunny\WebmanCoroutine\Utils\Worker;
 
 use Workbunny\WebmanCoroutine\Utils\Channel\Channel;
+use Workbunny\WebmanCoroutine\Utils\Coroutine\Coroutine;
 use Workbunny\WebmanCoroutine\Utils\WaitGroup\WaitGroup;
 use Workerman\Connection\ConnectionInterface;
 
@@ -164,7 +165,7 @@ trait ServerMethods
             $this->onConnect = function (ConnectionInterface $connection) use ($connectionCoroutine) {
                 // 协程化连接创建
                 if ($connectionCoroutine) {
-                    $this->getCoroutine()->create(function () use ($connection) {
+                    new Coroutine(function () use ($connection) {
                         call_user_func($this->getParentOnConnect(), $connection);
                     });
                 } else {
@@ -182,7 +183,7 @@ trait ServerMethods
             $this->onClose = function (ConnectionInterface $connection) use ($connectionCoroutine) {
                 // 协程化连接关闭
                 if ($connectionCoroutine) {
-                    $this->getCoroutine()->create(function () use ($connection) {
+                    new Coroutine(function () use ($connection) {
                         call_user_func($this->getParentOnClose(), $connection);
                     });
                 } else {
@@ -208,7 +209,7 @@ trait ServerMethods
                 foreach (range(1, $count) as $ignored) {
                     $waitGroup->add();
                     // 协程创建
-                    $this->getCoroutine()->create(function () use ($channel, $waitGroup) {
+                    new Coroutine(function () use ($channel, $waitGroup) {
                         while (true) {
                             // 通道为空或者关闭时退出协程
                             if (

@@ -7,42 +7,10 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Utils\Worker;
 
-use Workbunny\WebmanCoroutine\Utils\Coroutine\Coroutine;
 use Workerman\Worker;
 
 abstract class AbstractWorker extends Worker
 {
-    /**
-     * 协程组件
-     *
-     * @var Coroutine
-     */
-    protected Coroutine $_coroutine;
-
-    /**
-     * 构造
-     *
-     * @param string $socket_name
-     * @param array $context_option
-     */
-    public function __construct(string $socket_name = '', array $context_option = array())
-    {
-        // 初始化协程组件
-        $this->_coroutine = new Coroutine();
-        // 父类构造
-        parent::__construct($socket_name, $context_option);
-    }
-
-    /**
-     * 获取协程组件
-     *
-     * @return Coroutine
-     */
-    public function getCoroutine(): Coroutine
-    {
-        return $this->_coroutine;
-    }
-
     /** @inheritdoc  */
     public function run(): void
     {
