@@ -16,18 +16,14 @@ class SwooleCoroutine implements CoroutineInterface
      */
     protected ?int $_id;
 
-    /**
-     * @var array
-     */
-    protected array $_promise;
-
     /** @inheritdoc
      * @param \Closure $func
      */
     public function __construct(\Closure $func)
     {
         while (1) {
-            if ($this->_id = Coroutine::create($func)) {
+            if ($res = Coroutine::create($func)) {
+                $this->_id = $res;
                 break;
             }
         }

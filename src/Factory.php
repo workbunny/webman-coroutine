@@ -176,6 +176,9 @@ class Factory
                 // 如果没有就自动获取
                 $eventLoopClass ? self::get($eventLoopClass, true, true) : self::find(true)
             );
+            /** @var HandlerInterface $handler */
+            $handler = self::getCurrentHandler();
+            $handler::initEnv();
         }
     }
 }
