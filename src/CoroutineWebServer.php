@@ -70,7 +70,7 @@ class CoroutineWebServer extends App
                 call_user_func($call, $connection, ...$params);
             });
         }
-        if (!$this->_connectionChannels[$id = spl_object_hash($connection)] ?? null) {
+        if (!($this->_connectionChannels[$id = spl_object_hash($connection)] ?? null)) {
             $this->_connectionChannels[$id] = new Channel(\config('plugin.workbunny.webman-coroutine.app.channel_size', 1));
         }
     }

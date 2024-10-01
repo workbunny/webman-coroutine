@@ -10,8 +10,8 @@ namespace Workbunny\WebmanCoroutine\Utils\Channel\Handlers;
 class RippleChannel implements ChannelInterface
 {
 
-    /** @var \SplQueue|null  */
-    protected ?\SplQueue $_queue;
+    /** @var \SplQueue  */
+    protected \SplQueue $_queue;
 
     /** @var int  */
     protected int $_capacity;
@@ -31,7 +31,6 @@ class RippleChannel implements ChannelInterface
 
     public function pop(int $timeout = -1): mixed
     {
-        if ($this->_queue) {
         $time = time();
         while (1) {
             if (!$this->isEmpty()) {
@@ -44,9 +43,6 @@ class RippleChannel implements ChannelInterface
                 \Co\sleep(0);
             }
         }
-
-    }
-        return false;
     }
 
     /** @inheritdoc
@@ -55,41 +51,37 @@ class RippleChannel implements ChannelInterface
      */
     public function push(mixed $data, int $timeout = -1): bool
     {
-        if ($this->_queue) {
-            $time = time();
-            while (1) {
-                if (!$this->isFull()) {
-                    $this->_queue->enqueue($data);
-                    return true;
-                } else {
-                    // timeout
-                    if ($timeout > 0 and time() - $time >= $timeout) {
-                        return false;
-                    }
-                    \Co\sleep(0);
+        $time = time();
+        while (1) {
+            if (!$this->isFull()) {
+                $this->_queue->enqueue($data);
+                return true;
+            } else {
+                // timeout
+                if ($timeout > 0 and time() - $time >= $timeout) {
+                    return false;
                 }
+                \Co\sleep(0);
             }
-
         }
-        return false;
     }
 
     /** @inheritdoc  */
     public function isEmpty(): bool
     {
-        return $this->_queue?->isEmpty() ?: true;
+        return $this->_queue->isEmpty();
     }
 
     /** @inheritdoc  */
     public function isFull(): bool
     {
-        return !($this->_capacity < 0) && $this->_capacity <= intval($this->_queue?->count());
+        return !($this->capacity() < 0) && $this->capacity() <= $this->_queue->count();
     }
 
     /** @inheritdoc  */
     public function close(): void
     {
-        $this->_queue = null;
+        $this->_queue = new \SplQueue();
     }
 
     /** @inheritdoc  */

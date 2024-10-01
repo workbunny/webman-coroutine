@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine;
 
-use Webman\Http\Request;
 use Workbunny\WebmanCoroutine\Events\SwooleEvent;
 use Workbunny\WebmanCoroutine\Events\SwowEvent;
 use Workbunny\WebmanCoroutine\Handlers\DefaultHandler;
@@ -17,8 +16,6 @@ use Workbunny\WebmanCoroutine\Handlers\SwooleHandler;
 use Workbunny\WebmanCoroutine\Handlers\SwooleWorkerman5Handler;
 use Workbunny\WebmanCoroutine\Handlers\SwowHandler;
 use Workbunny\WebmanCoroutine\Handlers\SwowWorkerman5Handler;
-use Workerman\Connection\ConnectionInterface;
-use Workerman\Worker;
 
 /**
  *  工厂化启动器
@@ -180,42 +177,5 @@ class Factory
                 $eventLoopClass ? self::get($eventLoopClass, true, true) : self::find(true)
             );
         }
-    }
-
-    /**
-     * 根据当前环境运行处理器
-     *
-     * @param CoroutineServerInterface $app 实现CoroutineServerInterface
-     * @param mixed|ConnectionInterface $connection 连接资源
-     * @param mixed|Request $request 请求体
-     * @param string|null $eventLoopClass null:根据环境获取事件循环类
-     * @return mixed
-     */
-    public static function run(CoroutineServerInterface $app, mixed $connection, mixed $request, ?string $eventLoopClass = null): mixed
-    {
-        self::init($eventLoopClass);
-        // 获取当前处理器
-        /** @var HandlerInterface $handlerClass */
-        $handlerClass = self::getCurrentHandler();
-
-        return $handlerClass::onMessage($app, $connection, $request);
-    }
-
-    /**
-     * 根据当前环境运行处理器
-     *
-     * @param CoroutineWorkerInterface $app 实现CoroutineWorkerInterface
-     * @param mixed|Worker|null $worker worker对象
-     * @param string|null $eventLoopClass null:根据环境获取事件循环类
-     * @return mixed
-     */
-    public static function start(CoroutineWorkerInterface $app, mixed $worker = null, ?string $eventLoopClass = null): mixed
-    {
-        self::init($eventLoopClass);
-        // 获取当前处理器
-        /** @var HandlerInterface $handlerClass */
-        $handlerClass = self::getCurrentHandler();
-
-        return $handlerClass::onWorkerStart($app, $worker);
     }
 }

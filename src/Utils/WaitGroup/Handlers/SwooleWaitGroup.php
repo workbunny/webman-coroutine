@@ -11,8 +11,8 @@ use Swoole\Coroutine\WaitGroup;
 
 class SwooleWaitGroup implements WaitGroupInterface
 {
-    /** @var WaitGroup|null  */
-    protected ?WaitGroup $_waitGroup;
+    /** @var WaitGroup  */
+    protected WaitGroup $_waitGroup;
 
     /** @inheritdoc  */
     public function __construct()
@@ -23,11 +23,12 @@ class SwooleWaitGroup implements WaitGroupInterface
     /** @inheritdoc  */
     public function __destruct()
     {
-        $count = max(1, $this->count());
-        foreach (range(1, $count) as $ignored) {
-            $this->done();
+        $count = $this->count();
+        if ($count > 0) {
+            foreach (range(1, $count) as $ignored) {
+                $this->done();
+            }
         }
-        $this->_waitGroup = null;
     }
 
     /** @inheritdoc  */

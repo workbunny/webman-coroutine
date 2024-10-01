@@ -11,8 +11,8 @@ use Swow\Sync\WaitGroup;
 
 class SwowWaitGroup implements WaitGroupInterface
 {
-    /** @var WaitGroup|null  */
-    protected ?WaitGroup $_waitGroup;
+    /** @var WaitGroup  */
+    protected WaitGroup $_waitGroup;
 
     /** @var int 计数 */
     protected int $_count;
@@ -27,7 +27,12 @@ class SwowWaitGroup implements WaitGroupInterface
     /** @inheritdoc  */
     public function __destruct()
     {
-        $this->_waitGroup = null;
+        $count = $this->count();
+        if ($count > 0) {
+            foreach (range(1, $count) as $ignored) {
+                $this->done();
+            }
+        }
         $this->_count = 0;
     }
 
