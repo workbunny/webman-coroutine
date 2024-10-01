@@ -23,6 +23,10 @@ class SwooleWaitGroup implements WaitGroupInterface
     /** @inheritdoc  */
     public function __destruct()
     {
+        $count = max(1, $this->count());
+        foreach (range(1, $count) as $ignored) {
+            $this->done();
+        }
         $this->_waitGroup = null;
     }
 

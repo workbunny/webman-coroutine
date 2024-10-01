@@ -92,7 +92,7 @@ class SwooleHandler implements HandlerInterface
         ]);
         $waitGroup = new WaitGroup();
         // 根据request consumer数量创建协程
-        $consumerCount = config('plugin.workbunny.webman-coroutine.app.consumer_count', 1);
+        $consumerCount = max(1, config('plugin.workbunny.webman-coroutine.app.consumer_count', 1));
         foreach (range(1, $consumerCount) as $ignored) {
             // 协程监听通道，消费
             $res = Coroutine::create(function () use ($app, $connectionChannels, $waitGroup) {

@@ -204,7 +204,8 @@ trait ServerMethods
                 ]);
                 $waitGroup = new WaitGroup();
                 // 消费者消费
-                foreach (range(1, $this->getConnectionConsumerCount()) as $ignored) {
+                $count = max(1, $this->getConnectionConsumerCount());
+                foreach (range(1, $count) as $ignored) {
                     $waitGroup->add();
                     // 协程创建
                     $this->getCoroutine()->create(function () use ($channel, $waitGroup) {

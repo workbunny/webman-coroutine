@@ -117,7 +117,7 @@ class CoroutineWebServer extends App
         $channel->push(func_get_args());
         $waitGroup = new WaitGroup();
         // 根据request consumer数量创建协程
-        $consumerCount = config('plugin.workbunny.webman-coroutine.app.consumer_count', 1);
+        $consumerCount = max(1, config('plugin.workbunny.webman-coroutine.app.consumer_count', 1));
         foreach (range(1, $consumerCount) as $ignored) {
             $waitGroup->add();
             // 请求消费协程
