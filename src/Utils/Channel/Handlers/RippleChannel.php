@@ -29,6 +29,16 @@ class RippleChannel implements ChannelInterface
         $this->close();
     }
 
+    /**
+     * @param int $second
+     * @return void
+     */
+    protected function _sleep(int $second): void
+    {
+        \Co\sleep($second);
+    }
+
+    /** @inheritdoc  */
     public function pop(int $timeout = -1): mixed
     {
         $time = time();
@@ -40,15 +50,12 @@ class RippleChannel implements ChannelInterface
                 if ($timeout > 0 and time() - $time >= $timeout) {
                     return false;
                 }
-                \Co\sleep(0);
+                $this->_sleep(0);
             }
         }
     }
 
-    /** @inheritdoc
-     * @param mixed $data
-     * @param int $timeout
-     */
+    /** @inheritdoc */
     public function push(mixed $data, int $timeout = -1): bool
     {
         $time = time();
@@ -61,7 +68,7 @@ class RippleChannel implements ChannelInterface
                 if ($timeout > 0 and time() - $time >= $timeout) {
                     return false;
                 }
-                \Co\sleep(0);
+                $this->_sleep(0);
             }
         }
     }
