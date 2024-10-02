@@ -28,6 +28,13 @@ trait ServerMethods
     protected bool $_connectionCoroutine = false;
 
     /**
+     * 连接请求响应等待
+     *
+     * @var bool
+     */
+    protected bool $_connectionOnMessageWait = true;
+
+    /**
      * 父类的onConnect
      *
      * @var callable|null
@@ -98,11 +105,21 @@ trait ServerMethods
     }
 
     /**
+     * 设置连接on message是否等待
+     *
+     * @param bool $connectionOnMessageWait
+     */
+    public function setConnectionOnMessageWait(bool $connectionOnMessageWait): void
+    {
+        $this->_connectionOnMessageWait = $connectionOnMessageWait;
+    }
+
+    /**
      * 初始化服务
      *
      * @return void
      */
-    protected function __runInit__serverMethods(): void
+    public function __init__serverMethods(): void
     {
         // 确保协程化开关只被调用一次
         $connectionCoroutine = $this->_connectionCoroutine;

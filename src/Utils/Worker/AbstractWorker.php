@@ -13,25 +13,28 @@ use Workerman\Worker;
 
 abstract class AbstractWorker extends Worker
 {
-    /** @inheritdoc  */
-    public function run(): void
+
+    /** @inheritDoc */
+    protected static function initWorkers()
     {
-        // 加载环境
-        /** @var HandlerInterface $handler */
-        $handler = Factory::getCurrentHandler();
-        $handler::initEnv();
-        // 加载__runInit__开头的初始化方法
-        $traits = class_uses($this, false);
-        foreach ($traits as $trait) {
-            $methods = (new \ReflectionClass($trait))->getMethods(\ReflectionMethod::IS_PRIVATE);
-            foreach ($methods as $method) {
-                $methodName = $method->getName();
-                if (str_starts_with($methodName, '__runInit__') and method_exists($this, $methodName)) {
-                    $this->$methodName();
+        foreach (static::$_workers as $worker) {
+            // 加载环境
+            /** @var HandlerInterface $handler */
+            $handler = Factory::getCurrentHandler();
+            $handler::initEnv();
+            // 加载__init__开头的初始化方法
+            $traits = class_uses($worker, false);
+            foreach ($traits as $trait) {
+                $methods = (new \ReflectionClass($trait))->getMethods(\ReflectionMethod::IS_PUBLIC);
+                foreach ($methods as $method) {
+                    $methodName = $method->getName();
+                    if (str_starts_with($methodName, '__init__') and method_exists($worker, $methodName)) {
+                        $worker->$methodName();
+                    }
                 }
             }
         }
         // 运行
-        parent::run();
+        parent::initWorkers();
     }
 }
