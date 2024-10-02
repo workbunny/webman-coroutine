@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Utils\Worker;
 
-use Workbunny\WebmanCoroutine\Utils\Channel\Channel;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Coroutine;
 use Workbunny\WebmanCoroutine\Utils\WaitGroup\WaitGroup;
 use Workerman\Connection\ConnectionInterface;
@@ -15,32 +14,18 @@ use Workerman\Connection\ConnectionInterface;
 trait ServerMethods
 {
     /**
+     * 每个连接的协程计数
+     *
+     * @var int[]
+     */
+    protected static array $_connectionCoroutineCount = [];
+
+    /**
      * 连接关闭/开启协程化
      *
      * @var bool
      */
     protected bool $_connectionCoroutine = false;
-
-    /**
-     * 连接队列
-     *
-     * @var Channel[]
-     */
-    protected array $_connectionChannels = [];
-
-    /**
-     * 连接队列容量
-     *
-     * @var int
-     */
-    protected int $_connectionChannelSize = 1;
-
-    /**
-     * 连接队列消费者数量
-     *
-     * @var int
-     */
-    protected int $_connectionConsumerCount = 1;
 
     /**
      * 父类的onConnect
@@ -64,55 +49,15 @@ trait ServerMethods
     protected $_parentOnMessage = null;
 
     /**
-     * 获取所有连接队列
+     * 获取连接的协程计数
      *
-     * @return array
+     * @return int[]|int
      */
-    public function getConnectionChannels(): array
+    public static function getConnectionCoroutineCount(?string $connectionId = null): array|int
     {
-        return $this->_connectionChannels;
-    }
-
-    /**
-     * 获取连接队列容量
-     *
-     * @return int
-     */
-    public function getConnectionChannelSize(): int
-    {
-        return $this->_connectionChannelSize;
-    }
-
-    /**
-     * 设置连接队列容量
-     *
-     * @param int $connectionChannelSize
-     * @return void
-     */
-    public function setConnectionChannelSize(int $connectionChannelSize): void
-    {
-        $this->_connectionChannelSize = $connectionChannelSize;
-    }
-
-    /**
-     * 获取连接队列消费者数量
-     *
-     * @return int
-     */
-    public function getConnectionConsumerCount(): int
-    {
-        return $this->_connectionConsumerCount;
-    }
-
-    /**
-     * 设置连接队列消费者数量
-     *
-     * @param int $connectionConsumerCount
-     * @return void
-     */
-    public function setConnectionConsumerCount(int $connectionConsumerCount): void
-    {
-        $this->_connectionConsumerCount = $connectionConsumerCount;
+        return $connectionId === null
+            ? static::$_connectionCoroutineCount
+            : (static::$_connectionCoroutineCount[$connectionId] ?? 0);
     }
 
     /**
@@ -143,6 +88,8 @@ trait ServerMethods
     }
 
     /**
+     * 设置连接创建/关闭协程化
+     *
      * @param bool $connectionCoroutine
      */
     public function setConnectionCoroutine(bool $connectionCoroutine): void
@@ -171,10 +118,6 @@ trait ServerMethods
                 } else {
                     call_user_func($this->getParentOnConnect(), $connection);
                 }
-                // 为每一个连接创建一个通道
-                if (!$this->_connectionChannels[$id = spl_object_hash($connection)] ?? null) {
-                    $this->_connectionChannels[$id] = new Channel($this->getConnectionChannelSize());
-                }
             };
         }
         // 代理onClose
@@ -189,43 +132,30 @@ trait ServerMethods
                 } else {
                     call_user_func($this->getParentOnClose(), $connection);
                 }
-                // 删除通道，析构自动close
-                unset($this->_connectionChannels[spl_object_hash($connection)]);
             };
         }
         // 代理onMessage
         if ($this->onMessage) {
             $this->_parentOnMessage = $this->onMessage;
-            $this->onMessage = function (ConnectionInterface $connection, mixed $data) {
-                // 获取连接通道
-                $channel = $this->_connectionChannels[spl_object_hash($connection)];
-                // 投递数据
-                $channel->push([
-                    $connection, $data
-                ]);
+            $this->onMessage = function (ConnectionInterface $connection, mixed $data, ...$params) {
+                $connectionId = spl_object_hash($connection);
+                $res = null;
+                $params = func_get_args();
                 $waitGroup = new WaitGroup();
-                // 消费者消费
-                $count = max(1, $this->getConnectionConsumerCount());
-                foreach (range(1, $count) as $ignored) {
-                    $waitGroup->add();
-                    // 协程创建
-                    new Coroutine(function () use ($channel, $waitGroup) {
-                        while (true) {
-                            // 通道为空或者关闭时退出协程
-                            if (
-                                $channel->isEmpty() or
-                                !$data = $channel->pop()
-                            ) {
-                                break;
-                            }
-                            [$connection, $request] = $data;
-                            call_user_func($this->getParentOnMessage(), $connection, $request);
-                        }
-                        $waitGroup->done();
-                    });
-                }
+                $waitGroup->add();
+                // 协程创建
+                new Coroutine(function () use (&$res, $waitGroup, $params, $connectionId) {
+                    $res = call_user_func($this->getParentOnMessage(), ...$params);
+                    self::$_connectionCoroutineCount[$connectionId] --;
+                    $waitGroup->done();
+                });
+                self::$_connectionCoroutineCount[$connectionId] =
+                    (isset(self::$_connectionCoroutineCount[$connectionId])
+                        ? self::$_connectionCoroutineCount[$connectionId] + 1
+                        : 1);
                 // 等待
-                $waitGroup->wait(-1);
+                $waitGroup->wait();
+                return $res;
             };
         }
     }
