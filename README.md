@@ -24,20 +24,15 @@
 
 ## 简介
 
-> **🚀🐇 webman-coroutine 是一个 webman 开发框架生态下的协程基建支撑插件**
+> **🚀🐇 webman-coroutine 是一个支持 workerman / webman 开发框架生态下的协程基建支撑插件**
 
 **主要实现以下功能**：
 
 1. 支持`workerman 4.x`的 [swow](https://github.com/swow/swow) 协程驱动能力，兼容`workerman 5.x`版本自带的`swow`协程驱动；
 2. 支持`workerman 4.x`的 [swoole](https://github.com/swoole/swoole-src) 协程驱动能力，兼容`workerman 5.x`版本自带的`swoole`协程驱动；
 3. 支持 [ripple](https://github.com/cloudtay/ripple) 协程驱动能力，兼容`revolt (PHP-fiber)`协程生态；
-4. 实现`coroutine web server` 用于实现具备协程能力的web服务；
-
-## 说明
-
-1. `workerman 4.x/5.x`驱动下的 webman 框架无法完整使用`swoole`的协程能力，所以使用`CoroutineWebServer`来替代`webman`自带的`webServer`
-2. `workerman 4.x`下还未有官方支持的`swow`协程驱动，本插件提供`SwowEvent`事件驱动支撑`workerman 4.x`下的协程能力
-3. 由于配置`event-loop`等操作相较于普通开发会存在一定的心智负担，所以本插件提供了`event_loop()`函数，用于根据当前环境自动选择合适的事件驱动
+4. 提供`coroutine web server` 用于实现具备协程能力的web服务；
+5. 支持纯 workerman 环境，支持 webman 开发框架
 
 ## 安装
 
@@ -46,16 +41,50 @@
 ```php
 composer require workbunny/webman-coroutine
 ```
-> 注: 目前在开发阶段，体验请使用`dev-main`分支
+> 注: 目前在alpha阶段
 
-**配置说明**
+## 说明
+
+1. `workerman 4.x/5.x`驱动下的 webman 框架无法完整使用`swoole`的协程能力，所以使用`CoroutineWebServer`来替代`webman`自带的`webServer`
+2. `workerman 4.x`下还未有官方支持的`swow`协程驱动，本插件提供`SwowEvent`事件驱动支撑`workerman 4.x`下的协程能力
+3. 由于配置`event-loop`等操作相较于普通开发会存在一定的心智负担，所以本插件提供了`event_loop()`函数，用于根据当前环境自动选择合适的事件驱动
+4. workerman开发环境下支持使用所有 Utils
+
+### 目录说明
+
+```
+|-- config                       # webman 配置文件
+    |-- plugin
+        |-- webman-push-server
+            |-- app.php          # 主配置信息
+            |-- process.php      # 启动进程
+|-- Events                       # workerman-4.x 事件驱动文件
+|-- Exceptions                   # 异常
+|-- Handlers                     # 入口主驱动
+|-- Utils                        # 工具包
+    |-- Channel                  # 通道 驱动
+    |-- Coroutine                # 协程 驱动
+    |-- WaitGroup                # wait group 驱动
+    |-- Worker                   # worker 驱动
+    |-- RegisterMethods.php      # 驱动注册助手
+|-- Factory                      # 入口类
+|-- helpers.php                  # 入口助手          
+```
+
+### 配置说明
 
 - enable : (true/false), 是否启用协程webServer
 - port : (int), 协程webServer默认端口
 - channel_size : (int), 每个connection的channel容量
 - consumer_count : (int), 每个connection的消费者数量
 
+> 注: 配置只在webman框架下自动加载生效
+
 ## 使用
+
+> 本插件主要是webman开发框架的协程基建包，但同时也提供纯 workerman 环境的协程化能力
+
+### webman开发框架
 
 #### 1. swow 环境
 
@@ -86,11 +115,24 @@ composer require workbunny/webman-coroutine
 
 1. 使用`composer require cclilshy/p-ripple-drive`安装 ripple 驱动插件
 2. 修改`config/server.php`配置
-   - `'event_loop' => \Workbunny\WebmanCoroutine\event_loop()`自动判断，请勿开启 swow、swoole，
+   - `'event_loop' => \Workbunny\WebmanCoroutine\event_loop(Factory::RIPPLE_FIBER)`自动判断，请勿开启 swow、swoole，
    - `'event_loop' => \Workbunny\WebmanCoroutine\Factory::RIPPLE_FIBER`手动指定
 3. 使用`php webman start`启动
 
 > 注：该环境协程依赖`php-fiber`，并没有自动`hook`系统的阻塞函数，但支持所有支持`php-fiber`的插件
+
+### workerman开发环境
+
+- Workbunny\WebmanCoroutine\Utils\Channel 提供协程通道的实现
+- Workbunny\WebmanCoroutine\Utils\Coroutine 提供协程的实现
+- Workbunny\WebmanCoroutine\Utils\WaitGroup 提供 wait group 实现
+- Workbunny\WebmanCoroutine\Utils\Worker 提供 worker 实现
+  - 将原有的Workerman\Worker使用Workbunny\WebmanCoroutine\Utils\Worker\Worker替换，
+  即可获得协程化`onWorkerStart`、`onWorkerStop`的Worker进程 
+  - 将原有的Workerman\Worker使用Workbunny\WebmanCoroutine\Utils\Worker\Server替换，
+  即可获得协程化`onConnect`、`onClose`、`onMessage`的Server进程，支持TCP/UDP/WebSocket/UnixSocket
+
+> 注：以上工具实现的代码支持在协程/非协程下使用，也就是说通过协程方法写的代码可以运行在非协程环境下
 
 ## 文档
 
