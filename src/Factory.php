@@ -50,7 +50,9 @@ class Factory
     protected static ?string $_currentEventLoop = null;
 
     /**
-     * @return string|null
+     * 获取当前事件循环
+     *
+     * @return string|null null:未初始化 空字符串:默认事件
      */
     public static function getCurrentEventLoop(): ?string
     {
@@ -60,12 +62,11 @@ class Factory
     /**
      * 获取当前使用的处理器类名
      *
-     * @return string|null
+     * @return string|null null:未初始化
      */
     public static function getCurrentHandler(): ?string
     {
-        return self::$_handlers[self::getCurrentEventLoop()] ??
-            (self::getCurrentEventLoop() === null ? DefaultHandler::class : null);
+        return self::get(self::$_currentEventLoop) ?: (self::getCurrentEventLoop() === null ? null : DefaultHandler::class);
     }
 
     /**
@@ -119,47 +120,12 @@ class Factory
     /**
      * 根据事件循环类获取对应处理器
      *
-     * @param string $eventLoopClass 指定的事件循环类
-     * @param bool $available 是否校验当前环境可用性
-     * @param bool $returnEventLoopClass 只在available=true时生效
-     * @return string
+     * @param null|string $eventLoopClass 指定的事件循环类
+     * @return string|null null:未找到
      */
-    public static function get(string $eventLoopClass, bool $available = false, bool $returnEventLoopClass = false): string
+    public static function get(?string $eventLoopClass): ?string
     {
-        /** @var HandlerInterface $handlerClass */
-        $handlerClass = self::$_handlers[$eventLoopClass] ?? DefaultHandler::class;
-        if ($available) {
-            // 当$returnEventLoopClass=true时，返回的是eventloop classname而不是handler classname
-            $handlerClass = $handlerClass::isAvailable()
-                ? ($returnEventLoopClass
-                    ? (isset(self::$_handlers[$eventLoopClass])) ? $eventLoopClass : self::WORKERMAN_DEFAULT
-                    : $handlerClass)
-                : ($returnEventLoopClass ? self::WORKERMAN_DEFAULT : DefaultHandler::class);
-        }
-
-        return $handlerClass;
-    }
-
-    /**
-     * 根据当前环境获取可用的处理器
-     *
-     * @param bool $returnEventLoopClass 是否返回事件循环类名
-     * @return string 事件循环类名|处理器类名|空字符串
-     */
-    public static function find(bool $returnEventLoopClass = false): string
-    {
-        /**
-         * @var string $eventLoopClass
-         * @var HandlerInterface $handlerClass
-         */
-        foreach (self::getAll() as $eventLoopClass => $handlerClass) {
-            // 判断当前环境是否可用，相同可用的取优先
-            if ($handlerClass::isAvailable()) {
-                return $returnEventLoopClass ? $eventLoopClass : $handlerClass;
-            }
-        }
-
-        return $returnEventLoopClass ? self::WORKERMAN_DEFAULT : DefaultHandler::class;
+        return self::$_handlers[$eventLoopClass] ?? null;
     }
 
     /**
@@ -171,11 +137,25 @@ class Factory
     public static function init(?string $eventLoopClass): void
     {
         if (!self::$_currentEventLoop) {
-            // 赋值，避免重复获取
-            self::$_currentEventLoop = (
-                // 如果没有就自动获取
-            $eventLoopClass ? self::get($eventLoopClass, true, true) : self::find(true)
-            );
+            if ($eventLoopClass === null) {
+                $handlers = self::getAll();
+            } else {
+                $handlers = self::get($eventLoopClass) ? [$eventLoopClass => self::get($eventLoopClass)] : [];
+            }
+            // 默认处理器
+            $eventLoopClass = self::WORKERMAN_DEFAULT;
+            /**
+             * @var string $eventloop
+             * @var HandlerInterface $handler
+             */
+            foreach ($handlers as $eventloop => $handler) {
+                if ($handler::isAvailable()) {
+                    $eventLoopClass = $eventloop;
+                    break;
+                }
+            }
+            // 赋值
+            self::$_currentEventLoop = $eventLoopClass;
         }
     }
 }
