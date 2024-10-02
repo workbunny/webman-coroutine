@@ -21,7 +21,17 @@ class RippleWaitGroup implements WaitGroupInterface
     /** @inheritdoc  */
     public function __destruct()
     {
-        $this->_count = 0;
+        try {
+            $count = $this->count();
+            if ($count > 0) {
+                foreach (range(1, $count) as $ignored) {
+                    $this->done();
+                }
+            }
+        } catch (\Throwable) {} finally {
+            $this->_count = 0;
+        }
+
     }
 
     /** @inheritdoc  */

@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Events;
 
+use Swoole\Coroutine;
 use Swoole\Event;
 use Swoole\Process;
 use Swoole\Timer;
@@ -168,7 +169,13 @@ class SwooleEvent implements EventInterface
     /** @inheritdoc  */
     public function destroy()
     {
+        // 移除所有定时器
         $this->clearAllTimer();
+        // 退出所有协程
+        foreach (Coroutine::listCoroutines() as $coroutine) {
+            Coroutine::cancel($coroutine);
+        }
+        // 退出event loop
         Event::exit();
         $this->_reads = $this->_writes = [];
     }

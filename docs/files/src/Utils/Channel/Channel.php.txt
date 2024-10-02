@@ -28,9 +28,9 @@ class Channel
     use RegisterMethods;
 
     /**
-     * @var ChannelInterface
+     * @var null|ChannelInterface
      */
-    protected ChannelInterface $_interface;
+    protected ?ChannelInterface $_interface;
 
     /**
      * @var string[]
@@ -49,6 +49,14 @@ class Channel
     public function __construct(int $capacity = -1)
     {
         $this->_interface = new (self::$_handlers[Factory::getCurrentEventLoop()] ?? DefaultChannel::class)($capacity);
+    }
+
+    /**
+     * 析构方法
+     */
+    public function __destruct()
+    {
+        $this->_interface = null;
     }
 
     /** @inheritdoc  */

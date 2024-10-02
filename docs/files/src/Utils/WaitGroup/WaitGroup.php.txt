@@ -26,9 +26,9 @@ class WaitGroup
     use RegisterMethods;
 
     /**
-     * @var WaitGroupInterface
+     * @var WaitGroupInterface|null
      */
-    protected WaitGroupInterface $_interface;
+    protected ?WaitGroupInterface $_interface;
 
     /**
      * @var string[]
@@ -47,6 +47,14 @@ class WaitGroup
     public function __construct()
     {
         $this->_interface = new (self::$_handlers[Factory::getCurrentEventLoop()] ?? DefaultWaitGroup::class)();
+    }
+
+    /**
+     * 析构方法
+     */
+    public function __destruct()
+    {
+        $this->_interface = null;
     }
 
     /** @inheritdoc  */

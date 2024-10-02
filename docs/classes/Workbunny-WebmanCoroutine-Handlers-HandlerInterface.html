@@ -110,9 +110,9 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Handlers/HandlerInterface.php"><a href="files/src-handlers-handlerinterface.html"><abbr title="src/Handlers/HandlerInterface.php">HandlerInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">20</span>
+    <span class="phpdocumentor-element-found-in__line">13</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#source-view.20" class="phpdocumentor-element-found-in__source" data-line="20" data-modal="source-view" data-src="files/src/Handlers/HandlerInterface.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#source-view.13" class="phpdocumentor-element-found-in__source" data-line="13" data-modal="source-view" data-src="files/src/Handlers/HandlerInterface.php.txt"></a>
     </aside>
 
             <p class="phpdocumentor-summary">协程处理器接口</p>
@@ -147,11 +147,11 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#method_coroutineCreate">coroutineCreate()</a>
+    <a class="" href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#method_initEnv">initEnv()</a>
     <span>
-                                &nbsp;: mixed    </span>
+                                &nbsp;: void    </span>
 </dt>
-<dd>创建一个协程</dd>
+<dd>用于环境加载初始化</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#method_isAvailable">isAvailable()</a>
@@ -159,34 +159,6 @@
                                 &nbsp;: bool    </span>
 </dt>
 <dd>用于判断当前环境是否可用</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#method_onMessage">onMessage()</a>
-    <span>
-                                &nbsp;: mixed    </span>
-</dt>
-<dd>执行协程处理</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#method_onWorkerStart">onWorkerStart()</a>
-    <span>
-                                &nbsp;: mixed    </span>
-</dt>
-<dd>执行协程处理</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#method_waitGroupCreate">waitGroupCreate()</a>
-    <span>
-                                &nbsp;: string    </span>
-</dt>
-<dd>创建一个waitGroup</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#method_waitGroupWait">waitGroupWait()</a>
-    <span>
-                                &nbsp;: void    </span>
-</dt>
-<dd>阻塞等待一个waitGroup完成</dd>
 
     </dl>
 
@@ -207,67 +179,31 @@
             -public
                                     -static                    "
 >
-    <h4 class="phpdocumentor-element__name" id="method_coroutineCreate">
-        coroutineCreate()
-        <a href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#method_coroutineCreate" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_initEnv">
+        initEnv()
+        <a href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#method_initEnv" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Handlers/HandlerInterface.php"><a href="files/src-handlers-handlerinterface.html"><abbr title="src/Handlers/HandlerInterface.php">HandlerInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">58</span>
+    <span class="phpdocumentor-element-found-in__line">27</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#source-view.58" class="phpdocumentor-element-found-in__source" data-line="58" data-modal="source-view" data-src="files/src/Handlers/HandlerInterface.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#source-view.27" class="phpdocumentor-element-found-in__source" data-line="27" data-modal="source-view" data-src="files/src/Handlers/HandlerInterface.php.txt"></a>
     </aside>
 
-        <p class="phpdocumentor-summary">创建一个协程</p>
+        <p class="phpdocumentor-summary">用于环境加载初始化</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">coroutineCreate</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Closure">Closure</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$function</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$waitGroupId</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">initEnv</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
     
     
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$function</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Closure">Closure</abbr></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>协程执行逻辑</p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$waitGroupId</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>null:不使用waitGroup</p>
-</section>
-
-            </dd>
-            </dl>
-
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#method_coroutineCreate#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><a href="classes/Workbunny-WebmanCoroutine-Exceptions-RuntimeException.html"><abbr title="\Workbunny\WebmanCoroutine\Exceptions\RuntimeException">RuntimeException</abbr></a></span>
-                                                            
-                                             
-                                    </dd>
-                                            </dl>
+    
 
     
 
@@ -287,9 +223,9 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Handlers/HandlerInterface.php"><a href="files/src-handlers-handlerinterface.html"><abbr title="src/Handlers/HandlerInterface.php">HandlerInterface.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">27</span>
+    <span class="phpdocumentor-element-found-in__line">20</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#source-view.27" class="phpdocumentor-element-found-in__source" data-line="27" data-modal="source-view" data-src="files/src/Handlers/HandlerInterface.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#source-view.20" class="phpdocumentor-element-found-in__source" data-line="20" data-modal="source-view" data-src="files/src/Handlers/HandlerInterface.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">用于判断当前环境是否可用</p>
@@ -316,263 +252,6 @@
 
             </section>
 
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                    -static                    "
->
-    <h4 class="phpdocumentor-element__name" id="method_onMessage">
-        onMessage()
-        <a href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#method_onMessage" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Handlers/HandlerInterface.php"><a href="files/src-handlers-handlerinterface.html"><abbr title="src/Handlers/HandlerInterface.php">HandlerInterface.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">38</span>
-
-            <a href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#source-view.38" class="phpdocumentor-element-found-in__source" data-line="38" data-modal="source-view" data-src="files/src/Handlers/HandlerInterface.php.txt"></a>
-    </aside>
-
-        <p class="phpdocumentor-summary">执行协程处理</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">onMessage</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Workbunny-WebmanCoroutine-CoroutineServerInterface.html"><abbr title="\Workbunny\WebmanCoroutine\CoroutineServerInterface">CoroutineServerInterface</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$app</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed|<abbr title="\Workerman\Connection\ConnectionInterface">ConnectionInterface</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$connection</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed|<abbr title="\Webman\Http\Request">Request</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$request</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$app</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Workbunny-WebmanCoroutine-CoroutineServerInterface.html"><abbr title="\Workbunny\WebmanCoroutine\CoroutineServerInterface">CoroutineServerInterface</abbr></a></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$connection</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed|<abbr title="\Workerman\Connection\ConnectionInterface">ConnectionInterface</abbr></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$request</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed|<abbr title="\Webman\Http\Request">Request</abbr></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#method_onMessage#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><a href="classes/Workbunny-WebmanCoroutine-Exceptions-RuntimeException.html"><abbr title="\Workbunny\WebmanCoroutine\Exceptions\RuntimeException">RuntimeException</abbr></a></span>
-                                                            
-                                             
-                                    </dd>
-                                            </dl>
-
-    
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                    -static                    "
->
-    <h4 class="phpdocumentor-element__name" id="method_onWorkerStart">
-        onWorkerStart()
-        <a href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#method_onWorkerStart" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Handlers/HandlerInterface.php"><a href="files/src-handlers-handlerinterface.html"><abbr title="src/Handlers/HandlerInterface.php">HandlerInterface.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">48</span>
-
-            <a href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#source-view.48" class="phpdocumentor-element-found-in__source" data-line="48" data-modal="source-view" data-src="files/src/Handlers/HandlerInterface.php.txt"></a>
-    </aside>
-
-        <p class="phpdocumentor-summary">执行协程处理</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">onWorkerStart</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Workbunny-WebmanCoroutine-CoroutineWorkerInterface.html"><abbr title="\Workbunny\WebmanCoroutine\CoroutineWorkerInterface">CoroutineWorkerInterface</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$app</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$worker</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$app</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Workbunny-WebmanCoroutine-CoroutineWorkerInterface.html"><abbr title="\Workbunny\WebmanCoroutine\CoroutineWorkerInterface">CoroutineWorkerInterface</abbr></a></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$worker</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#method_onWorkerStart#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><a href="classes/Workbunny-WebmanCoroutine-Exceptions-RuntimeException.html"><abbr title="\Workbunny\WebmanCoroutine\Exceptions\RuntimeException">RuntimeException</abbr></a></span>
-                                                            
-                                             
-                                    </dd>
-                                            </dl>
-
-    
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                    -static                    "
->
-    <h4 class="phpdocumentor-element__name" id="method_waitGroupCreate">
-        waitGroupCreate()
-        <a href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#method_waitGroupCreate" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Handlers/HandlerInterface.php"><a href="files/src-handlers-handlerinterface.html"><abbr title="src/Handlers/HandlerInterface.php">HandlerInterface.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">65</span>
-
-            <a href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#source-view.65" class="phpdocumentor-element-found-in__source" data-line="65" data-modal="source-view" data-src="files/src/Handlers/HandlerInterface.php.txt"></a>
-    </aside>
-
-        <p class="phpdocumentor-summary">创建一个waitGroup</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">waitGroupCreate</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">string</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>返回waitGroupId</p>
-</section>
-
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                    -static                    "
->
-    <h4 class="phpdocumentor-element__name" id="method_waitGroupWait">
-        waitGroupWait()
-        <a href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#method_waitGroupWait" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Handlers/HandlerInterface.php"><a href="files/src-handlers-handlerinterface.html"><abbr title="src/Handlers/HandlerInterface.php">HandlerInterface.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">75</span>
-
-            <a href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#source-view.75" class="phpdocumentor-element-found-in__source" data-line="75" data-modal="source-view" data-src="files/src/Handlers/HandlerInterface.php.txt"></a>
-    </aside>
-
-        <p class="phpdocumentor-summary">阻塞等待一个waitGroup完成</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">waitGroupWait</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$waitGroupId</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$timeout</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">-1</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$waitGroupId</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$timeout</span>
-                : <span class="phpdocumentor-signature__argument__return-type">int</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">-1</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>默认无超时时间</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#method_waitGroupWait#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><a href="classes/Workbunny-WebmanCoroutine-Exceptions-RuntimeException.html"><abbr title="\Workbunny\WebmanCoroutine\Exceptions\RuntimeException">RuntimeException</abbr></a></span>
-                                                            
-                                             
-                                    </dd>
-                                            </dl>
-
-    
-
-    
 </article>
             </section>
 
@@ -686,12 +365,8 @@
                             <li class="phpdocumentor-on-this-page-section__title">Methods</li>
                 <li>
                     <ul class="phpdocumentor-list -clean">
-                                                    <li class=""><a href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#method_coroutineCreate">coroutineCreate()</a></li>
+                                                    <li class=""><a href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#method_initEnv">initEnv()</a></li>
                                                     <li class=""><a href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#method_isAvailable">isAvailable()</a></li>
-                                                    <li class=""><a href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#method_onMessage">onMessage()</a></li>
-                                                    <li class=""><a href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#method_onWorkerStart">onWorkerStart()</a></li>
-                                                    <li class=""><a href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#method_waitGroupCreate">waitGroupCreate()</a></li>
-                                                    <li class=""><a href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#method_waitGroupWait">waitGroupWait()</a></li>
                                             </ul>
                 </li>
             

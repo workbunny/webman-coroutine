@@ -31,10 +31,7 @@ class DefaultChannel implements ChannelInterface
 
     public function pop(int $timeout = -1): mixed
     {
-        if ($this->_queue) {
-            return $this->_queue->dequeue();
-        }
-        return false;
+        return $this->_queue->dequeue();
     }
 
     /** @inheritdoc
@@ -43,29 +40,26 @@ class DefaultChannel implements ChannelInterface
      */
     public function push(mixed $data, int $timeout = -1): bool
     {
-        if ($this->_queue) {
-            $this->_queue->enqueue($data);
-            return true;
-        }
-        return false;
+        $this->_queue->enqueue($data);
+        return true;
     }
 
     /** @inheritdoc  */
     public function isEmpty(): bool
     {
-        return $this->_queue?->isEmpty() ?: true;
+        return $this->_queue->isEmpty();
     }
 
     /** @inheritdoc  */
     public function isFull(): bool
     {
-        return !($this->_capacity < 0) && $this->_capacity <= intval($this->_queue?->count());
+        return !($this->capacity() < 0) && $this->capacity() <= intval($this->_queue?->count());
     }
 
     /** @inheritdoc  */
     public function close(): void
     {
-        $this->_queue = null;
+        $this->_queue = new \SplQueue();
     }
 
     /** @inheritdoc  */

@@ -12,8 +12,8 @@ use Swoole\Coroutine\Channel;
 class SwooleChannel implements ChannelInterface
 {
 
-    /** @var Channel|null  */
-    protected ?Channel $_channel;
+    /** @var Channel  */
+    protected Channel $_channel;
 
     /** @inheritdoc  */
     public function __construct(int $capacity = -1)
@@ -30,43 +30,36 @@ class SwooleChannel implements ChannelInterface
     /** @inheritdoc  */
     public function pop(int $timeout = -1): mixed
     {
-        if ($this->_channel) {
-            return $this->_channel->pop($timeout);
-        }
-        return false;
+        return $this->_channel->pop($timeout);
     }
 
     /** @inheritdoc */
     public function push(mixed $data, int $timeout = -1): mixed
     {
-        if ($this->_channel) {
-            return $this->_channel->push($data, $timeout);
-        }
-        return false;
+        return $this->_channel->push($data, $timeout);
     }
 
     /** @inheritdoc  */
     public function isEmpty(): bool
     {
-        return $this->_channel?->isEmpty() ?: true;
+        return $this->_channel->isEmpty();
     }
 
     /** @inheritdoc  */
     public function isFull(): bool
     {
-        return $this->_channel?->isFull() ?: false;
+        return $this->_channel->isFull();
     }
 
     /** @inheritdoc  */
     public function close(): void
     {
         $this->_channel->close();
-        $this->_channel = null;
     }
 
     /** @inheritdoc  */
     public function capacity(): int
     {
-        return $this->_channel?->capacity ?: 0;
+        return $this->_channel->capacity;
     }
 }

@@ -15,11 +15,8 @@ namespace Workbunny\WebmanCoroutine;
  */
 function event_loop(?string $expectEventLoopClass = null): string
 {
-    return $expectEventLoopClass
-        // 如果传入期待值，则会对期待值判定
-        ? Factory::get($expectEventLoopClass, true, true)
-        // 否则根据环境自动判定
-        : Factory::find(true);
+    Factory::init($expectEventLoopClass);
+    return Factory::getCurrentEventLoop();
 }
 
 /**

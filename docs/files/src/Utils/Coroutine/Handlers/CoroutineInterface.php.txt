@@ -10,28 +10,19 @@ namespace Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers;
 interface CoroutineInterface
 {
     /**
-     * 初始化
+     * 创建协程
      */
-    public function __construct();
+    public function __construct(\Closure $func);
 
     /**
-     * 销毁
+     * 销毁协程
      */
     public function __destruct();
 
     /**
-     * 创建一个协程
+     * 获取协程原始返回
      *
-     * @param \Closure $func
-     * @return string 协程id
+     * @return mixed
      */
-    public function create(\Closure $func): string;
-
-    /**
-     * 获取协程对象，部分实现不支持
-     *
-     * @param string $id
-     * @return mixed null:不存在 false:不支持
-     */
-    public function query(string $id): mixed;
+    public function origin(): mixed;
 }

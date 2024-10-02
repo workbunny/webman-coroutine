@@ -171,28 +171,21 @@
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
-<dd>初始化</dd>
+<dd>创建协程</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-SwowCoroutine.html#method___destruct">__destruct()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
-<dd>销毁</dd>
+<dd>销毁协程</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-SwowCoroutine.html#method_create">create()</a>
-    <span>
-                                &nbsp;: string    </span>
-</dt>
-<dd>创建一个协程</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-SwowCoroutine.html#method_query">query()</a>
+    <a class="" href="classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-SwowCoroutine.html#method_origin">origin()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
-<dd>获取协程对象，部分实现不支持</dd>
+<dd>获取协程原始返回</dd>
 
     </dl>
 
@@ -222,22 +215,32 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Coroutine/Handlers/SwowCoroutine.php"><a href="files/src-utils-coroutine-handlers-swowcoroutine.html"><abbr title="src/Utils/Coroutine/Handlers/SwowCoroutine.php">SwowCoroutine.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">20</span>
+    <span class="phpdocumentor-element-found-in__line">22</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-SwowCoroutine.html#source-view.20" class="phpdocumentor-element-found-in__source" data-line="20" data-modal="source-view" data-src="files/src/Utils/Coroutine/Handlers/SwowCoroutine.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-SwowCoroutine.html#source-view.22" class="phpdocumentor-element-found-in__source" data-line="22" data-modal="source-view" data-src="files/src/Utils/Coroutine/Handlers/SwowCoroutine.php.txt"></a>
     </aside>
 
-        <p class="phpdocumentor-summary">初始化</p>
+        <p class="phpdocumentor-summary">创建协程</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Closure">Closure</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$func</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
     
     
-    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$func</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Closure">Closure</abbr></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
@@ -272,12 +275,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Coroutine/Handlers/SwowCoroutine.php"><a href="files/src-utils-coroutine-handlers-swowcoroutine.html"><abbr title="src/Utils/Coroutine/Handlers/SwowCoroutine.php">SwowCoroutine.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">26</span>
+    <span class="phpdocumentor-element-found-in__line">28</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-SwowCoroutine.html#source-view.26" class="phpdocumentor-element-found-in__source" data-line="26" data-modal="source-view" data-src="files/src/Utils/Coroutine/Handlers/SwowCoroutine.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-SwowCoroutine.html#source-view.28" class="phpdocumentor-element-found-in__source" data-line="28" data-modal="source-view" data-src="files/src/Utils/Coroutine/Handlers/SwowCoroutine.php.txt"></a>
     </aside>
 
-        <p class="phpdocumentor-summary">销毁</p>
+        <p class="phpdocumentor-summary">销毁协程</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -314,44 +317,34 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_create">
-        create()
-        <a href="classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-SwowCoroutine.html#method_create" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_origin">
+        origin()
+        <a href="classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-SwowCoroutine.html#method_origin" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Coroutine/Handlers/SwowCoroutine.php"><a href="files/src-utils-coroutine-handlers-swowcoroutine.html"><abbr title="src/Utils/Coroutine/Handlers/SwowCoroutine.php">SwowCoroutine.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">32</span>
+    <span class="phpdocumentor-element-found-in__line">34</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-SwowCoroutine.html#source-view.32" class="phpdocumentor-element-found-in__source" data-line="32" data-modal="source-view" data-src="files/src/Utils/Coroutine/Handlers/SwowCoroutine.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-SwowCoroutine.html#source-view.34" class="phpdocumentor-element-found-in__source" data-line="34" data-modal="source-view" data-src="files/src/Utils/Coroutine/Handlers/SwowCoroutine.php.txt"></a>
     </aside>
 
-        <p class="phpdocumentor-summary">创建一个协程</p>
+        <p class="phpdocumentor-summary">获取协程原始返回</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">create</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Closure">Closure</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$func</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+                    <span class="phpdocumentor-signature__name">origin</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
     
     
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$func</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Closure">Closure</abbr></span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
+    
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-SwowCoroutine.html#method_create#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-SwowCoroutine.html#method_origin#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -366,83 +359,7 @@
 
     
 
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">string</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>协程id</p>
-</section>
-
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_query">
-        query()
-        <a href="classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-SwowCoroutine.html#method_query" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Coroutine/Handlers/SwowCoroutine.php"><a href="files/src-utils-coroutine-handlers-swowcoroutine.html"><abbr title="src/Utils/Coroutine/Handlers/SwowCoroutine.php">SwowCoroutine.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">39</span>
-
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-SwowCoroutine.html#source-view.39" class="phpdocumentor-element-found-in__source" data-line="39" data-modal="source-view" data-src="files/src/Utils/Coroutine/Handlers/SwowCoroutine.php.txt"></a>
-    </aside>
-
-        <p class="phpdocumentor-summary">获取协程对象，部分实现不支持</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">query</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
     
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$id</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-SwowCoroutine.html#method_query#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">inheritdoc</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                             
-                                    </dd>
-                                            </dl>
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">mixed</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>null:不存在 false:不支持</p>
-</section>
-
-            </section>
-
 </article>
             </section>
 
@@ -559,8 +476,7 @@
                 <ul class="phpdocumentor-list -clean">
                                             <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-SwowCoroutine.html#method___construct">__construct()</a></li>
                                             <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-SwowCoroutine.html#method___destruct">__destruct()</a></li>
-                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-SwowCoroutine.html#method_create">create()</a></li>
-                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-SwowCoroutine.html#method_query">query()</a></li>
+                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-SwowCoroutine.html#method_origin">origin()</a></li>
                                     </ul>
             </li>
                     </ul>

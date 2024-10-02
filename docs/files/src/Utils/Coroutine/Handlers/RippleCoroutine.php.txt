@@ -7,39 +7,38 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers;
 
+use Psc\Core\Coroutine\Promise;
+use function Co\async;
+
 class RippleCoroutine implements CoroutineInterface
 {
     /**
-     * @var array
+     * @var null|Promise
      */
-    protected array $_promise;
+    protected ?Promise $_promise;
 
-    /** @inheritdoc  */
-    public function __construct()
+    /** @inheritdoc
+     * @param \Closure $func
+     */
+    public function __construct(\Closure $func)
     {
-        $this->_promise = [];
+        $this->_promise = async(function () use (&$promise, $func) {
+            call_user_func($func);
+            // 移除协程id及promise
+            $this->_promise = null;
+        });
     }
 
     /** @inheritdoc  */
     public function __destruct()
     {
-        $this->_promise = [];
+        $this->_promise = null;
     }
 
     /** @inheritdoc  */
-    public function create(\Closure $func): string
+    public function origin(): ?Promise
     {
-        $promise = \Co\async(function () use (&$promise, $func) {
-            call_user_func($func);
-            // 移除协程id及promise
-            unset($this->_promise[spl_object_hash($promise)]);
-        });
-        return spl_object_hash($promise);
-    }
 
-    /** @inheritdoc  */
-    public function query(string $id): mixed
-    {
-        return $this->_promise[$id] ?? null;
+        return $this->_promise;
     }
 }
