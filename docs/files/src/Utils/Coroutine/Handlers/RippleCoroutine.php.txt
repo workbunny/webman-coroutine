@@ -17,16 +17,22 @@ class RippleCoroutine implements CoroutineInterface
      */
     protected ?Promise $_promise;
 
+    /**
+     * @var string
+     */
+    protected string $_id;
+
     /** @inheritdoc
      * @param \Closure $func
      */
     public function __construct(\Closure $func)
     {
-        $this->_promise = async(function () use (&$promise, $func) {
+        $this->_promise = $this->_async(function () use (&$promise, $func) {
             call_user_func($func);
             // 移除协程id及promise
             $this->_promise = null;
         });
+        $this->_id = spl_object_hash($this->_promise);
     }
 
     /** @inheritdoc  */
@@ -40,5 +46,20 @@ class RippleCoroutine implements CoroutineInterface
     {
 
         return $this->_promise;
+    }
+
+    /** @inheritdoc  */
+    public function id(): string
+    {
+        return $this->_id;
+    }
+
+    /**
+     * @param \Closure $closure
+     * @return mixed
+     */
+    protected function _async(\Closure $closure)
+    {
+        return async($closure);
     }
 }

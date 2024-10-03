@@ -10,7 +10,6 @@ namespace Workbunny\WebmanCoroutine;
 use Webman\App;
 use Webman\Http\Request;
 use Workbunny\WebmanCoroutine\Handlers\HandlerInterface;
-use Workbunny\WebmanCoroutine\Utils\Channel\Channel;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Coroutine;
 use Workbunny\WebmanCoroutine\Utils\WaitGroup\WaitGroup;
 use Workerman\Connection\ConnectionInterface;
@@ -23,9 +22,23 @@ class CoroutineWebServer extends App
 {
 
     /**
-     * @var Channel[]
+     * 每个连接的协程计数
+     *
+     * @var int[]
      */
-    protected array $_connectionChannels = [];
+    protected static array $_connectionCoroutineCount = [];
+
+    /**
+     * 获取连接的协程计数
+     *
+     * @return int[]|int
+     */
+    public static function getConnectionCoroutineCount(?string $connectionId = null): array|int
+    {
+        return $connectionId === null
+            ? static::$_connectionCoroutineCount
+            : (static::$_connectionCoroutineCount[$connectionId] ?? 0);
+    }
 
     /** @inheritdoc  */
     public function onWorkerStart($worker)
@@ -74,9 +87,6 @@ class CoroutineWebServer extends App
                 call_user_func($call, $connection, ...$params);
             });
         }
-        if (!($this->_connectionChannels[$id = spl_object_hash($connection)] ?? null)) {
-            $this->_connectionChannels[$id] = new Channel(\config('plugin.workbunny.webman-coroutine.app.channel_size', 1));
-        }
     }
 
     /**
@@ -99,7 +109,6 @@ class CoroutineWebServer extends App
                 call_user_func($call, $connection, ...$params);
             });
         }
-        unset($this->_connectionChannels[spl_object_hash($connection)]);
     }
 
     /**
@@ -115,31 +124,22 @@ class CoroutineWebServer extends App
         if (!is_object($connection)) {
             return null;
         }
-        // 为每一个连接创建一个通道
-        $channel = $this->_connectionChannels[spl_object_hash($connection)] ?? new Channel(\config('plugin.workbunny.webman-coroutine.app.channel_size', 1));
-        // 请求生产
-        $channel->push(func_get_args());
+        $connectionId = spl_object_hash($connection);
+        $params = func_get_args();
+        $res = null;
         $waitGroup = new WaitGroup();
-        // 根据request consumer数量创建协程
-        $consumerCount = max(1, config('plugin.workbunny.webman-coroutine.app.consumer_count', 1));
-        foreach (range(1, $consumerCount) as $ignored) {
-            $waitGroup->add();
-            // 请求消费协程
-            new Coroutine(function () use ($channel, $waitGroup) {
-                while (true) {
-                    // 通道为空或者关闭时退出协程
-                    if (
-                        $channel->isEmpty() or
-                        !$data = $channel->pop()
-                    ) {
-                        break;
-                    }
-                    parent::onMessage(...$data);
-                }
-                $waitGroup->done();
-            });
-        }
+        $waitGroup->add();
+        // 请求消费协程
+        new Coroutine(function () use (&$res, $waitGroup, $params, $connectionId) {
+            $res = parent::onMessage(...$params);
+            self::$_connectionCoroutineCount[$connectionId] --;
+            $waitGroup->done();
+        });
+        self::$_connectionCoroutineCount[$connectionId] =
+            (isset(self::$_connectionCoroutineCount[$connectionId])
+                ? self::$_connectionCoroutineCount[$connectionId] + 1
+                : 1);
         $waitGroup->wait();
-        return null;
+        return $res;
     }
 }

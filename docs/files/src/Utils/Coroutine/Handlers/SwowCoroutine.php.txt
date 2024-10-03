@@ -16,12 +16,18 @@ class SwowCoroutine implements CoroutineInterface
      */
     protected ?Coroutine $_coroutine;
 
+    /**
+     * @var int
+     */
+    protected int $_id;
+
     /** @inheritdoc
      * @param \Closure $func
      */
     public function __construct(\Closure $func)
     {
         $this->_coroutine = Coroutine::run($func);
+        $this->_id = $this->_coroutine->getId();
     }
 
     /** @inheritdoc  */
@@ -34,5 +40,11 @@ class SwowCoroutine implements CoroutineInterface
     public function origin(): ?Coroutine
     {
         return $this->_coroutine;
+    }
+
+    /** @inheritdoc  */
+    public function id(): int
+    {
+        return $this->_id;
     }
 }

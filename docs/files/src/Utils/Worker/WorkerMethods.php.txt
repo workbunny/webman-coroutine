@@ -42,7 +42,7 @@ trait WorkerMethods
     /**
      * @return void
      */
-    protected function __runInit__workerMethods(): void
+    public function __init__workerMethods(): void
     {
         // start
         $this->_parentOnWorkerStart = $this->onWorkerStart;

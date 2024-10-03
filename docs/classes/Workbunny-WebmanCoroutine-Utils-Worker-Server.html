@@ -170,25 +170,18 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_getConnectionChannels">getConnectionChannels()</a>
+    <a class="" href="classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method___init__serverMethods">__init__serverMethods()</a>
     <span>
-                                &nbsp;: array&lt;string|int, mixed&gt;    </span>
+                                &nbsp;: void    </span>
 </dt>
-<dd>获取所有连接队列</dd>
+<dd>初始化服务</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_getConnectionChannelSize">getConnectionChannelSize()</a>
+    <a class="" href="classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_getConnectionCoroutineCount">getConnectionCoroutineCount()</a>
     <span>
-                                &nbsp;: int    </span>
+                                &nbsp;: array&lt;string|int, int&gt;|int    </span>
 </dt>
-<dd>获取连接队列容量</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_getConnectionConsumerCount">getConnectionConsumerCount()</a>
-    <span>
-                                &nbsp;: int    </span>
-</dt>
-<dd>获取连接队列消费者数量</dd>
+<dd>获取连接的协程计数</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_getParentOnClose">getParentOnClose()</a>
@@ -209,30 +202,18 @@
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Workbunny-WebmanCoroutine-Utils-Worker-AbstractWorker.html#method_run">run()</a>
-    <span>
-                                &nbsp;: void    </span>
-</dt>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_setConnectionChannelSize">setConnectionChannelSize()</a>
-    <span>
-                                &nbsp;: void    </span>
-</dt>
-<dd>设置连接队列容量</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_setConnectionConsumerCount">setConnectionConsumerCount()</a>
-    <span>
-                                &nbsp;: void    </span>
-</dt>
-<dd>设置连接队列消费者数量</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_setConnectionCoroutine">setConnectionCoroutine()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>设置连接创建/关闭协程化</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_setConnectionOnMessageWait">setConnectionOnMessageWait()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>设置连接on message是否等待</dd>
 
     </dl>
 
@@ -254,24 +235,24 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getConnectionChannels">
-        getConnectionChannels()
-        <a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_getConnectionChannels" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method___init__serverMethods">
+        __init__serverMethods()
+        <a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method___init__serverMethods" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Worker/ServerMethods.php"><a href="files/src-utils-worker-servermethods.html"><abbr title="src/Utils/Worker/ServerMethods.php">ServerMethods.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">71</span>
+    <span class="phpdocumentor-element-found-in__line">122</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-Server.html#source-view.71" class="phpdocumentor-element-found-in__source" data-line="71" data-modal="source-view" data-src="files/src/Utils/Worker/ServerMethods.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-Server.html#source-view.122" class="phpdocumentor-element-found-in__source" data-line="122" data-modal="source-view" data-src="files/src/Utils/Worker/ServerMethods.php.txt"></a>
     </aside>
 
-        <p class="phpdocumentor-summary">获取所有连接队列</p>
+        <p class="phpdocumentor-summary">初始化服务</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getConnectionChannels</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">__init__serverMethods</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -282,89 +263,55 @@
 
     
 
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
-            </section>
-
+    
 </article>
                     <article
         class="phpdocumentor-element
             -method
             -public
-                                                        "
+                                    -static                    "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getConnectionChannelSize">
-        getConnectionChannelSize()
-        <a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_getConnectionChannelSize" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getConnectionCoroutineCount">
+        getConnectionCoroutineCount()
+        <a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_getConnectionCoroutineCount" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Worker/ServerMethods.php"><a href="files/src-utils-worker-servermethods.html"><abbr title="src/Utils/Worker/ServerMethods.php">ServerMethods.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">81</span>
+    <span class="phpdocumentor-element-found-in__line">63</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-Server.html#source-view.81" class="phpdocumentor-element-found-in__source" data-line="81" data-modal="source-view" data-src="files/src/Utils/Worker/ServerMethods.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-Server.html#source-view.63" class="phpdocumentor-element-found-in__source" data-line="63" data-modal="source-view" data-src="files/src/Utils/Worker/ServerMethods.php.txt"></a>
     </aside>
 
-        <p class="phpdocumentor-summary">获取连接队列容量</p>
+        <p class="phpdocumentor-summary">获取连接的协程计数</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getConnectionChannelSize</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">getConnectionCoroutineCount</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$connectionId</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, int&gt;|int</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
     
     
-    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$connectionId</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
     
 
     
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">int</span>
-            </section>
-
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getConnectionConsumerCount">
-        getConnectionConsumerCount()
-        <a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_getConnectionConsumerCount" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Worker/ServerMethods.php"><a href="files/src-utils-worker-servermethods.html"><abbr title="src/Utils/Worker/ServerMethods.php">ServerMethods.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">102</span>
-
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-Server.html#source-view.102" class="phpdocumentor-element-found-in__source" data-line="102" data-modal="source-view" data-src="files/src/Utils/Worker/ServerMethods.php.txt"></a>
-    </aside>
-
-        <p class="phpdocumentor-summary">获取连接队列消费者数量</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">getConnectionConsumerCount</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-
-    
-
-            <section>
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-        <span class="phpdocumentor-signature__response_type">int</span>
+        <span class="phpdocumentor-signature__response_type">array&lt;string|int, int&gt;|int</span>
             </section>
 
 </article>
@@ -382,9 +329,9 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Worker/ServerMethods.php"><a href="files/src-utils-worker-servermethods.html"><abbr title="src/Utils/Worker/ServerMethods.php">ServerMethods.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">131</span>
+    <span class="phpdocumentor-element-found-in__line">83</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-Server.html#source-view.131" class="phpdocumentor-element-found-in__source" data-line="131" data-modal="source-view" data-src="files/src/Utils/Worker/ServerMethods.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-Server.html#source-view.83" class="phpdocumentor-element-found-in__source" data-line="83" data-modal="source-view" data-src="files/src/Utils/Worker/ServerMethods.php.txt"></a>
     </aside>
 
     
@@ -435,9 +382,9 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Worker/ServerMethods.php"><a href="files/src-utils-worker-servermethods.html"><abbr title="src/Utils/Worker/ServerMethods.php">ServerMethods.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">122</span>
+    <span class="phpdocumentor-element-found-in__line">74</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-Server.html#source-view.122" class="phpdocumentor-element-found-in__source" data-line="122" data-modal="source-view" data-src="files/src/Utils/Worker/ServerMethods.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-Server.html#source-view.74" class="phpdocumentor-element-found-in__source" data-line="74" data-modal="source-view" data-src="files/src/Utils/Worker/ServerMethods.php.txt"></a>
     </aside>
 
     
@@ -488,9 +435,9 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Worker/ServerMethods.php"><a href="files/src-utils-worker-servermethods.html"><abbr title="src/Utils/Worker/ServerMethods.php">ServerMethods.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">140</span>
+    <span class="phpdocumentor-element-found-in__line">92</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-Server.html#source-view.140" class="phpdocumentor-element-found-in__source" data-line="140" data-modal="source-view" data-src="files/src/Utils/Worker/ServerMethods.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-Server.html#source-view.92" class="phpdocumentor-element-found-in__source" data-line="92" data-modal="source-view" data-src="files/src/Utils/Worker/ServerMethods.php.txt"></a>
     </aside>
 
     
@@ -533,147 +480,6 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_run">
-        run()
-        <a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-AbstractWorker.html#method_run" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Worker/AbstractWorker.php"><a href="files/src-utils-worker-abstractworker.html"><abbr title="src/Utils/Worker/AbstractWorker.php">AbstractWorker.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">17</span>
-
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-Server.html#source-view.17" class="phpdocumentor-element-found-in__source" data-line="17" data-modal="source-view" data-src="files/src/Utils/Worker/AbstractWorker.php.txt"></a>
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">run</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-    
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-AbstractWorker.html#method_run#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">inheritdoc</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                             
-                                    </dd>
-                                            </dl>
-
-    
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_setConnectionChannelSize">
-        setConnectionChannelSize()
-        <a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_setConnectionChannelSize" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Worker/ServerMethods.php"><a href="files/src-utils-worker-servermethods.html"><abbr title="src/Utils/Worker/ServerMethods.php">ServerMethods.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">92</span>
-
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-Server.html#source-view.92" class="phpdocumentor-element-found-in__source" data-line="92" data-modal="source-view" data-src="files/src/Utils/Worker/ServerMethods.php.txt"></a>
-    </aside>
-
-        <p class="phpdocumentor-summary">设置连接队列容量</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setConnectionChannelSize</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$connectionChannelSize</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$connectionChannelSize</span>
-                : <span class="phpdocumentor-signature__argument__return-type">int</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-    
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_setConnectionConsumerCount">
-        setConnectionConsumerCount()
-        <a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_setConnectionConsumerCount" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Worker/ServerMethods.php"><a href="files/src-utils-worker-servermethods.html"><abbr title="src/Utils/Worker/ServerMethods.php">ServerMethods.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">113</span>
-
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-Server.html#source-view.113" class="phpdocumentor-element-found-in__source" data-line="113" data-modal="source-view" data-src="files/src/Utils/Worker/ServerMethods.php.txt"></a>
-    </aside>
-
-        <p class="phpdocumentor-summary">设置连接队列消费者数量</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setConnectionConsumerCount</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$connectionConsumerCount</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
-
-    <div class="phpdocumentor-label-line">
-        </div>
-    
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$connectionConsumerCount</span>
-                : <span class="phpdocumentor-signature__argument__return-type">int</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                
-            </dd>
-            </dl>
-
-    
-
-    
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_setConnectionCoroutine">
         setConnectionCoroutine()
         <a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_setConnectionCoroutine" class="headerlink"><i class="fas fa-link"></i></a>
@@ -682,12 +488,13 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Worker/ServerMethods.php"><a href="files/src-utils-worker-servermethods.html"><abbr title="src/Utils/Worker/ServerMethods.php">ServerMethods.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">148</span>
+    <span class="phpdocumentor-element-found-in__line">102</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-Server.html#source-view.148" class="phpdocumentor-element-found-in__source" data-line="148" data-modal="source-view" data-src="files/src/Utils/Worker/ServerMethods.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-Server.html#source-view.102" class="phpdocumentor-element-found-in__source" data-line="102" data-modal="source-view" data-src="files/src/Utils/Worker/ServerMethods.php.txt"></a>
     </aside>
 
-    
+        <p class="phpdocumentor-summary">设置连接创建/关闭协程化</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setConnectionCoroutine</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$connectionCoroutine</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
@@ -700,6 +507,52 @@
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$connectionCoroutine</span>
+                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+    
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_setConnectionOnMessageWait">
+        setConnectionOnMessageWait()
+        <a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_setConnectionOnMessageWait" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Worker/ServerMethods.php"><a href="files/src-utils-worker-servermethods.html"><abbr title="src/Utils/Worker/ServerMethods.php">ServerMethods.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">112</span>
+
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-Server.html#source-view.112" class="phpdocumentor-element-found-in__source" data-line="112" data-modal="source-view" data-src="files/src/Utils/Worker/ServerMethods.php.txt"></a>
+    </aside>
+
+        <p class="phpdocumentor-summary">设置连接on message是否等待</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setConnectionOnMessageWait</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$connectionOnMessageWait</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$connectionOnMessageWait</span>
                 : <span class="phpdocumentor-signature__argument__return-type">bool</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
@@ -826,16 +679,13 @@
                         <li class="phpdocumentor-on-this-page-section__title">Methods</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_getConnectionChannels">getConnectionChannels()</a></li>
-                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_getConnectionChannelSize">getConnectionChannelSize()</a></li>
-                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_getConnectionConsumerCount">getConnectionConsumerCount()</a></li>
+                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method___init__serverMethods">__init__serverMethods()</a></li>
+                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_getConnectionCoroutineCount">getConnectionCoroutineCount()</a></li>
                                             <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_getParentOnClose">getParentOnClose()</a></li>
                                             <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_getParentOnConnect">getParentOnConnect()</a></li>
                                             <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_getParentOnMessage">getParentOnMessage()</a></li>
-                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-AbstractWorker.html#method_run">run()</a></li>
-                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_setConnectionChannelSize">setConnectionChannelSize()</a></li>
-                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_setConnectionConsumerCount">setConnectionConsumerCount()</a></li>
                                             <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_setConnectionCoroutine">setConnectionCoroutine()</a></li>
+                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_setConnectionOnMessageWait">setConnectionOnMessageWait()</a></li>
                                     </ul>
             </li>
                     </ul>

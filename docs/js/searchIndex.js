@@ -6,6 +6,11 @@ Search.appendIndex(
             "summary": "\u534F\u7A0B\u5316web\u670D\u52A1\u8FDB\u7A0B",
             "url": "classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html"
         },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\CoroutineWebServer\u003A\u003AgetConnectionCoroutineCount\u0028\u0029",
+            "name": "getConnectionCoroutineCount",
+            "summary": "\u83B7\u53D6\u8FDE\u63A5\u7684\u534F\u7A0B\u8BA1\u6570",
+            "url": "classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#method_getConnectionCoroutineCount"
+        },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\CoroutineWebServer\u003A\u003AonWorkerStart\u0028\u0029",
             "name": "onWorkerStart",
             "summary": "",
@@ -130,6 +135,11 @@ Search.appendIndex(
             "name": "SkipWaitGroupDoneException",
             "summary": "\u7279\u6B8A\u5F02\u5E38\u7C7B\uFF0C\u7528\u4E8E\u8DF3\u8FC7\u0020WaitGroup\u7684done\uFF0C\u7528\u4E8E\u7279\u6B8A\u60C5\u51B5\u7684\u963B\u585E",
             "url": "classes/Workbunny-WebmanCoroutine-Exceptions-SkipWaitGroupDoneException.html"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Exceptions\\WorkerException",
+            "name": "WorkerException",
+            "summary": "",
+            "url": "classes/Workbunny-WebmanCoroutine-Exceptions-WorkerException.html"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Factory",
             "name": "Factory",
@@ -611,6 +621,11 @@ Search.appendIndex(
             "summary": "\u83B7\u53D6\u534F\u7A0B\u539F\u59CB\u8FD4\u56DE",
             "url": "classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-CoroutineInterface.html#method_origin"
         },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Coroutine\\Handlers\\CoroutineInterface\u003A\u003Aid\u0028\u0029",
+            "name": "id",
+            "summary": "\u83B7\u53D6\u534F\u7A0Bid",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-CoroutineInterface.html#method_id"
+        },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Coroutine\\Handlers\\DefaultCoroutine",
             "name": "DefaultCoroutine",
             "summary": "",
@@ -630,6 +645,11 @@ Search.appendIndex(
             "name": "origin",
             "summary": "\u83B7\u53D6\u534F\u7A0B\u539F\u59CB\u8FD4\u56DE",
             "url": "classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-DefaultCoroutine.html#method_origin"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Coroutine\\Handlers\\DefaultCoroutine\u003A\u003Aid\u0028\u0029",
+            "name": "id",
+            "summary": "\u83B7\u53D6\u534F\u7A0Bid",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-DefaultCoroutine.html#method_id"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Coroutine\\Handlers\\RippleCoroutine",
             "name": "RippleCoroutine",
@@ -651,6 +671,11 @@ Search.appendIndex(
             "summary": "\u83B7\u53D6\u534F\u7A0B\u539F\u59CB\u8FD4\u56DE",
             "url": "classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-RippleCoroutine.html#method_origin"
         },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Coroutine\\Handlers\\RippleCoroutine\u003A\u003Aid\u0028\u0029",
+            "name": "id",
+            "summary": "\u83B7\u53D6\u534F\u7A0Bid",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-RippleCoroutine.html#method_id"
+        },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Coroutine\\Handlers\\SwooleCoroutine",
             "name": "SwooleCoroutine",
             "summary": "",
@@ -671,6 +696,11 @@ Search.appendIndex(
             "summary": "\u83B7\u53D6\u534F\u7A0B\u539F\u59CB\u8FD4\u56DE",
             "url": "classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-SwooleCoroutine.html#method_origin"
         },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Coroutine\\Handlers\\SwooleCoroutine\u003A\u003Aid\u0028\u0029",
+            "name": "id",
+            "summary": "\u83B7\u53D6\u534F\u7A0Bid",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-SwooleCoroutine.html#method_id"
+        },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Coroutine\\Handlers\\SwowCoroutine",
             "name": "SwowCoroutine",
             "summary": "",
@@ -690,6 +720,11 @@ Search.appendIndex(
             "name": "origin",
             "summary": "\u83B7\u53D6\u534F\u7A0B\u539F\u59CB\u8FD4\u56DE",
             "url": "classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-SwowCoroutine.html#method_origin"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Coroutine\\Handlers\\SwowCoroutine\u003A\u003Aid\u0028\u0029",
+            "name": "id",
+            "summary": "\u83B7\u53D6\u534F\u7A0Bid",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-SwowCoroutine.html#method_id"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\RegisterMethods",
             "name": "RegisterMethods",
@@ -936,11 +971,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Workbunny-WebmanCoroutine-Utils-Worker-AbstractWorker.html"
         },                {
-            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Worker\\AbstractWorker\u003A\u003Arun\u0028\u0029",
-            "name": "run",
-            "summary": "",
-            "url": "classes/Workbunny-WebmanCoroutine-Utils-Worker-AbstractWorker.html#method_run"
-        },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Worker\\Server",
             "name": "Server",
             "summary": "\u7F51\u7EDC\u8FDB\u7A0B",
@@ -951,30 +981,10 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html"
         },                {
-            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Worker\\ServerMethods\u003A\u003AgetConnectionChannels\u0028\u0029",
-            "name": "getConnectionChannels",
-            "summary": "\u83B7\u53D6\u6240\u6709\u8FDE\u63A5\u961F\u5217",
-            "url": "classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_getConnectionChannels"
-        },                {
-            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Worker\\ServerMethods\u003A\u003AgetConnectionChannelSize\u0028\u0029",
-            "name": "getConnectionChannelSize",
-            "summary": "\u83B7\u53D6\u8FDE\u63A5\u961F\u5217\u5BB9\u91CF",
-            "url": "classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_getConnectionChannelSize"
-        },                {
-            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Worker\\ServerMethods\u003A\u003AsetConnectionChannelSize\u0028\u0029",
-            "name": "setConnectionChannelSize",
-            "summary": "\u8BBE\u7F6E\u8FDE\u63A5\u961F\u5217\u5BB9\u91CF",
-            "url": "classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_setConnectionChannelSize"
-        },                {
-            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Worker\\ServerMethods\u003A\u003AgetConnectionConsumerCount\u0028\u0029",
-            "name": "getConnectionConsumerCount",
-            "summary": "\u83B7\u53D6\u8FDE\u63A5\u961F\u5217\u6D88\u8D39\u8005\u6570\u91CF",
-            "url": "classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_getConnectionConsumerCount"
-        },                {
-            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Worker\\ServerMethods\u003A\u003AsetConnectionConsumerCount\u0028\u0029",
-            "name": "setConnectionConsumerCount",
-            "summary": "\u8BBE\u7F6E\u8FDE\u63A5\u961F\u5217\u6D88\u8D39\u8005\u6570\u91CF",
-            "url": "classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_setConnectionConsumerCount"
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Worker\\ServerMethods\u003A\u003AgetConnectionCoroutineCount\u0028\u0029",
+            "name": "getConnectionCoroutineCount",
+            "summary": "\u83B7\u53D6\u8FDE\u63A5\u7684\u534F\u7A0B\u8BA1\u6570",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_getConnectionCoroutineCount"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Worker\\ServerMethods\u003A\u003AgetParentOnConnect\u0028\u0029",
             "name": "getParentOnConnect",
@@ -993,8 +1003,18 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Worker\\ServerMethods\u003A\u003AsetConnectionCoroutine\u0028\u0029",
             "name": "setConnectionCoroutine",
-            "summary": "",
+            "summary": "\u8BBE\u7F6E\u8FDE\u63A5\u521B\u5EFA\/\u5173\u95ED\u534F\u7A0B\u5316",
             "url": "classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_setConnectionCoroutine"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Worker\\ServerMethods\u003A\u003AsetConnectionOnMessageWait\u0028\u0029",
+            "name": "setConnectionOnMessageWait",
+            "summary": "\u8BBE\u7F6E\u8FDE\u63A5on\u0020message\u662F\u5426\u7B49\u5F85",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_setConnectionOnMessageWait"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Worker\\ServerMethods\u003A\u003A__init__serverMethods\u0028\u0029",
+            "name": "__init__serverMethods",
+            "summary": "\u521D\u59CB\u5316\u670D\u52A1",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method___init__serverMethods"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Worker\\Worker",
             "name": "Worker",
@@ -1015,6 +1035,11 @@ Search.appendIndex(
             "name": "getParentOnWorkerStop",
             "summary": "",
             "url": "classes/Workbunny-WebmanCoroutine-Utils-Worker-WorkerMethods.html#method_getParentOnWorkerStop"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Worker\\WorkerMethods\u003A\u003A__init__workerMethods\u0028\u0029",
+            "name": "__init__workerMethods",
+            "summary": "",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Worker-WorkerMethods.html#method___init__workerMethods"
         },                {
             "fqsen": "\\",
             "name": "\\",

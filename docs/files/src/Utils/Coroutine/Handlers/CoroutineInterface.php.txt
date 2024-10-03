@@ -25,4 +25,11 @@ interface CoroutineInterface
      * @return mixed
      */
     public function origin(): mixed;
+
+    /**
+     * 获取协程id
+     *
+     * @return string|int
+     */
+    public function id(): string|int;
 }
