@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace UtilsCase\Channel;
+namespace Workbunny\Tests\UtilsCase\Channel;
 
 use PHPUnit\Framework\TestCase;
 use Mockery;
