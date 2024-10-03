@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Utils\Worker;
 
+use Workbunny\WebmanCoroutine\Exceptions\WorkerException;
 use Workbunny\WebmanCoroutine\Factory;
 use Workbunny\WebmanCoroutine\Handlers\HandlerInterface;
 use Workerman\Worker;
@@ -21,6 +22,10 @@ abstract class AbstractWorker extends Worker
             // 加载环境
             /** @var HandlerInterface $handler */
             $handler = Factory::getCurrentHandler();
+            if (!$handler) {
+                $className = $worker::class;
+                throw new WorkerException("Please run Factory::init or set $className::\$EventLoopClass = event_loop(). ");
+            }
             $handler::initEnv();
             // 加载__init__开头的初始化方法
             $traits = class_uses($worker, false);
