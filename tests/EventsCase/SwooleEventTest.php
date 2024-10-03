@@ -6,7 +6,6 @@ namespace Workbunny\Tests\EventsCase;
 
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
-use Swoole\Coroutine;
 use Workbunny\WebmanCoroutine\Events\SwooleEvent;
 use Workbunny\WebmanCoroutine\Exceptions\EventLoopException;
 use Workerman\Events\EventInterface;

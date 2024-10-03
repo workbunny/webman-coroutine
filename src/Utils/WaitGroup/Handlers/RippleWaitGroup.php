@@ -65,7 +65,16 @@ class RippleWaitGroup implements WaitGroupInterface
             if ($this->_count <= 0) {
                 return;
             }
-            \Co\sleep(0);
+            $this->_sleep(0);
         }
+    }
+
+    /**
+     * @param int $second
+     * @return void
+     */
+    protected function _sleep(int $second): void
+    {
+        \Co\sleep(0);
     }
 }
