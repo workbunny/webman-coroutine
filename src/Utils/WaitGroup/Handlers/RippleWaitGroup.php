@@ -75,6 +75,6 @@ class RippleWaitGroup implements WaitGroupInterface
      */
     protected function _sleep(int $second): void
     {
-        \Co\sleep(0);
+        \Co\sleep($second);
     }
 }
