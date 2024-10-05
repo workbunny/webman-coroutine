@@ -1,8 +1,10 @@
-## 自定义开发
+# 自定义开发
 
 `webman-coroutine`提供了用于让自己的自定义服务/进程协程化的基础工具
 
-### 1. 自定义协程驱动
+## 驱动自定义
+
+> 主驱动提供`Workbunny\WebmanCoroutine\Handlers\HandlerInterface`接口支持自定义驱动类
 
 1. 实现`Workbunny\WebmanCoroutine\Handlers\HandlerInterface`接口，实现自定义协程处理逻辑
 2. 通过`Workbunny\WebmanCoroutine\Factory::register(HandlerInterface $handler)`注册你的协程处理器
@@ -14,76 +16,126 @@
 > 注：因为`eventLoopClass`与`HandlerClass`是一一对应的，所以建议不管是否存在相同的事件循环或者相同的处理器都需要继承后重命名
 
 
-### 2. 自定义进程协程化
+## Utils自定义
 
-> 注：考虑到 webman 框架默认不会启用注解代理，所以这里没有使用注解代理来处理协程化代理
+> Utils下`Channel`、`Coroutine`、`WaitGroup`工具都提供了对应接口，支持自定义实现
 
-#### 1. Worker 协程化
+### Channel
 
-假设我们已经存在一个自定义服务类，如`MyProcess.php`
+1. 实现`Workbunny\WebmanCoroutine\Utils\Channel\Handlers\ChannelInterface`接口，实现自定义通道逻辑
+2. 通过`Workbunny\WebmanCoroutine\Utils\Channel\Channel::register(string $eventLoopClass, ChannelInterface $channelHandler)`注册你的通道处理器
+3. 当驱动使用的是该`$eventLoopClass`时，`Channel`会自动使用其注册对应的Handler
 
-```php
-namespace process;
+### Coroutine
 
-class MyProcess {
-    public function onWorkerStart() {
-        // 具体业务逻辑
-    }
-    // ...
-}
-```
+1. 实现`Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\CoroutineInterface`接口，实现自定义协程逻辑
+2. 通过`Workbunny\WebmanCoroutine\Utils\Coroutine\Coroutine::register(string $eventLoopClass, CoroutineInterface $coroutineHandler)`注册你的协程处理器
+3. 当驱动使用的是该`$eventLoopClass`时，`Coroutine`会自动使用其注册对应的Handler
 
-在`webman/workerman`环境中，`onWorkerStart()`是一个 worker 进程所必不可少的方法，
-假设我们想要将它协程化，在不改动`MyProcess`的情况下，只需要新建一个`MyCoroutineProcess.php`
+### WaitGroup
 
-```php
-namespace process;
+1. 实现`Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers\WaitGroupInterface`接口，实现自定义等待逻辑
+2. 通过`Workbunny\WebmanCoroutine\Utils\WaitGroup\WaitGroup::register(string $eventLoopClass, WaitGroupInterface $waitGroupHandler)`注册你的等待处理器
+3. 当驱动使用的是该`$eventLoopClass`时，`WaitGroup`会自动使用其注册对应的Handler
 
-use Workbunny\WebmanCoroutine\CoroutineWorkerInterface;
-use Workbunny\WebmanCoroutine\CoroutineWorkerMethods;
+## Worker
 
-class MyCoroutineProcess extends MyProcess implements CoroutineWorkerInterface {
+### 普通进程
 
-    // 引入协程代理方法
-    use CoroutineWorkerMethods;
-}
-```
-
-此时的`MyCoroutineProcess`将拥有协程化的`onWorkerStart()`，将新建的`MyCoroutineProcess`添加到 webman 的自定义进程配置`config/process.php`中启动即可
-
-#### 2. Server 协程化
-
-> 代码样例：[CoroutineWebServer.php](..%2F..%2Fsrc%2FCoroutineWebServer.php)
-
-假设我们已经存在一个自定义服务类，如`MyServer.php`
+- 原代码，使用workerman的worker启动4个进程输出start和stop
 
 ```php
-namespace process;
 
-class MyServer {
+use Workerman\Worker;
 
-    public function onMessage($connection, $data) {
-        // 具体业务逻辑
-    }
-
-    // ...
+$worker = new Worker();
+$worker->name = 'normal-worker';
+$worker->count = 4;
+$worker->onWorkerStart = function () {
+    echo 'start' . PHP_EOL;
 }
+$worker->onWorkerStop = function () {
+    echo 'stop' . PHP_EOL;
+}
+Worker::runAll();
 ```
 
-在`webman/workerman`环境中，`onMessage()`是一个具备监听能力的进程所必不可少的方法，假设我们想要将它协程化，在不改动`MyServer`的情况下，只需要新建一个`MyCoroutineServer.php`
+- 按如下修改即可协程化
 
 ```php
-namespace process;
 
-use Workbunny\WebmanCoroutine\CoroutineServerInterface;
-use Workbunny\WebmanCoroutine\CoroutineServerMethods;
+// 注释原Worker引入
+//use Workerman\Worker;
+//使用Utils worker 
+use Workbunny\WebmanCoroutine\Utils\Worker\Worker;
 
-class MyCoroutineServer extends MyServer implements CoroutineServerInterface {
+$worker = new Worker();
+// 增加eventLoop的指定
+$worker::$eventLoopClass = \Workbunny\WebmanCoroutine\event_loop();
 
-    // 引入协程代理方法
-    use CoroutineServerMethods;
+$worker->name = 'normal-worker';
+$worker->count = 4;
+$worker->onWorkerStart = function () {
+    echo 'start' . PHP_EOL;
 }
+$worker->onWorkerStop = function () {
+    echo 'stop' . PHP_EOL;
+}
+Worker::runAll();
 ```
 
-此时的`MyCoroutineServer`将拥有协程化的`onMessage()`，将新建的`MyCoroutineServer`添加到 webman 的自定义进程配置`config/process.php`中启动即可
+> Tips：上述代码即可协程化进程的`onWorkerStart`、`onWorkerStop`执行逻辑
 
+### 带网络监听的进程
+
+- 原代码，使用workerman的worker启动4个进程监听http
+
+```php
+
+use Workerman\Worker;
+
+$worker = new Worker('http://[::]:8080');
+$worker->name = 'normal-worker';
+$worker->count = 4;
+$worker->onConnect = function () {
+    // do something
+}
+$worker->onClose = function () {
+    // do something
+}
+$worker->onMessage = function () {
+    // do something
+}
+Worker::runAll();
+```
+
+- 按如下修改即可协程化
+
+```php
+
+// 注释原Worker引入
+//use Workerman\Worker;
+//使用Utils server 
+use Workbunny\WebmanCoroutine\Utils\Worker\Server as Worker;
+
+$worker = new Worker('http://[::]:8080');
+// 增加eventLoop的指定
+$worker::$eventLoopClass = \Workbunny\WebmanCoroutine\event_loop();
+
+$worker->name = 'normal-worker';
+$worker->count = 4;
+$worker->onConnect = function () {
+    // do something
+}
+$worker->onClose = function () {
+    // do something
+}
+$worker->onMessage = function () {
+    // do something
+}
+Worker::runAll();
+```
+
+> Tips：
+> 1. 上述代码即可协程化进程的`onMessage`、`onConnect`、`onClose`执行逻辑
+> 2. 除了http协议，还支持ws、tcp、udp等协议

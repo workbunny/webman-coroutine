@@ -71,76 +71,15 @@ composer require workbunny/webman-coroutine
 |-- helpers.php                  # 入口助手          
 ```
 
-### 配置说明
-
-- enable : (true/false), 是否启用协程webServer
-- port : (int), 协程webServer默认端口
-- channel_size : (int), 每个connection的channel容量
-- consumer_count : (int), 每个connection的消费者数量
-
-> 注: 配置只在webman框架下自动加载生效
-
-## 使用
-
-> 本插件主要是webman开发框架的协程基建包，但同时也提供纯 workerman 环境的协程化能力
-
-### webman开发框架
-
-#### 1. swow 环境
-
-1. 使用`./vendor/bin/swow-builder`安装`swow`拓展，注意请关闭`swoole`环境
-2. 修改`config/server.php`中`'event_loop' => \Workbunny\WebmanCoroutine\event_loop()`，
-   `event_loop()`函数会根据当前环境自行判断当前的 workerman 版本，自动选择合适的事件驱动
-   - 当开启`swow`拓展时，`workerman 4.x`下使用`SwowEvent`事件驱动
-   - 当开启`swow`拓展时，`workerman 5.x`下使用`workerman`自带的`Swow`事件驱动
-   - 当未开启`swow`时，使用`workerman`自带的`Event`事件驱动
-3. 使用`php -d extension=swow webman start`启动
-4. webman 自带的 webServer 协程化，可以关闭启动的`CoroutineWebServer`
-
-> 注：`CoroutineWebServer`可以在`config/plugin/workbunny/webman-coroutine/app.php`中通过`enable=false`关闭启动
-
-#### 2. swoole 环境
-
-1. 使用`pecl install swoole`安装稳定版 swoole 拓展
-2. 建议不要将`swoole`加入`php.ini`配置文件
-3. 修改`config/server.php`中`'event_loop' => \Workbunny\WebmanCoroutine\event_loop()`，
-   `event_loop()`函数会根据当前环境自行判断当前的 workerman 版本，自动选择合适的事件驱动
-   - 当开启 swoole 拓展时，workerman 4.x 下使用 SwooleEvent 事件驱动
-   - 当开启 swoole 拓展时，workerman 5.x 下使用 workerman 自带的 Swoole 事件驱动
-   - 当未开启 swoole 时，使用 workerman 自带的 Event 事件驱动
-4. 使用`php -d extension=swoole webman start`启动
-5. 通过`config/plugin/workbunny/webman-coroutine/process.php`启动的 CoroutineWebServer 可以用于协程环境开发，原服务还是 BIO 模式
-
-#### 3. ripple 环境
-
-1. 使用`composer require cclilshy/p-ripple-drive`安装 ripple 驱动插件
-2. 修改`config/server.php`配置
-   - `'event_loop' => \Workbunny\WebmanCoroutine\event_loop(Factory::RIPPLE_FIBER)`自动判断，请勿开启 swow、swoole，
-   - `'event_loop' => \Workbunny\WebmanCoroutine\Factory::RIPPLE_FIBER`手动指定
-3. 使用`php webman start`启动
-
-> 注：该环境协程依赖`php-fiber`，并没有自动`hook`系统的阻塞函数，但支持所有支持`php-fiber`的插件
-
-### workerman开发环境
-
-- Workbunny\WebmanCoroutine\Utils\Channel 提供协程通道的实现
-- Workbunny\WebmanCoroutine\Utils\Coroutine 提供协程的实现
-- Workbunny\WebmanCoroutine\Utils\WaitGroup 提供 wait group 实现
-- Workbunny\WebmanCoroutine\Utils\Worker 提供 worker 实现
-  - 将原有的Workerman\Worker使用Workbunny\WebmanCoroutine\Utils\Worker\Worker替换，
-  即可获得协程化`onWorkerStart`、`onWorkerStop`的Worker进程 
-  - 将原有的Workerman\Worker使用Workbunny\WebmanCoroutine\Utils\Worker\Server替换，
-  即可获得协程化`onConnect`、`onClose`、`onMessage`的Server进程，支持TCP/UDP/WebSocket/UnixSocket
-
-> 注：以上工具实现的代码支持在协程/非协程下使用，也就是说通过协程方法写的代码可以运行在非协程环境下
-
 ## 文档
 
-|      目录       |                                地址                                 |
-|:-------------:|:-----------------------------------------------------------------:|
-| Fucntion APIs | [Fucntion APIs 文档](https://workbunny.github.io/webman-coroutine/) |
-|      教程       |                   [协程入门](docs/doc/coroutine.md)                   |
-|               |                    [自定义开发](docs/doc/custom.md)                    |
+| 目录  |                               地址                               |
+|:---:|:--------------------------------------------------------------:|
+| API | [Fucntion-APIs](https://workbunny.github.io/webman-coroutine/) |
+| 教程  |               [PHP 协程入门](docs/doc/coroutine.md)                |
+|  -  |            [workerman 环境中使用](docs/doc/workerman.md)            |
+|  -  |               [webman 框架中使用](docs/doc/webman.md)               |
+|  -  |                    [自定义拓展](docs/doc/custom.md)                     |
 
 ## ♨️ 相关文章
 
