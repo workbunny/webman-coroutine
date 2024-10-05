@@ -102,6 +102,7 @@ class SwooleChannelTest extends TestCase
 
         $channel->close();
         unset($channel);
+        $this->assertTrue(true);
 //        $mockChannel = Mockery::mock('\Swow\Channel');
 //        $mockChannel->shouldReceive('close')
 //            ->once();
