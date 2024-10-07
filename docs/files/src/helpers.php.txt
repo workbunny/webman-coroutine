@@ -7,6 +7,9 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine;
 
+// 设置环境变量
+putenv('WORKBUNNY_COROUTINE=1');
+
 /**
  * 根据环境加载event-loop
  *
@@ -34,4 +37,14 @@ function package_installed(string $packageName): bool
     $composerData = json_decode(file_get_contents($composerFile), true);
 
     return isset($composerData['require'][$packageName]);
+}
+
+/**
+ * 判断是否在workbunny协程环境
+ *
+ * @return bool
+ */
+function is_coroutine_env(): bool
+{
+    return !getenv('WORKBUNNY_COROUTINE') === false;
 }

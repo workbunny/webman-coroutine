@@ -316,6 +316,11 @@ Search.appendIndex(
             "summary": "\u5224\u65AD\u662F\u5426composer\u5B89\u88C5\u4E86\u6307\u5B9A\u5305",
             "url": "namespaces/workbunny-webmancoroutine.html#function_package_installed"
         },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\is_coroutine_env\u0028\u0029",
+            "name": "is_coroutine_env",
+            "summary": "\u5224\u65AD\u662F\u5426\u5728workbunny\u534F\u7A0B\u73AF\u5883",
+            "url": "namespaces/workbunny-webmancoroutine.html#function_is_coroutine_env"
+        },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Channel\\Channel",
             "name": "Channel",
             "summary": "",
