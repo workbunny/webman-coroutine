@@ -11,6 +11,7 @@ use function Workbunny\WebmanCoroutine\event_loop;
 
 use Workbunny\WebmanCoroutine\Factory;
 
+use function Workbunny\WebmanCoroutine\is_coroutine_env;
 use function Workbunny\WebmanCoroutine\package_installed;
 
 /**
@@ -50,5 +51,10 @@ class HelpersTest extends TestCase
         $this->assertTrue(package_installed($packageName));
         $packageName = 'nonexistent/package';
         $this->assertFalse(package_installed($packageName));
+    }
+
+    public function testIsCoroutineEnv()
+    {
+        $this->assertTrue(is_coroutine_env());
     }
 }
