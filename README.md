@@ -74,9 +74,10 @@ composer require workbunny/webman-coroutine
 ### 助手函数说明
 
 - `event_loop()` 用于自动判断当前环境适合的event loop和协程驱动
+    > 环境的自动判定按照`Factory::$_handlers`的顺序择先加载
 - `package_installed` 用于判定当前环境是否安装对应composer包
 - `is_coroutine_env` 用于判断当前环境是否为workbunny协程环境
-  > 安装workbunny/webman-coroutine后自动会注册环境变量`WORKBUNNY_COROUTINE=1`
+    > 安装workbunny/webman-coroutine后自动会注册环境变量`WORKBUNNY_COROUTINE=1`
 
 ## 文档
 
