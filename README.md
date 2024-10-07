@@ -71,6 +71,13 @@ composer require workbunny/webman-coroutine
 |-- helpers.php                  # 入口助手          
 ```
 
+### 助手函数说明
+
+- `event_loop()` 用于自动判断当前环境适合的event loop和协程驱动
+- `package_installed` 用于判定当前环境是否安装对应composer包
+- `is_coroutine_env` 用于判断当前环境是否为workbunny协程环境
+  > 安装workbunny/webman-coroutine后自动会注册环境变量`WORKBUNNY_COROUTINE=1`
+
 ## 文档
 
 | 目录  |                               地址                               |
