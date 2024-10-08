@@ -18,9 +18,9 @@ class RippleCoroutine implements CoroutineInterface
     protected ?Promise $_promise = null;
 
     /**
-     * @var string
+     * @var null|string
      */
-    protected string $_id;
+    protected ?string $_id = null;
 
     /** @inheritdoc
      * @param \Closure $func
@@ -33,6 +33,7 @@ class RippleCoroutine implements CoroutineInterface
             } finally {
                 // 移除协程id及promise
                 $this->_promise = null;
+                $this->_id = null;
             }
         });
         $this->_id = spl_object_hash($this->_promise);
@@ -52,7 +53,7 @@ class RippleCoroutine implements CoroutineInterface
     }
 
     /** @inheritdoc  */
-    public function id(): string
+    public function id(): ?string
     {
         return $this->_id;
     }

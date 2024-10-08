@@ -23,7 +23,11 @@ class SwooleCoroutine implements CoroutineInterface
     {
         while (1) {
             if ($id = Coroutine::create(function () use ($func) {
-                call_user_func($func, $this->_id);
+                try {
+                    call_user_func($func, $this->_id);
+                } finally {
+                    $this->_id = null;
+                }
             })) {
                 $this->_id = $id;
                 break;

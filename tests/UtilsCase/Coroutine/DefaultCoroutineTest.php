@@ -19,8 +19,8 @@ class DefaultCoroutineTest extends TestCase
         };
         $coroutine = new DefaultCoroutine($func);
         $this->assertTrue($executed);
-        $this->assertEquals(spl_object_hash($func), $coroutine->id());
-        $this->assertEquals($coroutine->id(), $id);
+        $this->assertNull($coroutine->id());
+        $this->assertEquals(spl_object_hash($func), $id);
     }
 
     public function testOrigin()
@@ -38,7 +38,7 @@ class DefaultCoroutineTest extends TestCase
             // 模拟闭包函数的执行
         };
         $coroutine = new DefaultCoroutine($func);
-        $this->assertIsString($coroutine->id());
-        $this->assertEquals(spl_object_hash($func), $coroutine->id());
+        $this->assertNull($coroutine->id());
+        $this->assertNull($coroutine->origin());
     }
 }

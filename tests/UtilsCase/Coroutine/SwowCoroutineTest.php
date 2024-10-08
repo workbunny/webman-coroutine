@@ -35,12 +35,18 @@ class SwowCoroutineTest extends TestCase
         $coroutineMock->shouldReceive('getId')->andReturn(123);
         // 构造
         $coroutine = new SwowCoroutine($func);
+
+        $this->assertFalse($executed);
+        $this->assertInstanceOf('Swow\Coroutine', $coroutine->origin());
+        $this->assertEquals(123, $coroutine->id());
+        $this->assertEquals(123, $id);
+
         // 模拟构造后发生协程调度执行
         call_user_func($callback);
 
         $this->assertTrue($executed);
-        $this->assertInstanceOf('Swow\Coroutine', $coroutine->origin());
-        $this->assertEquals(123, $coroutine->id());
+        $this->assertNull($coroutine->origin());
+        $this->assertNull($coroutine->id());
         $this->assertEquals(123, $id);
     }
 
@@ -66,6 +72,7 @@ class SwowCoroutineTest extends TestCase
         $coroutine->__destruct();
 
         $this->assertNull($coroutine->origin());
+        $this->assertNull($coroutine->id());
     }
 
     public function testOrigin()
@@ -84,10 +91,13 @@ class SwowCoroutineTest extends TestCase
         $coroutineMock->shouldReceive('getId')->andReturn(123);
         // 构造
         $coroutine = new SwowCoroutine($func);
+
+        $this->assertInstanceOf('Swow\Coroutine', $coroutine->origin());
+
         // 模拟构造后发生协程调度执行
         call_user_func($callback);
 
-        $this->assertInstanceOf('Swow\Coroutine', $coroutine->origin());
+        $this->assertNull($coroutine->origin());
     }
 
     public function testId()
@@ -106,9 +116,12 @@ class SwowCoroutineTest extends TestCase
         $coroutineMock->shouldReceive('getId')->andReturn(123);
         // 构造
         $coroutine = new SwowCoroutine($func);
+
+        $this->assertEquals(123, $coroutine->id());
+
         // 模拟构造后发生协程调度执行
         call_user_func($callback);
 
-        $this->assertEquals(123, $coroutine->id());
+        $this->assertNull($coroutine->id());
     }
 }

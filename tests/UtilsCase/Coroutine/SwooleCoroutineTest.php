@@ -34,12 +34,18 @@ class SwooleCoroutineTest extends TestCase
         });
         // 构造
         $coroutine = new SwooleCoroutine($func);
+
+        $this->assertFalse($executed);
+        $this->assertEquals(123, $coroutine->origin());
+        $this->assertEquals(123, $coroutine->id());
+        $this->assertEquals(123, $id);
+
         // 模拟构造后发生协程执行
         call_user_func($callback);
 
         $this->assertTrue($executed);
-        $this->assertEquals(123, $coroutine->origin());
-        $this->assertEquals(123, $coroutine->id());
+        $this->assertNull($coroutine->origin());
+        $this->assertNull($coroutine->id());
         $this->assertEquals(123, $id);
     }
 
@@ -64,6 +70,7 @@ class SwooleCoroutineTest extends TestCase
         $coroutine->__destruct();
 
         $this->assertNull($coroutine->origin());
+        $this->assertNull($coroutine->id());
     }
 
     public function testOrigin()
@@ -81,10 +88,12 @@ class SwooleCoroutineTest extends TestCase
         });
         // 构造
         $coroutine = new SwooleCoroutine($func);
+
+        $this->assertEquals(123, $coroutine->origin());
         // 模拟构造后发生协程执行
         call_user_func($callback);
 
-        $this->assertEquals(123, $coroutine->origin());
+        $this->assertNull($coroutine->origin());
     }
 
     public function testId()
@@ -102,9 +111,11 @@ class SwooleCoroutineTest extends TestCase
         });
         // 构造
         $coroutine = new SwooleCoroutine($func);
+
+        $this->assertEquals(123, $coroutine->id());
         // 模拟构造后发生协程执行
         call_user_func($callback);
 
-        $this->assertEquals(123, $coroutine->id());
+        $this->assertNull($coroutine->id());
     }
 }

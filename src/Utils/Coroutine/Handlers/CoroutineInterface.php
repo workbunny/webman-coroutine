@@ -31,7 +31,7 @@ interface CoroutineInterface
     /**
      * 获取协程id
      *
-     * @return string|int
+     * @return string|int|null
      */
-    public function id(): string|int;
+    public function id(): string|int|null;
 }

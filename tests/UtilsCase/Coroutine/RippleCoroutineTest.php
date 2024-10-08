@@ -33,17 +33,24 @@ class RippleCoroutineTest extends TestCase
                 $callback = $closure;
                 return $promiseMock;
             });
-        // 模拟构造函数执行
+        // 模拟构造
         $constructor = new \ReflectionMethod(RippleCoroutine::class, '__construct');
         $constructor->invoke($coroutine, $func);
-        // 模拟构造后协程执行callback
-        call_user_func($callback);
 
-        $this->assertTrue($executed);
+        $this->assertFalse($executed);
         $this->assertInstanceOf('Psc\Core\Coroutine\Promise', $coroutine->origin());
         $this->assertIsString($coroutine->id());
         $this->assertEquals(spl_object_hash($promiseMock), $coroutine->id());
         $this->assertEquals($coroutine->id(), $id);
+
+        // 模拟发生协程执行
+        call_user_func($callback);
+
+        $this->assertTrue($executed);
+        $this->assertNull($coroutine->origin());
+        $this->assertNull($coroutine->id());
+        $this->assertNotNull($id);
+
     }
 
     public function testDestruct()
@@ -112,9 +119,12 @@ class RippleCoroutineTest extends TestCase
         // 模拟构造函数执行
         $constructor = new \ReflectionMethod(RippleCoroutine::class, '__construct');
         $constructor->invoke($coroutine, $func);
+
+        $this->assertIsString($coroutine->id());
+
         // 模拟构造后协程执行callback
         call_user_func($callback);
 
-        $this->assertIsString($coroutine->id());
+        $this->assertNull($coroutine->id());
     }
 }

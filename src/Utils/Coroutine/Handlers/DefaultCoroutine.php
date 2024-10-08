@@ -11,15 +11,15 @@ class DefaultCoroutine implements CoroutineInterface
 {
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected string $id;
+    protected ?string $id = null;
 
     /** @inheritdoc  */
     public function __construct(\Closure $func)
     {
-        call_user_func($func, $id = spl_object_hash($func));
-        $this->id = $id;
+        call_user_func($func, $this->id = spl_object_hash($func));
+        $this->id = null;
     }
 
     /** @inheritdoc  */
@@ -34,7 +34,7 @@ class DefaultCoroutine implements CoroutineInterface
     }
 
     /** @inheritdoc  */
-    public function id(): string
+    public function id(): ?string
     {
         return $this->id;
     }
