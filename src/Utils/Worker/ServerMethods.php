@@ -162,9 +162,12 @@ trait ServerMethods
                 $waitGroup->add();
                 // 协程创建
                 new Coroutine(function () use (&$res, $waitGroup, $params, $connectionId) {
-                    $res = call_user_func($this->getParentOnMessage(), ...$params);
-                    self::$_connectionCoroutineCount[$connectionId] --;
-                    $waitGroup->done();
+                    try {
+                        $res = call_user_func($this->getParentOnMessage(), ...$params);
+                    } finally {
+                        self::$_connectionCoroutineCount[$connectionId] --;
+                        $waitGroup->done();
+                    }
                 });
                 self::$_connectionCoroutineCount[$connectionId] =
                     (isset(self::$_connectionCoroutineCount[$connectionId])
