@@ -32,4 +32,12 @@ class DefaultHandler implements HandlerInterface
     public static function initEnv(): void
     {
     }
+
+    /** @inheritdoc  */
+    public static function waitFor(?\Closure $closure = null, float|int $timeout = -1): void
+    {
+        if ($closure) {
+            call_user_func($closure);
+        }
+    }
 }
