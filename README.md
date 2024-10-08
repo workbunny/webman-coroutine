@@ -2,9 +2,9 @@
 
 **<p align="center">workbunny/webman-coroutine</p>**
 
-**<p align="center">🐇 Webman plugin for coroutine web server. 🐇</p>**
+**<p align="center">🐇 Webman Coroutine Infrastructure Suite Compatible with Workerman. 🐇</p>**
 
-# Webman plugin for coroutine web server.
+# Webman Coroutine Infrastructure Suite Compatible with Workerman.
 
 <div align="center">
     <a href="https://github.com/workbunny/webman-coroutine/actions">
