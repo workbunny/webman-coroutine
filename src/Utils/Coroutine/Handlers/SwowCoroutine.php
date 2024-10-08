@@ -14,7 +14,7 @@ class SwowCoroutine implements CoroutineInterface
     /**
      * @var null|Coroutine
      */
-    protected ?Coroutine $_coroutine;
+    protected ?Coroutine $_coroutine = null;
 
     /**
      * @var int

@@ -14,7 +14,7 @@ class SwooleCoroutine implements CoroutineInterface
     /**
      * @var int|null
      */
-    protected ?int $_id;
+    protected ?int $_id = null;
 
     /** @inheritdoc
      * @param \Closure $func

@@ -36,7 +36,7 @@ class SwooleCoroutineTest extends TestCase
         $this->assertTrue($executed);
         $this->assertEquals(123, $coroutine->origin());
         $this->assertEquals(123, $coroutine->id());
-        $this->assertEquals(123, $id());
+        $this->assertEquals(123, $id);
     }
 
     public function testDestruct()
