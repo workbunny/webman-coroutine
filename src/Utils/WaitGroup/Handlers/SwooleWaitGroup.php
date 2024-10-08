@@ -65,7 +65,7 @@ class SwooleWaitGroup implements WaitGroupInterface
             if ($this->_count <= 0) {
                 return;
             }
-            msleep(max((int)($timeout * 1000 * 1000), 0));
+            usleep(max((int)($timeout * 1000 * 1000), 0));
         }
     }
 }
