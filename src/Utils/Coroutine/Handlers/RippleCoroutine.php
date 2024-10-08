@@ -15,7 +15,7 @@ class RippleCoroutine implements CoroutineInterface
     /**
      * @var null|Promise
      */
-    protected ?Promise $_promise;
+    protected ?Promise $_promise = null;
 
     /**
      * @var string
@@ -27,7 +27,7 @@ class RippleCoroutine implements CoroutineInterface
      */
     public function __construct(\Closure $func)
     {
-        $this->_promise = $this->_async(function () use ($func) {
+        $this->_promise = $promise = $this->_async(function () use (&$promise, $func) {
             try {
                 call_user_func($func, spl_object_hash($this->_promise));
             } finally {

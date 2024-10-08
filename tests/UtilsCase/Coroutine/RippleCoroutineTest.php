@@ -23,18 +23,21 @@ class RippleCoroutineTest extends TestCase
             $executed = true;
             $id = $coroutineId;
         };
-        $promiseMock = Mockery::mock('Psc\Core\Coroutine\Promise');
 
+        // mock async
+        $callback = null;
+        $promiseMock = Mockery::mock('Psc\Core\Coroutine\Promise');
         $coroutine = Mockery::mock(RippleCoroutine::class)->makePartial();
         $coroutine->shouldAllowMockingProtectedMethods()->shouldReceive('_async')
-            ->andReturnUsing(function($closure) use ($promiseMock) {
-                $closure();
+            ->andReturnUsing(function($closure) use (&$callback, $promiseMock) {
+                $callback = $closure;
                 return $promiseMock;
             });
-
-        // 手动调用构造函数
+        // 模拟构造函数执行
         $constructor = new \ReflectionMethod(RippleCoroutine::class, '__construct');
         $constructor->invoke($coroutine, $func);
+        // 模拟构造后协程执行callback
+        call_user_func($callback);
 
         $this->assertTrue($executed);
         $this->assertInstanceOf('Psc\Core\Coroutine\Promise', $coroutine->origin());
@@ -48,20 +51,24 @@ class RippleCoroutineTest extends TestCase
         $func = function() {
             // 模拟闭包函数的执行
         };
-        $promiseMock = Mockery::mock('Psc\Core\Coroutine\Promise');
 
+        // mock async
+        $callback = null;
+        $promiseMock = Mockery::mock('Psc\Core\Coroutine\Promise');
         $coroutine = Mockery::mock(RippleCoroutine::class)->makePartial();
         $coroutine->shouldAllowMockingProtectedMethods()->shouldReceive('_async')
-            ->andReturnUsing(function($closure) use ($promiseMock) {
-                $closure();
+            ->andReturnUsing(function($closure) use (&$callback, $promiseMock) {
+                $callback = $closure;
                 return $promiseMock;
             });
-
-        // 手动调用构造函数
+        // 模拟构造函数执行
         $constructor = new \ReflectionMethod(RippleCoroutine::class, '__construct');
         $constructor->invoke($coroutine, $func);
-
+        // 模拟构造后协程执行callback
+        call_user_func($callback);
+        // 模拟析构
         $coroutine->__destruct();
+        // 正常执行无报错
         $this->assertTrue(true);
     }
 
@@ -70,18 +77,20 @@ class RippleCoroutineTest extends TestCase
         $func = function() {
             // 模拟闭包函数的执行
         };
+        // mock async
+        $callback = null;
         $promiseMock = Mockery::mock('Psc\Core\Coroutine\Promise');
-
         $coroutine = Mockery::mock(RippleCoroutine::class)->makePartial();
         $coroutine->shouldAllowMockingProtectedMethods()->shouldReceive('_async')
-            ->andReturnUsing(function($closure) use ($promiseMock) {
-                $closure();
+            ->andReturnUsing(function($closure) use (&$callback, $promiseMock) {
+                $callback = $closure;
                 return $promiseMock;
             });
-
-        // 手动调用构造函数
+        // 模拟构造函数执行
         $constructor = new \ReflectionMethod(RippleCoroutine::class, '__construct');
         $constructor->invoke($coroutine, $func);
+        // 模拟构造后协程执行callback
+        call_user_func($callback);
 
         $this->assertInstanceOf('Psc\Core\Coroutine\Promise', $coroutine->origin());
     }
@@ -91,18 +100,20 @@ class RippleCoroutineTest extends TestCase
         $func = function() {
             // 模拟闭包函数的执行
         };
+        // mock async
+        $callback = null;
         $promiseMock = Mockery::mock('Psc\Core\Coroutine\Promise');
-
         $coroutine = Mockery::mock(RippleCoroutine::class)->makePartial();
         $coroutine->shouldAllowMockingProtectedMethods()->shouldReceive('_async')
-            ->andReturnUsing(function($closure) use ($promiseMock) {
-                $closure();
+            ->andReturnUsing(function($closure) use (&$callback, $promiseMock) {
+                $callback = $closure;
                 return $promiseMock;
             });
-
-        // 手动调用构造函数
+        // 模拟构造函数执行
         $constructor = new \ReflectionMethod(RippleCoroutine::class, '__construct');
         $constructor->invoke($coroutine, $func);
+        // 模拟构造后协程执行callback
+        call_user_func($callback);
 
         $this->assertIsString($coroutine->id());
     }

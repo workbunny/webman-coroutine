@@ -25,14 +25,18 @@ class SwowCoroutineTest extends TestCase
             $id = $coroutineId;
         };
 
+        // mock 协程创建
+        $callback = null;
         $coroutineMock = Mockery::mock('alias:Swow\Coroutine');
-        $coroutineMock->shouldReceive('run')->andReturnUsing(function($closure) use ($coroutineMock) {
-            $closure();
+        $coroutineMock->shouldReceive('run')->andReturnUsing(function($closure) use (&$callback, $coroutineMock) {
+            $callback = $closure;
             return $coroutineMock;
         });
         $coroutineMock->shouldReceive('getId')->andReturn(123);
-
+        // 构造
         $coroutine = new SwowCoroutine($func);
+        // 模拟构造后发生协程调度执行
+        call_user_func($callback);
 
         $this->assertTrue($executed);
         $this->assertInstanceOf('Swow\Coroutine', $coroutine->origin());
@@ -46,14 +50,19 @@ class SwowCoroutineTest extends TestCase
             // 模拟闭包函数的执行
         };
 
+        // mock 协程创建
+        $callback = null;
         $coroutineMock = Mockery::mock('alias:Swow\Coroutine');
-        $coroutineMock->shouldReceive('run')->andReturnUsing(function($closure) use ($coroutineMock) {
-            $closure();
+        $coroutineMock->shouldReceive('run')->andReturnUsing(function($closure) use (&$callback, $coroutineMock) {
+            $callback = $closure;
             return $coroutineMock;
         });
         $coroutineMock->shouldReceive('getId')->andReturn(123);
-
+        // 构造
         $coroutine = new SwowCoroutine($func);
+        // 模拟构造后发生协程调度执行
+        call_user_func($callback);
+        // 析构
         $coroutine->__destruct();
 
         $this->assertNull($coroutine->origin());
@@ -65,14 +74,18 @@ class SwowCoroutineTest extends TestCase
             // 模拟闭包函数的执行
         };
 
+        // mock 协程创建
+        $callback = null;
         $coroutineMock = Mockery::mock('alias:Swow\Coroutine');
-        $coroutineMock->shouldReceive('run')->andReturnUsing(function($closure) use ($coroutineMock) {
-            $closure();
+        $coroutineMock->shouldReceive('run')->andReturnUsing(function($closure) use (&$callback, $coroutineMock) {
+            $callback = $closure;
             return $coroutineMock;
         });
         $coroutineMock->shouldReceive('getId')->andReturn(123);
-
+        // 构造
         $coroutine = new SwowCoroutine($func);
+        // 模拟构造后发生协程调度执行
+        call_user_func($callback);
 
         $this->assertInstanceOf('Swow\Coroutine', $coroutine->origin());
     }
@@ -83,14 +96,18 @@ class SwowCoroutineTest extends TestCase
             // 模拟闭包函数的执行
         };
 
+        // mock 协程创建
+        $callback = null;
         $coroutineMock = Mockery::mock('alias:Swow\Coroutine');
-        $coroutineMock->shouldReceive('run')->andReturnUsing(function($closure) use ($coroutineMock) {
-            $closure();
+        $coroutineMock->shouldReceive('run')->andReturnUsing(function($closure) use (&$callback, $coroutineMock) {
+            $callback = $closure;
             return $coroutineMock;
         });
         $coroutineMock->shouldReceive('getId')->andReturn(123);
-
+        // 构造
         $coroutine = new SwowCoroutine($func);
+        // 模拟构造后发生协程调度执行
+        call_user_func($callback);
 
         $this->assertEquals(123, $coroutine->id());
     }

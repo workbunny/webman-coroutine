@@ -25,13 +25,17 @@ class SwooleCoroutineTest extends TestCase
             $id = $coroutineId;
         };
 
+        // mock 协程创建
+        $callback = null;
         $coroutineMock = Mockery::mock('alias:Swoole\Coroutine');
-        $coroutineMock->shouldReceive('create')->andReturnUsing(function($closure) use (&$executed) {
-            $closure();
+        $coroutineMock->shouldReceive('create')->andReturnUsing(function($closure) use (&$callback, &$executed) {
+            $callback = $closure;
             return 123;
         });
-
+        // 构造
         $coroutine = new SwooleCoroutine($func);
+        // 模拟构造后发生协程执行
+        call_user_func($callback);
 
         $this->assertTrue($executed);
         $this->assertEquals(123, $coroutine->origin());
@@ -45,13 +49,18 @@ class SwooleCoroutineTest extends TestCase
             // 模拟闭包函数的执行
         };
 
+        // mock 协程创建
+        $callback = null;
         $coroutineMock = Mockery::mock('alias:Swoole\Coroutine');
-        $coroutineMock->shouldReceive('create')->andReturnUsing(function($closure) {
-            $closure();
+        $coroutineMock->shouldReceive('create')->andReturnUsing(function($closure) use (&$callback, &$executed) {
+            $callback = $closure;
             return 123;
         });
-
+        // 构造
         $coroutine = new SwooleCoroutine($func);
+        // 模拟构造后发生协程执行
+        call_user_func($callback);
+        // 析构
         $coroutine->__destruct();
 
         $this->assertNull($coroutine->origin());
@@ -63,13 +72,17 @@ class SwooleCoroutineTest extends TestCase
             // 模拟闭包函数的执行
         };
 
+        // mock 协程创建
+        $callback = null;
         $coroutineMock = Mockery::mock('alias:Swoole\Coroutine');
-        $coroutineMock->shouldReceive('create')->andReturnUsing(function($closure) {
-            $closure();
+        $coroutineMock->shouldReceive('create')->andReturnUsing(function($closure) use (&$callback, &$executed) {
+            $callback = $closure;
             return 123;
         });
-
+        // 构造
         $coroutine = new SwooleCoroutine($func);
+        // 模拟构造后发生协程执行
+        call_user_func($callback);
 
         $this->assertEquals(123, $coroutine->origin());
     }
@@ -80,13 +93,17 @@ class SwooleCoroutineTest extends TestCase
             // 模拟闭包函数的执行
         };
 
+        // mock 协程创建
+        $callback = null;
         $coroutineMock = Mockery::mock('alias:Swoole\Coroutine');
-        $coroutineMock->shouldReceive('create')->andReturnUsing(function($closure) {
-            $closure();
+        $coroutineMock->shouldReceive('create')->andReturnUsing(function($closure) use (&$callback, &$executed) {
+            $callback = $closure;
             return 123;
         });
-
+        // 构造
         $coroutine = new SwooleCoroutine($func);
+        // 模拟构造后发生协程执行
+        call_user_func($callback);
 
         $this->assertEquals(123, $coroutine->id());
     }
