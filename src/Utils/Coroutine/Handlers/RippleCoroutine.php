@@ -29,7 +29,7 @@ class RippleCoroutine implements CoroutineInterface
     {
         $this->_promise = $this->_async(function () use ($func) {
             try {
-                call_user_func($func, $this->_id);
+                call_user_func($func, spl_object_hash($this->_promise));
             } finally {
                 // 移除协程id及promise
                 $this->_promise = null;
