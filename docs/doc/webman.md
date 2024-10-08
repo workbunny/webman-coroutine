@@ -114,18 +114,21 @@ $waitGroup->add();
 $coroutine1 = new Coroutine(function () use ($waitGroup) {
     echo 1 . PHP_EOL;
     $waitGroup->done();
-})
+});
+
 // 协程2
 $waitGroup->add();
 $coroutine2 = new Coroutine(function () use ($waitGroup) {
     echo 2 . PHP_EOL;
     $waitGroup->done();
-})
+});
+
+// 协程3
 $waitGroup->add();
 $coroutine3 = new Coroutine(function () use ($waitGroup) {
     echo 3 . PHP_EOL;
     $waitGroup->done();
-})
+});
 $waitGroup->wait();
 echo 'done' . PHP_EOL;
 ```
