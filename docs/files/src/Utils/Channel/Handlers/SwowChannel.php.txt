@@ -28,15 +28,15 @@ class SwowChannel implements ChannelInterface
     }
 
     /** @inheritdoc  */
-    public function pop(int $timeout = -1): mixed
+    public function pop(int|float $timeout = -1): mixed
     {
-        return $this->_channel->pop($timeout);
+        return $this->_channel->pop($this->_second2microsecond($timeout));
     }
 
     /** @inheritdoc */
-    public function push(mixed $data, int $timeout = -1): mixed
+    public function push(mixed $data, int|float $timeout = -1): mixed
     {
-        return $this->_channel->push($data, $timeout);
+        return $this->_channel->push($data, $this->_second2microsecond($timeout));
     }
 
     /** @inheritdoc  */
@@ -61,5 +61,14 @@ class SwowChannel implements ChannelInterface
     public function capacity(): int
     {
         return $this->_channel->getCapacity();
+    }
+
+    /**
+     * @param int|float $timeout
+     * @return int
+     */
+    protected function _second2microsecond(int|float $timeout): int
+    {
+        return $timeout > 0 ? (int)($timeout * 1000 * 1000) : -1;
     }
 }

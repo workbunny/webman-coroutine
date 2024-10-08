@@ -44,8 +44,8 @@ interface WaitGroupInterface
     /**
      * 阻塞等待
      *
-     * @param int $timeout
+     * @param int|float $timeout 单位：秒
      * @return void
      */
-    public function wait(int $timeout = -1): void;
+    public function wait(int|float $timeout = -1): void;
 }

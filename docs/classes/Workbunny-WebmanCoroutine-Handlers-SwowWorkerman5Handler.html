@@ -172,6 +172,13 @@
 </dt>
 <dd>用于判断当前环境是否可用</dd>
 
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Workbunny-WebmanCoroutine-Handlers-SwowHandler.html#method_waitFor">waitFor()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>等待直到回调返回true</dd>
+
     </dl>
 
 
@@ -294,6 +301,77 @@
             </section>
 
 </article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_waitFor">
+        waitFor()
+        <a href="classes/Workbunny-WebmanCoroutine-Handlers-SwowHandler.html#method_waitFor" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Handlers/SwowHandler.php"><a href="files/src-handlers-swowhandler.html"><abbr title="src/Handlers/SwowHandler.php">SwowHandler.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">34</span>
+
+            <a href="classes/Workbunny-WebmanCoroutine-Handlers-SwowWorkerman5Handler.html#source-view.34" class="phpdocumentor-element-found-in__source" data-line="34" data-modal="source-view" data-src="files/src/Handlers/SwowHandler.php.txt"></a>
+    </aside>
+
+        <p class="phpdocumentor-summary">等待直到回调返回true</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">waitFor</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Closure">Closure</abbr>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$closure</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">float|int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$timeout</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">-1</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$closure</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Closure">Closure</abbr>|null</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>返回true或抛出异常则跳出等待</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$timeout</span>
+                : <span class="phpdocumentor-signature__argument__return-type">float|int</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">-1</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>单位：秒| -1：不限制等待时间</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Workbunny-WebmanCoroutine-Handlers-SwowHandler.html#method_waitFor#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">inheritdoc</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+
+    
+</article>
             </section>
 
         <div class="phpdocumentor-modal" id="source-view">
@@ -409,6 +487,7 @@
                 <ul class="phpdocumentor-list -clean">
                                             <li class=""><a href="classes/Workbunny-WebmanCoroutine-Handlers-SwowHandler.html#method_initEnv">initEnv()</a></li>
                                             <li class=""><a href="classes/Workbunny-WebmanCoroutine-Handlers-SwowWorkerman5Handler.html#method_isAvailable">isAvailable()</a></li>
+                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-Handlers-SwowHandler.html#method_waitFor">waitFor()</a></li>
                                     </ul>
             </li>
                     </ul>

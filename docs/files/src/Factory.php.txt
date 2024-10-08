@@ -12,6 +12,7 @@ use Workbunny\WebmanCoroutine\Events\SwowEvent;
 use Workbunny\WebmanCoroutine\Handlers\DefaultHandler;
 use Workbunny\WebmanCoroutine\Handlers\HandlerInterface;
 use Workbunny\WebmanCoroutine\Handlers\RippleHandler;
+use Workbunny\WebmanCoroutine\Handlers\RippleWorkerman5Handler;
 use Workbunny\WebmanCoroutine\Handlers\SwooleHandler;
 use Workbunny\WebmanCoroutine\Handlers\SwooleWorkerman5Handler;
 use Workbunny\WebmanCoroutine\Handlers\SwowHandler;
@@ -27,6 +28,7 @@ class Factory
     public const WORKERMAN_SWOOLE = 'Workerman\Events\Swoole';
     public const WORKBUNNY_SWOOLE = SwooleEvent::class;
     public const RIPPLE_FIBER = 'Psc\Drive\Workerman\PDrive';
+    public const REVOLT_FIBER = 'Workerman\Events\Revolt';
     public const WORKERMAN_DEFAULT = '';
 
     /**
@@ -39,6 +41,7 @@ class Factory
         self::WORKBUNNY_SWOW    => SwowHandler::class,
         self::WORKERMAN_SWOOLE  => SwooleWorkerman5Handler::class,
         self::WORKBUNNY_SWOOLE  => SwooleHandler::class,
+        self::REVOLT_FIBER      => RippleWorkerman5Handler::class,
         self::RIPPLE_FIBER      => RippleHandler::class,
     ];
 

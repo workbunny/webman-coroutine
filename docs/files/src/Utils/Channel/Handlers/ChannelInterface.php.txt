@@ -21,22 +21,23 @@ interface ChannelInterface
      * 摧毁通道
      */
     public function __destruct();
+
     /**
      * 获取一个数据
      *
-     * @param int $timeout
+     * @param int|float $timeout 单位：秒
      * @return mixed false:通道关闭
      */
-    public function pop(int $timeout = -1): mixed;
+    public function pop(int|float $timeout = -1): mixed;
 
     /**
      * 推送一个数据
      *
-     * @param int $timeout
      * @param mixed $data
+     * @param int|float $timeout 单位：秒
      * @return mixed
      */
-    public function push(mixed $data, int $timeout = -1): mixed;
+    public function push(mixed $data, int|float $timeout = -1): mixed;
 
     /**
      * 通道是否为空

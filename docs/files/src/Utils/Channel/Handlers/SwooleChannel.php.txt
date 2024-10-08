@@ -28,15 +28,15 @@ class SwooleChannel implements ChannelInterface
     }
 
     /** @inheritdoc  */
-    public function pop(int $timeout = -1): mixed
+    public function pop(int|float $timeout = -1): mixed
     {
-        return $this->_channel->pop($timeout);
+        return $this->_channel->pop((float)$timeout);
     }
 
     /** @inheritdoc */
-    public function push(mixed $data, int $timeout = -1): mixed
+    public function push(mixed $data, int|float $timeout = -1): mixed
     {
-        return $this->_channel->push($data, $timeout);
+        return $this->_channel->push($data, (float)$timeout);
     }
 
     /** @inheritdoc  */

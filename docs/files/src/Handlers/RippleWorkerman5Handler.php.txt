@@ -8,21 +8,32 @@ declare(strict_types=1);
 namespace Workbunny\WebmanCoroutine\Handlers;
 
 use Workerman\Worker;
+use function Workbunny\WebmanCoroutine\package_installed;
 
 /**
- *  基于swow实现的协程处理器
+ * 基于Ripple插件的协程处理器，支持PHP-fiber
  */
-class SwowHandler implements HandlerInterface
+class RippleWorkerman5Handler implements HandlerInterface
 {
 
     /** @inheritdoc  */
     public static function isAvailable(): bool
     {
-        return !version_compare(Worker::VERSION, '5.0.0', '>=') and extension_loaded('swow');
+        return version_compare(static::_getWorkerVersion(), '5.0.0', '>=') and package_installed('cclilshy/p-ripple-drive');
     }
 
     /**
-     * swow handler无需初始化
+     * 为了测试可以mock
+     *
+     * @return string
+     */
+    protected static function _getWorkerVersion(): string
+    {
+        return Worker::VERSION;
+    }
+
+    /**
+     * ripple handler无需初始化
      *
      * @inheritdoc
      */
@@ -41,7 +52,16 @@ class SwowHandler implements HandlerInterface
             if ($timeout > 0 && microtime(true) - $time >= $timeout) {
                 return;
             }
-            usleep(max((int)($timeout * 1000 * 1000), 0));
+            static::_sleep($timeout);
         }
+    }
+
+    /**
+     * @param int|float $second
+     * @return void
+     */
+    protected static function _sleep(int|float $second): void
+    {
+        \Co\sleep(max($second, 0));
     }
 }

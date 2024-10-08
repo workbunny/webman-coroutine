@@ -38,7 +38,7 @@ class DefaultWaitGroup implements WaitGroupInterface
     }
 
     /** @inheritdoc  */
-    public function wait(int $timeout = -1): void
+    public function wait(int|float $timeout = -1): void
     {
     }
 }

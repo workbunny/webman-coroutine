@@ -8,6 +8,8 @@ declare(strict_types=1);
 namespace Workbunny\WebmanCoroutine;
 
 // 设置环境变量
+use Workbunny\WebmanCoroutine\Handlers\HandlerInterface;
+
 putenv('WORKBUNNY_COROUTINE=1');
 
 /**
@@ -20,6 +22,26 @@ function event_loop(?string $expectEventLoopClass = null): string
 {
     Factory::init($expectEventLoopClass);
     return Factory::getCurrentEventLoop();
+}
+
+/**
+ * 等待回调执行返回true
+ *
+ *  - 用于主协程等待子协程执行
+ *
+ * @param \Closure|null $closure
+ * @param float|int $timeout
+ * @return void
+ * @link HandlerInterface::waitFor()
+ */
+function wait_for(?\Closure $closure, float|int $timeout = -1): void
+{
+    if (($handler = Factory::getCurrentHandler()) === null) {
+        Factory::init(null);
+        /** @var HandlerInterface $handler */
+        $handler = Factory::getCurrentHandler();
+    }
+    $handler::waitFor($closure, $timeout);
 }
 
 /**

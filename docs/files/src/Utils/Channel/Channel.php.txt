@@ -40,6 +40,7 @@ class Channel
         Factory::WORKBUNNY_SWOW     => SwowChannel::class,
         Factory::WORKERMAN_SWOOLE   => SwooleChannel::class,
         Factory::WORKBUNNY_SWOOLE   => SwooleChannel::class,
+        Factory::REVOLT_FIBER       => RippleChannel::class,
         Factory::RIPPLE_FIBER       => RippleChannel::class,
     ];
 

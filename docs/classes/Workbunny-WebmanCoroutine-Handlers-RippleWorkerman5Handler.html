@@ -98,11 +98,8 @@
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    SwooleWorkerman5Handler
+    RippleWorkerman5Handler
 
-        <span class="phpdocumentor-element__extends">
-        extends <a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleHandler.html"><abbr title="\Workbunny\WebmanCoroutine\Handlers\SwooleHandler">SwooleHandler</abbr></a>
-    </span>
     
             <div class="phpdocumentor-element__package">
             in package
@@ -111,6 +108,9 @@
                             </ul>
         </div>
     
+            <span class="phpdocumentor-element__implements">
+            implements
+                            <a href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html"><abbr title="\Workbunny\WebmanCoroutine\Handlers\HandlerInterface">HandlerInterface</abbr></a>                    </span>
     
     </h2>
 
@@ -120,14 +120,14 @@
 </div>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Handlers/SwooleWorkerman5Handler.php"><a href="files/src-handlers-swooleworkerman5handler.html"><abbr title="src/Handlers/SwooleWorkerman5Handler.php">SwooleWorkerman5Handler.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Handlers/RippleWorkerman5Handler.php"><a href="files/src-handlers-rippleworkerman5handler.html"><abbr title="src/Handlers/RippleWorkerman5Handler.php">RippleWorkerman5Handler.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">15</span>
+    <span class="phpdocumentor-element-found-in__line">16</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleWorkerman5Handler.html#source-view.15" class="phpdocumentor-element-found-in__source" data-line="15" data-modal="source-view" data-src="files/src/Handlers/SwooleWorkerman5Handler.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Handlers-RippleWorkerman5Handler.html#source-view.16" class="phpdocumentor-element-found-in__source" data-line="16" data-modal="source-view" data-src="files/src/Handlers/RippleWorkerman5Handler.php.txt"></a>
     </aside>
 
-            <p class="phpdocumentor-summary">基于swoole实现的Workerman5.x版本协程处理器</p>
+            <p class="phpdocumentor-summary">基于Ripple插件的协程处理器，支持PHP-fiber</p>
 
 
 
@@ -139,12 +139,19 @@
 
 <h3 id="toc">
     Table of Contents
-    <a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleWorkerman5Handler.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Workbunny-WebmanCoroutine-Handlers-RippleWorkerman5Handler.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
 
 
+    <h4 id="toc-interfaces">
+        Interfaces
+        <a href="classes/Workbunny-WebmanCoroutine-Handlers-RippleWorkerman5Handler.html#toc-interfaces" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <dl class="phpdocumentor-table-of-contents">
+                    <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html"><abbr title="\Workbunny\WebmanCoroutine\Handlers\HandlerInterface">HandlerInterface</abbr></a></dt><dd>协程处理器接口</dd>    </dl>
 
 
 
@@ -154,26 +161,26 @@
 
 <h4 id="toc-methods">
     Methods
-    <a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleWorkerman5Handler.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/Workbunny-WebmanCoroutine-Handlers-RippleWorkerman5Handler.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleHandler.html#method_initEnv">initEnv()</a>
+    <a class="" href="classes/Workbunny-WebmanCoroutine-Handlers-RippleWorkerman5Handler.html#method_initEnv">initEnv()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd>用于环境加载初始化</dd>
+<dd>ripple handler无需初始化</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleWorkerman5Handler.html#method_isAvailable">isAvailable()</a>
+    <a class="" href="classes/Workbunny-WebmanCoroutine-Handlers-RippleWorkerman5Handler.html#method_isAvailable">isAvailable()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
 <dd>用于判断当前环境是否可用</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleHandler.html#method_waitFor">waitFor()</a>
+    <a class="" href="classes/Workbunny-WebmanCoroutine-Handlers-RippleWorkerman5Handler.html#method_waitFor">waitFor()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
@@ -190,7 +197,7 @@
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleWorkerman5Handler.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Handlers-RippleWorkerman5Handler.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -201,18 +208,18 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_initEnv">
         initEnv()
-        <a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleHandler.html#method_initEnv" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Workbunny-WebmanCoroutine-Handlers-RippleWorkerman5Handler.html#method_initEnv" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Handlers/SwooleHandler.php"><a href="files/src-handlers-swoolehandler.html"><abbr title="src/Handlers/SwooleHandler.php">SwooleHandler.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Handlers/RippleWorkerman5Handler.php"><a href="files/src-handlers-rippleworkerman5handler.html"><abbr title="src/Handlers/RippleWorkerman5Handler.php">RippleWorkerman5Handler.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">25</span>
+    <span class="phpdocumentor-element-found-in__line">40</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleWorkerman5Handler.html#source-view.25" class="phpdocumentor-element-found-in__source" data-line="25" data-modal="source-view" data-src="files/src/Handlers/SwooleHandler.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Handlers-RippleWorkerman5Handler.html#source-view.40" class="phpdocumentor-element-found-in__source" data-line="40" data-modal="source-view" data-src="files/src/Handlers/RippleWorkerman5Handler.php.txt"></a>
     </aside>
 
-        <p class="phpdocumentor-summary">用于环境加载初始化</p>
+        <p class="phpdocumentor-summary">ripple handler无需初始化</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -226,7 +233,7 @@
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleHandler.html#method_initEnv#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Workbunny-WebmanCoroutine-Handlers-RippleWorkerman5Handler.html#method_initEnv#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -251,15 +258,15 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_isAvailable">
         isAvailable()
-        <a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleWorkerman5Handler.html#method_isAvailable" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Workbunny-WebmanCoroutine-Handlers-RippleWorkerman5Handler.html#method_isAvailable" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Handlers/SwooleWorkerman5Handler.php"><a href="files/src-handlers-swooleworkerman5handler.html"><abbr title="src/Handlers/SwooleWorkerman5Handler.php">SwooleWorkerman5Handler.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Handlers/RippleWorkerman5Handler.php"><a href="files/src-handlers-rippleworkerman5handler.html"><abbr title="src/Handlers/RippleWorkerman5Handler.php">RippleWorkerman5Handler.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">18</span>
+    <span class="phpdocumentor-element-found-in__line">20</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleWorkerman5Handler.html#source-view.18" class="phpdocumentor-element-found-in__source" data-line="18" data-modal="source-view" data-src="files/src/Handlers/SwooleWorkerman5Handler.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Handlers-RippleWorkerman5Handler.html#source-view.20" class="phpdocumentor-element-found-in__source" data-line="20" data-modal="source-view" data-src="files/src/Handlers/RippleWorkerman5Handler.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">用于判断当前环境是否可用</p>
@@ -276,7 +283,7 @@
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleWorkerman5Handler.html#method_isAvailable#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Workbunny-WebmanCoroutine-Handlers-RippleWorkerman5Handler.html#method_isAvailable#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -309,15 +316,15 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_waitFor">
         waitFor()
-        <a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleHandler.html#method_waitFor" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Workbunny-WebmanCoroutine-Handlers-RippleWorkerman5Handler.html#method_waitFor" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Handlers/SwooleHandler.php"><a href="files/src-handlers-swoolehandler.html"><abbr title="src/Handlers/SwooleHandler.php">SwooleHandler.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Handlers/RippleWorkerman5Handler.php"><a href="files/src-handlers-rippleworkerman5handler.html"><abbr title="src/Handlers/RippleWorkerman5Handler.php">RippleWorkerman5Handler.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">31</span>
+    <span class="phpdocumentor-element-found-in__line">45</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleWorkerman5Handler.html#source-view.31" class="phpdocumentor-element-found-in__source" data-line="31" data-modal="source-view" data-src="files/src/Handlers/SwooleHandler.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Handlers-RippleWorkerman5Handler.html#source-view.45" class="phpdocumentor-element-found-in__source" data-line="45" data-modal="source-view" data-src="files/src/Handlers/RippleWorkerman5Handler.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">等待直到回调返回true</p>
@@ -355,7 +362,7 @@
     
     <h5 class="phpdocumentor-tag-list__heading" id="tags">
         Tags
-        <a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleHandler.html#method_waitFor#tags" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Workbunny-WebmanCoroutine-Handlers-RippleWorkerman5Handler.html#method_waitFor#tags" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h5>
     <dl class="phpdocumentor-tag-list">
@@ -378,7 +385,7 @@
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Handlers/SwooleWorkerman5Handler.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/Handlers/RippleWorkerman5Handler.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -477,7 +484,7 @@
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                                                                <li><a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleWorkerman5Handler.html#toc-methods">Methods</a></li>
+                                                                                <li><a href="classes/Workbunny-WebmanCoroutine-Handlers-RippleWorkerman5Handler.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
             
@@ -485,9 +492,9 @@
                         <li class="phpdocumentor-on-this-page-section__title">Methods</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleHandler.html#method_initEnv">initEnv()</a></li>
-                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleWorkerman5Handler.html#method_isAvailable">isAvailable()</a></li>
-                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleHandler.html#method_waitFor">waitFor()</a></li>
+                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-Handlers-RippleWorkerman5Handler.html#method_initEnv">initEnv()</a></li>
+                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-Handlers-RippleWorkerman5Handler.html#method_isAvailable">isAvailable()</a></li>
+                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-Handlers-RippleWorkerman5Handler.html#method_waitFor">waitFor()</a></li>
                                     </ul>
             </li>
                     </ul>
@@ -507,7 +514,7 @@
     </section>
 </section>
         </div>
-        <a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleWorkerman5Handler.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Workbunny-WebmanCoroutine-Handlers-RippleWorkerman5Handler.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

@@ -160,6 +160,13 @@
 <dd>根据环境加载event-loop</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a class="" href="namespaces/workbunny-webmancoroutine.html#function_wait_for">wait_for()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>等待回调执行返回true</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a class="" href="namespaces/workbunny-webmancoroutine.html#function_package_installed">package_installed()</a>
     <span>
                                 &nbsp;: bool    </span>
@@ -194,9 +201,9 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/helpers.php"><a href="files/src-helpers.html"><abbr title="src/helpers.php">helpers.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">19</span>
+    <span class="phpdocumentor-element-found-in__line">21</span>
 
-            <a href="files/src-helpers.html#source-view.19" class="phpdocumentor-element-found-in__source" data-line="19" data-modal="source-view" data-src="files/src/helpers.php.txt"></a>
+            <a href="files/src-helpers.html#source-view.21" class="phpdocumentor-element-found-in__source" data-line="21" data-modal="source-view" data-src="files/src/helpers.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">根据环境加载event-loop</p>
@@ -233,6 +240,68 @@
 
 </article>
                     <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_wait_for">
+        wait_for()
+        <a href="namespaces/workbunny-webmancoroutine.html#function_wait_for" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/helpers.php"><a href="files/src-helpers.html"><abbr title="src/helpers.php">helpers.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">37</span>
+
+            <a href="files/src-helpers.html#source-view.37" class="phpdocumentor-element-found-in__source" data-line="37" data-modal="source-view" data-src="files/src/helpers.php.txt"></a>
+    </aside>
+
+        <p class="phpdocumentor-summary">等待回调执行返回true</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">wait_for</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Closure">Closure</abbr>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$closure</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">float|int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$timeout</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">-1</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+        <section class="phpdocumentor-description"><ul>
+<li>用于主协程等待子协程执行</li>
+</ul>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$closure</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Closure">Closure</abbr>|null</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$timeout</span>
+                : <span class="phpdocumentor-signature__argument__return-type">float|int</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">-1</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="namespaces/workbunny-webmancoroutine.html#function_wait_for#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="HandlerInterface::waitFor()"> HandlerInterface::waitFor() </a>
+                    
+                                    </dd>
+                                            </dl>
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
     <h4 class="phpdocumentor-element__name" id="function_package_installed">
         package_installed()
         <a href="namespaces/workbunny-webmancoroutine.html#function_package_installed" class="headerlink"><i class="fas fa-link"></i></a>
@@ -241,9 +310,9 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/helpers.php"><a href="files/src-helpers.html"><abbr title="src/helpers.php">helpers.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">31</span>
+    <span class="phpdocumentor-element-found-in__line">53</span>
 
-            <a href="files/src-helpers.html#source-view.31" class="phpdocumentor-element-found-in__source" data-line="31" data-modal="source-view" data-src="files/src/helpers.php.txt"></a>
+            <a href="files/src-helpers.html#source-view.53" class="phpdocumentor-element-found-in__source" data-line="53" data-modal="source-view" data-src="files/src/helpers.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">判断是否composer安装了指定包</p>
@@ -288,9 +357,9 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/helpers.php"><a href="files/src-helpers.html"><abbr title="src/helpers.php">helpers.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">47</span>
+    <span class="phpdocumentor-element-found-in__line">69</span>
 
-            <a href="files/src-helpers.html#source-view.47" class="phpdocumentor-element-found-in__source" data-line="47" data-modal="source-view" data-src="files/src/helpers.php.txt"></a>
+            <a href="files/src-helpers.html#source-view.69" class="phpdocumentor-element-found-in__source" data-line="69" data-modal="source-view" data-src="files/src/helpers.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">判断是否在workbunny协程环境</p>
@@ -426,6 +495,7 @@
                                                     <li class=""><a href="namespaces/workbunny-webmancoroutine.html#function_event_loop">event_loop()</a></li>
                                                     <li class=""><a href="namespaces/workbunny-webmancoroutine.html#function_is_coroutine_env">is_coroutine_env()</a></li>
                                                     <li class=""><a href="namespaces/workbunny-webmancoroutine.html#function_package_installed">package_installed()</a></li>
+                                                    <li class=""><a href="namespaces/workbunny-webmancoroutine.html#function_wait_for">wait_for()</a></li>
                                             </ul>
                 </li>
                     </ul>

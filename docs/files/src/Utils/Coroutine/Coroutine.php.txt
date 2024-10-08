@@ -36,6 +36,7 @@ class Coroutine
         Factory::WORKBUNNY_SWOW     => SwowCoroutine::class,
         Factory::WORKERMAN_SWOOLE   => SwooleCoroutine::class,
         Factory::WORKBUNNY_SWOOLE   => SwooleCoroutine::class,
+        Factory::REVOLT_FIBER       => RippleCoroutine::class,
         Factory::RIPPLE_FIBER       => RippleCoroutine::class,
     ];
 

@@ -41,7 +41,6 @@
 ```php
 composer require workbunny/webman-coroutine
 ```
-> 注: 目前在alpha阶段
 
 ## 说明
 
