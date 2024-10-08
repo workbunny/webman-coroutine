@@ -13,6 +13,7 @@ use Workbunny\WebmanCoroutine\Factory;
 
 use function Workbunny\WebmanCoroutine\is_coroutine_env;
 use function Workbunny\WebmanCoroutine\package_installed;
+use function Workbunny\WebmanCoroutine\wait_for;
 
 /**
  * @runTestsInSeparateProcesses
@@ -56,5 +57,14 @@ class HelpersTest extends TestCase
     public function testIsCoroutineEnv()
     {
         $this->assertTrue(is_coroutine_env());
+    }
+
+    public function testWaitFor()
+    {
+        $return = false;
+        wait_for(function () use (&$return) {
+            return $return = true;
+        });
+        $this->assertTrue($return);
     }
 }
