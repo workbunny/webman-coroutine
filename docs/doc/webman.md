@@ -2,7 +2,7 @@
 
 `webman-coroutine`插件提供了对webman框架协程化的一等支撑
 
-## 配置 
+## 配置文件说明 
 
 ### app.php
 
@@ -111,18 +111,18 @@ use Workbunny\WebmanCoroutine\Utils\WaitGroup\WaitGroup;
 $waitGroup = new WaitGroup();
 // 协程1
 $waitGroup->add();
-$coroutine1 = new Coroutine(fucntion () use ($waitGroup) {
+$coroutine1 = new Coroutine(function () use ($waitGroup) {
     echo 1 . PHP_EOL;
     $waitGroup->done();
 })
 // 协程2
 $waitGroup->add();
-$coroutine2 = new Coroutine(fucntion () use ($waitGroup) {
+$coroutine2 = new Coroutine(function () use ($waitGroup) {
     echo 2 . PHP_EOL;
     $waitGroup->done();
 })
 $waitGroup->add();
-$coroutine3 = new Coroutine(fucntion () use ($waitGroup) {
+$coroutine3 = new Coroutine(function () use ($waitGroup) {
     echo 3 . PHP_EOL;
     $waitGroup->done();
 })
