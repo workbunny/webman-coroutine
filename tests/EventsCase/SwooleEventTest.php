@@ -67,7 +67,7 @@ class SwooleEventTest extends TestCase
         $swooleEvent = new SwooleEvent(true);
 
         $timerMock = m::mock('alias:Swoole\Timer');
-        $timerMock->shouldReceive('after')->andReturn(1);
+        $timerMock->shouldReceive('tick')->andReturn(1);
 
         $result = $swooleEvent->add(1, EventInterface::EV_TIMER, function () {
             echo 'Timer triggered';
@@ -113,7 +113,7 @@ class SwooleEventTest extends TestCase
         $swooleEvent = new SwooleEvent(true);
 
         $timerMock = m::mock('alias:Swoole\Timer');
-        $timerMock->shouldReceive('after')->andReturn(1);
+        $timerMock->shouldReceive('tick')->andReturn(1);
         $timerMock->shouldReceive('clear')->andReturn(true);
 
         $timerId = $swooleEvent->add(1, EventInterface::EV_TIMER, $fuc = function () {
