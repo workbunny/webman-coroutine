@@ -41,13 +41,13 @@ class RippleChannel implements ChannelInterface
     /** @inheritdoc  */
     public function pop(int|float $timeout = -1): mixed
     {
-        $time = time();
+        $time = microtime(true);
         while (1) {
             if (!$this->isEmpty()) {
                 return $this->_queue->dequeue();
             } else {
                 // timeout
-                if ($timeout > 0 and time() - $time >= $timeout) {
+                if ($timeout > 0 and microtime(true) - $time >= $timeout) {
                     return false;
                 }
                 $this->_sleep($timeout);
@@ -58,14 +58,14 @@ class RippleChannel implements ChannelInterface
     /** @inheritdoc */
     public function push(mixed $data, int|float $timeout = -1): bool
     {
-        $time = time();
+        $time = microtime(true);
         while (1) {
             if (!$this->isFull()) {
                 $this->_queue->enqueue($data);
                 return true;
             } else {
                 // timeout
-                if ($timeout > 0 and time() - $time >= $timeout) {
+                if ($timeout > 0 and microtime(true) - $time >= $timeout) {
                     return false;
                 }
                 $this->_sleep($timeout);

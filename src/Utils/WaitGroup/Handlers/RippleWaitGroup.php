@@ -57,9 +57,9 @@ class RippleWaitGroup implements WaitGroupInterface
     /** @inheritdoc  */
     public function wait(int|float $timeout = -1): void
     {
-        $time = time();
+        $time = microtime(true);
         while (1) {
-            if ($timeout > 0 and time() - $time >= $timeout) {
+            if ($timeout > 0 and microtime(true) - $time >= $timeout) {
                 return;
             }
             if ($this->_count <= 0) {
