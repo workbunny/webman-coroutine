@@ -60,12 +60,16 @@ class SwooleEvent implements EventInterface
             case EventInterface::EV_TIMER:
             case EventInterface::EV_TIMER_ONCE:
                 $timerId = $this->_timerId++;
-                $this->_timer[$timerId] = Timer::after((int) ($fd * 1000), function () use ($timerId, $flag, $func, $args) {
+                $res = Timer::after((int) ($fd * 1000), function () use ($timerId, $flag, $func, $args) {
                     call_user_func($func, (array) $args);
                     if ($flag === EventInterface::EV_TIMER_ONCE) {
                         $this->del($timerId, $flag);
                     }
                 });
+                if ($res === false) {
+                    $this->_timerId--;
+                    return false;
+                }
 
                 return $timerId;
             case EventInterface::EV_READ:
