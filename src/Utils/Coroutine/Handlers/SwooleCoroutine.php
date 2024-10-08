@@ -22,8 +22,10 @@ class SwooleCoroutine implements CoroutineInterface
     public function __construct(\Closure $func)
     {
         while (1) {
-            if ($res = Coroutine::create($func)) {
-                $this->_id = $res;
+            if ($id = Coroutine::create(function () use ($func) {
+                call_user_func($func, $this->_id);
+            })) {
+                $this->_id = $id;
                 break;
             }
         }

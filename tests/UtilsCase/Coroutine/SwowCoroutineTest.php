@@ -19,8 +19,10 @@ class SwowCoroutineTest extends TestCase
     public function testConstruct()
     {
         $executed = false;
-        $func = function() use (&$executed) {
+        $id = null;
+        $func = function ($coroutineId) use (&$id, &$executed) {
             $executed = true;
+            $id = $coroutineId;
         };
 
         $coroutineMock = Mockery::mock('alias:Swow\Coroutine');
@@ -35,6 +37,7 @@ class SwowCoroutineTest extends TestCase
         $this->assertTrue($executed);
         $this->assertInstanceOf('Swow\Coroutine', $coroutine->origin());
         $this->assertEquals(123, $coroutine->id());
+        $this->assertEquals(123, $id);
     }
 
     public function testDestruct()

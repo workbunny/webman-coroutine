@@ -18,8 +18,8 @@ class DefaultCoroutine implements CoroutineInterface
     /** @inheritdoc  */
     public function __construct(\Closure $func)
     {
-        call_user_func($func);
-        $this->id = spl_object_hash($func);
+        call_user_func($func, $id = spl_object_hash($func));
+        $this->id = $id;
     }
 
     /** @inheritdoc  */

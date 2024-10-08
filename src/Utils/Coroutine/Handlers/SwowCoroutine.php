@@ -21,12 +21,12 @@ class SwowCoroutine implements CoroutineInterface
      */
     protected int $_id;
 
-    /** @inheritdoc
-     * @param \Closure $func
-     */
+    /** @inheritDoc */
     public function __construct(\Closure $func)
     {
-        $this->_coroutine = Coroutine::run($func);
+        $this->_coroutine = Coroutine::run(function () use ($func) {
+            call_user_func($func, $this->_id);
+        });
         $this->_id = $this->_coroutine->getId();
     }
 

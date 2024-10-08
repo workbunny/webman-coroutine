@@ -18,6 +18,7 @@ use Workbunny\WebmanCoroutine\Utils\RegisterMethods;
 
 /**
  * @method mixed origin()
+ * @method string|int id()
  */
 class Coroutine
 {
@@ -42,15 +43,18 @@ class Coroutine
 
     /**
      * 构造方法
-     */
-    /**
+     *
      * @param Closure $func
+     * @link CoroutineInterface::__construct
      */
     public function __construct(Closure $func)
     {
         $this->_interface = new (self::$_handlers[Factory::getCurrentEventLoop()] ?? DefaultCoroutine::class)($func);
     }
 
+    /**
+     * 析构
+     */
     public function __destruct()
     {
         $this->_interface = null;

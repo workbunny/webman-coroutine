@@ -18,8 +18,10 @@ class RippleCoroutineTest extends TestCase
     public function testConstruct()
     {
         $executed = false;
-        $func = function() use (&$executed) {
+        $id = null;
+        $func = function ($coroutineId) use (&$id, &$executed) {
             $executed = true;
+            $id = $coroutineId;
         };
         $promiseMock = Mockery::mock('Psc\Core\Coroutine\Promise');
 
@@ -37,6 +39,8 @@ class RippleCoroutineTest extends TestCase
         $this->assertTrue($executed);
         $this->assertInstanceOf('Psc\Core\Coroutine\Promise', $coroutine->origin());
         $this->assertIsString($coroutine->id());
+        $this->assertEquals(spl_object_hash($promiseMock), $coroutine->id());
+        $this->assertEquals($coroutine->id(), $id);
     }
 
     public function testDestruct()

@@ -12,12 +12,15 @@ class DefaultCoroutineTest extends TestCase
     public function testConstruct()
     {
         $executed = false;
-        $func = function() use (&$executed) {
+        $id = null;
+        $func = function ($coroutineId) use (&$id, &$executed) {
             $executed = true;
+            $id = $coroutineId;
         };
         $coroutine = new DefaultCoroutine($func);
         $this->assertTrue($executed);
         $this->assertEquals(spl_object_hash($func), $coroutine->id());
+        $this->assertEquals($coroutine->id(), $id);
     }
 
     public function testOrigin()

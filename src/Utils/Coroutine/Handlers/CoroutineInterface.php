@@ -11,6 +11,8 @@ interface CoroutineInterface
 {
     /**
      * 创建协程
+     *
+     * @param \Closure $func = function (mixed $coroutineId) {}
      */
     public function __construct(\Closure $func);
 
