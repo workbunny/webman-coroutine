@@ -30,16 +30,16 @@ class RippleChannel implements ChannelInterface
     }
 
     /**
-     * @param int $second
+     * @param int|float $second
      * @return void
      */
-    protected function _sleep(int $second): void
+    protected function _sleep(int|float $second): void
     {
-        \Co\sleep($second);
+        \Co\sleep(max($second, 0));
     }
 
     /** @inheritdoc  */
-    public function pop(int $timeout = -1): mixed
+    public function pop(int|float $timeout = -1): mixed
     {
         $time = time();
         while (1) {
@@ -50,13 +50,13 @@ class RippleChannel implements ChannelInterface
                 if ($timeout > 0 and time() - $time >= $timeout) {
                     return false;
                 }
-                $this->_sleep(0);
+                $this->_sleep($timeout);
             }
         }
     }
 
     /** @inheritdoc */
-    public function push(mixed $data, int $timeout = -1): bool
+    public function push(mixed $data, int|float $timeout = -1): bool
     {
         $time = time();
         while (1) {
@@ -68,7 +68,7 @@ class RippleChannel implements ChannelInterface
                 if ($timeout > 0 and time() - $time >= $timeout) {
                     return false;
                 }
-                $this->_sleep(0);
+                $this->_sleep($timeout);
             }
         }
     }

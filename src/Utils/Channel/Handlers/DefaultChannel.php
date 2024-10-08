@@ -29,16 +29,13 @@ class DefaultChannel implements ChannelInterface
         $this->close();
     }
 
-    public function pop(int $timeout = -1): mixed
+    public function pop(int|float $timeout = -1): mixed
     {
         return $this->_queue->dequeue();
     }
 
-    /** @inheritdoc
-     * @param mixed $data
-     * @param int $timeout
-     */
-    public function push(mixed $data, int $timeout = -1): bool
+    /** @inheritdoc */
+    public function push(mixed $data, int|float $timeout = -1): bool
     {
         $this->_queue->enqueue($data);
         return true;

@@ -55,7 +55,7 @@ class RippleWaitGroup implements WaitGroupInterface
     }
 
     /** @inheritdoc  */
-    public function wait(int $timeout = -1): void
+    public function wait(int|float $timeout = -1): void
     {
         $time = time();
         while (1) {
@@ -70,11 +70,11 @@ class RippleWaitGroup implements WaitGroupInterface
     }
 
     /**
-     * @param int $second
+     * @param int|float $second
      * @return void
      */
-    protected function _sleep(int $second): void
+    protected function _sleep(int|float $second): void
     {
-        \Co\sleep($second);
+        \Co\sleep(max($second, 0));
     }
 }

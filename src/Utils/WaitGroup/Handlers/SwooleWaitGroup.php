@@ -55,17 +55,17 @@ class SwooleWaitGroup implements WaitGroupInterface
     }
 
     /** @inheritdoc  */
-    public function wait(int $timeout = -1): void
+    public function wait(int|float $timeout = -1): void
     {
-        $time = time();
+        $time = microtime(true);
         while (1) {
-            if ($timeout > 0 and time() - $time >= $timeout) {
+            if ($timeout > 0 and microtime(true) - $time >= $timeout) {
                 return;
             }
             if ($this->_count <= 0) {
                 return;
             }
-            sleep(max($timeout, 0));
+            msleep(max((int)($timeout * 1000 * 1000), 0));
         }
     }
 }

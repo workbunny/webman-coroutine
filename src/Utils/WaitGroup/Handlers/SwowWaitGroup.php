@@ -62,8 +62,8 @@ class SwowWaitGroup implements WaitGroupInterface
     }
 
     /** @inheritdoc  */
-    public function wait(int $timeout = -1): void
+    public function wait(int|float $timeout = -1): void
     {
-        $this->_waitGroup->wait($timeout);
+        $this->_waitGroup->wait($timeout > 0 ? (int)($timeout * 1000) : $timeout);
     }
 }
