@@ -40,6 +40,21 @@ class CoroutineWebServer extends App
             : (static::$_connectionCoroutineCount[$connectionId] ?? 0);
     }
 
+    /**
+     * 回收连接的协程计数
+     *
+     * @param string $connectionId
+     * @param bool $force
+     * @return void
+     */
+    public static function unsetConnectionCoroutineCount(string $connectionId, bool $force = false): void
+    {
+        if (!$force and self::getConnectionCoroutineCount($connectionId) > 0) {
+            return;
+        }
+        unset(static::$_connectionCoroutineCount[$connectionId]);
+    }
+
     /** @inheritdoc  */
     public function onWorkerStart($worker)
     {
@@ -109,6 +124,7 @@ class CoroutineWebServer extends App
                 call_user_func($call, $connection, ...$params);
             });
         }
+        self::unsetConnectionCoroutineCount(spl_object_hash($connection), true);
     }
 
     /**
@@ -127,18 +143,32 @@ class CoroutineWebServer extends App
         $connectionId = spl_object_hash($connection);
         $params = func_get_args();
         $res = null;
+        // 检测协程数
+        if (($consumerCount = \config('plugin.workbunny.webman-coroutine.app.consumer_count', 0)) > 0) {
+            // 等待协程回收
+            wait_for(function () use ($connectionId, $consumerCount) {
+                return self::getConnectionCoroutineCount($connectionId) <= $consumerCount;
+            });
+        }
+
         $waitGroup = new WaitGroup();
         $waitGroup->add();
         // 请求消费协程
         new Coroutine(function () use (&$res, $waitGroup, $params, $connectionId) {
             $res = parent::onMessage(...$params);
+            // 计数 --
             self::$_connectionCoroutineCount[$connectionId] --;
+            // 尝试回收
+            self::unsetConnectionCoroutineCount($connectionId);
+            // wg完成
             $waitGroup->done();
         });
+        // 计数 ++
         self::$_connectionCoroutineCount[$connectionId] =
             (isset(self::$_connectionCoroutineCount[$connectionId])
                 ? self::$_connectionCoroutineCount[$connectionId] + 1
                 : 1);
+        // 等待
         $waitGroup->wait();
         return $res;
     }

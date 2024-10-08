@@ -11,6 +11,11 @@ Search.appendIndex(
             "summary": "\u83B7\u53D6\u8FDE\u63A5\u7684\u534F\u7A0B\u8BA1\u6570",
             "url": "classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#method_getConnectionCoroutineCount"
         },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\CoroutineWebServer\u003A\u003AunsetConnectionCoroutineCount\u0028\u0029",
+            "name": "unsetConnectionCoroutineCount",
+            "summary": "\u56DE\u6536\u8FDE\u63A5\u7684\u534F\u7A0B\u8BA1\u6570",
+            "url": "classes/Workbunny-WebmanCoroutine-CoroutineWebServer.html#method_unsetConnectionCoroutineCount"
+        },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\CoroutineWebServer\u003A\u003AonWorkerStart\u0028\u0029",
             "name": "onWorkerStart",
             "summary": "",

@@ -16,8 +16,10 @@ return [
     'enable'         => true,
     // coroutine-web-server 监听端口
     'port'           => 8717,
-    // connection channel 容量
+    /**
+     * @deprecated
+     */
     'channel_size'   => 1,
-    // request consumer 数量
-    'consumer_count' => 1,
+    // request consumer 数量 0:无限
+    'consumer_count' => 0,
 ];
