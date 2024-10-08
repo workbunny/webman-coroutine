@@ -207,7 +207,9 @@ class SwooleEvent implements EventInterface
     public function clearAllTimer()
     {
         foreach ($this->_timer as $id) {
-            Timer::clear($id);
+            if (is_int($id)) {
+                Timer::clear($id);
+            }
         }
         $this->_timer = [];
     }
