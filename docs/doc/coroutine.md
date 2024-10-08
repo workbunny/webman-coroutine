@@ -3,7 +3,7 @@
 #### 1. 协程创建
 
 Swow 的协程是面向对象的，所以我们可以这样创建一个待运行的协程
-```
+```php
 use Swow\Coroutine;
 
 $coroutine = new Coroutine(static function (): void {
