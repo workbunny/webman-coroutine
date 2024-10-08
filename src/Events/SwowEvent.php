@@ -68,7 +68,7 @@ class SwowEvent implements EventInterface
                 $timerId = $this->_timerId++;
                 $this->_timer[$timerId] = Coroutine::run(function () use ($timerId, $fd, $flag, $func, $args): void {
                     while (1) {
-                        msleep((int) ($fd * 1000));
+                        usleep((int) ($fd * 1000 * 1000));
                         \call_user_func($func, ...$args);
                         if ($flag === EventInterface::EV_TIMER_ONCE) {
                             $this->del($timerId, $flag);

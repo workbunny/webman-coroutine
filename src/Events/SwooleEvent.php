@@ -26,7 +26,7 @@ class SwooleEvent implements EventInterface
     /** @var callable[] Event listeners of signal. */
     protected array $_signals = [];
 
-    /** @var int[] Timer id to timer info. */
+    /** @var int[]|true[] Timer id to timer info. */
     protected array $_timer = [];
 
     /** @var int 定时器id */
@@ -60,12 +60,30 @@ class SwooleEvent implements EventInterface
             case EventInterface::EV_TIMER:
             case EventInterface::EV_TIMER_ONCE:
                 $timerId = $this->_timerId++;
-                $res = Timer::tick((int) ($fd * 1000), function () use ($timerId, $flag, $func, $args) {
-                    call_user_func($func, (array) $args);
-                    if ($flag === EventInterface::EV_TIMER_ONCE) {
-                        $this->del($timerId, $flag);
-                    }
-                });
+                if (($interval = (int) ($fd * 1000)) >= 1) {
+                    $res = Timer::tick($interval, function () use ($timerId, $flag, $func, $args) {
+                        call_user_func($func, (array) $args);
+                        if ($flag === EventInterface::EV_TIMER_ONCE) {
+                            $this->del($timerId, $flag);
+                        }
+                    });
+                } else {
+                    $res = Coroutine::create(function () use ($fd, $timerId, $flag, $func, $args) {
+                        while (true) {
+                            usleep((int) ($fd * 1000 * 1000));
+                            if (!isset($this->_timer[$timerId])) {
+                                return;
+                            }
+                            call_user_func($func, (array) $args);
+                            if ($flag === EventInterface::EV_TIMER_ONCE) {
+                                $this->del($timerId, $flag);
+                                return;
+                            }
+                        }
+                    });
+                    $res = $res !== false;
+                }
+
                 if ($res === false) {
                     $this->_timerId--;
                     return false;
@@ -121,7 +139,7 @@ class SwooleEvent implements EventInterface
             case self::EV_TIMER:
             case self::EV_TIMER_ONCE:
                 if ($id = $this->_timer[$fd] ?? null) {
-                    if (Timer::clear($id)) {
+                    if ($id === true or Timer::clear($id)) {
                         unset($this->_timer[$fd]);
 
                         return true;
