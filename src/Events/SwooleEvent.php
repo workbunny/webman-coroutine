@@ -70,6 +70,7 @@ class SwooleEvent implements EventInterface
                     $this->_timerId--;
                     return false;
                 }
+                $this->_timer[$timerId] = $res;
 
                 return $timerId;
             case EventInterface::EV_READ:
