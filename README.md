@@ -56,7 +56,7 @@ composer require workbunny/webman-coroutine
 ```
 |-- config                       # webman 配置文件
     |-- plugin
-        |-- webman-push-server
+        |-- webman-coroutine
             |-- app.php          # 主配置信息
             |-- process.php      # 启动进程
 |-- Events                       # workerman-4.x 事件驱动文件
