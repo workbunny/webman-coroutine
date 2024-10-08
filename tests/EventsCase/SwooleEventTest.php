@@ -116,9 +116,17 @@ class SwooleEventTest extends TestCase
         $timerMock->shouldReceive('after')->andReturn(1);
         $timerMock->shouldReceive('clear')->andReturn(true);
 
-        $timerId = $swooleEvent->add(1, EventInterface::EV_TIMER, function () {
+        $timerId = $swooleEvent->add(1, EventInterface::EV_TIMER, $fuc = function () {
             echo 'Timer triggered';
         });
+        if (!$timerId) {
+            while (true) {
+                $r = $swooleEvent->add(1, EventInterface::EV_TIMER, $fuc);
+                if ($r) {
+                    break;
+                }
+            }
+        }
 
         $result = $swooleEvent->del($timerId, EventInterface::EV_TIMER);
 
