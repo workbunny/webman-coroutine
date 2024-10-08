@@ -10,9 +10,17 @@ namespace Workbunny\WebmanCoroutine\Utils\Worker;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Coroutine;
 use Workbunny\WebmanCoroutine\Utils\WaitGroup\WaitGroup;
 use Workerman\Connection\ConnectionInterface;
+use function Workbunny\WebmanCoroutine\wait_for;
 
 trait ServerMethods
 {
+    /**
+     * 请求消费者协程数量，0为无限
+     *
+     * @var int
+     */
+    public static int $consumerCount = 0;
+
     /**
      * 每个连接的协程计数
      *
@@ -65,6 +73,21 @@ trait ServerMethods
         return $connectionId === null
             ? static::$_connectionCoroutineCount
             : (static::$_connectionCoroutineCount[$connectionId] ?? 0);
+    }
+
+    /**
+     * 回收连接的协程计数
+     *
+     * @param string $connectionId
+     * @param bool $force
+     * @return void
+     */
+    public static function unsetConnectionCoroutineCount(string $connectionId, bool $force = false): void
+    {
+        if (!$force and self::getConnectionCoroutineCount($connectionId) > 0) {
+            return;
+        }
+        unset(static::$_connectionCoroutineCount[$connectionId]);
     }
 
     /**
@@ -149,15 +172,24 @@ trait ServerMethods
                 } else {
                     call_user_func($this->getParentOnClose(), $connection);
                 }
+                self::unsetConnectionCoroutineCount(spl_object_hash($connection), true);
             };
         }
+        // 保证只调用一次
+        $consumerCount = static::$consumerCount;
         // 代理onMessage
         if ($this->onMessage) {
             $this->_parentOnMessage = $this->onMessage;
-            $this->onMessage = function (ConnectionInterface $connection, mixed $data, ...$params) {
+            $this->onMessage = function (ConnectionInterface $connection, mixed $data, ...$params) use ($consumerCount) {
                 $connectionId = spl_object_hash($connection);
                 $res = null;
                 $params = func_get_args();
+                if ($consumerCount > 0) {
+                    // 等待协程消费者回收
+                    wait_for(function () use ($connectionId, $consumerCount) {
+                        return self::getConnectionCoroutineCount($connectionId) <= $consumerCount;
+                    });
+                }
                 $waitGroup = new WaitGroup();
                 $waitGroup->add();
                 // 协程创建
@@ -166,6 +198,7 @@ trait ServerMethods
                         $res = call_user_func($this->getParentOnMessage(), ...$params);
                     } finally {
                         self::$_connectionCoroutineCount[$connectionId] --;
+                        self::unsetConnectionCoroutineCount($connectionId);
                         $waitGroup->done();
                     }
                 });
