@@ -25,4 +25,13 @@ interface HandlerInterface
      * @return void
      */
     public static function initEnv(): void;
+
+    /**
+     * 等待直到回调返回true
+     *
+     * @param \Closure|null $closure 返回true或抛出异常则跳出等待
+     * @param int|float $timeout 单位：秒| -1：不限制等待时间
+     * @return void
+     */
+    public static function waitFor(?\Closure $closure = null, int|float $timeout = -1): void;
 }

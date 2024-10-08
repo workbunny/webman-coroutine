@@ -29,4 +29,19 @@ class SwowHandler implements HandlerInterface
     public static function initEnv(): void
     {
     }
+
+    /** @inheritdoc  */
+    public static function waitFor(?\Closure $closure = null, float|int $timeout = -1): void
+    {
+        $time = microtime(true);
+        while (true) {
+            if ($closure and call_user_func($closure) === true) {
+                return;
+            }
+            if ($timeout > 0 && microtime(true) - $time >= $timeout) {
+                return;
+            }
+            usleep(max((int)($timeout * 1000 * 1000), 0));
+        }
+    }
 }

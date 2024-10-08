@@ -17,4 +17,11 @@ class TestByFailHandler implements HandlerInterface
     {
         echo 'initEnv';
     }
+
+    public static function waitFor(?\Closure $closure = null, float|int $timeout = -1): void
+    {
+        if ($closure) {
+            call_user_func($closure);
+        }
+    }
 }
