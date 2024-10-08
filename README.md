@@ -26,6 +26,8 @@
 
 > **🚀🐇 webman-coroutine 是一个支持 workerman / webman 开发框架生态下的协程基建支撑插件**
 
+> [workbunny/webman-coroutine 插件诞生缘由及协程开发分享](https://www.workerman.net/a/1769)
+
 **主要实现以下功能**：
 
 1. 支持`workerman 4.x`的 [swow](https://github.com/swow/swow) 协程驱动能力，兼容`workerman 5.x`版本自带的`swow`协程驱动；
