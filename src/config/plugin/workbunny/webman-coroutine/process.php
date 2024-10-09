@@ -24,10 +24,10 @@ return config('plugin.workbunny.webman-coroutine.app.enable', false) ? [
         'group'       => '',
         'reusePort'   => true,
         'constructor' => [
-            'request_class' => Request::class,
-            'logger'        => Log::channel(), // 日志实例
-            'app_path'      => app_path(), // app目录位置
-            'public_path'   => public_path(), // public目录位置
+            'requestClass' => Request::class,
+            'logger'       => Log::channel(), // 日志实例
+            'appPath'      => app_path(), // app目录位置
+            'publicPath'   => public_path(), // public目录位置
         ],
     ],
 ] : [];
