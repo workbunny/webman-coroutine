@@ -30,7 +30,7 @@ class SwooleEvent implements EventInterface
     protected array $_timer = [];
 
     /** @var int 定时器id */
-    protected int $_timerId = 0;
+    protected int $_timerId = 1;
 
     /**
      * @param bool $debug 测试用
@@ -62,7 +62,7 @@ class SwooleEvent implements EventInterface
                 $timerId = $this->_timerId++;
                 if (($interval = (int) ($fd * 1000)) >= 1) {
                     $res = Timer::tick($interval, function () use ($timerId, $flag, $func, $args) {
-                        call_user_func($func, (array) $args);
+                        call_user_func($func, ...$args);
                         if ($flag === EventInterface::EV_TIMER_ONCE) {
                             $this->del($timerId, $flag);
                         }
@@ -74,9 +74,10 @@ class SwooleEvent implements EventInterface
                             if (!isset($this->_timer[$timerId])) {
                                 return;
                             }
-                            call_user_func($func, (array) $args);
+                            call_user_func($func, ...$args);
                             if ($flag === EventInterface::EV_TIMER_ONCE) {
                                 $this->del($timerId, $flag);
+
                                 return;
                             }
                         }
@@ -86,6 +87,7 @@ class SwooleEvent implements EventInterface
 
                 if ($res === false) {
                     $this->_timerId--;
+
                     return false;
                 }
                 $this->_timer[$timerId] = $res;

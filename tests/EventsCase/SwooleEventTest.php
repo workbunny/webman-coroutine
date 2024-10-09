@@ -62,36 +62,6 @@ class SwooleEventTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testAddTimer()
-    {
-        $swooleEvent = new SwooleEvent(true);
-
-        $timerMock = m::mock('alias:Swoole\Timer');
-        $timerMock->shouldReceive('tick')->andReturn(1);
-
-        $result = $swooleEvent->add(1, EventInterface::EV_TIMER, function () {
-            echo 'Timer triggered';
-        });
-
-        $this->assertEquals(0, $result);
-    }
-
-    public function testAddRead()
-    {
-        $swooleEvent = new SwooleEvent(true);
-
-        $eventMock = m::mock('alias:Swoole\Event');
-        $eventMock->shouldReceive('add')->andReturn(true);
-
-        $stream = fopen('php://memory', 'r+');
-        $result = $swooleEvent->add($stream, EventInterface::EV_READ, function () {
-            echo 'Read event';
-        });
-
-        $this->assertTrue($result);
-        fclose($stream);
-    }
-
     public function testDelSignal()
     {
         $swooleEvent = new SwooleEvent(true);
@@ -106,6 +76,26 @@ class SwooleEventTest extends TestCase
         $result = $swooleEvent->del(SIGTERM, EventInterface::EV_SIGNAL);
 
         $this->assertTrue($result);
+    }
+
+    public function testAddTimer()
+    {
+        $swooleEvent = new SwooleEvent(true);
+        $timerMock = m::mock('alias:Swoole\Timer');
+        $timerMock->shouldReceive('tick')->andReturn(1);
+        $result = $swooleEvent->add(1, EventInterface::EV_TIMER, function () {
+            echo 'Timer triggered';
+        });
+        $this->assertEquals(1, $result);
+        m::close();
+
+        $swooleEvent = new SwooleEvent(true);
+        $timerMock = m::mock('alias:Swoole\Coroutine');
+        $timerMock->shouldReceive('create')->andReturn(true);
+        $result = $swooleEvent->add(0, EventInterface::EV_TIMER, function () {
+            echo 'Timer triggered';
+        });
+        $this->assertEquals(1, $result);
     }
 
     public function testDelTimer()
@@ -131,6 +121,50 @@ class SwooleEventTest extends TestCase
         $result = $swooleEvent->del($timerId, EventInterface::EV_TIMER);
 
         $this->assertTrue($result);
+    }
+
+    public function testAddAndDelRead()
+    {
+        $swooleEvent = new SwooleEvent(true);
+
+        $eventMock = m::mock('alias:Swoole\Event');
+        $eventMock->shouldReceive('add')->andReturn(true);
+
+        $stream = fopen('php://memory', 'r+');
+        $result = $swooleEvent->add($stream, EventInterface::EV_READ, function () {
+            echo 'Read event';
+        });
+
+        $this->assertTrue($result);
+
+        $eventMock->shouldReceive('del')->andReturn(true);
+        $eventMock->shouldReceive('isset')->andReturn(true);
+
+        $result = $swooleEvent->del($stream, EventInterface::EV_READ);
+        $this->assertTrue($result);
+        fclose($stream);
+    }
+
+    public function testAddAndDelWrite()
+    {
+        $swooleEvent = new SwooleEvent(true);
+
+        $eventMock = m::mock('alias:Swoole\Event');
+        $eventMock->shouldReceive('add')->andReturn(true);
+
+        $stream = fopen('php://memory', 'w+');
+        $result = $swooleEvent->add($stream, EventInterface::EV_WRITE, function () {
+            echo 'Write event';
+        });
+
+        $this->assertTrue($result);
+
+        $eventMock->shouldReceive('del')->andReturn(true);
+        $eventMock->shouldReceive('isset')->andReturn(true);
+
+        $result = $swooleEvent->del($stream, EventInterface::EV_WRITE);
+        $this->assertTrue($result);
+        fclose($stream);
     }
 
     public function testLoop()
@@ -173,6 +207,8 @@ class SwooleEventTest extends TestCase
         $swooleEvent->add(1, EventInterface::EV_TIMER, function () {
             echo 'Timer triggered';
         });
+
+        $this->assertEquals(1, $swooleEvent->getTimerCount());
 
         $swooleEvent->clearAllTimer();
 

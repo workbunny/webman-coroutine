@@ -29,7 +29,7 @@ class SwowEvent implements EventInterface
     protected array $_timer = [];
 
     /** @var int 定时器id */
-    protected int $_timerId = 0;
+    protected int $_timerId = 1;
 
     /** @var WaitGroup|null 阻塞 */
     protected null|WaitGroup $_waitGroup = null;

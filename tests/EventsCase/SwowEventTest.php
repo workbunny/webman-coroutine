@@ -70,37 +70,6 @@ class SwowEventTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testAddTimer()
-    {
-        $swowEvent = new SwowEvent(true);
-
-        $coroutineMock = m::mock('alias:Swow\Coroutine');
-        $coroutineMock->shouldReceive('run')->andReturnSelf();
-        $coroutineMock->shouldReceive('sleep')->andReturn(true);
-
-        $result = $swowEvent->add(1, EventInterface::EV_TIMER, function () {
-            echo 'Timer triggered';
-        });
-
-        $this->assertEquals(0, $result);
-    }
-
-    public function testAddRead()
-    {
-        $swowEvent = new SwowEvent(true);
-
-        $coroutineMock = m::mock('alias:Swow\Coroutine');
-        $coroutineMock->shouldReceive('run')->andReturnSelf();
-
-        $stream = fopen('php://memory', 'r+');
-        $result = $swowEvent->add($stream, EventInterface::EV_READ, function () {
-            echo 'Read event';
-        });
-
-        $this->assertTrue($result);
-        fclose($stream);
-    }
-
     public function testDelSignal()
     {
         $swowEvent = new SwowEvent(true);
@@ -119,6 +88,21 @@ class SwowEventTest extends TestCase
         $this->assertTrue($result);
     }
 
+    public function testAddTimer()
+    {
+        $swowEvent = new SwowEvent(true);
+
+        $coroutineMock = m::mock('alias:Swow\Coroutine');
+        $coroutineMock->shouldReceive('run')->andReturnSelf();
+        $coroutineMock->shouldReceive('sleep')->andReturn(true);
+
+        $result = $swowEvent->add(1, EventInterface::EV_TIMER, function () {
+            echo 'Timer triggered';
+        });
+
+        $this->assertEquals(1, $result);
+    }
+
     public function testDelTimer()
     {
         $swowEvent = new SwowEvent(true);
@@ -135,6 +119,68 @@ class SwowEventTest extends TestCase
         $result = $swowEvent->del($timerId, EventInterface::EV_TIMER);
 
         $this->assertTrue($result);
+    }
+
+    public function testAddAndDelRead()
+    {
+        $swowEvent = new SwowEvent(true);
+        // mock run
+        $coroutineMock = m::mock('alias:Swow\Coroutine');
+        $coroutineMock->shouldReceive('run')->andReturnSelf();
+        $stream = fopen('php://memory', 'r+');
+        // 创建
+        $result = $swowEvent->add($stream, EventInterface::EV_READ, function () {
+            echo 'Read event';
+        });
+        $this->assertTrue($result);
+
+        // mock 协程未存活
+        $coroutineMock->shouldReceive('isExecuting')->andReturn(false);
+        $result = $swowEvent->del($stream, EventInterface::EV_READ);
+        $this->assertTrue($result);
+        // mock 协程存活
+        $swowEvent->add($stream, EventInterface::EV_READ, function () {
+            echo 'Read event';
+        });
+        $coroutineMock->shouldReceive('isExecuting')->andReturn(true);
+        $coroutineMock->shouldReceive('kill')->andReturn(true);
+        $result = $swowEvent->del($stream, EventInterface::EV_READ);
+        $this->assertTrue($result);
+        // 重复删除
+        $result = $swowEvent->del($stream, EventInterface::EV_READ);
+        $this->assertFalse($result);
+
+        fclose($stream);
+    }
+
+    public function testAddAndDelWrite()
+    {
+        $swowEvent = new SwowEvent(true);
+
+        $coroutineMock = m::mock('alias:Swow\Coroutine');
+        $coroutineMock->shouldReceive('run')->andReturnSelf();
+        $stream = fopen('php://memory', 'w+');
+        $result = $swowEvent->add($stream, EventInterface::EV_WRITE, function () {
+            echo 'Write event';
+        });
+        $this->assertTrue($result);
+        // mock 协程未存活
+        $coroutineMock->shouldReceive('isExecuting')->andReturn(false);
+        $result = $swowEvent->del($stream, EventInterface::EV_WRITE);
+        $this->assertTrue($result);
+        // mock 协程存活
+        $swowEvent->add($stream, EventInterface::EV_WRITE, function () {
+            echo 'Write event';
+        });
+        $coroutineMock->shouldReceive('isExecuting')->andReturn(true);
+        $coroutineMock->shouldReceive('kill')->andReturn(true);
+        $result = $swowEvent->del($stream, EventInterface::EV_WRITE);
+        $this->assertTrue($result);
+        // 重复删除
+        $result = $swowEvent->del($stream, EventInterface::EV_WRITE);
+        $this->assertFalse($result);
+
+        fclose($stream);
     }
 
     public function testLoop()
