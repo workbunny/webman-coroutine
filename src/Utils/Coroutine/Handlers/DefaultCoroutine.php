@@ -9,7 +9,6 @@ namespace Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers;
 
 class DefaultCoroutine implements CoroutineInterface
 {
-
     /**
      * @var string|null
      */

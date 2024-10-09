@@ -29,8 +29,9 @@ class RippleCoroutineTest extends TestCase
         $promiseMock = Mockery::mock('Psc\Core\Coroutine\Promise');
         $coroutine = Mockery::mock(RippleCoroutine::class)->makePartial();
         $coroutine->shouldAllowMockingProtectedMethods()->shouldReceive('_async')
-            ->andReturnUsing(function($closure) use (&$callback, $promiseMock) {
+            ->andReturnUsing(function ($closure) use (&$callback, $promiseMock) {
                 $callback = $closure;
+
                 return $promiseMock;
             });
         // 模拟构造
@@ -39,9 +40,9 @@ class RippleCoroutineTest extends TestCase
 
         $this->assertFalse($executed);
         $this->assertInstanceOf('Psc\Core\Coroutine\Promise', $coroutine->origin());
-        $this->assertIsString($coroutine->id());
+        $this->assertIsString($getId = $coroutine->id());
         $this->assertEquals(spl_object_hash($promiseMock), $coroutine->id());
-        $this->assertEquals($coroutine->id(), $id);
+        $this->assertNull($id);
 
         // 模拟发生协程执行
         call_user_func($callback);
@@ -50,12 +51,12 @@ class RippleCoroutineTest extends TestCase
         $this->assertNull($coroutine->origin());
         $this->assertNull($coroutine->id());
         $this->assertNotNull($id);
-
+        $this->assertEquals($getId, $id);
     }
 
     public function testDestruct()
     {
-        $func = function() {
+        $func = function () {
             // 模拟闭包函数的执行
         };
 
@@ -64,8 +65,9 @@ class RippleCoroutineTest extends TestCase
         $promiseMock = Mockery::mock('Psc\Core\Coroutine\Promise');
         $coroutine = Mockery::mock(RippleCoroutine::class)->makePartial();
         $coroutine->shouldAllowMockingProtectedMethods()->shouldReceive('_async')
-            ->andReturnUsing(function($closure) use (&$callback, $promiseMock) {
+            ->andReturnUsing(function ($closure) use (&$callback, $promiseMock) {
                 $callback = $closure;
+
                 return $promiseMock;
             });
         // 模拟构造函数执行
@@ -81,7 +83,7 @@ class RippleCoroutineTest extends TestCase
 
     public function testOrigin()
     {
-        $func = function() {
+        $func = function () {
             // 模拟闭包函数的执行
         };
         // mock async
@@ -89,22 +91,25 @@ class RippleCoroutineTest extends TestCase
         $promiseMock = Mockery::mock('Psc\Core\Coroutine\Promise');
         $coroutine = Mockery::mock(RippleCoroutine::class)->makePartial();
         $coroutine->shouldAllowMockingProtectedMethods()->shouldReceive('_async')
-            ->andReturnUsing(function($closure) use (&$callback, $promiseMock) {
+            ->andReturnUsing(function ($closure) use (&$callback, $promiseMock) {
                 $callback = $closure;
+
                 return $promiseMock;
             });
         // 模拟构造函数执行
         $constructor = new \ReflectionMethod(RippleCoroutine::class, '__construct');
         $constructor->invoke($coroutine, $func);
+
+        $this->assertInstanceOf('Psc\Core\Coroutine\Promise', $coroutine->origin());
         // 模拟构造后协程执行callback
         call_user_func($callback);
 
-        $this->assertInstanceOf('Psc\Core\Coroutine\Promise', $coroutine->origin());
+        $this->assertNull($coroutine->origin());
     }
 
     public function testId()
     {
-        $func = function() {
+        $func = function () {
             // 模拟闭包函数的执行
         };
         // mock async
@@ -112,8 +117,9 @@ class RippleCoroutineTest extends TestCase
         $promiseMock = Mockery::mock('Psc\Core\Coroutine\Promise');
         $coroutine = Mockery::mock(RippleCoroutine::class)->makePartial();
         $coroutine->shouldAllowMockingProtectedMethods()->shouldReceive('_async')
-            ->andReturnUsing(function($closure) use (&$callback, $promiseMock) {
+            ->andReturnUsing(function ($closure) use (&$callback, $promiseMock) {
                 $callback = $closure;
+
                 return $promiseMock;
             });
         // 模拟构造函数执行

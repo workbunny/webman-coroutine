@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Workbunny\Tests\UtilsCase\Coroutine;
 
-use PHPUnit\Framework\TestCase;
 use Mockery;
+use PHPUnit\Framework\TestCase;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Coroutine;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\CoroutineInterface;
 
@@ -19,7 +19,7 @@ class CoroutineTest extends TestCase
     public function testConstruct()
     {
         $executed = false;
-        $func = function() use (&$executed) {
+        $func = function () use (&$executed) {
             $executed = true;
         };
 
@@ -27,7 +27,7 @@ class CoroutineTest extends TestCase
         $mockInterface->shouldReceive('__construct')
             ->with($func);
 
-        $channel = Mockery::mock( Coroutine::class)
+        $channel = Mockery::mock(Coroutine::class)
             ->makePartial()
             ->shouldAllowMockingProtectedMethods();
         $channel->shouldReceive('__destruct')
@@ -46,7 +46,7 @@ class CoroutineTest extends TestCase
 
     public function testDestruct()
     {
-        $func = function() {
+        $func = function () {
             // 模拟闭包函数的执行
         };
 
@@ -54,7 +54,7 @@ class CoroutineTest extends TestCase
         $mockInterface->shouldReceive('__construct')
             ->with($func);
 
-        $channel = Mockery::mock( Coroutine::class)
+        $channel = Mockery::mock(Coroutine::class)
             ->makePartial()
             ->shouldAllowMockingProtectedMethods();
         $channel->shouldReceive('__destruct')

@@ -7,8 +7,9 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers;
 
-use Psc\Core\Coroutine\Promise;
 use function Co\async;
+
+use Psc\Core\Coroutine\Promise;
 
 class RippleCoroutine implements CoroutineInterface
 {
@@ -16,11 +17,6 @@ class RippleCoroutine implements CoroutineInterface
      * @var null|Promise
      */
     protected ?Promise $_promise = null;
-
-    /**
-     * @var null|string
-     */
-    protected ?string $_id = null;
 
     /** @inheritdoc
      * @param \Closure $func
@@ -31,12 +27,10 @@ class RippleCoroutine implements CoroutineInterface
             try {
                 call_user_func($func, spl_object_hash($this->_promise));
             } finally {
-                // 移除协程id及promise
+                // 移除协程promise
                 $this->_promise = null;
-                $this->_id = null;
             }
         });
-        $this->_id = spl_object_hash($this->_promise);
     }
 
     /** @inheritdoc  */
@@ -48,14 +42,13 @@ class RippleCoroutine implements CoroutineInterface
     /** @inheritdoc  */
     public function origin(): ?Promise
     {
-
         return $this->_promise;
     }
 
     /** @inheritdoc  */
     public function id(): ?string
     {
-        return $this->_id;
+        return $this->_promise ? spl_object_hash($this->_promise) : null;
     }
 
     /**

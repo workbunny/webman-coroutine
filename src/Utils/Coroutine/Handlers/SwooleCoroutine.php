@@ -48,7 +48,7 @@ class SwooleCoroutine implements CoroutineInterface
     }
 
     /** @inheritdoc  */
-    public function id(): int
+    public function id(): ?int
     {
         return $this->_id;
     }

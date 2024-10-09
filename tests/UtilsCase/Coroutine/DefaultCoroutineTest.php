@@ -25,7 +25,7 @@ class DefaultCoroutineTest extends TestCase
 
     public function testOrigin()
     {
-        $func = function() {
+        $func = function () {
             // 模拟闭包函数的执行
         };
         $coroutine = new DefaultCoroutine($func);
@@ -34,7 +34,7 @@ class DefaultCoroutineTest extends TestCase
 
     public function testId()
     {
-        $func = function() {
+        $func = function () {
             // 模拟闭包函数的执行
         };
         $coroutine = new DefaultCoroutine($func);
