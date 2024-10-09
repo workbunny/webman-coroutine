@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Workbunny\Tests\UtilsCase\Channel;
 
-use PHPUnit\Framework\TestCase;
 use Mockery;
+use PHPUnit\Framework\TestCase;
 use Workbunny\WebmanCoroutine\Utils\Channel\Handlers\SwooleChannel;
 
 class SwooleChannelTest extends TestCase
@@ -103,22 +103,22 @@ class SwooleChannelTest extends TestCase
         $channel->close();
         unset($channel);
         $this->assertTrue(true);
-//        $mockChannel = Mockery::mock('\Swow\Channel');
-//        $mockChannel->shouldReceive('close')
-//            ->once();
-//
-//        $channel = Mockery::mock(SwowChannel::class, [10])
-//            ->makePartial()
-//            ->shouldAllowMockingProtectedMethods();
-//        $channel->shouldReceive('__destruct')
-//            ->andReturnNull();
-//
-//        $reflection = new \ReflectionClass($channel);
-//        $property = $reflection->getProperty('_channel');
-//        $property->setAccessible(true);
-//        $property->setValue($channel, $mockChannel);
-//
-//        $channel->close();
+        //        $mockChannel = Mockery::mock('\Swow\Channel');
+        //        $mockChannel->shouldReceive('close')
+        //            ->once();
+        //
+        //        $channel = Mockery::mock(SwowChannel::class, [10])
+        //            ->makePartial()
+        //            ->shouldAllowMockingProtectedMethods();
+        //        $channel->shouldReceive('__destruct')
+        //            ->andReturnNull();
+        //
+        //        $reflection = new \ReflectionClass($channel);
+        //        $property = $reflection->getProperty('_channel');
+        //        $property->setAccessible(true);
+        //        $property->setValue($channel, $mockChannel);
+        //
+        //        $channel->close();
     }
 
     public function testCapacity()

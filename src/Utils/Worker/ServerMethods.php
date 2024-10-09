@@ -9,8 +9,10 @@ namespace Workbunny\WebmanCoroutine\Utils\Worker;
 
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Coroutine;
 use Workbunny\WebmanCoroutine\Utils\WaitGroup\WaitGroup;
-use Workerman\Connection\ConnectionInterface;
+
 use function Workbunny\WebmanCoroutine\wait_for;
+
+use Workerman\Connection\ConnectionInterface;
 
 trait ServerMethods
 {
@@ -197,7 +199,7 @@ trait ServerMethods
                     try {
                         $res = call_user_func($this->getParentOnMessage(), ...$params);
                     } finally {
-                        self::$_connectionCoroutineCount[$connectionId] --;
+                        self::$_connectionCoroutineCount[$connectionId]--;
                         self::unsetConnectionCoroutineCount($connectionId);
                         $waitGroup->done();
                     }
@@ -208,9 +210,9 @@ trait ServerMethods
                         : 1);
                 // 等待
                 $waitGroup->wait();
+
                 return $res;
             };
         }
     }
-
 }

@@ -82,6 +82,7 @@ class WaitGroup
         if (!method_exists($this->_interface, $name)) {
             throw new \BadMethodCallException("Method $name not exists. ");
         }
+
         return $this->_interface->$name(...$arguments);
     }
 }

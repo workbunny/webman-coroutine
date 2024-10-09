@@ -6,5 +6,4 @@ namespace Workbunny\Tests\HandlersCase;
 
 class SwowWorkerman5HandlerTest extends SwowHandlerTest
 {
-
 }

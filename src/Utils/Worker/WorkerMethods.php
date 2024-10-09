@@ -12,7 +12,6 @@ use Workbunny\WebmanCoroutine\Utils\WaitGroup\WaitGroup;
 
 trait WorkerMethods
 {
-
     /**
      * @var callable|null
      */
@@ -67,5 +66,4 @@ trait WorkerMethods
             $waitGroup->wait(-1);
         };
     }
-
 }

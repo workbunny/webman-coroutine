@@ -39,6 +39,7 @@ class SwooleHandlerTest extends TestCase
         $return = false;
         SwooleHandler::waitFor(function () use (&$return) {
             sleep(1);
+
             return $return = true;
         });
         $this->assertTrue($return);

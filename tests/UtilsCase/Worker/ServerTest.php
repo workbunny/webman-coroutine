@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace UtilsCase\Worker;
 
 use PHPUnit\Framework\TestCase;
+
+use function Workbunny\WebmanCoroutine\event_loop;
+
 use Workbunny\WebmanCoroutine\Exceptions\WorkerException;
 use Workbunny\WebmanCoroutine\Factory;
 use Workbunny\WebmanCoroutine\Utils\Worker\AbstractWorker;
 use Workbunny\WebmanCoroutine\Utils\Worker\Server;
-use function Workbunny\WebmanCoroutine\event_loop;
 
 /**
  * @runTestsInSeparateProcesses
@@ -20,9 +22,12 @@ class ServerTest extends TestCase
     {
         $worker = new Server();
         $worker::$eventLoopClass = event_loop(Factory::WORKERMAN_DEFAULT);
-        $worker->onConnect = $onConnect = function () {};
-        $worker->onClose = $onClose = function () {};
-        $worker->onMessage = $onMessage = function () {};
+        $worker->onConnect = $onConnect = function () {
+        };
+        $worker->onClose = $onClose = function () {
+        };
+        $worker->onMessage = $onMessage = function () {
+        };
 
         $this->assertNull($worker->getParentOnConnect());
         $this->assertNull($worker->getParentOnClose());
@@ -41,9 +46,12 @@ class ServerTest extends TestCase
     {
         Factory::init(Factory::WORKERMAN_DEFAULT);
         $worker = new Server();
-        $worker->onConnect = $onConnect = function () {};
-        $worker->onClose = $onClose = function () {};
-        $worker->onMessage = $onMessage = function () {};
+        $worker->onConnect = $onConnect = function () {
+        };
+        $worker->onClose = $onClose = function () {
+        };
+        $worker->onMessage = $onMessage = function () {
+        };
 
         $this->assertNull($worker->getParentOnConnect());
         $this->assertNull($worker->getParentOnClose());
@@ -61,10 +69,13 @@ class ServerTest extends TestCase
     public function testServerException()
     {
         $worker = new Server();
-//        $worker::$eventLoopClass = event_loop();
-        $worker->onConnect = function () {};
-        $worker->onClose  = function () {};
-        $worker->onMessage = function () {};
+        //        $worker::$eventLoopClass = event_loop();
+        $worker->onConnect = function () {
+        };
+        $worker->onClose = function () {
+        };
+        $worker->onMessage = function () {
+        };
 
         $this->expectException(WorkerException::class);
         $this->assertNull($worker->getParentOnConnect());
@@ -75,6 +86,4 @@ class ServerTest extends TestCase
         $reflectionMethod->setAccessible(true);
         $reflectionMethod->invoke(null);
     }
-
-
 }

@@ -14,7 +14,6 @@ use Workerman\Worker;
 
 abstract class AbstractWorker extends Worker
 {
-
     /** @inheritDoc */
     protected static function initWorkers()
     {

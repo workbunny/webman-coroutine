@@ -11,8 +11,7 @@ use Swow\Channel;
 
 class SwowChannel implements ChannelInterface
 {
-
-    /** @var Channel  */
+    /** @var Channel */
     protected Channel $_channel;
 
     /** @inheritdoc  */
@@ -69,6 +68,6 @@ class SwowChannel implements ChannelInterface
      */
     protected function _second2microsecond(int|float $timeout): int
     {
-        return $timeout > 0 ? (int)($timeout * 1000 * 1000) : -1;
+        return $timeout > 0 ? (int) ($timeout * 1000 * 1000) : -1;
     }
 }

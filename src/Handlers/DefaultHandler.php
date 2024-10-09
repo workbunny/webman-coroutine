@@ -7,8 +7,6 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Handlers;
 
-use Closure;
-
 /**
  *  默认处理器，使用workerman基础事件
  */

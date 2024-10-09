@@ -10,7 +10,6 @@ use Workbunny\WebmanCoroutine\Handlers\RippleHandler;
 
 class RippleHandlerTest extends TestCase
 {
-
     protected function tearDown(): void
     {
         parent::tearDown();
@@ -47,6 +46,7 @@ class RippleHandlerTest extends TestCase
         $return = false;
         $rippleHandlerMock::waitFor(function () use (&$return) {
             sleep(1);
+
             return $return = true;
         });
         $this->assertTrue($return);

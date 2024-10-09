@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Workbunny\Tests\mock\TestHandler;
 use Workbunny\WebmanCoroutine\Factory;
-use Workbunny\WebmanCoroutine\Handlers\DefaultHandler;
 
 /**
  * @runTestsInSeparateProcesses

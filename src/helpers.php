@@ -21,6 +21,7 @@ putenv('WORKBUNNY_COROUTINE=1');
 function event_loop(?string $expectEventLoopClass = null): string
 {
     Factory::init($expectEventLoopClass);
+
     return Factory::getCurrentEventLoop();
 }
 

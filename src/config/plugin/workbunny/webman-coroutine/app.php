@@ -16,7 +16,7 @@ return [
     'enable'         => true,
     // coroutine-web-server 监听端口
     'port'           => 8717,
-    /**
+    /*
      * @deprecated
      */
     'channel_size'   => 1,

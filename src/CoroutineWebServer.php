@@ -20,7 +20,6 @@ use Workerman\Worker;
  */
 class CoroutineWebServer extends App
 {
-
     /**
      * 每个连接的协程计数
      *
@@ -159,7 +158,7 @@ class CoroutineWebServer extends App
                 $res = parent::onMessage(...$params);
             } finally {
                 // 计数 --
-                self::$_connectionCoroutineCount[$connectionId] --;
+                self::$_connectionCoroutineCount[$connectionId]--;
                 // 尝试回收
                 self::unsetConnectionCoroutineCount($connectionId);
                 // wg完成
@@ -173,6 +172,7 @@ class CoroutineWebServer extends App
                 : 1);
         // 等待
         $waitGroup->wait();
+
         return $res;
     }
 }

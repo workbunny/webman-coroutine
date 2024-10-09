@@ -9,11 +9,10 @@ namespace Workbunny\WebmanCoroutine\Utils\Channel\Handlers;
 
 class DefaultChannel implements ChannelInterface
 {
-
-    /** @var \SplQueue|null  */
+    /** @var \SplQueue|null */
     protected ?\SplQueue $_queue;
 
-    /** @var int  */
+    /** @var int */
     protected int $_capacity;
 
     /** @inheritdoc  */
@@ -38,6 +37,7 @@ class DefaultChannel implements ChannelInterface
     public function push(mixed $data, int|float $timeout = -1): bool
     {
         $this->_queue->enqueue($data);
+
         return true;
     }
 

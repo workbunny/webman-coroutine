@@ -9,11 +9,10 @@ namespace Workbunny\WebmanCoroutine\Utils\Channel\Handlers;
 
 class RippleChannel implements ChannelInterface
 {
-
-    /** @var \SplQueue  */
+    /** @var \SplQueue */
     protected \SplQueue $_queue;
 
-    /** @var int  */
+    /** @var int */
     protected int $_capacity;
 
     /** @inheritdoc  */
@@ -62,6 +61,7 @@ class RippleChannel implements ChannelInterface
         while (1) {
             if (!$this->isFull()) {
                 $this->_queue->enqueue($data);
+
                 return true;
             } else {
                 // timeout

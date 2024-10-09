@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Handlers;
 
-use Workerman\Worker;
 use function Workbunny\WebmanCoroutine\package_installed;
 
 /**
@@ -15,21 +14,12 @@ use function Workbunny\WebmanCoroutine\package_installed;
  */
 class RippleHandler implements HandlerInterface
 {
+    use HandlerMethods;
 
     /** @inheritdoc  */
     public static function isAvailable(): bool
     {
         return version_compare(static::_getWorkerVersion(), '5.0.0', '<') and package_installed('cclilshy/p-ripple-drive');
-    }
-
-    /**
-     * 为了测试可以mock
-     *
-     * @return string
-     */
-    protected static function _getWorkerVersion(): string
-    {
-        return Worker::VERSION;
     }
 
     /**

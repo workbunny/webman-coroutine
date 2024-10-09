@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Workbunny\Tests\UtilsCase\Channel;
 
-use PHPUnit\Framework\TestCase;
 use Mockery;
+use PHPUnit\Framework\TestCase;
 use Workbunny\WebmanCoroutine\Utils\Channel\Handlers\RippleChannel;
 
 class RippleChannelTest extends TestCase
@@ -71,6 +71,6 @@ class RippleChannelTest extends TestCase
         $partialMock = Mockery::mock('Workbunny\WebmanCoroutine\Utils\Channel\Handlers\RippleChannel', [])->makePartial();
         $partialMock->shouldAllowMockingProtectedMethods()->shouldReceive('_sleep')->andReturnNull();
 
-        $this->assertFalse($partialMock->pop( 1));
+        $this->assertFalse($partialMock->pop(1));
     }
 }

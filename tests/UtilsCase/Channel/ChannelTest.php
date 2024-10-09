@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Workbunny\Tests\UtilsCase\Channel;
 
-use PHPUnit\Framework\TestCase;
 use Mockery;
+use PHPUnit\Framework\TestCase;
 use Workbunny\WebmanCoroutine\Utils\Channel\Channel;
 use Workbunny\WebmanCoroutine\Utils\Channel\Handlers\ChannelInterface;
 
@@ -22,7 +22,7 @@ class ChannelTest extends TestCase
         $mockInterface->shouldReceive('__construct')
             ->with(-1);
 
-        $channel = Mockery::mock( Channel::class, [-1])
+        $channel = Mockery::mock(Channel::class, [-1])
             ->makePartial()
             ->shouldAllowMockingProtectedMethods();
         $channel->shouldReceive('__destruct')
@@ -42,7 +42,7 @@ class ChannelTest extends TestCase
         $mockInterface->shouldReceive('__destruct')
             ->andReturnNull();
 
-        $channel = Mockery::mock( Channel::class, [-1])
+        $channel = Mockery::mock(Channel::class, [-1])
             ->makePartial()
             ->shouldAllowMockingProtectedMethods();
         $channel->shouldReceive('__destruct')

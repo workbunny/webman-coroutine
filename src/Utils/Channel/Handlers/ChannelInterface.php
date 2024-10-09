@@ -9,7 +9,6 @@ namespace Workbunny\WebmanCoroutine\Utils\Channel\Handlers;
 
 interface ChannelInterface
 {
-
     /**
      * 初始化通道
      *

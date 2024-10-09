@@ -11,7 +11,6 @@ use InvalidArgumentException;
 
 trait RegisterMethods
 {
-
     /**
      * 注册
      *
@@ -24,10 +23,13 @@ trait RegisterMethods
         if (!self::$_handlers[$key] ?? null) {
             if ($value = self::registerVerify($value)) {
                 self::$_handlers[$key] = $value;
+
                 return true;
             }
+
             return false;
         }
+
         return null;
     }
 
@@ -67,7 +69,6 @@ trait RegisterMethods
      * @throws InvalidArgumentException 如果参数值不合法，请抛出该异常
      */
     abstract public static function unregisterExecute(string $key): bool;
-
 
     /**
      * 获取指定handler 或 获取所有
