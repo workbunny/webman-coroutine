@@ -88,12 +88,14 @@ class Pool
                     unset(self::$pools[$name][$in]);
                     continue;
                 }
-                // 非Pool则为数组
+                /**
+                 * 非Pool则为数组
+                 * @var int $i
+                 * @var Pool $p
+                 */
                 foreach ($pool as $i => $p) {
                     if (!$force) {
-                        wait_for(function () use ($p) {
-                            return $p->isIdle();
-                        });
+                        $p->waitForIdle();
                     }
                     unset(self::$pools[$name][$i]);
                 }
@@ -144,9 +146,7 @@ class Pool
      */
     public function __destruct()
     {
-        wait_for(function () {
-            return $this->isIdle();
-        });
+        $this->waitForIdle();
     }
 
     /**
@@ -200,4 +200,19 @@ class Pool
         $this->_idle = $idle;
     }
 
+    /**
+     * 等待至闲置
+     *
+     * @param \Closure|null $closure
+     * @return void
+     */
+    public function waitForIdle(?\Closure $closure = null): void
+    {
+        wait_for(function () {
+            return $this->isIdle();
+        });
+        if ($closure) {
+            call_user_func($closure, $this);
+        }
+    }
 }
