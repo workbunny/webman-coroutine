@@ -16,7 +16,7 @@
   },
   "require": {
     "php": "^8.0",
-    "swow/swow": "^1.5"
+    "workerman/workerman": "^4.0|^5.0"
   },
   "require-dev": {
     "workerman/webman-framework": "^1.0",
@@ -26,6 +26,7 @@
     "friendsofphp/php-cs-fixer": "^3.0",
     "symfony/var-dumper": "^6.0",
     "swoole/ide-helper": "^5.1",
+    "swow/swow": "^1.5",
     "mockery/mockery": "^1.6"
   },
   "autoload": {
@@ -45,8 +46,9 @@
     }
   },
   "suggest": {
-    "ext-swoole": "For supporting Swoole handler. ",
-    "cclilshy/p-ripple-drive": "For supporting Ripple handler. "
+    "swow/swow": "For supporting Swow handler. ",
+    "cclilshy/p-ripple-drive": "For supporting Ripple handler. ",
+    "ext-swoole": "For supporting Swoole handler. "
   },
   "scripts": {
     "cs-fix": "./vendor/bin/php-cs-fixer fix",
