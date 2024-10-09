@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace Workbunny\WebmanCoroutine;
 
 // 设置环境变量
+use Composer\InstalledVersions;
 use Workbunny\WebmanCoroutine\Handlers\HandlerInterface;
 
 putenv('WORKBUNNY_COROUTINE=1');
@@ -53,13 +54,7 @@ function wait_for(?\Closure $closure, float|int $timeout = -1): void
  */
 function package_installed(string $packageName): bool
 {
-    $composerFile = dirname(__DIR__) . '/composer.json';
-    if (!file_exists($composerFile)) {
-        return false;
-    }
-    $composerData = json_decode(file_get_contents($composerFile), true);
-
-    return isset($composerData['require'][$packageName]);
+    return InstalledVersions::isInstalled($packageName);
 }
 
 /**
