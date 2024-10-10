@@ -58,7 +58,7 @@ class RevoltHandler implements HandlerInterface
     {
         $suspension = EventLoop::getSuspension();
         // 毫秒及以上
-        if ($second > 0.001) {
+        if ($second >= 0.001) {
             EventLoop::delay((float) $second, function () use ($suspension) {
                 $suspension->resume();
             });
