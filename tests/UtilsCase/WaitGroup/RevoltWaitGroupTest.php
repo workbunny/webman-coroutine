@@ -8,9 +8,6 @@ use Mockery;
 use PHPUnit\Framework\TestCase;
 use Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers\RevoltWaitGroup;
 
-/**
- * @runTestsInSeparateProcesses
- */
 class RevoltWaitGroupTest extends TestCase
 {
     protected function tearDown(): void
@@ -43,8 +40,18 @@ class RevoltWaitGroupTest extends TestCase
 
     public function testWait()
     {
-        Mockery::mock('Workbunny\WebmanCoroutine\Handlers\RevoltHandler')
-            ->shouldReceive('sleep')->andReturnNull();
+        $suspensionMock = Mockery::mock('alias:\Revolt\EventLoop\Suspension');
+        $suspensionMock->shouldReceive('resume')->andReturnNull();
+        $suspensionMock->shouldReceive('suspend')->andReturnNull();
+
+        $eventLoopMock = Mockery::mock('alias:\Revolt\EventLoop');
+        $eventLoopMock->shouldReceive('getSuspension')->andReturn($suspensionMock);
+        $eventLoopMock->shouldReceive('defer')->andReturnUsing(function ($closure) {
+            $closure();
+        });
+        $eventLoopMock->shouldReceive('delay')->andReturnUsing(function ($timeout, $closure) {
+            $closure();
+        });
         $wg = new RevoltWaitGroup();
         $wg->add();
         $wg->done();

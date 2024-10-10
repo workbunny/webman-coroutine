@@ -8,9 +8,6 @@ use Mockery;
 use PHPUnit\Framework\TestCase;
 use Workbunny\WebmanCoroutine\Utils\Channel\Handlers\RevoltChannel;
 
-/**
- * @runTestsInSeparateProcesses
- */
 class RevoltChannelTest extends TestCase
 {
     protected function tearDown(): void
@@ -62,8 +59,18 @@ class RevoltChannelTest extends TestCase
 
     public function testPushWithTimeout()
     {
-        Mockery::mock('alias:\Workbunny\WebmanCoroutine\Handlers\RevoltHandler')
-            ->shouldReceive('sleep')->andReturnNull();
+        $suspensionMock = Mockery::mock('alias:\Revolt\EventLoop\Suspension');
+        $suspensionMock->shouldReceive('resume')->andReturnNull();
+        $suspensionMock->shouldReceive('suspend')->andReturnNull();
+
+        $eventLoopMock = Mockery::mock('alias:\Revolt\EventLoop');
+        $eventLoopMock->shouldReceive('getSuspension')->andReturn($suspensionMock);
+        $eventLoopMock->shouldReceive('defer')->andReturnUsing(function ($closure) {
+            $closure();
+        });
+        $eventLoopMock->shouldReceive('delay')->andReturnUsing(function ($timeout, $closure) {
+            $closure();
+        });
         $channel = new RevoltChannel(1);
         $channel->push('test');
 
@@ -72,8 +79,18 @@ class RevoltChannelTest extends TestCase
 
     public function testPopWithTimeout()
     {
-        Mockery::mock('alias:\Workbunny\WebmanCoroutine\Handlers\RevoltHandler')
-            ->shouldReceive('sleep')->andReturnNull();
+        $suspensionMock = Mockery::mock('alias:\Revolt\EventLoop\Suspension');
+        $suspensionMock->shouldReceive('resume')->andReturnNull();
+        $suspensionMock->shouldReceive('suspend')->andReturnNull();
+
+        $eventLoopMock = Mockery::mock('alias:\Revolt\EventLoop');
+        $eventLoopMock->shouldReceive('getSuspension')->andReturn($suspensionMock);
+        $eventLoopMock->shouldReceive('defer')->andReturnUsing(function ($closure) {
+            $closure();
+        });
+        $eventLoopMock->shouldReceive('delay')->andReturnUsing(function ($timeout, $closure) {
+            $closure();
+        });
         $channel = new RevoltChannel(1);
 
         $this->assertFalse($channel->pop(1));

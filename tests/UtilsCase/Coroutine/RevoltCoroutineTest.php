@@ -8,9 +8,6 @@ use Mockery;
 use PHPUnit\Framework\TestCase;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\RevoltCoroutine;
 
-/**
- * @runTestsInSeparateProcesses
- */
 class RevoltCoroutineTest extends TestCase
 {
     protected function tearDown(): void

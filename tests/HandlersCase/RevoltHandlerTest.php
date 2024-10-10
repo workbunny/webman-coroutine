@@ -27,19 +27,33 @@ class RevoltHandlerTest extends TestCase
         $this->assertTrue(true);
     }
 
+    /**
+     * @runInSeparateProcess
+     * @return void
+     */
     public function testWaitFor()
     {
-        $rippleHandlerMock = Mockery::mock(RevoltHandler::class . '[sleep]');
-        $rippleHandlerMock->shouldReceive('sleep')->andReturnNull();
+        $suspensionMock = Mockery::mock('alias:\Revolt\EventLoop\Suspension');
+        $suspensionMock->shouldReceive('resume')->andReturnNull();
+        $suspensionMock->shouldReceive('suspend')->andReturnNull();
+
+        $eventLoopMock = Mockery::mock('alias:\Revolt\EventLoop');
+        $eventLoopMock->shouldReceive('getSuspension')->andReturn($suspensionMock);
+        $eventLoopMock->shouldReceive('defer')->andReturnUsing(function ($closure) {
+            $closure();
+        });
+        $eventLoopMock->shouldReceive('delay')->andReturnUsing(function ($timeout, $closure) {
+            $closure();
+        });
 
         $return = false;
-        $rippleHandlerMock::waitFor(function () use (&$return) {
+        RevoltHandler::waitFor(function () use (&$return) {
             return $return = true;
         });
         $this->assertTrue($return);
 
         $return = false;
-        $rippleHandlerMock::waitFor(function () use (&$return) {
+        RevoltHandler::waitFor(function () use (&$return) {
             sleep(1);
 
             return $return = true;
@@ -47,7 +61,7 @@ class RevoltHandlerTest extends TestCase
         $this->assertTrue($return);
 
         $return = false;
-        $rippleHandlerMock::waitFor(function () use (&$return) {
+        RevoltHandler::waitFor(function () use (&$return) {
             return false;
         }, 1);
         $this->assertFalse($return);
