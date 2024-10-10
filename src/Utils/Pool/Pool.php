@@ -35,9 +35,9 @@ class Pool
     /**
      * 元素
      *
-     * @var object|array|null
+     * @var object|array|null|mixed
      */
-    protected object|array|null $_element;
+    protected mixed $_element;
 
     /**
      * 是否空闲
@@ -83,26 +83,18 @@ class Pool
     public static function destroy(string $name, ?int $index, bool $force = false): void
     {
         $pools = static::get($name, $index);
-        if ($pools) {
-            foreach ($pools as $in => $pool) {
-                // Pool
-                if ($pool instanceof Pool) {
-                    $pool->setForce($force);
-                    unset(self::$pools[$name][$in]);
-                    continue;
-                }
-                /**
-                 * 非Pool则为数组
-                 * @var int $i
-                 * @var Pool $p
-                 */
-                foreach ($pool as $i => $p) {
-                    $p->setForce($force);
-                    unset(self::$pools[$name][$i]);
-                }
+        if ($pools instanceof Pool) {
+            $pools->setForce($force);
+            unset(self::$pools[$name][$index]);
+            return;
+        }
+        if (is_array($pools)) {
+            foreach ($pools as $i => $p) {
+                $p->setForce($force);
+                unset(self::$pools[$name][$i]);
+                return;
             }
         }
-
     }
 
     /**
@@ -155,6 +147,27 @@ class Pool
     }
 
     /**
+     * 数组的深拷贝
+     *
+     * @param array $array
+     * @return array
+     */
+    protected static function _deepCopyArray(array $array): array
+    {
+        $copy = [];
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                $copy[$key] = self::_deepCopyArray($value);
+            } elseif (is_object($value)) {
+                $copy[$key] = clone $value;
+            } else {
+                $copy[$key] = $value;
+            }
+        }
+        return $copy;
+    }
+
+    /**
      * 构造
      *
      * @param string $name
@@ -171,7 +184,8 @@ class Pool
         $this->setForce(false);
         $this->setIdle(true);
         $this->_element = match (true) {
-            is_object($element), is_array($element) => clone $element,
+            is_object($element)                     => clone $element,
+            is_array($element)                      => self::_deepCopyArray($element),
             is_callable($element)                   => call_user_func($element),
             default                                 => $element,
         };
@@ -274,4 +288,5 @@ class Pool
             call_user_func($closure, $this);
         }
     }
+
 }
