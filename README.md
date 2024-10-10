@@ -26,15 +26,36 @@
 
 > **🚀🐇 webman-coroutine 是一个支持 workerman / webman 开发框架生态下的协程基建支撑插件**
 
+### 起源
+
+- workerman 4.x 及基于其作为运行容器的 webman 框架不支持协程
+- workerman 5.x 及基于其作为运行容器的 webman 框架不具备完备的协程能力
+- workerman / webman 没有一个较为统一的协程使用方式，导致切换协程驱动的开发成本较高，试错成本较高
+- 自行实现协程版worker、server开发成本较高，试错成本较高
+
 > [workbunny/webman-coroutine 插件诞生缘由及协程开发分享](https://www.workerman.net/a/1769)
 
-**主要实现以下功能**：
+### 目的
 
-1. 支持`workerman 4.x`的 [swow](https://github.com/swow/swow) 协程驱动能力，兼容`workerman 5.x`版本自带的`swow`协程驱动；
-2. 支持`workerman 4.x`的 [swoole](https://github.com/swoole/swoole-src) 协程驱动能力，兼容`workerman 5.x`版本自带的`swoole`协程驱动；
-3. 支持 [ripple](https://github.com/cloudtay/ripple) 协程驱动能力，兼容`revolt (PHP-fiber)`协程生态；
-4. 提供`coroutine web server` 用于实现具备协程能力的web服务；
-5. 支持纯 workerman 环境，支持 webman 开发框架
+- 提供 workerman/webman 多样的基础协程事件库，兼容支持`workerman 4.x`和`workerman 5.x`的协程驱动
+  - [revolt/PHP-fiber](https://github.com/revoltphp/event-loop)
+  - [swow](https://github.com/swow/swow)
+  - [swoole](https://github.com/swoole/swoole-src)
+  - [ripple](https://github.com/cloudtay/ripple)
+  
+- 提供 workerman/webman 统一的协程开发工具，兼容非协程环境
+  - 协程通道：[Utils/Channel](https://github.com/workbunny/webman-coroutine/tree/main/src/Utils/Channel)
+  - 协程等待：[Utils/WaitGroup](https://github.com/workbunny/webman-coroutine/tree/main/src/Utils/WaitGroup)
+  - 协程：[Utils/Coroutine](https://github.com/workbunny/webman-coroutine/tree/main/src/Utils/Coroutine)
+  - 协程化Worker：[Utils/Worker](https://github.com/workbunny/webman-coroutine/tree/main/src/Utils/Worker)
+  - 对象池：[Utils/Pool](https://github.com/workbunny/webman-coroutine/tree/main/src/Utils/Pool) `测试中`
+
+### 愿景
+
+1. 在 workerman/webman 开发环境下，提供一套简单的协程工具包，降低心智负担。
+2. 在 workerman/webman 开发环境下，尝试实现一套兼容协程与非协程开发的方案，让方案选择和方案逃离更简单，避免更多的焦虑。
+3. 在 workerman/webman 开发环境下，尽可能实现对官方组件的非侵入的协程化改造`(虽然很难，但也想试试)`。
+4. 希望在代码的实现上能够给更多PHP开发带来一些帮助，甚至灵感。
 
 ## 安装
 
@@ -46,12 +67,7 @@ composer require workbunny/webman-coroutine
 
 ## 说明
 
-1. `workerman 4.x/5.x`驱动下的 webman 框架无法完整使用`swoole`的协程能力，所以使用`CoroutineWebServer`来替代`webman`自带的`webServer`
-2. `workerman 4.x`下还未有官方支持的`swow`协程驱动，本插件提供`SwowEvent`事件驱动支撑`workerman 4.x`下的协程能力
-3. 由于配置`event-loop`等操作相较于普通开发会存在一定的心智负担，所以本插件提供了`event_loop()`函数，用于根据当前环境自动选择合适的事件驱动
-4. workerman开发环境下支持使用所有 Utils
-
-### 目录说明
+### 目录
 
 ```
 |-- config                       # webman 配置文件
@@ -72,11 +88,12 @@ composer require workbunny/webman-coroutine
 |-- helpers.php                  # 入口助手          
 ```
 
-### 助手函数说明
+### 助手函数
 
 - `event_loop()` 用于自动判断当前环境适合的event loop和协程驱动
     > 环境的自动判定按照`Factory::$_handlers`的顺序择先加载
 - `package_installed` 用于判定当前环境是否安装对应composer包
+- `wait_for` 用于进程非阻塞地等待对应条件执行（一般是子协程执行结果）
 - `is_coroutine_env` 用于判断当前环境是否为workbunny协程环境
     > 安装workbunny/webman-coroutine后自动会注册环境变量`WORKBUNNY_COROUTINE=1`
 
@@ -85,10 +102,10 @@ composer require workbunny/webman-coroutine
 | 目录  |                               地址                               |
 |:---:|:--------------------------------------------------------------:|
 | API | [Fucntion-APIs](https://workbunny.github.io/webman-coroutine/) |
-| 教程  |               [PHP 协程入门](docs/doc/coroutine.md)                |
-|  -  |            [workerman 环境中使用](docs/doc/workerman.md)            |
-|  -  |               [webman 框架中使用](docs/doc/webman.md)               |
-|  -  |                    [自定义拓展](docs/doc/custom.md)                     |
+| 教程  |               [PHP 协程入门](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/coroutine.md)                |
+|  -  |            [workerman 环境中使用](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/workerman.md)            |
+|  -  |               [webman 框架中使用](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/webman.md)               |
+|  -  |                    [自定义拓展](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/custom.md)                     |
 
 ## ♨️ 相关文章
 

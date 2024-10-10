@@ -22,10 +22,10 @@ function add_class_annotations(string $targetClass, string $sourceClass): void
         if (str_starts_with($method->getName(), '__')) {
             continue;
         }
-        $params = array_map(function($param) {
-            return $param->getType() . " $" . $param->getName();
+        $params = array_map(function ($param) {
+            return $param->getType() . ' $' . $param->getName();
         }, $method->getParameters());
-        $annotations[] = "@method " . $method->getReturnType() . " " . $method->getName() . "(" . implode(', ', $params) . ")";
+        $annotations[] = '@method ' . $method->getReturnType() . ' ' . $method->getName() . '(' . implode(', ', $params) . ')';
     }
 
     $annotationString = "/**\n * " . implode("\n * ", $annotations) . "\n */\n";

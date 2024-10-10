@@ -11,7 +11,7 @@ use Swow\Sync\WaitGroup;
 
 class SwowWaitGroup implements WaitGroupInterface
 {
-    /** @var WaitGroup  */
+    /** @var WaitGroup */
     protected WaitGroup $_waitGroup;
 
     /** @var int 计数 */
@@ -34,7 +34,8 @@ class SwowWaitGroup implements WaitGroupInterface
                     $this->done();
                 }
             }
-        } catch (\Throwable) {} finally {
+        } catch (\Throwable) {
+        } finally {
             $this->_count = 0;
         }
     }
@@ -43,7 +44,8 @@ class SwowWaitGroup implements WaitGroupInterface
     public function add(int $delta = 1): bool
     {
         $this->_waitGroup->add($delta);
-        $this->_count ++;
+        $this->_count++;
+
         return true;
     }
 
@@ -51,7 +53,8 @@ class SwowWaitGroup implements WaitGroupInterface
     public function done(): bool
     {
         $this->_waitGroup->done();
-        $this->_count --;
+        $this->_count--;
+
         return true;
     }
 
@@ -64,6 +67,6 @@ class SwowWaitGroup implements WaitGroupInterface
     /** @inheritdoc  */
     public function wait(int|float $timeout = -1): void
     {
-        $this->_waitGroup->wait($timeout > 0 ? (int)($timeout * 1000) : $timeout);
+        $this->_waitGroup->wait($timeout > 0 ? (int) ($timeout * 1000) : $timeout);
     }
 }

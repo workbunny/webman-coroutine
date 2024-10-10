@@ -11,6 +11,8 @@ interface CoroutineInterface
 {
     /**
      * 创建协程
+     *
+     * @param \Closure $func = function (mixed $coroutineId) {}
      */
     public function __construct(\Closure $func);
 
@@ -29,7 +31,7 @@ interface CoroutineInterface
     /**
      * 获取协程id
      *
-     * @return string|int
+     * @return string|int|null
      */
-    public function id(): string|int;
+    public function id(): string|int|null;
 }

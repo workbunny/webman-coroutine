@@ -8,7 +8,6 @@
 
 - enable : (true/false), 是否启用协程webServer
 - port : (int), 协程webServer默认端口
-- channel_size : (int), 每个connection的channel容量
 - consumer_count : (int), 每个connection的消费者数量
 
 ### process.php
@@ -40,9 +39,10 @@ return config('plugin.workbunny.webman-coroutine.app.enable', false) ? [
 
 ### 默认驱动支持
 
-- swow
-- swoole
-- ripple
+- [revolt/PHP-fiber](https://github.com/revoltphp/event-loop)
+- [swow](https://github.com/swow/swow)
+- [swoole](https://github.com/swoole/swoole-src)
+- [ripple](https://github.com/cloudtay/ripple)
 
 ### swow
 
@@ -78,6 +78,17 @@ return config('plugin.workbunny.webman-coroutine.app.enable', false) ? [
 2. 修改`config/server.php`中`'event_loop' => \Workbunny\WebmanCoroutine\event_loop(Factory::RIPPLE_FIBER)`自动判断
 3. 使用`php webman start` 或 `php start.php start`启动
 
+> 注：该环境协程依赖`revolt`，并没有自动`hook`系统的阻塞函数，但支持所有支持`revolt`的插件
+
+### revolt
+
+1. 使用`composer require revolt/event-loop`安装 revolt 驱动插件
+   - 依赖 PHP >= 8.1
+   - 依赖 workerman 5.x
+   - 建议安装 event/uv 拓展提高性能
+2. 修改`config/server.php`中`'event_loop' => \Workbunny\WebmanCoroutine\event_loop(Factory::REVOLT_FIBER)`自动判断
+3. 使用`php webman start` 或 `php start.php start`启动
+4. 
 > 注：该环境协程依赖`revolt`，并没有自动`hook`系统的阻塞函数，但支持所有支持`revolt`的插件
 
 ## 开发

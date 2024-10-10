@@ -6,15 +6,16 @@
 
 ### 默认驱动支持
 
-- swow
-- swoole
-- ripple
+- [revolt/PHP-fiber](https://github.com/revoltphp/event-loop)
+- [swow](https://github.com/swow/swow)
+- [swoole](https://github.com/swoole/swoole-src)
+- [ripple](https://github.com/cloudtay/ripple)
 
 ### swow
 
 1. 使用`./vendor/bin/swow-builder`安装`swow`拓展
     - 注意请关闭`swoole`环境
-    - 请勿将`swow`加入`php.ini`配置文件
+    - 请勿将`swow`加入`php.ini`配置文件，建议使用`-d extension=swow`加载
 2. 修改启动文件中的`\Workerman\Worker::$eventLoopClass = \Workbunny\WebmanCoroutine\event_loop()`，`event_loop()`函数会根据当前环境自行判断当前的 workerman 版本，自动选择合适的事件驱动
     - 当开启`swow`拓展时，`workerman 4.x`下使用`SwowEvent`事件驱动
     - 当开启`swow`拓展时，`workerman 5.x`下使用`workerman`自带的`Swow`事件驱动
@@ -26,7 +27,7 @@
 
 1. 使用`pecl install swoole` 或者 源码编译安装稳定版 swoole 拓展
     - 请注意关闭`swow`环境
-    - 请勿将`swoole`加入`php.ini`配置文件
+    - 请勿将`swoole`加入`php.ini`配置文件，建议使用`-d extension=swoole`加载
 2. 修改启动文件中的`\Workerman\Worker::$eventLoopClass = \Workbunny\WebmanCoroutine\event_loop()`，`event_loop()`函数会根据当前环境自行判断当前的 workerman 版本，自动选择合适的事件驱动
     - 当开启 swoole 拓展时，workerman 4.x 下使用 SwooleEvent 事件驱动
     - 当开启 swoole 拓展时，workerman 5.x 下使用 workerman 自带的 Swoole 事件驱动
@@ -40,6 +41,16 @@
     - ripple驱动基于revolt (PHP-fiber)，建议安装event拓展提高性能
     - 请勿安装`swoole`拓展，否则会导致`swoole`和`ripple`命名空间冲突
 2. 修改启动文件中的`\Workerman\Worker::$eventLoopClass = \Workbunny\WebmanCoroutine\event_loop(Factory::RIPPLE_FIBER)`自动判断
+
+> 注：该环境协程依赖`revolt`，并没有自动`hook`系统的阻塞函数，但支持所有支持`revolt`的插件
+
+### revolt
+
+1. 使用`composer require revolt/event-loop`安装 revolt 驱动插件
+   - 依赖 PHP >= 8.1
+   - 依赖 workerman 5.x
+   - 建议安装 event/uv 拓展提高性能
+2. 修改启动文件中的`\Workerman\Worker::$eventLoopClass = \Workbunny\WebmanCoroutine\event_loop(Factory::REVOLT_FIBER)`自动判断
 
 > 注：该环境协程依赖`revolt`，并没有自动`hook`系统的阻塞函数，但支持所有支持`revolt`的插件
 

@@ -131,6 +131,11 @@ Search.appendIndex(
             "summary": "\u5904\u7406\u5668\u5F02\u5E38",
             "url": "classes/Workbunny-WebmanCoroutine-Exceptions-HandlerException.html"
         },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Exceptions\\PoolException",
+            "name": "PoolException",
+            "summary": "",
+            "url": "classes/Workbunny-WebmanCoroutine-Exceptions-PoolException.html"
+        },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Exceptions\\RuntimeException",
             "name": "RuntimeException",
             "summary": "",
@@ -211,6 +216,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Workbunny-WebmanCoroutine-Factory.html#constant_RIPPLE_FIBER"
         },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Factory\u003A\u003ARIPPLE_FIBER_5",
+            "name": "RIPPLE_FIBER_5",
+            "summary": "",
+            "url": "classes/Workbunny-WebmanCoroutine-Factory.html#constant_RIPPLE_FIBER_5"
+        },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Factory\u003A\u003AREVOLT_FIBER",
             "name": "REVOLT_FIBER",
             "summary": "",
@@ -260,6 +270,36 @@ Search.appendIndex(
             "name": "waitFor",
             "summary": "\u7B49\u5F85\u76F4\u5230\u56DE\u8C03\u8FD4\u56DEtrue",
             "url": "classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#method_waitFor"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\HandlerMethods",
+            "name": "HandlerMethods",
+            "summary": "",
+            "url": "classes/Workbunny-WebmanCoroutine-Handlers-HandlerMethods.html"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\RevoltHandler",
+            "name": "RevoltHandler",
+            "summary": "\u57FA\u4E8ERipple\u63D2\u4EF6\u7684\u534F\u7A0B\u5904\u7406\u5668\uFF0C\u652F\u6301PHP\u002Dfiber",
+            "url": "classes/Workbunny-WebmanCoroutine-Handlers-RevoltHandler.html"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\RevoltHandler\u003A\u003AisAvailable\u0028\u0029",
+            "name": "isAvailable",
+            "summary": "\u7528\u4E8E\u5224\u65AD\u5F53\u524D\u73AF\u5883\u662F\u5426\u53EF\u7528",
+            "url": "classes/Workbunny-WebmanCoroutine-Handlers-RevoltHandler.html#method_isAvailable"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\RevoltHandler\u003A\u003AinitEnv\u0028\u0029",
+            "name": "initEnv",
+            "summary": "ripple\u0020handler\u65E0\u9700\u521D\u59CB\u5316",
+            "url": "classes/Workbunny-WebmanCoroutine-Handlers-RevoltHandler.html#method_initEnv"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\RevoltHandler\u003A\u003AwaitFor\u0028\u0029",
+            "name": "waitFor",
+            "summary": "\u7B49\u5F85\u76F4\u5230\u56DE\u8C03\u8FD4\u56DEtrue",
+            "url": "classes/Workbunny-WebmanCoroutine-Handlers-RevoltHandler.html#method_waitFor"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\RevoltHandler\u003A\u003Asleep\u0028\u0029",
+            "name": "sleep",
+            "summary": "",
+            "url": "classes/Workbunny-WebmanCoroutine-Handlers-RevoltHandler.html#method_sleep"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\RippleHandler",
             "name": "RippleHandler",
@@ -501,6 +541,51 @@ Search.appendIndex(
             "summary": "\u83B7\u53D6\u901A\u9053\u5BB9\u91CF",
             "url": "classes/Workbunny-WebmanCoroutine-Utils-Channel-Handlers-DefaultChannel.html#method_capacity"
         },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Channel\\Handlers\\RevoltChannel",
+            "name": "RevoltChannel",
+            "summary": "",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Channel-Handlers-RevoltChannel.html"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Channel\\Handlers\\RevoltChannel\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "\u521D\u59CB\u5316\u901A\u9053",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Channel-Handlers-RevoltChannel.html#method___construct"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Channel\\Handlers\\RevoltChannel\u003A\u003A__destruct\u0028\u0029",
+            "name": "__destruct",
+            "summary": "\u6467\u6BC1\u901A\u9053",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Channel-Handlers-RevoltChannel.html#method___destruct"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Channel\\Handlers\\RevoltChannel\u003A\u003Apop\u0028\u0029",
+            "name": "pop",
+            "summary": "\u83B7\u53D6\u4E00\u4E2A\u6570\u636E",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Channel-Handlers-RevoltChannel.html#method_pop"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Channel\\Handlers\\RevoltChannel\u003A\u003Apush\u0028\u0029",
+            "name": "push",
+            "summary": "\u63A8\u9001\u4E00\u4E2A\u6570\u636E",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Channel-Handlers-RevoltChannel.html#method_push"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Channel\\Handlers\\RevoltChannel\u003A\u003AisEmpty\u0028\u0029",
+            "name": "isEmpty",
+            "summary": "\u901A\u9053\u662F\u5426\u4E3A\u7A7A",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Channel-Handlers-RevoltChannel.html#method_isEmpty"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Channel\\Handlers\\RevoltChannel\u003A\u003AisFull\u0028\u0029",
+            "name": "isFull",
+            "summary": "\u901A\u9053\u662F\u5426\u6EE1",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Channel-Handlers-RevoltChannel.html#method_isFull"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Channel\\Handlers\\RevoltChannel\u003A\u003Aclose\u0028\u0029",
+            "name": "close",
+            "summary": "\u5173\u95ED\u901A\u9053",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Channel-Handlers-RevoltChannel.html#method_close"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Channel\\Handlers\\RevoltChannel\u003A\u003Acapacity\u0028\u0029",
+            "name": "capacity",
+            "summary": "\u83B7\u53D6\u901A\u9053\u5BB9\u91CF",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Channel-Handlers-RevoltChannel.html#method_capacity"
+        },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Channel\\Handlers\\RippleChannel",
             "name": "RippleChannel",
             "summary": "",
@@ -643,12 +728,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Coroutine\\Coroutine\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "",
+            "summary": "\u6784\u9020\u65B9\u6CD5",
             "url": "classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Coroutine.html#method___construct"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Coroutine\\Coroutine\u003A\u003A__destruct\u0028\u0029",
             "name": "__destruct",
-            "summary": "",
+            "summary": "\u6790\u6784",
             "url": "classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Coroutine.html#method___destruct"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Coroutine\\Coroutine\u003A\u003AregisterVerify\u0028\u0029",
@@ -715,6 +800,31 @@ Search.appendIndex(
             "name": "id",
             "summary": "\u83B7\u53D6\u534F\u7A0Bid",
             "url": "classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-DefaultCoroutine.html#method_id"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Coroutine\\Handlers\\RevoltCoroutine",
+            "name": "RevoltCoroutine",
+            "summary": "",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-RevoltCoroutine.html"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Coroutine\\Handlers\\RevoltCoroutine\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "\u521B\u5EFA\u534F\u7A0B",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-RevoltCoroutine.html#method___construct"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Coroutine\\Handlers\\RevoltCoroutine\u003A\u003A__destruct\u0028\u0029",
+            "name": "__destruct",
+            "summary": "\u9500\u6BC1\u534F\u7A0B",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-RevoltCoroutine.html#method___destruct"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Coroutine\\Handlers\\RevoltCoroutine\u003A\u003Aorigin\u0028\u0029",
+            "name": "origin",
+            "summary": "\u83B7\u53D6\u534F\u7A0B\u539F\u59CB\u8FD4\u56DE",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-RevoltCoroutine.html#method_origin"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Coroutine\\Handlers\\RevoltCoroutine\u003A\u003Aid\u0028\u0029",
+            "name": "id",
+            "summary": "\u83B7\u53D6\u534F\u7A0Bid",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-RevoltCoroutine.html#method_id"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Coroutine\\Handlers\\RippleCoroutine",
             "name": "RippleCoroutine",
@@ -791,6 +901,86 @@ Search.appendIndex(
             "summary": "\u83B7\u53D6\u534F\u7A0Bid",
             "url": "classes/Workbunny-WebmanCoroutine-Utils-Coroutine-Handlers-SwowCoroutine.html#method_id"
         },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Pool",
+            "name": "Pool",
+            "summary": "",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Pool\u003A\u003Acreate\u0028\u0029",
+            "name": "create",
+            "summary": "\u521B\u5EFA",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_create"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Pool\u003A\u003Adestroy\u0028\u0029",
+            "name": "destroy",
+            "summary": "\u56DE\u6536",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_destroy"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Pool\u003A\u003Aget\u0028\u0029",
+            "name": "get",
+            "summary": "\u83B7\u53D6",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_get"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Pool\u003A\u003Aidle\u0028\u0029",
+            "name": "idle",
+            "summary": "\u83B7\u53D6\u7A7A\u95F2\u6C60",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_idle"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Pool\u003A\u003AwaitForIdle\u0028\u0029",
+            "name": "waitForIdle",
+            "summary": "\u7B49\u5F85\u7A7A\u95F2\u5E76\u6267\u884C",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_waitForIdle"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Pool\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "\u6784\u9020",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method___construct"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Pool\u003A\u003A__destruct\u0028\u0029",
+            "name": "__destruct",
+            "summary": "\u6790\u6784\u7B49\u5F85\u9500\u6BC1",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method___destruct"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Pool\u003A\u003AgetName\u0028\u0029",
+            "name": "getName",
+            "summary": "\u83B7\u53D6\u6240\u5728\u533A\u57DF\u540D\u79F0",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_getName"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Pool\u003A\u003AgetIndex\u0028\u0029",
+            "name": "getIndex",
+            "summary": "\u6240\u5728\u533A\u57DF\u7684\u7D22\u5F15",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_getIndex"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Pool\u003A\u003AgetElement\u0028\u0029",
+            "name": "getElement",
+            "summary": "\u83B7\u53D6\u5143\u7D20",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_getElement"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Pool\u003A\u003AisIdle\u0028\u0029",
+            "name": "isIdle",
+            "summary": "\u662F\u5426\u95F2\u7F6E",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_isIdle"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Pool\u003A\u003AsetIdle\u0028\u0029",
+            "name": "setIdle",
+            "summary": "\u8BBE\u7F6E\u72B6\u6001",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_setIdle"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Pool\u003A\u003AisForce\u0028\u0029",
+            "name": "isForce",
+            "summary": "\u662F\u5426\u5F3A\u5236\u56DE\u6536",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_isForce"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Pool\u003A\u003AsetForce\u0028\u0029",
+            "name": "setForce",
+            "summary": "\u8BBE\u7F6E\u5F3A\u5236\u56DE\u6536",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_setForce"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Pool\u003A\u003Await\u0028\u0029",
+            "name": "wait",
+            "summary": "\u7B49\u5F85\u81F3\u95F2\u7F6E",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_wait"
+        },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\RegisterMethods",
             "name": "RegisterMethods",
             "summary": "",
@@ -860,6 +1050,41 @@ Search.appendIndex(
             "name": "wait",
             "summary": "\u963B\u585E\u7B49\u5F85",
             "url": "classes/Workbunny-WebmanCoroutine-Utils-WaitGroup-Handlers-DefaultWaitGroup.html#method_wait"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\WaitGroup\\Handlers\\RevoltWaitGroup",
+            "name": "RevoltWaitGroup",
+            "summary": "",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-WaitGroup-Handlers-RevoltWaitGroup.html"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\WaitGroup\\Handlers\\RevoltWaitGroup\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "\u521D\u59CB\u5316",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-WaitGroup-Handlers-RevoltWaitGroup.html#method___construct"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\WaitGroup\\Handlers\\RevoltWaitGroup\u003A\u003A__destruct\u0028\u0029",
+            "name": "__destruct",
+            "summary": "\u9500\u6BC1",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-WaitGroup-Handlers-RevoltWaitGroup.html#method___destruct"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\WaitGroup\\Handlers\\RevoltWaitGroup\u003A\u003Aadd\u0028\u0029",
+            "name": "add",
+            "summary": "\u589E\u52A0\u4E00\u4E2A\u8BA1\u6570",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-WaitGroup-Handlers-RevoltWaitGroup.html#method_add"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\WaitGroup\\Handlers\\RevoltWaitGroup\u003A\u003Adone\u0028\u0029",
+            "name": "done",
+            "summary": "\u5B8C\u6210\u4E00\u4E2A\u8BA1\u6570",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-WaitGroup-Handlers-RevoltWaitGroup.html#method_done"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\WaitGroup\\Handlers\\RevoltWaitGroup\u003A\u003Acount\u0028\u0029",
+            "name": "count",
+            "summary": "\u8FD4\u56DE\u8BA1\u6570",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-WaitGroup-Handlers-RevoltWaitGroup.html#method_count"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\WaitGroup\\Handlers\\RevoltWaitGroup\u003A\u003Await\u0028\u0029",
+            "name": "wait",
+            "summary": "\u963B\u585E\u7B49\u5F85",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-WaitGroup-Handlers-RevoltWaitGroup.html#method_wait"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\WaitGroup\\Handlers\\RippleWaitGroup",
             "name": "RippleWaitGroup",
@@ -1051,6 +1276,11 @@ Search.appendIndex(
             "summary": "\u83B7\u53D6\u8FDE\u63A5\u7684\u534F\u7A0B\u8BA1\u6570",
             "url": "classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_getConnectionCoroutineCount"
         },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Worker\\ServerMethods\u003A\u003AunsetConnectionCoroutineCount\u0028\u0029",
+            "name": "unsetConnectionCoroutineCount",
+            "summary": "\u56DE\u6536\u8FDE\u63A5\u7684\u534F\u7A0B\u8BA1\u6570",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_unsetConnectionCoroutineCount"
+        },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Worker\\ServerMethods\u003A\u003AgetParentOnConnect\u0028\u0029",
             "name": "getParentOnConnect",
             "summary": "",
@@ -1080,6 +1310,11 @@ Search.appendIndex(
             "name": "__init__serverMethods",
             "summary": "\u521D\u59CB\u5316\u670D\u52A1",
             "url": "classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method___init__serverMethods"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Worker\\ServerMethods\u003A\u003A\u0024consumerCount",
+            "name": "consumerCount",
+            "summary": "\u8BF7\u6C42\u6D88\u8D39\u8005\u534F\u7A0B\u6570\u91CF\uFF0C0\u4E3A\u65E0\u9650",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#property_consumerCount"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Worker\\Worker",
             "name": "Worker",
@@ -1155,6 +1390,11 @@ Search.appendIndex(
             "name": "Handlers",
             "summary": "",
             "url": "namespaces/workbunny-webmancoroutine-utils-coroutine-handlers.html"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool",
+            "name": "Pool",
+            "summary": "",
+            "url": "namespaces/workbunny-webmancoroutine-utils-pool.html"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils",
             "name": "Utils",

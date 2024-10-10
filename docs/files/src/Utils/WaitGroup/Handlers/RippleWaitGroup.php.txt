@@ -9,7 +9,7 @@ namespace Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers;
 
 class RippleWaitGroup implements WaitGroupInterface
 {
-    /** @var int  */
+    /** @var int */
     protected int $_count;
 
     /** @inheritdoc  */
@@ -28,23 +28,25 @@ class RippleWaitGroup implements WaitGroupInterface
                     $this->done();
                 }
             }
-        } catch (\Throwable) {} finally {
+        } catch (\Throwable) {
+        } finally {
             $this->_count = 0;
         }
-
     }
 
     /** @inheritdoc  */
     public function add(int $delta = 1): bool
     {
-        $this->_count ++;
+        $this->_count++;
+
         return true;
     }
 
     /** @inheritdoc  */
     public function done(): bool
     {
-        $this->_count --;
+        $this->_count--;
+
         return true;
     }
 

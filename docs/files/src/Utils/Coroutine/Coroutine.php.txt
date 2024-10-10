@@ -11,6 +11,7 @@ use Closure;
 use Workbunny\WebmanCoroutine\Factory;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\CoroutineInterface;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\DefaultCoroutine;
+use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\RevoltCoroutine;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\RippleCoroutine;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\SwooleCoroutine;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\SwowCoroutine;
@@ -18,6 +19,7 @@ use Workbunny\WebmanCoroutine\Utils\RegisterMethods;
 
 /**
  * @method mixed origin()
+ * @method string|int id()
  */
 class Coroutine
 {
@@ -36,21 +38,25 @@ class Coroutine
         Factory::WORKBUNNY_SWOW     => SwowCoroutine::class,
         Factory::WORKERMAN_SWOOLE   => SwooleCoroutine::class,
         Factory::WORKBUNNY_SWOOLE   => SwooleCoroutine::class,
-        Factory::REVOLT_FIBER       => RippleCoroutine::class,
+        Factory::REVOLT_FIBER       => RevoltCoroutine::class,
         Factory::RIPPLE_FIBER       => RippleCoroutine::class,
+        Factory::RIPPLE_FIBER_5     => RippleCoroutine::class,
     ];
 
     /**
      * 构造方法
-     */
-    /**
+     *
      * @param Closure $func
+     * @link CoroutineInterface::__construct
      */
     public function __construct(Closure $func)
     {
         $this->_interface = new (self::$_handlers[Factory::getCurrentEventLoop()] ?? DefaultCoroutine::class)($func);
     }
 
+    /**
+     * 析构
+     */
     public function __destruct()
     {
         $this->_interface = null;
@@ -80,6 +86,7 @@ class Coroutine
         if (!method_exists($this->_interface, $name)) {
             throw new \BadMethodCallException("Method $name not exists. ");
         }
+
         return $this->_interface->$name(...$arguments);
     }
 }

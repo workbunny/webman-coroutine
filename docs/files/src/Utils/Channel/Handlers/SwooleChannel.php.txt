@@ -11,8 +11,7 @@ use Swoole\Coroutine\Channel;
 
 class SwooleChannel implements ChannelInterface
 {
-
-    /** @var Channel  */
+    /** @var Channel */
     protected Channel $_channel;
 
     /** @inheritdoc  */
@@ -30,13 +29,13 @@ class SwooleChannel implements ChannelInterface
     /** @inheritdoc  */
     public function pop(int|float $timeout = -1): mixed
     {
-        return $this->_channel->pop((float)$timeout);
+        return $this->_channel->pop((float) $timeout);
     }
 
     /** @inheritdoc */
     public function push(mixed $data, int|float $timeout = -1): mixed
     {
-        return $this->_channel->push($data, (float)$timeout);
+        return $this->_channel->push($data, (float) $timeout);
     }
 
     /** @inheritdoc  */

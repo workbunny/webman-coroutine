@@ -14,7 +14,7 @@ class SwooleCoroutine implements CoroutineInterface
     /**
      * @var int|null
      */
-    protected ?int $_id;
+    protected ?int $_id = null;
 
     /** @inheritdoc
      * @param \Closure $func
@@ -22,8 +22,14 @@ class SwooleCoroutine implements CoroutineInterface
     public function __construct(\Closure $func)
     {
         while (1) {
-            if ($res = Coroutine::create($func)) {
-                $this->_id = $res;
+            if ($id = Coroutine::create(function () use ($func) {
+                try {
+                    call_user_func($func, $this->_id);
+                } finally {
+                    $this->_id = null;
+                }
+            })) {
+                $this->_id = $id;
                 break;
             }
         }
@@ -42,7 +48,7 @@ class SwooleCoroutine implements CoroutineInterface
     }
 
     /** @inheritdoc  */
-    public function id(): int
+    public function id(): ?int
     {
         return $this->_id;
     }

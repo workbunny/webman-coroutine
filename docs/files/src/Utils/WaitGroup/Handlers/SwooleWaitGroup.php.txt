@@ -9,7 +9,7 @@ namespace Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers;
 
 class SwooleWaitGroup implements WaitGroupInterface
 {
-    /** @var int  */
+    /** @var int */
     protected int $_count;
 
     /** @inheritdoc  */
@@ -28,23 +28,25 @@ class SwooleWaitGroup implements WaitGroupInterface
                     $this->done();
                 }
             }
-        } catch (\Throwable) {} finally {
+        } catch (\Throwable) {
+        } finally {
             $this->_count = 0;
         }
-
     }
 
     /** @inheritdoc  */
     public function add(int $delta = 1): bool
     {
-        $this->_count ++;
+        $this->_count++;
+
         return true;
     }
 
     /** @inheritdoc  */
     public function done(): bool
     {
-        $this->_count --;
+        $this->_count--;
+
         return true;
     }
 
@@ -65,7 +67,7 @@ class SwooleWaitGroup implements WaitGroupInterface
             if ($this->_count <= 0) {
                 return;
             }
-            usleep(max((int)($timeout * 1000 * 1000), 0));
+            usleep(max((int) ($timeout * 1000 * 1000), 0));
         }
     }
 }

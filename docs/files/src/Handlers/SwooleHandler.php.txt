@@ -8,17 +8,18 @@ declare(strict_types=1);
 namespace Workbunny\WebmanCoroutine\Handlers;
 
 use Swoole\Runtime;
-use Workerman\Worker;
 
 /**
  *  基于swoole实现的协程处理器
  */
 class SwooleHandler implements HandlerInterface
 {
+    use HandlerMethods;
+
     /** @inheritdoc  */
     public static function isAvailable(): bool
     {
-        return version_compare(Worker::VERSION, '5.0.0', '<') and extension_loaded('swoole');
+        return version_compare(static::_getWorkerVersion(), '5.0.0', '<') and extension_loaded('swoole');
     }
 
     /** @inheritdoc */
@@ -38,7 +39,7 @@ class SwooleHandler implements HandlerInterface
             if ($timeout > 0 && microtime(true) - $time >= $timeout) {
                 return;
             }
-            usleep(max((int)($timeout * 1000 * 1000), 0));
+            usleep(max((int) ($timeout * 1000 * 1000), 0));
         }
     }
 }
