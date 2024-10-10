@@ -11,6 +11,8 @@ use function Workbunny\WebmanCoroutine\package_installed;
 
 /**
  * 基于Ripple插件的协程处理器，支持PHP-fiber
+ *
+ * @deprecated ripple还未支持 workerman 5.x
  */
 class RippleWorkerman5Handler implements HandlerInterface
 {
