@@ -22,11 +22,14 @@ class RevoltCoroutine implements CoroutineInterface
     public function __construct(\Closure $func)
     {
         $this->_suspension = EventLoop::getSuspension();
+        // 将fiber恢复到队列中
         EventLoop::queue(function () {
             $this->_suspension->resume();
         });
+        // 当前fiber挂起
         $this->_suspension->suspend();
         try {
+            // 等待恢复后执行逻辑
             call_user_func($func);
         } finally {
             $this->_suspension = null;
