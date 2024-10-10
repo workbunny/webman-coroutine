@@ -11,8 +11,8 @@ use Workbunny\WebmanCoroutine\Events\SwooleEvent;
 use Workbunny\WebmanCoroutine\Events\SwowEvent;
 use Workbunny\WebmanCoroutine\Handlers\DefaultHandler;
 use Workbunny\WebmanCoroutine\Handlers\HandlerInterface;
+use Workbunny\WebmanCoroutine\Handlers\RevoltHandler;
 use Workbunny\WebmanCoroutine\Handlers\RippleHandler;
-use Workbunny\WebmanCoroutine\Handlers\RippleWorkerman5Handler;
 use Workbunny\WebmanCoroutine\Handlers\SwooleHandler;
 use Workbunny\WebmanCoroutine\Handlers\SwooleWorkerman5Handler;
 use Workbunny\WebmanCoroutine\Handlers\SwowHandler;
@@ -41,7 +41,7 @@ class Factory
         self::WORKBUNNY_SWOW    => SwowHandler::class,
         self::WORKERMAN_SWOOLE  => SwooleWorkerman5Handler::class,
         self::WORKBUNNY_SWOOLE  => SwooleHandler::class,
-        self::REVOLT_FIBER      => RippleWorkerman5Handler::class,
+        self::REVOLT_FIBER      => RevoltHandler::class,
         self::RIPPLE_FIBER      => RippleHandler::class,
     ];
 

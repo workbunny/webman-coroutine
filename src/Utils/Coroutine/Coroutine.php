@@ -11,6 +11,7 @@ use Closure;
 use Workbunny\WebmanCoroutine\Factory;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\CoroutineInterface;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\DefaultCoroutine;
+use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\RevoltCoroutine;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\RippleCoroutine;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\SwooleCoroutine;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\SwowCoroutine;
@@ -37,7 +38,7 @@ class Coroutine
         Factory::WORKBUNNY_SWOW     => SwowCoroutine::class,
         Factory::WORKERMAN_SWOOLE   => SwooleCoroutine::class,
         Factory::WORKBUNNY_SWOOLE   => SwooleCoroutine::class,
-        Factory::REVOLT_FIBER       => RippleCoroutine::class,
+        Factory::REVOLT_FIBER       => RevoltCoroutine::class,
         Factory::RIPPLE_FIBER       => RippleCoroutine::class,
     ];
 

@@ -25,7 +25,6 @@ class DefaultChannel implements ChannelInterface
     /** @inheritdoc  */
     public function __destruct()
     {
-        $this->close();
     }
 
     public function pop(int|float $timeout = -1): mixed
