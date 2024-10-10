@@ -41,6 +41,7 @@ class WaitGroup
         Factory::WORKBUNNY_SWOOLE   => SwooleWaitGroup::class,
         Factory::REVOLT_FIBER       => RevoltWaitGroup::class,
         Factory::RIPPLE_FIBER       => RippleWaitGroup::class,
+        Factory::RIPPLE_FIBER_5     => RippleWaitGroup::class
     ];
 
     /**

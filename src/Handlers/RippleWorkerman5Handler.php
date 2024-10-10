@@ -11,8 +11,6 @@ use function Workbunny\WebmanCoroutine\package_installed;
 
 /**
  * 基于Ripple插件的协程处理器，支持PHP-fiber
- *
- * @deprecated ripple还未支持 workerman 5.x
  */
 class RippleWorkerman5Handler implements HandlerInterface
 {
@@ -21,7 +19,10 @@ class RippleWorkerman5Handler implements HandlerInterface
     /** @inheritdoc  */
     public static function isAvailable(): bool
     {
-        return version_compare(static::_getWorkerVersion(), '5.0.0', '>=') and package_installed('cclilshy/p-ripple-drive');
+        return
+            version_compare(static::_getWorkerVersion(), '5.0.0', '>=') and
+            package_installed('cclilshy/p-ripple-drive') and
+            PHP_VERSION_ID >= 81000;
     }
 
     /**

@@ -43,6 +43,7 @@ class Channel
         Factory::WORKBUNNY_SWOOLE   => SwooleChannel::class,
         Factory::REVOLT_FIBER       => RevoltChannel::class,
         Factory::RIPPLE_FIBER       => RippleChannel::class,
+        Factory::RIPPLE_FIBER_5     => RippleChannel::class,
     ];
 
     /**

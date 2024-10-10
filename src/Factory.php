@@ -13,6 +13,7 @@ use Workbunny\WebmanCoroutine\Handlers\DefaultHandler;
 use Workbunny\WebmanCoroutine\Handlers\HandlerInterface;
 use Workbunny\WebmanCoroutine\Handlers\RevoltHandler;
 use Workbunny\WebmanCoroutine\Handlers\RippleHandler;
+use Workbunny\WebmanCoroutine\Handlers\RippleWorkerman5Handler;
 use Workbunny\WebmanCoroutine\Handlers\SwooleHandler;
 use Workbunny\WebmanCoroutine\Handlers\SwooleWorkerman5Handler;
 use Workbunny\WebmanCoroutine\Handlers\SwowHandler;
@@ -23,13 +24,14 @@ use Workbunny\WebmanCoroutine\Handlers\SwowWorkerman5Handler;
  */
 class Factory
 {
-    public const WORKERMAN_SWOW = 'Workerman\Events\Swow';
-    public const WORKBUNNY_SWOW = SwowEvent::class;
-    public const WORKERMAN_SWOOLE = 'Workerman\Events\Swoole';
-    public const WORKBUNNY_SWOOLE = SwooleEvent::class;
-    public const RIPPLE_FIBER = 'Psc\Drive\Workerman\PDrive';
-    public const REVOLT_FIBER = 'Workerman\Events\Revolt';
-    public const WORKERMAN_DEFAULT = '';
+    public const WORKERMAN_SWOW     = 'Workerman\Events\Swow';
+    public const WORKBUNNY_SWOW     = SwowEvent::class;
+    public const WORKERMAN_SWOOLE   = 'Workerman\Events\Swoole';
+    public const WORKBUNNY_SWOOLE   = SwooleEvent::class;
+    public const RIPPLE_FIBER       = 'Psc\Drive\Workerman\Drive4';
+    public const RIPPLE_FIBER_5     = 'Psc\Drive\Workerman\Drive5';
+    public const REVOLT_FIBER       = 'Workerman\Events\Revolt';
+    public const WORKERMAN_DEFAULT  = '';
 
     /**
      * 默认支持的处理器
@@ -43,6 +45,7 @@ class Factory
         self::WORKBUNNY_SWOOLE  => SwooleHandler::class,
         self::REVOLT_FIBER      => RevoltHandler::class,
         self::RIPPLE_FIBER      => RippleHandler::class,
+        self::RIPPLE_FIBER_5    => RippleWorkerman5Handler::class,
     ];
 
     /**
