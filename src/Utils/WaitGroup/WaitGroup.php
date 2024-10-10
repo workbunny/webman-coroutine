@@ -10,6 +10,7 @@ namespace Workbunny\WebmanCoroutine\Utils\WaitGroup;
 use Workbunny\WebmanCoroutine\Factory;
 use Workbunny\WebmanCoroutine\Utils\RegisterMethods;
 use Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers\DefaultWaitGroup;
+use Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers\RevoltWaitGroup;
 use Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers\RippleWaitGroup;
 use Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers\SwooleWaitGroup;
 use Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers\SwowWaitGroup;
@@ -38,8 +39,9 @@ class WaitGroup
         Factory::WORKBUNNY_SWOW     => SwowWaitGroup::class,
         Factory::WORKERMAN_SWOOLE   => SwooleWaitGroup::class,
         Factory::WORKBUNNY_SWOOLE   => SwooleWaitGroup::class,
-        Factory::REVOLT_FIBER       => RippleWaitGroup::class,
+        Factory::REVOLT_FIBER       => RevoltWaitGroup::class,
         Factory::RIPPLE_FIBER       => RippleWaitGroup::class,
+        Factory::RIPPLE_FIBER_5     => RippleWaitGroup::class
     ];
 
     /**

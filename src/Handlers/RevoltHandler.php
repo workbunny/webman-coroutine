@@ -7,12 +7,13 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Handlers;
 
+use Revolt\EventLoop;
 use function Workbunny\WebmanCoroutine\package_installed;
 
 /**
  * 基于Ripple插件的协程处理器，支持PHP-fiber
  */
-class RippleHandler implements HandlerInterface
+class RevoltHandler implements HandlerInterface
 {
     use HandlerMethods;
 
@@ -20,8 +21,8 @@ class RippleHandler implements HandlerInterface
     public static function isAvailable(): bool
     {
         return
-            version_compare(static::_getWorkerVersion(), '5.0.0', '<') and
-            package_installed('cclilshy/p-ripple-drive') and
+            version_compare(static::_getWorkerVersion(), '5.0.0', '>=') and
+            package_installed('revolt/event-loop') and
             PHP_VERSION_ID >= 81000;
     }
 
@@ -45,16 +46,33 @@ class RippleHandler implements HandlerInterface
             if ($timeout > 0 && microtime(true) - $time >= $timeout) {
                 return;
             }
-            static::_sleep($timeout);
+            RevoltHandler::sleep($timeout);
         }
     }
 
     /**
-     * @param int|float $second
+     * @param int|float $second 单位：秒
      * @return void
      */
-    protected static function _sleep(int|float $second): void
+    public static function sleep(int|float $second): void
     {
-        \Co\sleep(max($second, 0));
+        $suspension = EventLoop::getSuspension();
+        // 毫秒及以上
+        if ($second > 0.001) {
+            EventLoop::delay((float) $second, function () use ($suspension) {
+                $suspension->resume();
+            });
+        }
+        // 毫秒以下
+        else {
+            $start = microtime(true);
+            EventLoop::defer($fuc = function () use (&$fuc, $suspension, $second, $start) {
+                if (microtime(true) - $start >= $second) {
+                    $suspension->resume();
+                } else {
+                    EventLoop::defer($fuc);
+                }
+            });
+        }
     }
 }

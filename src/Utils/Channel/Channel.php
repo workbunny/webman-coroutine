@@ -10,6 +10,7 @@ namespace Workbunny\WebmanCoroutine\Utils\Channel;
 use Workbunny\WebmanCoroutine\Factory;
 use Workbunny\WebmanCoroutine\Utils\Channel\Handlers\ChannelInterface;
 use Workbunny\WebmanCoroutine\Utils\Channel\Handlers\DefaultChannel;
+use Workbunny\WebmanCoroutine\Utils\Channel\Handlers\RevoltChannel;
 use Workbunny\WebmanCoroutine\Utils\Channel\Handlers\RippleChannel;
 use Workbunny\WebmanCoroutine\Utils\Channel\Handlers\SwooleChannel;
 use Workbunny\WebmanCoroutine\Utils\Channel\Handlers\SwowChannel;
@@ -40,8 +41,9 @@ class Channel
         Factory::WORKBUNNY_SWOW     => SwowChannel::class,
         Factory::WORKERMAN_SWOOLE   => SwooleChannel::class,
         Factory::WORKBUNNY_SWOOLE   => SwooleChannel::class,
-        Factory::REVOLT_FIBER       => RippleChannel::class,
+        Factory::REVOLT_FIBER       => RevoltChannel::class,
         Factory::RIPPLE_FIBER       => RippleChannel::class,
+        Factory::RIPPLE_FIBER_5     => RippleChannel::class,
     ];
 
     /**
