@@ -8,11 +8,11 @@ declare(strict_types=1);
 namespace Workbunny\WebmanCoroutine\Utils\Pool;
 
 use Workbunny\WebmanCoroutine\Exceptions\PoolException;
+use Workerman\Worker;
 use function Workbunny\WebmanCoroutine\wait_for;
 
 class Pool
 {
-
     /**
      * @var Pool[][]
      */
@@ -47,6 +47,13 @@ class Pool
     protected bool $_idle;
 
     /**
+     * 是否是深拷贝
+     *
+     * @var bool
+     */
+    protected bool $_clone;
+
+    /**
      * 是否强制回收
      *
      * @var bool
@@ -56,18 +63,19 @@ class Pool
     /**
      * 创建
      *
-     * @param string $name
-     * @param int $count
-     * @param mixed $element
+     * @param string $name 区域
+     * @param int $count 区域索引
+     * @param mixed $element 元素
+     * @param bool $clone 是否开启深拷贝
      * @return Pool[]
      */
-    public static function create(string $name, int $count, mixed $element): array
+    public static function create(string $name, int $count, mixed $element, bool $clone = true): array
     {
         if (static::get($name, null)) {
             throw new PoolException("Pools $name already exists. ", -1);
         }
         foreach (range(1, $count) as $i) {
-            self::$pools[$name][$i] = new Pool($name, $i, $element);
+            self::$pools[$name][$i] = new Pool($name, $i, $element, $clone);
         }
         return self::$pools[$name];
     }
@@ -156,6 +164,9 @@ class Pool
     {
         $copy = [];
         foreach ($array as $key => $value) {
+            if (is_callable($value)) {
+                Worker::log("Pool::deepCopyArray $key value is callable. ");
+            }
             if (is_array($value)) {
                 $copy[$key] = self::_deepCopyArray($value);
             } elseif (is_object($value)) {
@@ -170,25 +181,32 @@ class Pool
     /**
      * 构造
      *
-     * @param string $name
-     * @param int $index 索引
-     * @param object|array|resource|mixed $element
+     * @param string $name 区域名称
+     * @param int $index 区域索引
+     * @param object|array|resource|mixed $element 元素
+     * @param bool $clone 是否执行深拷贝
      */
-    public function __construct(string $name, int $index, mixed $element)
+    public function __construct(string $name, int $index, mixed $element, bool $clone = true)
     {
         if (static::get($name, $index)) {
             throw new PoolException("Pool $name#$index already exists. ", -2);
         }
         $this->_name  = $name;
         $this->_index = $index;
+        $this->_clone = $clone;
         $this->setForce(false);
         $this->setIdle(true);
-        $this->_element = match (true) {
+        /*
+         * 由于callable类型数据无法做到完美深拷贝，涉及到参数引用上下文问题，谨慎使用
+         */
+        if (is_callable($element)) {
+            Worker::log("Pool $name#$index element is callable. ");
+        }
+        $this->_element = $clone ? match (true) {
             is_object($element)                     => clone $element,
             is_array($element)                      => self::_deepCopyArray($element),
-            is_callable($element)                   => call_user_func($element),
             default                                 => $element,
-        };
+        } : $element;
     }
 
     /**
@@ -229,6 +247,16 @@ class Pool
     public function getElement(): mixed
     {
         return $this->_element;
+    }
+
+    /**
+     * 是否是深拷贝
+     *
+     * @return bool
+     */
+    public function isClone(): bool
+    {
+        return $this->_clone;
     }
 
     /**
@@ -276,7 +304,7 @@ class Pool
     /**
      * 等待至闲置
      *
-     * @param \Closure|null $closure
+     * @param \Closure|null $closure 需要执行的逻辑 = function ($this) {}
      * @return void
      */
     public function wait(?\Closure $closure = null): void
@@ -285,7 +313,12 @@ class Pool
             return $this->isIdle();
         });
         if ($closure) {
-            call_user_func($closure, $this);
+            $this->setIdle(false);
+            try {
+                call_user_func($closure, $this);
+            } finally {
+                $this->setIdle(true);
+            }
         }
     }
 
