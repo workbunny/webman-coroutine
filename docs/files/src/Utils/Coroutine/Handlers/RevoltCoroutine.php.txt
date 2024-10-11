@@ -16,9 +16,7 @@ class RevoltCoroutine implements CoroutineInterface
      */
     protected ?EventLoop\Suspension $_suspension = null;
 
-    /** @inheritdoc
-     * @param \Closure $func
-     */
+    /** @inheritdoc */
     public function __construct(\Closure $func)
     {
         $this->_suspension = EventLoop::getSuspension();
@@ -30,7 +28,7 @@ class RevoltCoroutine implements CoroutineInterface
         $this->_suspension->suspend();
         try {
             // 等待恢复后执行逻辑
-            call_user_func($func);
+            call_user_func($func, spl_object_hash($this->_suspension));
         } finally {
             $this->_suspension = null;
         }

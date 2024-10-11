@@ -133,7 +133,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Exceptions\\PoolException",
             "name": "PoolException",
-            "summary": "",
+            "summary": "\u534F\u7A0B\u6C60\u5F02\u5E38\u7C7B",
             "url": "classes/Workbunny-WebmanCoroutine-Exceptions-PoolException.html"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Exceptions\\RuntimeException",
@@ -146,9 +146,14 @@ Search.appendIndex(
             "summary": "\u7279\u6B8A\u5F02\u5E38\u7C7B\uFF0C\u7528\u4E8E\u8DF3\u8FC7\u0020WaitGroup\u7684done\uFF0C\u7528\u4E8E\u7279\u6B8A\u60C5\u51B5\u7684\u963B\u585E",
             "url": "classes/Workbunny-WebmanCoroutine-Exceptions-SkipWaitGroupDoneException.html"
         },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Exceptions\\TimeoutException",
+            "name": "TimeoutException",
+            "summary": "\u8D85\u65F6\u5F02\u5E38",
+            "url": "classes/Workbunny-WebmanCoroutine-Exceptions-TimeoutException.html"
+        },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Exceptions\\WorkerException",
             "name": "WorkerException",
-            "summary": "",
+            "summary": "Utils\/Worker\u0020\u5F02\u5E38\u7C7B",
             "url": "classes/Workbunny-WebmanCoroutine-Exceptions-WorkerException.html"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Factory",
@@ -955,6 +960,11 @@ Search.appendIndex(
             "name": "getElement",
             "summary": "\u83B7\u53D6\u5143\u7D20",
             "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_getElement"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Pool\u003A\u003AisClone\u0028\u0029",
+            "name": "isClone",
+            "summary": "\u662F\u5426\u662F\u6DF1\u62F7\u8D1D",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_isClone"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Pool\u003A\u003AisIdle\u0028\u0029",
             "name": "isIdle",

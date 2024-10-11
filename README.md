@@ -99,13 +99,15 @@ composer require workbunny/webman-coroutine
 
 ## 文档
 
-| 目录  |                               地址                               |
-|:---:|:--------------------------------------------------------------:|
-| API | [Fucntion-APIs](https://workbunny.github.io/webman-coroutine/) |
-| 教程  |               [PHP 协程入门](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/coroutine.md)                |
-|  -  |            [workerman 环境中使用](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/workerman.md)            |
-|  -  |               [webman 框架中使用](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/webman.md)               |
-|  -  |                    [自定义拓展](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/custom.md)                     |
+| 目录  |                                               地址                                            |
+|:---:|:-------------------------------------------------------------------------------------------:|
+| API |                 [Fucntion-APIs](https://workbunny.github.io/webman-coroutine/)              |
+| 教程  |   [PHP 协程入门](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/coroutine.md) |
+|  -  |     [安装及配置](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/coroutine.md)  |
+|  -  | [`workerman`环境](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/workerman.md) |
+|  -  |    [`webman`框架](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/webman.md) |
+|  -  |     [`Utils`说明](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/utils.md)  |
+|  -  |      [自定义拓展](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/custom.md) |
 
 ## ♨️ 相关文章
 

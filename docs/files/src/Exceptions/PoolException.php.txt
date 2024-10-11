@@ -7,6 +7,9 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Exceptions;
 
+/**
+ * 协程池异常类
+ */
 class PoolException extends RuntimeException
 {
 }

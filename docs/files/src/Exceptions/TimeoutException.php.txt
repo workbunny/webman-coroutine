@@ -8,8 +8,8 @@ declare(strict_types=1);
 namespace Workbunny\WebmanCoroutine\Exceptions;
 
 /**
- * Utils/Worker 异常类
+ * 超时异常
  */
-class WorkerException extends RuntimeException
+class TimeoutException extends RuntimeException
 {
 }

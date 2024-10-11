@@ -2,17 +2,21 @@
 
 `webman-coroutine`插件提供了对webman框架协程化的一等支撑
 
-## 配置文件说明 
+## 说明
 
-### app.php
+webman开发框架下除了协程工具外还会根据框架插件加载策略加载配置文件中的对应进程
+
+### 配置
+
+#### app.php
 
 - enable : (true/false), 是否启用协程webServer
 - port : (int), 协程webServer默认端口
 - consumer_count : (int), 每个connection的消费者数量
 
-### process.php
+#### process.php
 
-根据`app.enable`开关启用协程webServer进程
+以webman自定义进程方式启动一个基于框架App加载的协程化web服务
 
 ```php
 
@@ -25,10 +29,10 @@ return config('plugin.workbunny.webman-coroutine.app.enable', false) ? [
         'group'       => '',
         'reusePort'   => true,
         'constructor' => [
-            'request_class' => Request::class,
+            'requestClass' => Request::class,
             'logger'        => Log::channel(), // 日志实例
-            'app_path'      => app_path(), // app目录位置
-            'public_path'   => public_path(), // public目录位置
+            'appPath'      => app_path(), // app目录位置
+            'publicPath'   => public_path(), // public目录位置
         ],
     ],
 ] : [];
@@ -37,112 +41,22 @@ return config('plugin.workbunny.webman-coroutine.app.enable', false) ? [
 
 ## 使用
 
-### 默认驱动支持
+- 选择一个你所需要的协程驱动进行安装，请参考：[安装及环境配置](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/install.md)
+- 将以下代码添加至`webman`配置`config\server.php`
 
-- [revolt/PHP-fiber](https://github.com/revoltphp/event-loop)
-- [swow](https://github.com/swow/swow)
-- [swoole](https://github.com/swoole/swoole-src)
-- [ripple](https://github.com/cloudtay/ripple)
+   ```php
+   // ...
+   'event_loop'       => \Workbunny\WebmanCoroutine\event_loop(),
+   // ...
+   ```
+  > 注：对于`Utils\Worker`工具包需要`webman-framework`最新版支持`workerClass`参数，详见 https://github.com/walkor/webman-framework/pull/110
 
-### swow
+## 说明
 
-1. 使用`./vendor/bin/swow-builder`安装`swow`拓展
-   - 注意请关闭`swoole`环境
-   - 请勿将`swow`加入`php.ini`配置文件
-2. 修改`config/server.php`中`'event_loop' => \Workbunny\WebmanCoroutine\event_loop()`，`event_loop()`函数会根据当前环境自行判断当前的 workerman 版本，自动选择合适的事件驱动
-    - 当开启`swow`拓展时，`workerman 4.x`下使用`SwowEvent`事件驱动
-    - 当开启`swow`拓展时，`workerman 5.x`下使用`workerman`自带的`Swow`事件驱动
-    - 当未开启`swow`时，使用`workerman`自带的`Event`事件驱动
-3. 使用`php -d extension=swow webman start` 或 `php -d extension=swow start.php start`启动
-
-> Tips：`swow`安装问题请具体参考官方文档，https://docs.toast.run/swow/chs/
-
-### swoole
-
-1. 使用`pecl install swoole` 或者 源码编译安装稳定版 swoole 拓展
-   - 请注意关闭`swow`环境
-   - 请勿将`swoole`加入`php.ini`配置文件
-2. 修改`config/server.php`中`'event_loop' => \Workbunny\WebmanCoroutine\event_loop()`，`event_loop()`函数会根据当前环境自行判断当前的 workerman 版本，自动选择合适的事件驱动
-    - 当开启 swoole 拓展时，workerman 4.x 下使用 SwooleEvent 事件驱动
-    - 当开启 swoole 拓展时，workerman 5.x 下使用 workerman 自带的 Swoole 事件驱动
-    - 当未开启 swoole 时，使用 workerman 自带的 Event 事件驱动
-3. 使用`php -d extension=swoole webman start` 或 `php -d extension=swoole start.php start`启动
-
-> Tips：`swoole`安装问题请具体参考官方文档，https://wiki.swoole.com/zh-cn/#/environment
-
-### ripple
-
-1. 使用`composer require cclilshy/p-ripple-drive`安装 ripple 驱动插件
-   - ripple驱动基于revolt (PHP-fiber)，建议安装event拓展提高性能
-   - 请勿安装`swoole`拓展，否则会导致`swoole`和`ripple`命名空间冲突
-2. 修改`config/server.php`中`'event_loop' => \Workbunny\WebmanCoroutine\event_loop(Factory::RIPPLE_FIBER)`自动判断
-3. 使用`php webman start` 或 `php start.php start`启动
-
-> 注：该环境协程依赖`revolt`，并没有自动`hook`系统的阻塞函数，但支持所有支持`revolt`的插件
-
-### revolt
-
-1. 使用`composer require revolt/event-loop`安装 revolt 驱动插件
-   - 依赖 PHP >= 8.1
-   - 依赖 workerman 5.x
-   - 建议安装 event/uv 拓展提高性能
-2. 修改`config/server.php`中`'event_loop' => \Workbunny\WebmanCoroutine\event_loop(Factory::REVOLT_FIBER)`自动判断
-3. 使用`php webman start` 或 `php start.php start`启动
-4. 
-> 注：该环境协程依赖`revolt`，并没有自动`hook`系统的阻塞函数，但支持所有支持`revolt`的插件
-
-## 开发
-
-### 协程web服务
-
-> webman开发框架下支持`CoroutineWebServer`自定义web服务进程
-
-- config/workbunny/webman-coroutine/process.php 进程配置
-- src/CoroutineWebServer.php 协程web服务源码
-  - 默认实现onConnect、onMessage、onClose协程化
-  - 非侵入，使用webman框架自带的加载逻辑
-
-### Utils 协程工具
-
-> webman开发框架下支持该插件的所有Utils
-
-- Channel：统一的通道驱动，兼容非协程环境
-- Coroutine：统一的协程驱动，兼容非协程环境
-- WaitGroup：统一的等待驱动，兼容非协程环境
-- Worker：统一的进程驱动，兼容非协程环境
-
-> Tips：兼容非协程的统一驱动支持相同代码自由切换于各个环境，避免侵入式代码修改
-
-**example：以下代码在任意环境都能正常运行**
-
-```php
-use Workbunny\WebmanCoroutine\Utils\Coroutine\Coroutine;
-use Workbunny\WebmanCoroutine\Utils\WaitGroup\WaitGroup;
-
-$waitGroup = new WaitGroup();
-// 协程1
-$waitGroup->add();
-$coroutine1 = new Coroutine(function () use ($waitGroup) {
-    echo 1 . PHP_EOL;
-    $waitGroup->done();
-});
-
-// 协程2
-$waitGroup->add();
-$coroutine2 = new Coroutine(function () use ($waitGroup) {
-    echo 2 . PHP_EOL;
-    $waitGroup->done();
-});
-
-// 协程3
-$waitGroup->add();
-$coroutine3 = new Coroutine(function () use ($waitGroup) {
-    echo 3 . PHP_EOL;
-    $waitGroup->done();
-});
-$waitGroup->wait();
-echo 'done' . PHP_EOL;
-```
-
-- 协程环境不会顺序输出1、2、3，但最后会输出`done`
-- 非协程环境会顺序输出1、2、3，最后输出`done`
+- `webman`环境支持`\config`配置使用
+- `webman`环境支持`CoroutineWebServer`进程服务
+  - `CoroutineWebServer`进程对`onConnect`、`onMessage`、`onClose`进行了协程化
+  - `CoroutineWebServer`进程是对`App`类的代理，并非侵入式改造，支持`webman`框架升级
+  - `CoroutineWebServer`进程支持`consumer_count`参数，用于限制每个连接的协程消费者数量，当数量达到上限时onMessage会进行协程等待，直到有空闲协程才恢复socket的监听
+- `webman`环境支持`Utils`工具包下的所有工具类
+  > `Utils`工具包请参考：[`Utils`说明](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/utils.md)

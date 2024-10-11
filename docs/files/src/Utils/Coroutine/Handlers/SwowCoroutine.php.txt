@@ -21,7 +21,7 @@ class SwowCoroutine implements CoroutineInterface
     {
         $this->_coroutine = Coroutine::run(function () use ($func) {
             try {
-                call_user_func($func, $this->_coroutine->getId());
+                call_user_func($func, Coroutine::getCurrent()->getId());
             } finally {
                 $this->_coroutine = null;
             }
