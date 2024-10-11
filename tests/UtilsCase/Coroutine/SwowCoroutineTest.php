@@ -32,6 +32,7 @@ class SwowCoroutineTest extends TestCase
 
             return $coroutineMock;
         });
+        $coroutineMock->shouldReceive('getCurrent')->andReturnSelf();
         $coroutineMock->shouldReceive('getId')->andReturn(123);
         // 构造
         $coroutine = new SwowCoroutine($func);
@@ -64,6 +65,7 @@ class SwowCoroutineTest extends TestCase
 
             return $coroutineMock;
         });
+        $coroutineMock->shouldReceive('getCurrent')->andReturnSelf();
         $coroutineMock->shouldReceive('getId')->andReturn(123);
         // 构造
         $coroutine = new SwowCoroutine($func);
@@ -90,6 +92,7 @@ class SwowCoroutineTest extends TestCase
 
             return $coroutineMock;
         });
+        $coroutineMock->shouldReceive('getCurrent')->andReturnSelf();
         $coroutineMock->shouldReceive('getId')->andReturn(123);
         // 构造
         $coroutine = new SwowCoroutine($func);
@@ -116,6 +119,7 @@ class SwowCoroutineTest extends TestCase
 
             return $coroutineMock;
         });
+        $coroutineMock->shouldReceive('getCurrent')->andReturnSelf();
         $coroutineMock->shouldReceive('getId')->andReturn(123);
         // 构造
         $coroutine = new SwowCoroutine($func);
