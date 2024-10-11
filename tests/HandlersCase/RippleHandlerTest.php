@@ -6,6 +6,7 @@ namespace Workbunny\Tests\HandlersCase;
 
 use Mockery;
 use PHPUnit\Framework\TestCase;
+use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
 use Workbunny\WebmanCoroutine\Handlers\RippleHandler;
 
 class RippleHandlerTest extends TestCase
@@ -50,7 +51,8 @@ class RippleHandlerTest extends TestCase
             return $return = true;
         });
         $this->assertTrue($return);
-
+        // 模拟超时
+        $this->expectException(TimeoutException::class);
         $return = false;
         $rippleHandlerMock::waitFor(function () use (&$return) {
             return false;

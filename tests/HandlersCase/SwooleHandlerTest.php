@@ -6,6 +6,7 @@ namespace Workbunny\Tests\HandlersCase;
 
 use Mockery;
 use PHPUnit\Framework\TestCase;
+use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
 use Workbunny\WebmanCoroutine\Handlers\SwooleHandler;
 
 class SwooleHandlerTest extends TestCase
@@ -43,7 +44,8 @@ class SwooleHandlerTest extends TestCase
             return $return = true;
         });
         $this->assertTrue($return);
-
+        // 模拟超时
+        $this->expectException(TimeoutException::class);
         $return = false;
         SwooleHandler::waitFor(function () use (&$return) {
             return false;

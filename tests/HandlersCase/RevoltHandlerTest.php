@@ -6,6 +6,7 @@ namespace Workbunny\Tests\HandlersCase;
 
 use Mockery;
 use PHPUnit\Framework\TestCase;
+use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
 use Workbunny\WebmanCoroutine\Handlers\RevoltHandler;
 
 class RevoltHandlerTest extends TestCase
@@ -28,7 +29,7 @@ class RevoltHandlerTest extends TestCase
     }
 
     /**
-     * @runInSeparateProcess
+     *
      * @return void
      */
     public function testWaitFor()
@@ -60,6 +61,8 @@ class RevoltHandlerTest extends TestCase
         });
         $this->assertTrue($return);
 
+        // 模拟超时
+        $this->expectException(TimeoutException::class);
         $return = false;
         RevoltHandler::waitFor(function () use (&$return) {
             return false;

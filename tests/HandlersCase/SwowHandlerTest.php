@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Workbunny\Tests\HandlersCase;
 
 use PHPUnit\Framework\TestCase;
+use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
 use Workbunny\WebmanCoroutine\Handlers\SwowHandler;
 
 class SwowHandlerTest extends TestCase
@@ -40,7 +41,8 @@ class SwowHandlerTest extends TestCase
             return $return = true;
         });
         $this->assertTrue($return);
-
+        // 模拟超时
+        $this->expectException(TimeoutException::class);
         $return = false;
         SwowHandler::waitFor(function () use (&$return) {
             return false;
