@@ -128,7 +128,13 @@ class SwooleEventTest extends TestCase
         $swooleEvent = new SwooleEvent(true);
 
         $eventMock = m::mock('alias:Swoole\Event');
-        $eventMock->shouldReceive('add')->andReturn(true);
+        $eventMock->shouldReceive('add')->andReturnUsing(function ($stream, $readCallback, $writeCallback, $event) {
+            $this->assertTrue(is_resource($stream));
+            $this->assertTrue(is_callable($readCallback));
+            $this->assertTrue(is_int($event));
+            $this->assertNull($writeCallback);
+            return true;
+        });
 
         $stream = fopen('php://memory', 'r+');
         $result = $swooleEvent->add($stream, EventInterface::EV_READ, function () {
@@ -150,7 +156,13 @@ class SwooleEventTest extends TestCase
         $swooleEvent = new SwooleEvent(true);
 
         $eventMock = m::mock('alias:Swoole\Event');
-        $eventMock->shouldReceive('add')->andReturn(true);
+        $eventMock->shouldReceive('add')->andReturnUsing(function ($stream, $readCallback, $writeCallback, $event) {
+            $this->assertTrue(is_resource($stream));
+            $this->assertTrue(is_callable($writeCallback));
+            $this->assertTrue(is_int($event));
+            $this->assertNull($readCallback);
+            return true;
+        });
 
         $stream = fopen('php://memory', 'w+');
         $result = $swooleEvent->add($stream, EventInterface::EV_WRITE, function () {

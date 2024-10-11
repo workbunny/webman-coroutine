@@ -111,7 +111,7 @@ class SwooleEvent implements EventInterface
                     if ($this->_writes[$key = (int) $fd] ?? null) {
                         $this->del($fd, EventInterface::EV_WRITE);
                     }
-                    if ($res = Event::add($fd, $func, null, SWOOLE_EVENT_WRITE)) {
+                    if ($res = Event::add($fd, null, $func, SWOOLE_EVENT_WRITE)) {
                         $this->_writes[$key] = 1;
                     }
 
