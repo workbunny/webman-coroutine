@@ -135,6 +135,7 @@ class SwooleEventTest extends TestCase
             $this->assertNull($writeCallback);
             return true;
         });
+        $eventMock->shouldReceive('isset')->andReturn(false);
 
         $stream = fopen('php://memory', 'r+');
         $result = $swooleEvent->add($stream, EventInterface::EV_READ, function () {
@@ -163,6 +164,7 @@ class SwooleEventTest extends TestCase
             $this->assertNull($readCallback);
             return true;
         });
+        $eventMock->shouldReceive('isset')->andReturn(false);
 
         $stream = fopen('php://memory', 'w+');
         $result = $swooleEvent->add($stream, EventInterface::EV_WRITE, function () {

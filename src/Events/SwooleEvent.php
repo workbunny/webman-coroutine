@@ -95,7 +95,10 @@ class SwooleEvent implements EventInterface
                 return $timerId;
             case EventInterface::EV_READ:
                 if (\is_resource($fd)) {
-                    if ($this->_reads[$key = (int) $fd] ?? null) {
+                    if (
+                        ($this->_reads[$key = (int) $fd] ?? null) or
+                        Event::isset($fd, SWOOLE_EVENT_READ)
+                    ) {
                         $this->del($fd, EventInterface::EV_READ);
                     }
                     if ($res = Event::add($fd, $func, null, SWOOLE_EVENT_READ)) {
@@ -108,7 +111,10 @@ class SwooleEvent implements EventInterface
                 return false;
             case self::EV_WRITE:
                 if (\is_resource($fd)) {
-                    if ($this->_writes[$key = (int) $fd] ?? null) {
+                    if (
+                        ($this->_writes[$key = (int) $fd] ?? null) or
+                        Event::isset($fd, SWOOLE_EVENT_WRITE)
+                    ) {
                         $this->del($fd, EventInterface::EV_WRITE);
                     }
                     if ($res = Event::add($fd, null, $func, SWOOLE_EVENT_WRITE)) {
@@ -150,30 +156,32 @@ class SwooleEvent implements EventInterface
 
                 return false;
             case self::EV_READ:
-                if (
-                    \is_resource($fd) and
-                    isset($this->_reads[$key = (int) $fd]) and
-                    Event::isset($fd, SWOOLE_EVENT_READ)
-                ) {
-                    if (Event::del($fd)) {
-                        unset($this->_reads[$key]);
+                if (\is_resource($fd)) {
+                    $key = (int) $fd;
+                    if (Event::isset($fd, SWOOLE_EVENT_READ)){
+                        if (Event::del($fd)) {
 
-                        return true;
+                            return false;
+                        }
                     }
+                    unset($this->_reads[$key]);
+
+                    return true;
                 }
 
                 return false;
             case self::EV_WRITE:
-                if (
-                    \is_resource($fd) and
-                    isset($this->_writes[$key = (int) $fd]) and
-                    Event::isset($fd, SWOOLE_EVENT_WRITE)
-                ) {
-                    if (Event::del($fd)) {
-                        unset($this->_writes[$key]);
+                if (\is_resource($fd)) {
+                    $key = (int) $fd;
+                    if (Event::isset($fd, SWOOLE_EVENT_WRITE)){
+                        if (Event::del($fd)) {
 
-                        return true;
+                            return false;
+                        }
                     }
+                    unset($this->_writes[$key]);
+
+                    return true;
                 }
 
                 return false;
