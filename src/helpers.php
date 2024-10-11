@@ -9,6 +9,7 @@ namespace Workbunny\WebmanCoroutine;
 
 // 设置环境变量
 use Composer\InstalledVersions;
+use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
 use Workbunny\WebmanCoroutine\Handlers\HandlerInterface;
 
 putenv('WORKBUNNY_COROUTINE=1');
@@ -35,6 +36,7 @@ function event_loop(?string $expectEventLoopClass = null): string
  * @param float|int $timeout
  * @return void
  * @link HandlerInterface::waitFor()
+ * @throws TimeoutException
  */
 function wait_for(?\Closure $closure, float|int $timeout = -1): void
 {

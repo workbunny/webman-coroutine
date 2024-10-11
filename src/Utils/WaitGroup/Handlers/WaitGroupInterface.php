@@ -7,6 +7,8 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers;
 
+use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
+
 interface WaitGroupInterface
 {
     /**

@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace Workbunny\WebmanCoroutine\Handlers;
 
 use Swoole\Runtime;
+use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
 
 /**
  *  基于swoole实现的协程处理器
@@ -37,7 +38,7 @@ class SwooleHandler implements HandlerInterface
                 return;
             }
             if ($timeout > 0 && microtime(true) - $time >= $timeout) {
-                return;
+                throw new TimeoutException("Timeout after $timeout seconds.");
             }
             usleep(max((int) ($timeout * 1000 * 1000), 0));
         }
