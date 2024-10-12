@@ -29,6 +29,7 @@
   // 协程1
   $waitGroup->add();
   $coroutine1 = new Coroutine(function () use ($waitGroup) {
+    // do something 
     echo 1 . PHP_EOL;
     $waitGroup->done();
   });
@@ -36,6 +37,7 @@
   // 协程2
   $waitGroup->add();
   $coroutine2 = new Coroutine(function () use ($waitGroup) {
+    // do something 
     echo 2 . PHP_EOL;
     $waitGroup->done();
   });
@@ -44,7 +46,7 @@
   echo 'done' . PHP_EOL;
   ```
   > Tips:
-  > - 协程环境不会顺序输出1、2，但最后会输出`done`
+  > - 协程环境不一定会顺序输出1、2，但最后会输出`done`
   > - 非协程环境会顺序输出1、2，最后输出`done`
 
 - 协程通道的使用
@@ -79,7 +81,7 @@
   echo 'done' . PHP_EOL;
   ```
   > Tips:
-  > - 协程环境不会顺序拿到`data 1`、`data 2`，但最后会输出`done`
+  > - 协程环境不一定会顺序拿到`data 1`、`data 2`，但最后会输出`done`
   > - 非协程环境会顺序拿到`data 1`、`data 2`，最后输出`done`
 
 ### 自定义`Worker`
