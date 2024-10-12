@@ -24,7 +24,7 @@ jobs:
           tools: phpunit:9, composer:v2
           coverage: xdebug
       - run: composer install
-      - run: .vendor/bin/phpunit --coverage-clover=coverage.xml
+      - run: vendor/bin/phpunit --coverage-clover=coverage.xml
 
       - uses: codecov/codecov-action@v4
         with:
