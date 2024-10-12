@@ -10,6 +10,9 @@
     <a href="https://github.com/workbunny/webman-coroutine/actions">
         <img src="https://github.com/workbunny/webman-coroutine/actions/workflows/CI.yml/badge.svg" alt="Build Status">
     </a>
+    <a href="https://codecov.io/github/workbunny/webman-coroutine">
+        <img src="https://codecov.io/gh/workbunny/webman-coroutine/branch/main/graph/badge.svg" alt="Codecov Status">
+    </a>
     <a href="https://github.com/workbunny/webman-coroutine/releases">
         <img alt="Latest Stable Version" src="https://badgen.net/packagist/v/workbunny/webman-coroutine/latest">
     </a>
