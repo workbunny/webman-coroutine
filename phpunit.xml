@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.6/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
          backupGlobals="false"
          bootstrap="vendor/autoload.php"
          executionOrder="depends,defects"
@@ -9,10 +9,21 @@
          colors="true"
          testdox="true"
          stopOnWarning="true"
-         cacheResult="false">
-    <testsuites>
-        <testsuite name="default">
-            <directory>tests</directory>
-        </testsuite>
-    </testsuites>
+         cacheResult="false"
+>
+  <coverage>
+    <include>
+      <directory suffix=".php">src/Events</directory>
+      <directory suffix=".php">src/Handler</directory>
+      <directory suffix=".php">src/Utils</directory>
+      <file>src/CoroutineWebServer.php</file>
+      <file>src/Factory.php</file>
+      <file>src/helpers.php</file>
+    </include>
+  </coverage>
+  <testsuites>
+    <testsuite name="default">
+      <directory>tests</directory>
+    </testsuite>
+  </testsuites>
 </phpunit>

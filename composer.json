@@ -54,7 +54,7 @@
   "scripts": {
     "cs-fix": "./vendor/bin/php-cs-fixer fix",
     "php-stan": "./vendor/bin/phpstan analyse --memory-limit=512MB",
-    "unit-test": "./vendor/bin/phpunit",
+    "unit-test": "./vendor/bin/phpunit --coverage-html coverage",
     "doc-install": "@php -r \"file_exists('/usr/local/bin/phpDocumentor') || shell_exec('curl -sSLf -o /usr/local/bin/phpDocumentor https://phpdoc.org/phpDocumentor.phar && chmod +x /usr/local/bin/phpDocumentor');\""
   },
   "config": {
