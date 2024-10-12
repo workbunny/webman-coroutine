@@ -54,11 +54,7 @@ class CoroutineTest extends TestCase
         $mockInterface->shouldReceive('__construct')
             ->with($func);
 
-        $channel = Mockery::mock(Coroutine::class)
-            ->makePartial()
-            ->shouldAllowMockingProtectedMethods();
-        $channel->shouldReceive('__destruct')
-            ->andReturnNull();
+        $channel = new Coroutine($func);
 
         $reflection = new \ReflectionClass($channel);
         $property = $reflection->getProperty('_interface');

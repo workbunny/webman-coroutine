@@ -47,23 +47,29 @@ trait WorkerMethods
         $this->_parentOnWorkerStart = $this->onWorkerStart;
         $this->onWorkerStart = function (\Workerman\Worker $worker) {
             $waitGroup = new WaitGroup();
-            $waitGroup->add(1);
+            $waitGroup->add();
             new Coroutine(function () use ($worker, $waitGroup) {
-                call_user_func($this->getParentOnWorkerStart(), $worker);
-                $waitGroup->done();
+                try {
+                    call_user_func($this->getParentOnWorkerStart(), $worker);
+                } finally {
+                    $waitGroup->done();
+                }
             });
-            $waitGroup->wait(-1);
+            $waitGroup->wait();
         };
         // stop
         $this->_parentOnWorkerStop = $this->onWorkerStop;
         $this->onWorkerStop = function (\Workerman\Worker $worker) {
             $waitGroup = new WaitGroup();
-            $waitGroup->add(1);
+            $waitGroup->add();
             new Coroutine(function () use ($worker, $waitGroup) {
-                call_user_func($this->getParentOnWorkerStop(), $worker);
-                $waitGroup->done();
+                try {
+                    call_user_func($this->getParentOnWorkerStop(), $worker);
+                } finally {
+                    $waitGroup->done();
+                }
             });
-            $waitGroup->wait(-1);
+            $waitGroup->wait();
         };
     }
 }

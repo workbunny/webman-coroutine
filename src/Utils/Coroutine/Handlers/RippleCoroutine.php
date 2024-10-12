@@ -52,6 +52,7 @@ class RippleCoroutine implements CoroutineInterface
     }
 
     /**
+     * @codeCoverageIgnore 用于测试mock，忽略覆盖
      * @param \Closure $closure
      * @return mixed
      */

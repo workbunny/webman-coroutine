@@ -28,7 +28,6 @@ class SwooleWaitGroup implements WaitGroupInterface
                     $this->done();
                 }
             }
-        } catch (\Throwable) {
         } finally {
             $this->_count = 0;
         }

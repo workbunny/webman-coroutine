@@ -14,12 +14,15 @@
   <coverage>
     <include>
       <directory suffix=".php">src/Events</directory>
-      <directory suffix=".php">src/Handler</directory>
+      <directory suffix=".php">src/Handlers</directory>
       <directory suffix=".php">src/Utils</directory>
       <file>src/CoroutineWebServer.php</file>
       <file>src/Factory.php</file>
       <file>src/helpers.php</file>
     </include>
+    <exclude>
+      <file>src/Utils/tools.php</file>
+    </exclude>
   </coverage>
   <testsuites>
     <testsuite name="default">

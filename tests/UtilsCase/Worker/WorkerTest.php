@@ -42,9 +42,11 @@ class WorkerTest extends TestCase
     {
         Factory::init(Factory::WORKERMAN_DEFAULT);
         $worker = new Worker();
-        $worker->onWorkerStart = $onWorkerStart = function () {
+        $worker->onWorkerStart = $onWorkerStart = function ($worker) {
+            echo "testWorkerUseFactoryInit->onWorkerStart\n";
         };
-        $worker->onWorkerStop = $onWorkerStop = function () {
+        $worker->onWorkerStop = $onWorkerStop = function ($worker) {
+            echo "testWorkerUseFactoryInit->onWorkerStop\n";
         };
 
         $this->assertNull($worker->getParentOnWorkerStart());
@@ -56,6 +58,13 @@ class WorkerTest extends TestCase
 
         $this->assertEquals($onWorkerStart, $worker->getParentOnWorkerStart());
         $this->assertEquals($onWorkerStop, $worker->getParentOnWorkerStop());
+
+        $this->expectOutputString(
+            "testWorkerUseFactoryInit->onWorkerStart\n"
+            . "testWorkerUseFactoryInit->onWorkerStop\n"
+        );
+        call_user_func($worker->onWorkerStart, $worker);
+        call_user_func($worker->onWorkerStop, $worker);
     }
 
     public function testWorkerException()

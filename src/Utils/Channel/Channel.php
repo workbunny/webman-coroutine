@@ -77,6 +77,7 @@ class Channel
     /**
      * 代理调用ChannelInterface方法
      *
+     * @codeCoverageIgnore 系统魔术方法，忽略覆盖
      * @param string $name
      * @param array $arguments
      * @return mixed

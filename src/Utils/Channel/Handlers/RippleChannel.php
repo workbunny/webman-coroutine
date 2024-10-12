@@ -28,6 +28,7 @@ class RippleChannel implements ChannelInterface
     }
 
     /**
+     * @codeCoverageIgnore 用于测试mock，忽略覆盖
      * @param int|float $second
      * @return void
      */

@@ -101,6 +101,7 @@ class CoroutineWebServer extends App
                 call_user_func($call, $connection, ...$params);
             });
         }
+        self::$_connectionCoroutineCount[spl_object_hash($connection)] = 0;
     }
 
     /**
@@ -152,24 +153,23 @@ class CoroutineWebServer extends App
 
         $waitGroup = new WaitGroup();
         $waitGroup->add();
+        // 计数 ++
+        self::$_connectionCoroutineCount[$connectionId] ++;
         // 请求消费协程
         new Coroutine(function () use (&$res, $waitGroup, $params, $connectionId) {
             try {
                 $res = parent::onMessage(...$params);
             } finally {
-                // 计数 --
-                self::$_connectionCoroutineCount[$connectionId]--;
-                // 尝试回收
-                self::unsetConnectionCoroutineCount($connectionId);
+                if (isset(self::$_connectionCoroutineCount[$connectionId])) {
+                    // 计数 --
+                    self::$_connectionCoroutineCount[$connectionId]--;
+                    // 尝试回收
+                    self::unsetConnectionCoroutineCount($connectionId);
+                }
                 // wg完成
                 $waitGroup->done();
             }
         });
-        // 计数 ++
-        self::$_connectionCoroutineCount[$connectionId] =
-            (isset(self::$_connectionCoroutineCount[$connectionId])
-                ? self::$_connectionCoroutineCount[$connectionId] + 1
-                : 1);
         // 等待
         $waitGroup->wait();
 

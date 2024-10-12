@@ -76,7 +76,9 @@ class RippleCoroutineTest extends TestCase
         // 模拟构造后协程执行callback
         call_user_func($callback);
         // 模拟析构
-        $coroutine->__destruct();
+        $destruct = new \ReflectionMethod(RippleCoroutine::class, '__destruct');
+        $destruct->invoke($coroutine);
+//        $coroutine->__destruct();
         // 正常执行无报错
         $this->assertTrue(true);
     }

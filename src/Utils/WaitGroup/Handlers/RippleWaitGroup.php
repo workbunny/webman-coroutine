@@ -28,7 +28,6 @@ class RippleWaitGroup implements WaitGroupInterface
                     $this->done();
                 }
             }
-        } catch (\Throwable) {
         } finally {
             $this->_count = 0;
         }
@@ -72,6 +71,7 @@ class RippleWaitGroup implements WaitGroupInterface
     }
 
     /**
+     * @codeCoverageIgnore 测试mock，忽略覆盖
      * @param int|float $second
      * @return void
      */

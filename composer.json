@@ -60,6 +60,7 @@
   "config": {
     "allow-plugins": {
       "symfony/flex": false
-    }
+    },
+    "process-timeout": 600
   }
 }
