@@ -22,7 +22,7 @@ class RippleWorkerman5Handler implements HandlerInterface
         return
             version_compare(static::_getWorkerVersion(), '5.0.0', '>=') and
             package_installed('cclilshy/p-ripple-drive') and
-            PHP_VERSION_ID >= 81000;
+            PHP_VERSION_ID >= 80100;
     }
 
     /**
