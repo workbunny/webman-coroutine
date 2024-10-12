@@ -48,7 +48,7 @@
   "suggest": {
     "swow/swow": "For supporting Swow handler. ",
     "revolt/event-loop": "For supporting Revolt/PHP-fiber handler. ",
-    "cclilshy/p-ripple-drive": "For supporting Ripple handler. ",
+    "cloudtay/ripple-driver": "For supporting Ripple handler. ",
     "ext-swoole": "For supporting Swoole handler. "
   },
   "scripts": {

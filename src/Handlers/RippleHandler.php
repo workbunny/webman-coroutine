@@ -22,7 +22,7 @@ class RippleHandler implements HandlerInterface
     {
         return
             version_compare(static::_getWorkerVersion(), '5.0.0', '<') and
-            package_installed('cclilshy/p-ripple-drive') and
+            package_installed('cloudtay/ripple-driver') and
             PHP_VERSION_ID >= 80100;
     }
 
