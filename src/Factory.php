@@ -28,10 +28,13 @@ class Factory
     public const WORKBUNNY_SWOW     = SwowEvent::class;
     public const WORKERMAN_SWOOLE   = 'Workerman\Events\Swoole';
     public const WORKBUNNY_SWOOLE   = SwooleEvent::class;
-    public const RIPPLE_FIBER       = 'Psc\Drive\Workerman\Drive4';
-    public const RIPPLE_FIBER_5     = 'Psc\Drive\Workerman\Drive5';
+    public const RIPPLE_FIBER_4     = 'Psc\Drive\Workerman\Driver4';
+    public const RIPPLE_FIBER_5     = 'Psc\Drive\Workerman\Driver5';
     public const REVOLT_FIBER       = 'Workerman\Events\Revolt';
     public const WORKERMAN_DEFAULT  = '';
+
+    /*** @Deprecated */
+    public const RIPPLE_FIBER       = Factory::RIPPLE_FIBER_4;
 
     /**
      * 默认支持的处理器
