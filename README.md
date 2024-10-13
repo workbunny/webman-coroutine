@@ -6,24 +6,11 @@
 
 # Webman Coroutine Infrastructure Suite Compatible with Workerman.
 
-<div align="center">
-    <a href="https://github.com/workbunny/webman-coroutine/actions">
-        <img src="https://github.com/workbunny/webman-coroutine/actions/workflows/CI.yml/badge.svg" alt="Build Status">
-    </a>
-    <a href="https://codecov.io/github/workbunny/webman-coroutine">
-        <img src="https://codecov.io/gh/workbunny/webman-coroutine/branch/main/graph/badge.svg" alt="Codecov Status">
-    </a>
-    <a href="https://github.com/workbunny/webman-coroutine/releases">
-        <img alt="Latest Stable Version" src="https://badgen.net/packagist/v/workbunny/webman-coroutine/latest">
-    </a>
-    <a href="https://github.com/workbunny/webman-coroutine/blob/main/composer.json">
-        <img alt="PHP Version Require" src="https://badgen.net/packagist/php/workbunny/webman-coroutine">
-    </a>
-    <a href="https://github.com/workbunny/webman-coroutine/blob/main/LICENSE">
-        <img alt="GitHub license" src="https://badgen.net/packagist/license/workbunny/webman-coroutine">
-    </a>
-
-</div>
+[![Build Status](https://github.com/workbunny//webman-coroutine/actions/workflows/CI.yml/badge.svg)](https://github.com/workbunny//webman-coroutine/actions)
+[![Codecov](https://codecov.io/github/workbunny/webman-coroutine/branch/main/graph/badge.svg)](https://codecov.io/github/workbunny/webman-coroutine)
+[![Latest Stable Version](https://badgen.net/packagist/v/workbunny//webman-coroutine/latest)](https://github.com/workbunny//webman-coroutine/releases)
+[![PHP Version Require](https://badgen.net/packagist/php/workbunny//webman-coroutine)](https://github.com/workbunny//webman-coroutine/blob/main/composer.json)
+[![License](https://badgen.net/packagist/license/workbunny//webman-coroutine)](https://github.com/workbunny//webman-coroutine/blob/main/LICENSE)
 
 ## 简介
 
