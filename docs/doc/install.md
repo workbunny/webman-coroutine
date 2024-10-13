@@ -81,15 +81,15 @@ composer require workbunny/webman-coroutine
 #### 依赖
 
 - PHP >= 8.1
-- cclilshy/p-ripple-drive **建议使用`latest`**
+- cloudtay/ripple-driver **建议使用`latest`**
 
 #### 安装
 
 - 通过`composer`安装
 
    ```shell
-   composer require cclilshy/p-ripple-drive
+   composer require cloudtay/ripple-driver
    ```
   > Tips：
-  > - `cclilshy/p-ripple-drive`与`swoole`的命名空间冲突，使用时请将`swoole`移除PHP.ini
-  > - `cclilshy/p-ripple-drive`工具请参考官方文档，https://ripple.cloudtay.com/docs/intro
+  > - `cloudtay/ripple-driver`与`swoole`的命名空间冲突，使用时请将`swoole`移除PHP.ini
+  > - `cloudtay/ripple-driver`工具请参考官方文档，https://ripple.cloudtay.com/docs/intro
