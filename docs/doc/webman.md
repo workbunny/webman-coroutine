@@ -44,7 +44,7 @@ return config('plugin.workbunny.webman-coroutine.app.enable', false) ? [
 
    ```php
    // ...
-   'event_loop'       => \Workbunny\WebmanCoroutine\event_loop(),
+   'event_loop' => \Workbunny\WebmanCoroutine\event_loop(),
    // ...
    ```
   > 注：对于`Utils\Worker`工具包需要`webman-framework`最新版支持`workerClass`参数，详见 https://github.com/walkor/webman-framework/pull/110

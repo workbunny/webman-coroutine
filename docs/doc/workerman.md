@@ -10,7 +10,9 @@
    ```php
    \Workerman\Worker::$eventLoopClass = \Workbunny\WebmanCoroutine\event_loop();
    ```
-   > 注：对于`Utils\Worker`工具包的使用还需要做一些调整，详细参考：[`Utils`说明](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/utils.md)
+   > Tips：
+   > - 对于`Utils\Worker`工具包的使用还需要做一些代码调整，详细参考：[`Utils`说明](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/utils.md)
+   > - 其他`Utils`工具可以直接使用
 
 ## 说明
 

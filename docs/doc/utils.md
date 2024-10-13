@@ -88,7 +88,8 @@
 
 ### 自定义`Worker`
 
-> 自定义`Worker`包含了对`Workerman\Worker`及上层应用`监听类进程`、`普通进程`的协程化实现，需要一些简单的代码入侵，兼容协程化前的逻辑。
+> - 自定义`Worker`包含了对`Workerman\Worker`及上层应用`监听类进程`、`普通进程`的协程化实现，需要一些简单的代码入侵，兼容协程化前的逻辑。
+> - 在`webman框架`中使用`Utils\Worker`作为自定义进程需要在`process`配置中指定进程类：`'workerClass' => {基于Utils\Worker实现的自定义进程类}`
 
 #### 普通进程
 
@@ -218,6 +219,34 @@
   Pool::create('normal-object', 2, $source, true);
   
   // 此时堆数据中存在三个source对象，其中Pool池的normal-object区域存在两个source对象
+  
+  // 等待获取normal-object区域闲置的source对象，获取到时，执行回调
+  // 由于拷贝，回调执行后不会修改原有source对象的id
+  Pool::waitForIdle('normal-object', function ($sourceObject) {
+    $sourceObject->id = 2;
+  });
+  // 输出 1
+  echo $source->id;
+  
+  // 获取区域索引为1的对象，等待闲置时执行回调
+  $source1 = Pool::get('normal-object', 1);
+  $source1->wait(function ($sourceObject) {
+    $sourceObject->id = 3;
+  });
+  // 输出 1
+  echo $source->id;
+  // 输出 3
+  echo $source1->id;
+  
+  // 获取当前闲置对象，未获取到时返回null
+  $source1 = Pool::idle('normal-object');
+  
+  // 销毁区域索引为1的对象
+  Pool::destroy('normal-object', 1);
+  // 强制销毁区域索引为2的对象
+  Pool::destroy('normal-object', 2， true);
+  // 销毁区域normal-object所有对象
+  Pool::destroy('normal-object');
   ```
   > Tips:
   > - 可用于主线程初始化时对象数据的池化操作
@@ -235,11 +264,13 @@
   
   // 此时堆数据中存在1个source对象，其中Pool池的normal-object区域是引用的source对象
 
-  // 等待获取normal-object区域闲置的source对象，获取到时执行回调
+  // 等待获取normal-object区域闲置的source对象，获取到时，执行回调
   // 超时时间10秒，如果超时则抛出TimeoutException
   Pool::waitForIdle('normal-object', function ($source) {
     $source->id = 2;
   }, 10);
+  
+  // ...
   ```
   > Tips:
   > - 可用于为资源对象的操作加锁，避免协程间的竞争状态
