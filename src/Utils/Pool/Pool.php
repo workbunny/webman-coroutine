@@ -151,7 +151,12 @@ class Pool
             $pool = self::idle($name);
             return $pool !== null;
         }, $timeout);
-        return call_user_func($closure, $pool);
+        try {
+            $pool->setIdle(false);
+            return call_user_func($closure, $pool);
+        } finally {
+            $pool->setIdle(true);
+        }
     }
 
     /**
