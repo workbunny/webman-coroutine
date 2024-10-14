@@ -3,80 +3,114 @@
  * @author workbunny/Chaz6chez
  * @email chaz6chez1993@outlook.com
  */
+
 declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers;
 
+use LogicException;
+use Revolt\EventLoop\Suspension;
+use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
+
 class RippleWaitGroup implements WaitGroupInterface
 {
-    /** @var int */
-    protected int $_count;
+    /*** @var \Revolt\EventLoop\Suspension */
+    protected Suspension $suspension;
 
-    /** @inheritdoc  */
-    public function __construct()
+    /*** @var bool */
+    protected bool $done = true;
+
+    /*** @var bool */
+    protected bool $isSuspended = false;
+
+    /*** @param int $count */
+    public function __construct(protected int $count = 0)
     {
-        $this->_count = 0;
-    }
-
-    /** @inheritdoc  */
-    public function __destruct()
-    {
-        try {
-            $count = $this->count();
-            if ($count > 0) {
-                foreach (range(1, $count) as $ignored) {
-                    $this->done();
-                }
-            }
-        } finally {
-            $this->_count = 0;
-        }
-    }
-
-    /** @inheritdoc  */
-    public function add(int $delta = 1): bool
-    {
-        $this->_count++;
-
-        return true;
-    }
-
-    /** @inheritdoc  */
-    public function done(): bool
-    {
-        $this->_count--;
-
-        return true;
-    }
-
-    /** @inheritdoc  */
-    public function count(): int
-    {
-        return $this->_count;
-    }
-
-    /** @inheritdoc  */
-    public function wait(int|float $timeout = -1): void
-    {
-        $time = microtime(true);
-        while (1) {
-            if ($timeout > 0 and microtime(true) - $time >= $timeout) {
-                return;
-            }
-            if ($this->_count <= 0) {
-                return;
-            }
-            $this->_sleep(0);
-        }
+        $this->add($count);
     }
 
     /**
-     * @codeCoverageIgnore 测试mock，忽略覆盖
-     * @param int|float $second
-     * @return void
+     * @param int $delta
+     *
+     * @return bool
      */
-    protected function _sleep(int|float $second): void
+    public function add(int $delta = 1): bool
     {
-        \Co\sleep(max($second, 0));
+        if ($delta > 0) {
+            $this->count += $delta;
+            $this->done  = false;
+            return true;
+        } elseif ($delta < 0) {
+            throw new LogicException('delta must be greater than or equal to 0');
+        }
+
+        // For the case where $delta is 0, no operation is performed
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function done(): bool
+    {
+        if ($this->count <= 0) {
+            throw new LogicException('No tasks to mark as done');
+        }
+
+        $this->count--;
+        if ($this->count === 0) {
+            $this->done = true;
+            if ($this->isSuspended) {
+                $this->suspension->resume();
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @param int|float $timeout *
+     *
+     * @return void
+     * @throws TimeoutException
+     */
+    public function wait(int|float $timeout = -1): void
+    {
+        if ($this->done) {
+            return;
+        }
+
+        if (!isset($this->suspension)) {
+            $this->suspension = \Co\getSuspension();
+        }
+
+        $this->isSuspended = true;
+
+        if ($timeout > 0) {
+            $timerId = \Co\delay(function () use ($timeout) {
+                $this->suspension->throw(new TimeoutException("Timeout after {$timeout} seconds."));
+            }, $timeout);
+        }
+
+        $this->suspension->suspend();
+        isset($timerId) && \Co\cancel($timerId);
+        $this->isSuspended = false;
+    }
+
+    /**
+     *
+     */
+    public function __destruct()
+    {
+        unset($this->suspension);
+        $this->count = 0;
+    }
+
+    /**
+     * @return int
+     */
+    public function count(): int
+    {
+        return $this->count;
     }
 }
