@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Utils\Pool;
 
+use WeakReference;
 use Workbunny\WebmanCoroutine\Exceptions\PoolException;
 use Workerman\Worker;
 use function Workbunny\WebmanCoroutine\wait_for;
@@ -35,7 +36,7 @@ class Pool
     /**
      * 元素
      *
-     * @var object|array|null|mixed
+     * @var WeakReference|object|array|null|mixed
      */
     protected mixed $_element;
 
@@ -129,7 +130,7 @@ class Pool
         $pools = self::get($name, null);
         // 总是按顺序优先获取空闲
         foreach ($pools as $pool) {
-            if ($pool->isIdle()) {
+            if ($pool->isIdle() and $pool->getElement()) {
                 return $pool;
             }
         }
@@ -247,11 +248,11 @@ class Pool
     /**
      * 获取元素
      *
-     * @return resource|object|array|mixed
+     * @return resource|object|array|mixed|null
      */
     public function getElement(): mixed
     {
-        return $this->_element;
+        return ($this->_element instanceof WeakReference) ? $this->_element->get() : $this->_element;
     }
 
     /**

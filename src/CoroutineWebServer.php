@@ -154,7 +154,10 @@ class CoroutineWebServer extends App
         $waitGroup = new WaitGroup();
         $waitGroup->add();
         // 计数 ++
-        self::$_connectionCoroutineCount[$connectionId] ++;
+        self::$_connectionCoroutineCount[$connectionId] =
+            isset(self::$_connectionCoroutineCount[$connectionId])
+                ? self::$_connectionCoroutineCount[$connectionId] ++
+                : 1;
         // 请求消费协程
         new Coroutine(function () use (&$res, $waitGroup, $params, $connectionId) {
             try {
