@@ -208,11 +208,11 @@ class Pool
         if (is_callable($element)) {
             Worker::log("Pool $name#$index element is callable. ");
         }
-        $this->_element = $clone ? match (true) {
+        $this->_element = !$clone ? $element : (match (true) {
             is_object($element)                     => clone $element,
             is_array($element)                      => self::_deepCopyArray($element),
             default                                 => $element,
-        } : $element;
+        });
     }
 
     /**

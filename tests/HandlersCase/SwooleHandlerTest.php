@@ -48,6 +48,7 @@ class SwooleHandlerTest extends TestCase
         $this->expectException(TimeoutException::class);
         $return = false;
         SwooleHandler::waitFor(function () use (&$return) {
+            sleep(2);
             return false;
         }, 1);
         $this->assertFalse($return);

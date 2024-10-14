@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Workbunny\Tests\HandlersCase;
 
 use PHPUnit\Framework\TestCase;
+use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
 use Workbunny\WebmanCoroutine\Handlers\DefaultHandler;
 
 class DefaultHandlerTest extends TestCase
@@ -36,8 +37,11 @@ class DefaultHandlerTest extends TestCase
         });
         $this->assertTrue($return);
 
+        // 模拟超时
+        $this->expectException(TimeoutException::class);
         $return = false;
         DefaultHandler::waitFor(function () use (&$return) {
+            sleep(2);
             return false;
         }, 1);
         $this->assertFalse($return);

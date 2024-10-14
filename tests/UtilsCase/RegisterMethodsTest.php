@@ -13,6 +13,8 @@ class RegisterMethodsTest extends TestCase
     {
         $result = TestRegisterMethods::register(__METHOD__, 'value');
         $this->assertTrue($result);
+        $result = TestRegisterMethods::register(__METHOD__, 'value');
+        $this->assertNull($result);
         $result = TestRegisterMethods::unregister(__METHOD__);
         $this->assertTrue($result);
 

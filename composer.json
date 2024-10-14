@@ -61,6 +61,6 @@
     "allow-plugins": {
       "symfony/flex": false
     },
-    "process-timeout": 600
+    "process-timeout": 6000
   }
 }
