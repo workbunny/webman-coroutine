@@ -68,5 +68,38 @@ class RevoltHandlerTest extends TestCase
             return false;
         }, 1);
         $this->assertFalse($return);
+
+        // 模拟毫秒以下超时
+        $this->expectException(TimeoutException::class);
+        $return = false;
+        RevoltHandler::waitFor(function () use (&$return) {
+            return false;
+        }, 0.00099);
+        $this->assertFalse($return);
+    }
+
+    /**
+     *
+     * @return void
+     */
+    public function testSleep()
+    {
+        $suspensionMock = Mockery::mock('alias:\Revolt\EventLoop\Suspension');
+        $suspensionMock->shouldReceive('resume')->andReturnNull();
+        $suspensionMock->shouldReceive('suspend')->andReturnNull();
+
+        $eventLoopMock = Mockery::mock('alias:\Revolt\EventLoop');
+        $eventLoopMock->shouldReceive('getSuspension')->andReturn($suspensionMock);
+        $eventLoopMock->shouldReceive('defer')->andReturnUsing(function ($closure) {
+            $closure();
+        });
+        $eventLoopMock->shouldReceive('delay')->andReturnUsing(function ($timeout, $closure) {
+            $closure();
+        });
+
+        RevoltHandler::sleep( 1);
+        RevoltHandler::sleep( 0.00099);
+        RevoltHandler::sleep( 0);
+        $this->assertTrue(true);
     }
 }

@@ -7,6 +7,8 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Handlers;
 
+use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
+
 /**
  *  默认处理器，使用workerman基础事件
  */
@@ -34,8 +36,15 @@ class DefaultHandler implements HandlerInterface
     /** @inheritdoc  */
     public static function waitFor(?\Closure $closure = null, float|int $timeout = -1): void
     {
-        if ($closure) {
-            call_user_func($closure);
+        $time = microtime(true);
+        while (true) {
+            if ($closure and call_user_func($closure) === true) {
+                return;
+            }
+            if ($timeout > 0 && microtime(true) - $time >= $timeout) {
+                throw new TimeoutException("Timeout after $timeout seconds.");
+            }
+            sleep(max(intval($timeout), 0));
         }
     }
 }

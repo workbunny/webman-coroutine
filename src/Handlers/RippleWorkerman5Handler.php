@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Handlers;
 
+use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
 use function Workbunny\WebmanCoroutine\package_installed;
 
 /**
@@ -43,13 +44,14 @@ class RippleWorkerman5Handler implements HandlerInterface
                 return;
             }
             if ($timeout > 0 && microtime(true) - $time >= $timeout) {
-                return;
+                throw new TimeoutException("Timeout after $timeout seconds.");
             }
             static::_sleep($timeout);
         }
     }
 
     /**
+     * @codeCoverageIgnore mock忽略覆盖
      * @param int|float $second
      * @return void
      */

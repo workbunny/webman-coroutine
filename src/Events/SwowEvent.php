@@ -205,7 +205,10 @@ class SwowEvent implements EventInterface
         $this->_timer = [];
     }
 
-    /** @inheritdoc  */
+    /**
+     * @codeCoverageIgnore 忽略覆盖
+     * @inheritdoc
+     */
     public function loop()
     {
         // workerman 4.x时，如果不阻塞，则会返回event-loop exited错误

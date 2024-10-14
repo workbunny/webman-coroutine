@@ -190,7 +190,10 @@ class SwooleEvent implements EventInterface
         }
     }
 
-    /** @inheritdoc  */
+    /**
+     * @inheritdoc
+     * @codeCoverageIgnore 忽略覆盖
+     */
     public function loop()
     {
         // 阻塞等待

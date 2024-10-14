@@ -101,6 +101,25 @@ composer require workbunny/webman-coroutine
 |  -  |     [`Utils`说明](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/utils.md)     |
 |  -  |      [自定义拓展](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/custom.md)       |
 
+## 参与开发
+
+- [Issues](https://github.com/workbunny/webman-coroutine/issues)
+- [PR](https://github.com/workbunny/webman-coroutine/pulls)
+
+### 规范
+
+- 新特性提交请先提交feature-issue，再提交PR，避免重复开发；
+- Bug修复请先提交bug-repo-issue，再提交PR，避免重复开发；
+
+### 工具
+
+- 代码格式化：`composer cs-fix`
+- 静态检查：`composer php-stan`
+- 测试与覆盖：`composer unit-test`，命令运行后会在项目创建的`coverage`目录下生成报告
+- function-apis文档生成：
+  - 使用`composer doc-install`或自行安装phpDocumentor
+  - 在项目根目录使用`phpDocumentor`生成文档
+
 ## ♨️ 相关文章
 
 * [webman如何使用swow事件驱动和协程？](https://mp.weixin.qq.com/s?__biz=MzUzMDMxNTQ4Nw==&mid=2247496493&idx=1&sn=4ab95befc894d556eac26d405f354a40&chksm=fa51129dcd269b8b61fc5b1a15a9a23b99b61c0780b9a341dfe3733692e85a1bc5e323ee9775#rd)

@@ -45,6 +45,7 @@ class SwowHandlerTest extends TestCase
         $this->expectException(TimeoutException::class);
         $return = false;
         SwowHandler::waitFor(function () use (&$return) {
+            sleep(2);
             return false;
         }, 1);
         $this->assertFalse($return);
