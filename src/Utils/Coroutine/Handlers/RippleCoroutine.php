@@ -7,22 +7,25 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers;
 
+use Closure;
 use Psc\Core\Coroutine\Promise;
 use Revolt\EventLoop\Suspension;
 
-use function Co\async;
-use function Co\getSuspension;
-
 class RippleCoroutine implements CoroutineInterface
 {
-    protected Promise|null $promise = null;
+    /**
+     * @var \Revolt\EventLoop\Suspension
+     */
+    protected Suspension $suspension;
 
     /** @inheritdoc
      * @param \Closure $func
      */
-    public function __construct(\Closure $func)
+    public function __construct(Closure $func)
     {
-        $this->promise = $this->_async(function (\Closure $resolve, \Closure $reject) use ($func) {
+        $this->_async(function (Closure $resolve, Closure $reject) use ($func) {
+            $this->suspension = \Co\getSuspension();
+
             try {
                 $result = call_user_func(
                     $func,
@@ -46,7 +49,7 @@ class RippleCoroutine implements CoroutineInterface
     /** @inheritdoc */
     public function origin(): Suspension
     {
-        return getSuspension();
+        return $this->suspension;
     }
 
     /** @inheritdoc */
@@ -60,10 +63,10 @@ class RippleCoroutine implements CoroutineInterface
      *
      * @param \Closure $closure
      *
-     * @return mixed
+     * @return \Psc\Core\Coroutine\Promise
      */
-    protected function _async(\Closure $closure)
+    protected function _async(Closure $closure): Promise
     {
-        return async($closure);
+        return \Co\async($closure);
     }
 }

@@ -26,7 +26,7 @@ class RippleCoroutineTest extends TestCase
 
         // mock async
         $callback = null;
-        $promiseMock = Mockery::mock('Psc\Core\Coroutine\Promise');
+        $promiseMock = Mockery::mock('Revolt\EventLoop\Suspension');
         $coroutine = Mockery::mock(RippleCoroutine::class)->makePartial();
         $coroutine->shouldAllowMockingProtectedMethods()->shouldReceive('_async')
             ->andReturnUsing(function ($closure) use (&$callback, $promiseMock) {
@@ -39,7 +39,7 @@ class RippleCoroutineTest extends TestCase
         $constructor->invoke($coroutine, $func);
 
         $this->assertFalse($executed);
-        $this->assertInstanceOf('Psc\Core\Coroutine\Promise', $coroutine->origin());
+        $this->assertInstanceOf('Revolt\EventLoop\Suspension', $coroutine->origin());
         $this->assertIsString($getId = $coroutine->id());
         $this->assertEquals(spl_object_hash($promiseMock), $coroutine->id());
         $this->assertNull($id);
@@ -62,7 +62,7 @@ class RippleCoroutineTest extends TestCase
 
         // mock async
         $callback = null;
-        $promiseMock = Mockery::mock('Psc\Core\Coroutine\Promise');
+        $promiseMock = Mockery::mock('Revolt\EventLoop\Suspension');
         $coroutine = Mockery::mock(RippleCoroutine::class)->makePartial();
         $coroutine->shouldAllowMockingProtectedMethods()->shouldReceive('_async')
             ->andReturnUsing(function ($closure) use (&$callback, $promiseMock) {
@@ -90,7 +90,7 @@ class RippleCoroutineTest extends TestCase
         };
         // mock async
         $callback = null;
-        $promiseMock = Mockery::mock('Psc\Core\Coroutine\Promise');
+        $promiseMock = Mockery::mock('Revolt\EventLoop\Suspension');
         $coroutine = Mockery::mock(RippleCoroutine::class)->makePartial();
         $coroutine->shouldAllowMockingProtectedMethods()->shouldReceive('_async')
             ->andReturnUsing(function ($closure) use (&$callback, $promiseMock) {
@@ -102,7 +102,7 @@ class RippleCoroutineTest extends TestCase
         $constructor = new \ReflectionMethod(RippleCoroutine::class, '__construct');
         $constructor->invoke($coroutine, $func);
 
-        $this->assertInstanceOf('Psc\Core\Coroutine\Promise', $coroutine->origin());
+        $this->assertInstanceOf('Revolt\EventLoop\Suspension', $coroutine->origin());
         // 模拟构造后协程执行callback
         call_user_func($callback);
 
@@ -116,7 +116,7 @@ class RippleCoroutineTest extends TestCase
         };
         // mock async
         $callback = null;
-        $promiseMock = Mockery::mock('Psc\Core\Coroutine\Promise');
+        $promiseMock = Mockery::mock('Revolt\EventLoop\Suspension');
         $coroutine = Mockery::mock(RippleCoroutine::class)->makePartial();
         $coroutine->shouldAllowMockingProtectedMethods()->shouldReceive('_async')
             ->andReturnUsing(function ($closure) use (&$callback, $promiseMock) {
