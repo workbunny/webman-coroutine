@@ -27,11 +27,11 @@ class RevoltCoroutineTest extends TestCase
 
         // mock
         $callback = null;
-        $suspensionMock = Mockery::mock('alias:\Revolt\EventLoop\Suspension');
+        $suspensionMock = Mockery::mock('alias:Revolt\EventLoop\Suspension');
         $suspensionMock->shouldReceive('resume')->andReturnNull();
         $suspensionMock->shouldReceive('suspend')->andReturnNull();
 
-        $eventLoopMock = Mockery::mock('alias:\Revolt\EventLoop');
+        $eventLoopMock = Mockery::mock('alias:Revolt\EventLoop');
         $eventLoopMock->shouldReceive('getSuspension')->andReturn($suspensionMock);
         $eventLoopMock->shouldReceive('queue')->andReturnUsing(function ($closure) use (&$callback) {
             $closure();
@@ -56,11 +56,11 @@ class RevoltCoroutineTest extends TestCase
 
         // mock
         $callback = null;
-        $suspensionMock = Mockery::mock('alias:\Revolt\EventLoop\Suspension');
+        $suspensionMock = Mockery::mock('alias:Revolt\EventLoop\Suspension');
         $suspensionMock->shouldReceive('resume')->andReturnNull();
         $suspensionMock->shouldReceive('suspend')->andReturnNull();
 
-        $eventLoopMock = Mockery::mock('alias:\Revolt\EventLoop');
+        $eventLoopMock = Mockery::mock('alias:Revolt\EventLoop');
         $eventLoopMock->shouldReceive('getSuspension')->andReturn($suspensionMock);
         $eventLoopMock->shouldReceive('queue')->andReturnUsing(function ($closure) use (&$callback) {
             $closure();
@@ -82,11 +82,11 @@ class RevoltCoroutineTest extends TestCase
         };
         // mock
         $callback = null;
-        $suspensionMock = Mockery::mock('alias:\Revolt\EventLoop\Suspension');
+        $suspensionMock = Mockery::mock('alias:Revolt\EventLoop\Suspension');
         $suspensionMock->shouldReceive('resume')->andReturnNull();
         $suspensionMock->shouldReceive('suspend')->andReturnNull();
 
-        $eventLoopMock = Mockery::mock('alias:\Revolt\EventLoop');
+        $eventLoopMock = Mockery::mock('alias:Revolt\EventLoop');
         $eventLoopMock->shouldReceive('getSuspension')->andReturn($suspensionMock);
         $eventLoopMock->shouldReceive('queue')->andReturnUsing(function ($closure) use (&$callback) {
             $closure();
@@ -105,11 +105,11 @@ class RevoltCoroutineTest extends TestCase
         };
         // mock
         $callback = null;
-        $suspensionMock = Mockery::mock('alias:\Revolt\EventLoop\Suspension');
+        $suspensionMock = Mockery::mock('alias:Revolt\EventLoop\Suspension');
         $suspensionMock->shouldReceive('resume')->andReturnNull();
         $suspensionMock->shouldReceive('suspend')->andReturnNull();
 
-        $eventLoopMock = Mockery::mock('alias:\Revolt\EventLoop');
+        $eventLoopMock = Mockery::mock('alias:Revolt\EventLoop');
         $eventLoopMock->shouldReceive('getSuspension')->andReturn($suspensionMock);
         $eventLoopMock->shouldReceive('queue')->andReturnUsing(function ($closure) use (&$callback) {
             $closure();

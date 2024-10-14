@@ -9,6 +9,7 @@ namespace Workbunny\WebmanCoroutine;
 
 use Webman\App;
 use Webman\Http\Request;
+use Workbunny\WebmanCoroutine\Exceptions\WorkerException;
 use Workbunny\WebmanCoroutine\Handlers\HandlerInterface;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Coroutine;
 use Workbunny\WebmanCoroutine\Utils\WaitGroup\WaitGroup;
@@ -63,6 +64,10 @@ class CoroutineWebServer extends App
         parent::onWorkerStart($worker);
         /** @var HandlerInterface $handler */
         $handler = Factory::getCurrentHandler();
+        if (!$handler) {
+            $className = $worker::class;
+            throw new WorkerException("Please run Factory::init or set $className::\$EventLoopClass = event_loop(). ");
+        }
         $handler::initEnv();
     }
 
@@ -71,6 +76,7 @@ class CoroutineWebServer extends App
      *
      *  - 不用返回值和参数标定是为了兼容
      *
+     * @codeCoverageIgnore 父级没有该方法，暂时不用覆盖
      * @param Worker|mixed $worker
      * @return void
      */
@@ -86,6 +92,7 @@ class CoroutineWebServer extends App
      *
      *  - 不用返回值和参数标定是为了兼容
      *
+     * @codeCoverageIgnore 父级没有该方法，暂时不用覆盖
      * @param ConnectionInterface $connection
      * @param mixed ...$params
      * @return void
@@ -109,6 +116,7 @@ class CoroutineWebServer extends App
      *
      *  - 不用返回值和参数标定是为了兼容
      *
+     * @codeCoverageIgnore 父级没有该方法，暂时不用覆盖
      * @param ConnectionInterface|mixed $connection
      * @param ...$params
      * @return void

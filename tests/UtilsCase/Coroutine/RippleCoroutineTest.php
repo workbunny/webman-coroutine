@@ -30,7 +30,7 @@ class RippleCoroutineTest extends TestCase
         // 模拟构造
         $coroutine = Mockery::mock(RippleCoroutine::class)->makePartial();
         $coroutine->shouldAllowMockingProtectedMethods()->shouldReceive('_getSuspension')
-            ->andReturn($suspension = Mockery::mock('Revolt\EventLoop\Suspension'));
+            ->andReturn($suspension = Mockery::mock('alias:Revolt\EventLoop\Suspension'));
         $coroutine->shouldAllowMockingProtectedMethods()->shouldReceive('_async')
             ->andReturnUsing(function ($closure) use ($coroutine, &$result, &$reject) {
                 // 模拟发生协程执行
@@ -40,7 +40,7 @@ class RippleCoroutineTest extends TestCase
                     $reject = $rj;
                 });
                 // 模拟返回
-                return Mockery::mock('Psc\Core\Coroutine\Promise');
+                return Mockery::mock('alias:Psc\Core\Coroutine\Promise');
             });
 
         // 模拟构造函数执行
@@ -87,7 +87,7 @@ class RippleCoroutineTest extends TestCase
         // 模拟构造
         $coroutine = Mockery::mock(RippleCoroutine::class)->makePartial();
         $coroutine->shouldAllowMockingProtectedMethods()->shouldReceive('_getSuspension')
-            ->andReturn($suspension = Mockery::mock('Revolt\EventLoop\Suspension'));
+            ->andReturn($suspension = Mockery::mock('alias:Revolt\EventLoop\Suspension'));
         $coroutine->shouldAllowMockingProtectedMethods()->shouldReceive('_async')
             ->andReturnUsing(function ($closure) use ($coroutine, &$result, &$reject) {
                 // 模拟发生协程执行
@@ -97,7 +97,7 @@ class RippleCoroutineTest extends TestCase
                     $reject = $rj;
                 });
                 // 模拟返回
-                return Mockery::mock('Psc\Core\Coroutine\Promise');
+                return Mockery::mock('alias:Psc\Core\Coroutine\Promise');
             });
 
         // 模拟构造函数执行
@@ -120,7 +120,7 @@ class RippleCoroutineTest extends TestCase
         // 模拟构造
         $coroutine = Mockery::mock(RippleCoroutine::class)->makePartial();
         $coroutine->shouldAllowMockingProtectedMethods()->shouldReceive('_getSuspension')
-            ->andReturn($suspension = Mockery::mock('Revolt\EventLoop\Suspension'));
+            ->andReturn($suspension = Mockery::mock('alias:Revolt\EventLoop\Suspension'));
         $coroutine->shouldAllowMockingProtectedMethods()->shouldReceive('_async')
             ->andReturnUsing(function ($closure) use ($coroutine, &$result, &$reject) {
                 // 模拟发生协程执行
@@ -130,7 +130,7 @@ class RippleCoroutineTest extends TestCase
                     $reject = $rj;
                 });
                 // 模拟返回
-                return Mockery::mock('Psc\Core\Coroutine\Promise');
+                return Mockery::mock('alias:Psc\Core\Coroutine\Promise');
             });
 
         // 模拟构造函数执行
@@ -148,7 +148,7 @@ class RippleCoroutineTest extends TestCase
         // 模拟构造
         $coroutine = Mockery::mock(RippleCoroutine::class)->makePartial();
         $coroutine->shouldAllowMockingProtectedMethods()->shouldReceive('_getSuspension')
-            ->andReturn($suspension = Mockery::mock('Revolt\EventLoop\Suspension'));
+            ->andReturn($suspension = Mockery::mock('alias:Revolt\EventLoop\Suspension'));
         $coroutine->shouldAllowMockingProtectedMethods()->shouldReceive('_async')
             ->andReturnUsing(function ($closure) use ($coroutine, &$result, &$reject) {
                 // 模拟发生协程执行
@@ -158,7 +158,7 @@ class RippleCoroutineTest extends TestCase
                     $reject = $rj;
                 });
                 // 模拟返回
-                return Mockery::mock('Psc\Core\Coroutine\Promise');
+                return Mockery::mock('alias:Psc\Core\Coroutine\Promise');
             });
 
         // 模拟构造函数执行
