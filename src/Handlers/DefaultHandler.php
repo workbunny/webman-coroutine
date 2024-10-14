@@ -14,6 +14,15 @@ use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
  */
 class DefaultHandler implements HandlerInterface
 {
+
+    /**
+     * 测试用，为保证覆盖生成时不会无限等待
+     *
+     * @codeCoverageIgnore
+     * @var bool
+     */
+    public static bool $debug = false;
+
     /**
      * default handler永远返回true
      *
@@ -45,6 +54,13 @@ class DefaultHandler implements HandlerInterface
                 throw new TimeoutException("Timeout after $timeout seconds.");
             }
             sleep(max(intval($timeout), 0));
+
+            // 测试用，为保证覆盖生成时不会无限等待
+            // @codeCoverageIgnoreStart
+            if (static::$debug and microtime(true) - $time >= 20) {
+                return;
+            }
+            // @codeCoverageIgnoreStart
         }
     }
 }

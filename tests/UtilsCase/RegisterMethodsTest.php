@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Workbunny\Tests\UtilsCase;
 
-use PHPUnit\Framework\TestCase;
+use Workbunny\Tests\TestCase;
 use Workbunny\Tests\mock\TestRegisterMethods;
 
 class RegisterMethodsTest extends TestCase

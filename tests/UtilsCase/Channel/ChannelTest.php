@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Workbunny\Tests\UtilsCase\Channel;
 
 use Mockery;
-use PHPUnit\Framework\TestCase;
+use Workbunny\Tests\TestCase;
 use Workbunny\WebmanCoroutine\Utils\Channel\Channel;
 use Workbunny\WebmanCoroutine\Utils\Channel\Handlers\ChannelInterface;
 
@@ -13,6 +13,7 @@ class ChannelTest extends TestCase
 {
     protected function tearDown(): void
     {
+        parent::tearDown();
         Mockery::close();
     }
 

@@ -42,11 +42,7 @@ class SwowHandler implements HandlerInterface
             if ($timeout > 0 && microtime(true) - $time >= $timeout) {
                 throw new TimeoutException("Timeout after $timeout seconds.");
             }
-            /**
-             * @codeCoverageIgnoreStart 忽略覆盖，该部分直接由swow接管，无需覆盖
-             */
             usleep(max((int) ($timeout * 1000 * 1000), 0));
-            /** @codeCoverageIgnoreEnd */
         }
     }
 }

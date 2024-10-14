@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Workbunny\Tests\HandlersCase;
 
 use Mockery;
-use PHPUnit\Framework\TestCase;
+use Workbunny\Tests\TestCase;
 use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
 use Workbunny\WebmanCoroutine\Handlers\RevoltHandler;
 
@@ -71,7 +71,6 @@ class RevoltHandlerTest extends TestCase
 
         // 模拟毫秒以下超时
         $this->expectException(TimeoutException::class);
-        $return = false;
         RevoltHandler::waitFor(function () use (&$return) {
             return false;
         }, 0.00099);

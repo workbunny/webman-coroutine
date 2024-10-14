@@ -171,7 +171,10 @@ class Pool
         $copy = [];
         foreach ($array as $key => $value) {
             if (is_callable($value)) {
+                // 系统接管，忽略覆盖
+                // @codeCoverageIgnoreStart
                 Worker::log("Pool::deepCopyArray $key value is callable. ");
+                // @codeCoverageIgnoreEnd
             }
             if (is_array($value)) {
                 $copy[$key] = self::_deepCopyArray($value);
@@ -206,7 +209,10 @@ class Pool
          * 由于callable类型数据无法做到完美深拷贝，涉及到参数引用上下文问题，谨慎使用
          */
         if (is_callable($element)) {
+            // 系统接管，忽略覆盖
+            // @codeCoverageIgnoreStart
             Worker::log("Pool $name#$index element is callable. ");
+            // @codeCoverageIgnoreEnd
         }
         $this->_element = !$clone ? $element : (match (true) {
             is_object($element)                     => clone $element,

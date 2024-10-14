@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Workbunny\Tests\UtilsCase\Channel;
 
-use PHPUnit\Framework\TestCase;
+use Workbunny\Tests\TestCase;
 use Workbunny\WebmanCoroutine\Utils\Channel\Handlers\DefaultChannel;
 
 class DefaultChannelTest extends TestCase

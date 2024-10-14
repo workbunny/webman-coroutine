@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Workbunny\Tests\UtilsCase\Pool;
 
 use Mockery;
-use PHPUnit\Framework\TestCase;
+use Workbunny\Tests\TestCase;
 use \stdClass;
 use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
 use Workbunny\WebmanCoroutine\Utils\Pool\Pool;
@@ -13,8 +13,9 @@ use Workbunny\WebmanCoroutine\Exceptions\PoolException;
 
 class PoolTest extends TestCase
 {
-    public function tearDown(): void
+    protected function tearDown(): void
     {
+        parent::tearDown();
         Mockery::close();
     }
 
@@ -170,11 +171,15 @@ class PoolTest extends TestCase
         Pool::get(__METHOD__, 1)->setIdle(false);
 
         $this->assertNull($element->value ?? null);
-        $this->expectException(TimeoutException::class);
-        Pool::waitForIdle(__METHOD__, function (Pool $pool) {
-            sleep(2);
-            $pool->getElement()->value = 'test';
-        }, 1);
+        $exception = null;
+        try {
+            Pool::waitForIdle(__METHOD__, function (Pool $pool) {
+                $pool->getElement()->value = 'test';
+            }, 1);
+        } catch (TimeoutException $e) {
+            $exception = $e;
+        }
+        $this->assertInstanceOf(TimeoutException::class, $exception);
         $this->assertNull($element->value ?? null);
     }
 

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Workbunny\Tests;
 
-use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Workbunny\Tests\mock\TestHandler;
 use Workbunny\WebmanCoroutine\Factory;
@@ -18,6 +17,8 @@ class FactoryTest extends TestCase
     {
         $result = Factory::register(__METHOD__, TestHandler::class);
         $this->assertTrue($result);
+
+        $this->assertFalse(Factory::register(__METHOD__ . '->false', \stdClass::class));
 
         $reflection = new ReflectionClass(Factory::class);
         $property = $reflection->getProperty('_handlers');

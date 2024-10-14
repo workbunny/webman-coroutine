@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Workbunny\Tests\UtilsCase\Coroutine;
 
 use Mockery;
-use PHPUnit\Framework\TestCase;
+use Workbunny\Tests\TestCase;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\SwowCoroutine;
 
 class SwowCoroutineTest extends TestCase
 {
     protected function tearDown(): void
     {
+        parent::tearDown();
         Mockery::close();
     }
 

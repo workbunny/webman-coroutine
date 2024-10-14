@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Workbunny\Tests\UtilsCase\WaitGroup;
 
-use PHPUnit\Framework\TestCase;
+use Workbunny\Tests\TestCase;
 use Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers\DefaultWaitGroup;
 
 class DefaultWaitGroupTest extends TestCase

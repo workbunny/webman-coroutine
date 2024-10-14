@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Workbunny\Tests;
 
-use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use Mockery;
 use ReflectionMethod;
@@ -23,6 +22,7 @@ class CoroutineWebServerTest extends TestCase
 
     protected function tearDown(): void
     {
+        parent::tearDown();
         Mockery::close();
     }
 

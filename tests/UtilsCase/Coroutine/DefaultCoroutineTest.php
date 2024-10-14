@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Workbunny\Tests\UtilsCase\Coroutine;
 
-use PHPUnit\Framework\TestCase;
+use Workbunny\Tests\TestCase;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\DefaultCoroutine;
 
 class DefaultCoroutineTest extends TestCase

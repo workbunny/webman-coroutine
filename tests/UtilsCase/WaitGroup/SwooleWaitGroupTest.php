@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Workbunny\Tests\UtilsCase\WaitGroup;
 
 use Mockery;
-use PHPUnit\Framework\TestCase;
+use Workbunny\Tests\TestCase;
 use Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers\SwooleWaitGroup;
 
 class SwooleWaitGroupTest extends TestCase
 {
     protected function tearDown(): void
     {
+        parent::tearDown();
         Mockery::close();
     }
 

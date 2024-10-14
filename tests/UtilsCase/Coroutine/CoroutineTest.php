@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Workbunny\Tests\UtilsCase\Coroutine;
 
 use Mockery;
-use PHPUnit\Framework\TestCase;
+use Workbunny\Tests\TestCase;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Coroutine;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\CoroutineInterface;
 
@@ -13,6 +13,7 @@ class CoroutineTest extends TestCase
 {
     protected function tearDown(): void
     {
+        parent::tearDown();
         Mockery::close();
     }
 

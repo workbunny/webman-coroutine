@@ -4,17 +4,12 @@ declare(strict_types=1);
 
 namespace Workbunny\Tests\HandlersCase;
 
-use PHPUnit\Framework\TestCase;
+use Workbunny\Tests\TestCase;
 use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
 use Workbunny\WebmanCoroutine\Handlers\SwowHandler;
 
 class SwowHandlerTest extends TestCase
 {
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-    }
-
     public function testIsAvailable()
     {
         $this->markTestSkipped('Skipped. ');
@@ -43,9 +38,7 @@ class SwowHandlerTest extends TestCase
         $this->assertTrue($return);
         // 模拟超时
         $this->expectException(TimeoutException::class);
-        $return = false;
         SwowHandler::waitFor(function () use (&$return) {
-            sleep(2);
             return false;
         }, 1);
         $this->assertFalse($return);

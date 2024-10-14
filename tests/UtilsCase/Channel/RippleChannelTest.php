@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Workbunny\Tests\UtilsCase\Channel;
 
 use Mockery;
-use PHPUnit\Framework\TestCase;
+use Workbunny\Tests\TestCase;
 use Workbunny\WebmanCoroutine\Utils\Channel\Handlers\RippleChannel;
 
 class RippleChannelTest extends TestCase
 {
     protected function tearDown(): void
     {
+        parent::tearDown();
         Mockery::close();
     }
 

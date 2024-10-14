@@ -2,18 +2,17 @@
 
 declare(strict_types=1);
 
-namespace UtilsCase\Worker;
+namespace Workbunny\Tests\UtilsCase\Worker;
 
 use Mockery;
-use PHPUnit\Framework\TestCase;
-
+use Workbunny\Tests\TestCase;
 use Workerman\Connection\ConnectionInterface;
-use function Workbunny\WebmanCoroutine\event_loop;
-
 use Workbunny\WebmanCoroutine\Exceptions\WorkerException;
 use Workbunny\WebmanCoroutine\Factory;
 use Workbunny\WebmanCoroutine\Utils\Worker\AbstractWorker;
 use Workbunny\WebmanCoroutine\Utils\Worker\Server;
+
+use function Workbunny\WebmanCoroutine\event_loop;
 
 /**
  * @runTestsInSeparateProcesses

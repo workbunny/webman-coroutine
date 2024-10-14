@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Workbunny\Tests\UtilsCase\Worker;
 
-use PHPUnit\Framework\TestCase;
-
-use function Workbunny\WebmanCoroutine\event_loop;
-
+use Workbunny\Tests\TestCase;
 use Workbunny\WebmanCoroutine\Exceptions\WorkerException;
 use Workbunny\WebmanCoroutine\Factory;
 use Workbunny\WebmanCoroutine\Utils\Worker\AbstractWorker;
 use Workbunny\WebmanCoroutine\Utils\Worker\Worker;
+
+use function Workbunny\WebmanCoroutine\event_loop;
 
 /**
  * @runTestsInSeparateProcesses
