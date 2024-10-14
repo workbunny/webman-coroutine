@@ -58,5 +58,9 @@ class RevoltWaitGroupTest extends TestCase
         $wg->done();
         $wg->wait();
         $this->assertEquals(0, $wg->count());
+
+        $wg->add();
+        $wg->wait(1);
+        $this->assertEquals(1, $wg->count());
     }
 }

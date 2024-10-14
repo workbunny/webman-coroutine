@@ -118,6 +118,10 @@ class PoolTest extends TestCase
         $element = new stdClass();
         Pool::create(__METHOD__, 2, $element);
         Pool::create(__METHOD__, 2, $element);
+
+        $index = 1;
+        $this->expectExceptionMessage("Pool $name#$index already exists. ");
+        new Pool(__METHOD__, $index, $element);
     }
 
     public function testGetPool()

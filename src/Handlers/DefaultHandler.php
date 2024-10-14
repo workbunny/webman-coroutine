@@ -53,14 +53,13 @@ class DefaultHandler implements HandlerInterface
             if ($timeout > 0 && microtime(true) - $time >= $timeout) {
                 throw new TimeoutException("Timeout after $timeout seconds.");
             }
-            sleep(max(intval($timeout), 0));
-
             // 测试用，为保证覆盖生成时不会无限等待
             // @codeCoverageIgnoreStart
             if (static::$debug and microtime(true) - $time >= 20) {
                 return;
             }
-            // @codeCoverageIgnoreStart
+            // @codeCoverageIgnoreEnd
+            sleep(max(intval($timeout), 0));
         }
     }
 }

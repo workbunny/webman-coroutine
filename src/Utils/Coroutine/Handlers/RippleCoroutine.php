@@ -14,29 +14,28 @@ use Revolt\EventLoop\Suspension;
 class RippleCoroutine implements CoroutineInterface
 {
     /**
-     * @var \Revolt\EventLoop\Suspension
+     * @var null|Suspension
      */
-    protected Suspension $suspension;
+    protected ?Suspension $_suspension = null;
 
     /** @inheritdoc
      * @param \Closure $func
      */
     public function __construct(Closure $func)
     {
+        $this->_suspension = $this->_getSuspension();
         $this->_async(function (Closure $resolve, Closure $reject) use ($func) {
-            $this->suspension = \Co\getSuspension();
-
             try {
                 $result = call_user_func(
                     $func,
-                    spl_object_hash($this->origin())
+                    $this->id()
                 );
 
                 $resolve($result);
             } catch (\Throwable $exception) {
                 $reject($exception);
             } finally {
-                unset($this->promise);
+                $this->_suspension = null;
             }
         });
     }
@@ -44,29 +43,38 @@ class RippleCoroutine implements CoroutineInterface
     /** @inheritdoc */
     public function __destruct()
     {
+        $this->_suspension = null;
     }
 
     /** @inheritdoc */
-    public function origin(): Suspension
+    public function origin(): ?Suspension
     {
-        return $this->suspension;
+        return $this->_suspension;
     }
 
     /** @inheritdoc */
     public function id(): ?string
     {
-        return spl_object_hash($this->origin());
+        return $this->_suspension ? spl_object_hash($this->_suspension) : null;
     }
 
     /**
      * @codeCoverageIgnore 用于测试mock，忽略覆盖
      *
      * @param \Closure $closure
-     *
-     * @return \Psc\Core\Coroutine\Promise
+     * @return Promise
      */
     protected function _async(Closure $closure): Promise
     {
         return \Co\async($closure);
+    }
+
+    /**
+     * @codeCoverageIgnore 用于测试mock，忽略覆盖
+     * @return Suspension
+     */
+    protected function _getSuspension(): Suspension
+    {
+        return \Co\getSuspension();
     }
 }

@@ -23,36 +23,58 @@ class RippleCoroutineTest extends TestCase
         $func = function ($coroutineId) use (&$id, &$executed) {
             $executed = true;
             $id = $coroutineId;
+            return 'testConstruct';
         };
+        $reject = $result = null;
 
-        // mock async
-        $callback = null;
-        $promiseMock = Mockery::mock('Revolt\EventLoop\Suspension');
-        $coroutine = Mockery::mock(RippleCoroutine::class)->makePartial();
-        $coroutine->shouldAllowMockingProtectedMethods()->shouldReceive('_async')
-            ->andReturnUsing(function ($closure) use (&$callback, $promiseMock) {
-                $callback = $closure;
-
-                return $promiseMock;
-            });
         // 模拟构造
-        $constructor = new \ReflectionMethod(RippleCoroutine::class, '__construct');
-        $constructor->invoke($coroutine, $func);
+        $coroutine = Mockery::mock(RippleCoroutine::class)->makePartial();
+        $coroutine->shouldAllowMockingProtectedMethods()->shouldReceive('_getSuspension')
+            ->andReturn($suspension = Mockery::mock('Revolt\EventLoop\Suspension'));
+        $coroutine->shouldAllowMockingProtectedMethods()->shouldReceive('_async')
+            ->andReturnUsing(function ($closure) use ($coroutine, &$result, &$reject) {
+                // 模拟发生协程执行
+                call_user_func($closure, function ($res) use (&$result) {
+                   $result = $res;
+                }, function ($rj) use (&$reject) {
+                    $reject = $rj;
+                });
+                // 模拟返回
+                return Mockery::mock('Psc\Core\Coroutine\Promise');
+            });
 
-        $this->assertFalse($executed);
-        $this->assertInstanceOf('Revolt\EventLoop\Suspension', $coroutine->origin());
-        $this->assertIsString($getId = $coroutine->id());
-        $this->assertEquals(spl_object_hash($promiseMock), $coroutine->id());
-        $this->assertNull($id);
-
-        // 模拟发生协程执行
-        call_user_func($callback);
+        // 模拟构造函数执行
+        $coroutine->__construct($func);
 
         $this->assertTrue($executed);
+        $this->assertEquals('testConstruct', $result);
+        $this->assertNull($reject);
         $this->assertNull($coroutine->origin());
         $this->assertNull($coroutine->id());
         $this->assertNotNull($id);
-        $this->assertEquals($getId, $id);
+        $this->assertEquals(spl_object_hash($suspension), $id);
+
+
+        $executed = false;
+        $id = null;
+        $func = function ($coroutineId) use (&$id, &$executed) {
+            $executed = true;
+            $id = $coroutineId;
+            throw new \Exception('testConstruct');
+        };
+        $reject = $result = null;
+
+        // 模拟构造函数执行
+        $coroutine->__construct($func);
+
+        $this->assertTrue($executed);
+        $this->assertInstanceOf(\Exception::class, $reject);
+        $this->assertNull($result);
+        $this->assertNull($coroutine->origin());
+        $this->assertNull($coroutine->id());
+        $this->assertNotNull($id);
+        $this->assertEquals(spl_object_hash($suspension), $id);
+
     }
 
     public function testDestruct()
@@ -61,24 +83,29 @@ class RippleCoroutineTest extends TestCase
             // 模拟闭包函数的执行
         };
 
-        // mock async
-        $callback = null;
-        $promiseMock = Mockery::mock('Revolt\EventLoop\Suspension');
+        $reject = $result = null;
+        // 模拟构造
         $coroutine = Mockery::mock(RippleCoroutine::class)->makePartial();
+        $coroutine->shouldAllowMockingProtectedMethods()->shouldReceive('_getSuspension')
+            ->andReturn($suspension = Mockery::mock('Revolt\EventLoop\Suspension'));
         $coroutine->shouldAllowMockingProtectedMethods()->shouldReceive('_async')
-            ->andReturnUsing(function ($closure) use (&$callback, $promiseMock) {
-                $callback = $closure;
-
-                return $promiseMock;
+            ->andReturnUsing(function ($closure) use ($coroutine, &$result, &$reject) {
+                // 模拟发生协程执行
+                call_user_func($closure, function ($res) use (&$result) {
+                    $result = $res;
+                }, function ($rj) use (&$reject) {
+                    $reject = $rj;
+                });
+                // 模拟返回
+                return Mockery::mock('Psc\Core\Coroutine\Promise');
             });
+
         // 模拟构造函数执行
-        $constructor = new \ReflectionMethod(RippleCoroutine::class, '__construct');
-        $constructor->invoke($coroutine, $func);
-        // 模拟构造后协程执行callback
-        call_user_func($callback);
-        // 模拟析构
-        $destruct = new \ReflectionMethod(RippleCoroutine::class, '__destruct');
-        $destruct->invoke($coroutine);
+        $coroutine->__construct($func);
+        // 模拟析构函数执行
+        $method = new \ReflectionMethod(RippleCoroutine::class, '__destruct');
+        $method->invoke($coroutine);
+//
 //        $coroutine->__destruct();
         // 正常执行无报错
         $this->assertTrue(true);
@@ -89,23 +116,25 @@ class RippleCoroutineTest extends TestCase
         $func = function () {
             // 模拟闭包函数的执行
         };
-        // mock async
-        $callback = null;
-        $promiseMock = Mockery::mock('Revolt\EventLoop\Suspension');
+        $reject = $result = null;
+        // 模拟构造
         $coroutine = Mockery::mock(RippleCoroutine::class)->makePartial();
+        $coroutine->shouldAllowMockingProtectedMethods()->shouldReceive('_getSuspension')
+            ->andReturn($suspension = Mockery::mock('Revolt\EventLoop\Suspension'));
         $coroutine->shouldAllowMockingProtectedMethods()->shouldReceive('_async')
-            ->andReturnUsing(function ($closure) use (&$callback, $promiseMock) {
-                $callback = $closure;
-
-                return $promiseMock;
+            ->andReturnUsing(function ($closure) use ($coroutine, &$result, &$reject) {
+                // 模拟发生协程执行
+                call_user_func($closure, function ($res) use (&$result) {
+                    $result = $res;
+                }, function ($rj) use (&$reject) {
+                    $reject = $rj;
+                });
+                // 模拟返回
+                return Mockery::mock('Psc\Core\Coroutine\Promise');
             });
-        // 模拟构造函数执行
-        $constructor = new \ReflectionMethod(RippleCoroutine::class, '__construct');
-        $constructor->invoke($coroutine, $func);
 
-        $this->assertInstanceOf('Revolt\EventLoop\Suspension', $coroutine->origin());
-        // 模拟构造后协程执行callback
-        call_user_func($callback);
+        // 模拟构造函数执行
+        $coroutine->__construct($func);
 
         $this->assertNull($coroutine->origin());
     }
@@ -115,24 +144,25 @@ class RippleCoroutineTest extends TestCase
         $func = function () {
             // 模拟闭包函数的执行
         };
-        // mock async
-        $callback = null;
-        $promiseMock = Mockery::mock('Revolt\EventLoop\Suspension');
+        $reject = $result = null;
+        // 模拟构造
         $coroutine = Mockery::mock(RippleCoroutine::class)->makePartial();
+        $coroutine->shouldAllowMockingProtectedMethods()->shouldReceive('_getSuspension')
+            ->andReturn($suspension = Mockery::mock('Revolt\EventLoop\Suspension'));
         $coroutine->shouldAllowMockingProtectedMethods()->shouldReceive('_async')
-            ->andReturnUsing(function ($closure) use (&$callback, $promiseMock) {
-                $callback = $closure;
-
-                return $promiseMock;
+            ->andReturnUsing(function ($closure) use ($coroutine, &$result, &$reject) {
+                // 模拟发生协程执行
+                call_user_func($closure, function ($res) use (&$result) {
+                    $result = $res;
+                }, function ($rj) use (&$reject) {
+                    $reject = $rj;
+                });
+                // 模拟返回
+                return Mockery::mock('Psc\Core\Coroutine\Promise');
             });
+
         // 模拟构造函数执行
-        $constructor = new \ReflectionMethod(RippleCoroutine::class, '__construct');
-        $constructor->invoke($coroutine, $func);
-
-        $this->assertIsString($coroutine->id());
-
-        // 模拟构造后协程执行callback
-        call_user_func($callback);
+        $coroutine->__construct($func);
 
         $this->assertNull($coroutine->id());
     }

@@ -48,5 +48,9 @@ class RippleWaitGroupTest extends TestCase
         $partialMock->done();
         $partialMock->wait();
         $this->assertEquals(0, $partialMock->count());
+
+        $partialMock->add();
+        $partialMock->wait(1);
+        $this->assertEquals(1, $partialMock->count());
     }
 }
