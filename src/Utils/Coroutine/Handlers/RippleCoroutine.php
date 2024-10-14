@@ -7,53 +7,59 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers;
 
-use function Co\async;
-
 use Psc\Core\Coroutine\Promise;
+use Revolt\EventLoop\Suspension;
+
+use function Co\async;
+use function Co\getSuspension;
 
 class RippleCoroutine implements CoroutineInterface
 {
-    /**
-     * @var null|Promise
-     */
-    protected ?Promise $_promise = null;
+    protected Promise|null $promise = null;
 
     /** @inheritdoc
      * @param \Closure $func
      */
     public function __construct(\Closure $func)
     {
-        $this->_promise = $promise = $this->_async(function () use (&$promise, $func) {
+        $this->promise = $this->_async(function (\Closure $resolve, \Closure $reject) use ($func) {
             try {
-                call_user_func($func, spl_object_hash($this->_promise));
+                $result = call_user_func(
+                    $func,
+                    spl_object_hash($this->origin())
+                );
+
+                $resolve($result);
+            } catch (\Throwable $exception) {
+                $reject($exception);
             } finally {
-                // 移除协程promise
-                $this->_promise = null;
+                unset($this->promise);
             }
         });
     }
 
-    /** @inheritdoc  */
+    /** @inheritdoc */
     public function __destruct()
     {
-        $this->_promise = null;
     }
 
-    /** @inheritdoc  */
-    public function origin(): ?Promise
+    /** @inheritdoc */
+    public function origin(): Suspension
     {
-        return $this->_promise;
+        return getSuspension();
     }
 
-    /** @inheritdoc  */
+    /** @inheritdoc */
     public function id(): ?string
     {
-        return $this->_promise ? spl_object_hash($this->_promise) : null;
+        return spl_object_hash($this->origin());
     }
 
     /**
      * @codeCoverageIgnore 用于测试mock，忽略覆盖
+     *
      * @param \Closure $closure
+     *
      * @return mixed
      */
     protected function _async(\Closure $closure)
