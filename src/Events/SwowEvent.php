@@ -16,6 +16,12 @@ use Workerman\Events\EventInterface;
 
 class SwowEvent implements EventInterface
 {
+    /**
+     * @codeCoverageIgnore
+     * @var bool
+     */
+    public static $debug = false;
+
     /** @var Coroutine[] All listeners for read event. */
     protected array $_reads = [];
 
@@ -35,12 +41,11 @@ class SwowEvent implements EventInterface
     protected null|WaitGroup $_waitGroup = null;
 
     /**
-     * @param bool $debug 测试用
      * @throws EventLoopException 如果没有启用拓展
      */
-    public function __construct(bool $debug = false)
+    public function __construct()
     {
-        if (!$debug and !extension_loaded('swow')) {
+        if (!self::$debug and !extension_loaded('swow')) {
             throw new EventLoopException('Not support ext-swow. ');
         }
     }
@@ -51,12 +56,15 @@ class SwowEvent implements EventInterface
         switch ($flag) {
             case EventInterface::EV_SIGNAL:
                 if (!isset($this->_signals[$fd])) {
-                    $this->_signals[$fd] = Coroutine::run(function () use ($fd, $func, $args): void {
+                    $this->_signals[$fd] = Coroutine::run(function () use ($fd, $func, $args): void
+                    {
                         try {
                             Signal::wait($fd);
                             \call_user_func($func, $fd, ...$args);
-                        } catch (SignalException) {
                         }
+                        // @codeCoverageIgnoreStart
+                        catch (SignalException) {}
+                        // @codeCoverageIgnoreEnd
                     });
 
                     return true;
@@ -66,13 +74,19 @@ class SwowEvent implements EventInterface
             case EventInterface::EV_TIMER:
             case EventInterface::EV_TIMER_ONCE:
                 $timerId = $this->_timerId++;
-                $this->_timer[$timerId] = Coroutine::run(function () use ($timerId, $fd, $flag, $func, $args): void {
+                $this->_timer[$timerId] = Coroutine::run(function () use ($timerId, $fd, $flag, $func, $args): void
+                {
                     while (1) {
                         usleep((int) ($fd * 1000 * 1000));
                         \call_user_func($func, ...$args);
                         if ($flag === EventInterface::EV_TIMER_ONCE) {
                             $this->del($timerId, $flag);
                         }
+                        // @codeCoverageIgnoreStart
+                        if (self::$debug) {
+                            break;
+                        }
+                        // @codeCoverageIgnoreEnd
                     }
                 });
 
@@ -93,6 +107,11 @@ class SwowEvent implements EventInterface
                                     $this->del($fd, EventInterface::EV_READ);
                                     break;
                                 }
+                                // @codeCoverageIgnoreStart
+                                if (self::$debug) {
+                                    break;
+                                }
+                                // @codeCoverageIgnoreEnd
                             }
                         } catch (\Throwable) {
                             $this->del($fd, EventInterface::EV_READ);
@@ -119,6 +138,11 @@ class SwowEvent implements EventInterface
                                     $this->del($fd, EventInterface::EV_WRITE);
                                     break;
                                 }
+                                // @codeCoverageIgnoreStart
+                                if (self::$debug) {
+                                    break;
+                                }
+                                // @codeCoverageIgnoreEnd
                             }
                         } catch (\Throwable) {
                             $this->del($fd, EventInterface::EV_WRITE);

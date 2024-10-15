@@ -58,7 +58,7 @@ class CoroutineWebServer extends App
     /** @inheritdoc  */
     public function onWorkerStart($worker)
     {
-        if (!\config('plugin.workbunny.webman-coroutine.app.enable', false)) {
+        if (!config('plugin.workbunny.webman-coroutine.app.enable', false)) {
             return;
         }
         parent::onWorkerStart($worker);
@@ -76,14 +76,13 @@ class CoroutineWebServer extends App
      *
      *  - 不用返回值和参数标定是为了兼容
      *
-     * @codeCoverageIgnore 父级没有该方法，暂时不用覆盖
      * @param Worker|mixed $worker
      * @return void
      */
     public function onWorkerStop($worker, ...$params)
     {
-        if (is_callable($call = [parent::class, 'onWorkerStop'])) {
-            call_user_func($call, $worker, ...$params);
+        if (method_exists(parent::class, 'onWorkerStop')) {
+            parent::onWorkerStop($worker, ...$params);
         }
     }
 
@@ -92,7 +91,6 @@ class CoroutineWebServer extends App
      *
      *  - 不用返回值和参数标定是为了兼容
      *
-     * @codeCoverageIgnore 父级没有该方法，暂时不用覆盖
      * @param ConnectionInterface $connection
      * @param mixed ...$params
      * @return void
@@ -102,10 +100,10 @@ class CoroutineWebServer extends App
         if (!is_object($connection)) {
             return;
         }
-        if (is_callable($call = [parent::class, 'onConnect'])) {
+        if (method_exists(parent::class, 'onConnect')) {
             // 协程化创建连接
-            new Coroutine(function () use ($call, $connection, $params) {
-                call_user_func($call, $connection, ...$params);
+            new Coroutine(function () use ($connection, $params) {
+                parent::onConnect($connection, ...$params);
             });
         }
         self::$_connectionCoroutineCount[spl_object_hash($connection)] = 0;
@@ -116,7 +114,6 @@ class CoroutineWebServer extends App
      *
      *  - 不用返回值和参数标定是为了兼容
      *
-     * @codeCoverageIgnore 父级没有该方法，暂时不用覆盖
      * @param ConnectionInterface|mixed $connection
      * @param ...$params
      * @return void
@@ -126,10 +123,10 @@ class CoroutineWebServer extends App
         if (!is_object($connection)) {
             return;
         }
-        if (is_callable($call = [parent::class, 'onClose'])) {
+        if (method_exists(parent::class, 'onClose')) {
             // 协程化关闭连接
-            new Coroutine(function () use ($call, $connection, $params) {
-                call_user_func($call, $connection, ...$params);
+            new Coroutine(function () use ($connection, $params) {
+                parent::onClose($connection, ...$params);
             });
         }
         self::unsetConnectionCoroutineCount(spl_object_hash($connection), true);
@@ -152,7 +149,7 @@ class CoroutineWebServer extends App
         $params = func_get_args();
         $res = null;
         // 检测协程数
-        if (($consumerCount = \config('plugin.workbunny.webman-coroutine.app.consumer_count', 0)) > 0) {
+        if (($consumerCount = config('plugin.workbunny.webman-coroutine.app.consumer_count', 0)) > 0) {
             // 等待协程回收
             wait_for(function () use ($connectionId, $consumerCount) {
                 return self::getConnectionCoroutineCount($connectionId) <= $consumerCount;
@@ -164,7 +161,7 @@ class CoroutineWebServer extends App
         // 计数 ++
         self::$_connectionCoroutineCount[$connectionId] =
             isset(self::$_connectionCoroutineCount[$connectionId])
-                ? self::$_connectionCoroutineCount[$connectionId] ++
+                ? (self::$_connectionCoroutineCount[$connectionId] + 1)
                 : 1;
         // 请求消费协程
         new Coroutine(function () use (&$res, $waitGroup, $params, $connectionId) {
