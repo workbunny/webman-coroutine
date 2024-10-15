@@ -6,13 +6,14 @@ namespace Workbunny\Tests\UtilsCase\Worker;
 
 use Mockery;
 use Workbunny\Tests\TestCase;
-use Workerman\Connection\ConnectionInterface;
+
+use function Workbunny\WebmanCoroutine\event_loop;
+
 use Workbunny\WebmanCoroutine\Exceptions\WorkerException;
 use Workbunny\WebmanCoroutine\Factory;
 use Workbunny\WebmanCoroutine\Utils\Worker\AbstractWorker;
 use Workbunny\WebmanCoroutine\Utils\Worker\Server;
-
-use function Workbunny\WebmanCoroutine\event_loop;
+use Workerman\Connection\ConnectionInterface;
 
 /**
  * @runTestsInSeparateProcesses
@@ -28,7 +29,6 @@ class ServerTest extends TestCase
         };
         $worker->onClose = $onClose = function () {
             echo "testServerUseFuncInit->onClose\n";
-
         };
         $worker->onMessage = $onMessage = function ($connection, $data) {
             echo "testServerUseFuncInit->onMessage\n";
@@ -72,7 +72,6 @@ class ServerTest extends TestCase
         };
         $worker->onClose = $onClose = function () {
             echo "testServerUseFactoryInit->onClose\n";
-
         };
         $worker->onMessage = $onMessage = function ($connection, $data) {
             echo "testServerUseFactoryInit->onMessage\n";
@@ -115,7 +114,6 @@ class ServerTest extends TestCase
         };
         $worker->onClose = $onClose = function () {
             echo "testServerSetConnectionCoroutine->onClose\n";
-
         };
         $worker->onMessage = $onMessage = function ($connection, $data) {
             echo "testServerSetConnectionCoroutine->onMessage\n";

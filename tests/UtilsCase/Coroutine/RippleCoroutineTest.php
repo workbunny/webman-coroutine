@@ -23,6 +23,7 @@ class RippleCoroutineTest extends TestCase
         $func = function ($coroutineId) use (&$id, &$executed) {
             $executed = true;
             $id = $coroutineId;
+
             return 'testConstruct';
         };
         $reject = $result = null;
@@ -35,10 +36,11 @@ class RippleCoroutineTest extends TestCase
             ->andReturnUsing(function ($closure) use ($coroutine, &$result, &$reject) {
                 // 模拟发生协程执行
                 call_user_func($closure, function ($res) use (&$result) {
-                   $result = $res;
+                    $result = $res;
                 }, function ($rj) use (&$reject) {
                     $reject = $rj;
                 });
+
                 // 模拟返回
                 return Mockery::mock('alias:Psc\Core\Coroutine\Promise');
             });
@@ -53,7 +55,6 @@ class RippleCoroutineTest extends TestCase
         $this->assertNull($coroutine->id());
         $this->assertNotNull($id);
         $this->assertEquals(spl_object_hash($suspension), $id);
-
 
         $executed = false;
         $id = null;
@@ -74,7 +75,6 @@ class RippleCoroutineTest extends TestCase
         $this->assertNull($coroutine->id());
         $this->assertNotNull($id);
         $this->assertEquals(spl_object_hash($suspension), $id);
-
     }
 
     public function testDestruct()
@@ -96,6 +96,7 @@ class RippleCoroutineTest extends TestCase
                 }, function ($rj) use (&$reject) {
                     $reject = $rj;
                 });
+
                 // 模拟返回
                 return Mockery::mock('alias:Psc\Core\Coroutine\Promise');
             });
@@ -105,8 +106,8 @@ class RippleCoroutineTest extends TestCase
         // 模拟析构函数执行
         $method = new \ReflectionMethod(RippleCoroutine::class, '__destruct');
         $method->invoke($coroutine);
-//
-//        $coroutine->__destruct();
+        //
+        //        $coroutine->__destruct();
         // 正常执行无报错
         $this->assertTrue(true);
     }
@@ -129,6 +130,7 @@ class RippleCoroutineTest extends TestCase
                 }, function ($rj) use (&$reject) {
                     $reject = $rj;
                 });
+
                 // 模拟返回
                 return Mockery::mock('alias:Psc\Core\Coroutine\Promise');
             });
@@ -157,6 +159,7 @@ class RippleCoroutineTest extends TestCase
                 }, function ($rj) use (&$reject) {
                     $reject = $rj;
                 });
+
                 // 模拟返回
                 return Mockery::mock('alias:Psc\Core\Coroutine\Promise');
             });

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Workbunny\Tests\UtilsCase;
 
-use Workbunny\Tests\TestCase;
 use Workbunny\Tests\mock\TestRegisterMethods;
+use Workbunny\Tests\TestCase;
 
 class RegisterMethodsTest extends TestCase
 {

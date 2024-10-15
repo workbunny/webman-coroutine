@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace Workbunny\Tests;
 
-use ReflectionClass;
 use Mockery;
+use ReflectionClass;
 use ReflectionMethod;
 use support\Request;
 use Workbunny\WebmanCoroutine\CoroutineWebServer;
+
+use function Workbunny\WebmanCoroutine\event_loop;
+
 use Workbunny\WebmanCoroutine\Exceptions\WorkerException;
 use Workerman\Connection\ConnectionInterface;
 use Workerman\Worker;
-use function Workbunny\WebmanCoroutine\event_loop;
 
 /**
  * @runTestsInSeparateProcesses
@@ -109,8 +111,7 @@ class CoroutineWebServerTest extends TestCase
     public function testOnWorkerStop()
     {
         $worker = Mockery::mock('alias:Workerman\Worker');
-        $mockClass = new class
-        {
+        $mockClass = new class () {
             public function onWorkerStop(Worker $worker, ...$params)
             {
                 TestCase::assertEquals('one', $params[0] ?? null);
@@ -133,8 +134,7 @@ class CoroutineWebServerTest extends TestCase
         $connection = Mockery::mock('alias:' . ConnectionInterface::class);
         $connectionId = spl_object_hash($connection);
 
-        $mockClass = new class
-        {
+        $mockClass = new class () {
             public function onConnect(?ConnectionInterface $connection, ...$params)
             {
                 TestCase::assertEquals('one', $params[0] ?? null);
@@ -153,11 +153,9 @@ class CoroutineWebServerTest extends TestCase
         $server->onConnect($connection, 'one', 'two');
         $this->assertEquals(0, CoroutineWebServer::getConnectionCoroutineCount($connectionId));
 
-
         // 非object
         $server->onConnect('123');
         $this->assertTrue(true);
-
     }
 
     public function testOnClose()
@@ -165,8 +163,7 @@ class CoroutineWebServerTest extends TestCase
         $connection = Mockery::mock('alias:' . ConnectionInterface::class);
         $connectionId = spl_object_hash($connection);
 
-        $mockClass = new class
-        {
+        $mockClass = new class () {
             public function onClose(?ConnectionInterface $connection, ...$params)
             {
                 TestCase::assertEquals('one', $params[0] ?? null);

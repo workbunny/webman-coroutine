@@ -54,6 +54,6 @@ class SwooleWaitGroupTest extends TestCase
 
         $wg->add();
         $wg->wait(1);
-        $this->assertEquals(1,  $wg->count());
+        $this->assertEquals(1, $wg->count());
     }
 }

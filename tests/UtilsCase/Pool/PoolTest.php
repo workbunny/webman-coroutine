@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Workbunny\Tests\UtilsCase\Pool;
 
 use Mockery;
+use stdClass;
 use Workbunny\Tests\TestCase;
-use \stdClass;
+use Workbunny\WebmanCoroutine\Exceptions\PoolException;
 use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
 use Workbunny\WebmanCoroutine\Utils\Pool\Pool;
-use Workbunny\WebmanCoroutine\Exceptions\PoolException;
 
 class PoolTest extends TestCase
 {
@@ -46,6 +46,7 @@ class PoolTest extends TestCase
                 }
             }
         }
+
         return false;
     }
 
@@ -77,7 +78,6 @@ class PoolTest extends TestCase
         $this->assertEquals(spl_object_id($reference), $pools[1]->getElement());
         $this->assertEquals('reference', $pools[1]->getElement()->property);
         $this->assertFalse($pools[1]->isClone());
-
     }
 
     public function testCreatePoolWithArray()
@@ -228,4 +228,3 @@ class PoolTest extends TestCase
         $this->assertTrue($pool->isIdle());
     }
 }
-

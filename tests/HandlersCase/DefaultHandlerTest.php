@@ -41,6 +41,7 @@ class DefaultHandlerTest extends TestCase
         // 模拟超时
         DefaultHandler::waitFor(function () use (&$return) {
             sleep(2);
+
             return false;
         }, 0.1);
 

@@ -64,6 +64,7 @@ class SwowEventTest extends TestCase
         $coroutineMock = m::mock('alias:Swow\Coroutine');
         $coroutineMock->shouldReceive('run')->andReturnUsing(function ($callback) use ($coroutineMock) {
             $callback();
+
             return $coroutineMock;
         });
 
@@ -114,6 +115,7 @@ class SwowEventTest extends TestCase
         $coroutineMock = m::mock('alias:Swow\Coroutine');
         $coroutineMock->shouldReceive('run')->andReturnUsing(function ($callback) use ($coroutineMock) {
             $callback();
+
             return $coroutineMock;
         });
 
@@ -149,6 +151,7 @@ class SwowEventTest extends TestCase
         $coroutineMock = m::mock('alias:Swow\Coroutine');
         $coroutineMock->shouldReceive('run')->andReturnUsing(function ($callback) use ($coroutineMock) {
             $callback();
+
             return $coroutineMock;
         });
         // exception
@@ -167,6 +170,7 @@ class SwowEventTest extends TestCase
         $coroutineMock = m::mock('alias:Swow\Coroutine');
         $coroutineMock->shouldReceive('run')->andReturnUsing(function ($callback) use ($coroutineMock) {
             $callback();
+
             return $coroutineMock;
         });
         // 非可读流
@@ -197,7 +201,8 @@ class SwowEventTest extends TestCase
         $this->assertTrue($result);
         // mock 协程存活
         $stream = fopen('php://memory', 'r+');
-        $swowEvent->add($stream, EventInterface::EV_READ, function () {});
+        $swowEvent->add($stream, EventInterface::EV_READ, function () {
+        });
         $coroutineMock->shouldReceive('isExecuting')->andReturn(true);
         $coroutineMock->shouldReceive('kill')->andReturn(true);
         $result = $swowEvent->del($stream, EventInterface::EV_READ);
@@ -216,6 +221,7 @@ class SwowEventTest extends TestCase
         $coroutineMock = m::mock('alias:Swow\Coroutine');
         $coroutineMock->shouldReceive('run')->andReturnUsing(function ($callback) use ($coroutineMock) {
             $callback();
+
             return $coroutineMock;
         });
         // exception
@@ -234,6 +240,7 @@ class SwowEventTest extends TestCase
         $coroutineMock = m::mock('alias:Swow\Coroutine');
         $coroutineMock->shouldReceive('run')->andReturnUsing(function ($callback) use ($coroutineMock) {
             $callback();
+
             return $coroutineMock;
         });
         // 非可写流
@@ -264,7 +271,8 @@ class SwowEventTest extends TestCase
         $this->assertTrue($result);
         // mock 协程存活
         $stream = fopen('php://memory', 'w+');
-        $swowEvent->add($stream, EventInterface::EV_WRITE, function () {});
+        $swowEvent->add($stream, EventInterface::EV_WRITE, function () {
+        });
         $coroutineMock->shouldReceive('isExecuting')->andReturn(true);
         $coroutineMock->shouldReceive('kill')->andReturn(true);
         $result = $swowEvent->del($stream, EventInterface::EV_WRITE);
@@ -279,9 +287,11 @@ class SwowEventTest extends TestCase
     public function testUnknownEvent()
     {
         $swowEvent = new SwowEvent();
-        $this->assertNull($swowEvent->add(1, 0xFFFFFFFF, function () {}));
+        $this->assertNull($swowEvent->add(1, 0xFFFFFFFF, function () {
+        }));
 
-        $this->assertNull($swowEvent->del(1, 0xFFFFFFFF, function () {}));
+        $this->assertNull($swowEvent->del(1, 0xFFFFFFFF, function () {
+        }));
     }
 
     public function testLoop()

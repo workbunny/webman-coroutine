@@ -11,6 +11,7 @@ function set_config(string $key, mixed $value)
 function config(?string $key = null, $default = null)
 {
     global $configData;
+
     return $key === null ? ($configData ?: $default) : ($configData[$key] ?? $default);
 }
 
@@ -26,5 +27,6 @@ function stream_poll_one($fd, $int)
     if ($streamPollOneReturn === -1) {
         throw new Exception('测试异常');
     }
+
     return $streamPollOneReturn ?: 0;
 }

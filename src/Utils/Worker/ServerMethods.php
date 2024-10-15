@@ -197,7 +197,7 @@ trait ServerMethods
                 $waitGroup = new WaitGroup();
                 // 协程创建
                 $waitGroup->add();
-                static::$_connectionCoroutineCount[$connectionId] ++;
+                static::$_connectionCoroutineCount[$connectionId]++;
                 new Coroutine(function () use (&$res, $waitGroup, $params, $connectionId) {
                     try {
                         $res = call_user_func($this->getParentOnMessage(), ...$params);

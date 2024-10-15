@@ -10,7 +10,6 @@ use Workbunny\WebmanCoroutine\Handlers\SwooleWorkerman5Handler as SwooleHandler;
 
 class SwooleWorkerman5HandlerTest extends SwooleHandlerTest
 {
-
     public function testIsAvailable()
     {
         $this->markTestSkipped('Skipped. ');

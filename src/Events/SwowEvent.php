@@ -56,14 +56,14 @@ class SwowEvent implements EventInterface
         switch ($flag) {
             case EventInterface::EV_SIGNAL:
                 if (!isset($this->_signals[$fd])) {
-                    $this->_signals[$fd] = Coroutine::run(function () use ($fd, $func, $args): void
-                    {
+                    $this->_signals[$fd] = Coroutine::run(function () use ($fd, $func, $args): void {
                         try {
                             Signal::wait($fd);
                             \call_user_func($func, $fd, ...$args);
                         }
                         // @codeCoverageIgnoreStart
-                        catch (SignalException) {}
+                        catch (SignalException) {
+                        }
                         // @codeCoverageIgnoreEnd
                     });
 
@@ -74,8 +74,7 @@ class SwowEvent implements EventInterface
             case EventInterface::EV_TIMER:
             case EventInterface::EV_TIMER_ONCE:
                 $timerId = $this->_timerId++;
-                $this->_timer[$timerId] = Coroutine::run(function () use ($timerId, $fd, $flag, $func, $args): void
-                {
+                $this->_timer[$timerId] = Coroutine::run(function () use ($timerId, $fd, $flag, $func, $args): void {
                     while (1) {
                         usleep((int) ($fd * 1000 * 1000));
                         \call_user_func($func, ...$args);

@@ -29,7 +29,6 @@ class RevoltHandlerTest extends TestCase
     }
 
     /**
-     *
      * @return void
      */
     public function testWaitFor()
@@ -78,7 +77,6 @@ class RevoltHandlerTest extends TestCase
     }
 
     /**
-     *
      * @return void
      */
     public function testSleep()
@@ -96,9 +94,9 @@ class RevoltHandlerTest extends TestCase
             $closure();
         });
 
-        RevoltHandler::sleep( 1);
-        RevoltHandler::sleep( 0.00099);
-        RevoltHandler::sleep( 0);
+        RevoltHandler::sleep(1);
+        RevoltHandler::sleep(0.00099);
+        RevoltHandler::sleep(0);
         $this->assertTrue(true);
     }
 }

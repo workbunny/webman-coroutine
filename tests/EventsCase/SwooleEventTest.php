@@ -133,6 +133,7 @@ class SwooleEventTest extends TestCase
             $this->assertTrue(is_callable($readCallback));
             $this->assertTrue(is_int($event));
             $this->assertNull($writeCallback);
+
             return true;
         });
         $eventMock->shouldReceive('isset')->andReturn(false);
@@ -162,6 +163,7 @@ class SwooleEventTest extends TestCase
             $this->assertTrue(is_callable($writeCallback));
             $this->assertTrue(is_int($event));
             $this->assertNull($readCallback);
+
             return true;
         });
         $eventMock->shouldReceive('isset')->andReturn(false);

@@ -11,7 +11,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     protected function tearDown(): void
     {
         parent::tearDown();
-        /**
+        /*
          * @see DefaultHandler::$debug
          */
         DefaultHandler::$debug = true;
@@ -22,7 +22,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
      */
     public static function tearDownAfterClass(): void
     {
-        /**
+        /*
          * @see DefaultHandler::$debug
          */
         DefaultHandler::$debug = true;

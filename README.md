@@ -38,7 +38,7 @@
   - 协程等待：[Utils/WaitGroup](https://github.com/workbunny/webman-coroutine/tree/main/src/Utils/WaitGroup)
   - 协程：[Utils/Coroutine](https://github.com/workbunny/webman-coroutine/tree/main/src/Utils/Coroutine)
   - 协程化Worker：[Utils/Worker](https://github.com/workbunny/webman-coroutine/tree/main/src/Utils/Worker)
-  - 对象池：[Utils/Pool](https://github.com/workbunny/webman-coroutine/tree/main/src/Utils/Pool) `测试中`
+  - 对象池：[Utils/Pool](https://github.com/workbunny/webman-coroutine/tree/main/src/Utils/Pool)
 
 ### 愿景
 

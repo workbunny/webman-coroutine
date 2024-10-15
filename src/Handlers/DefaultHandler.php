@@ -14,7 +14,6 @@ use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
  */
 class DefaultHandler implements HandlerInterface
 {
-
     /**
      * 测试用，为保证覆盖生成时不会无限等待
      *

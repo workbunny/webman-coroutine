@@ -158,9 +158,8 @@ class SwooleEvent implements EventInterface
             case self::EV_READ:
                 if (\is_resource($fd)) {
                     $key = (int) $fd;
-                    if (Event::isset($fd, SWOOLE_EVENT_READ)){
+                    if (Event::isset($fd, SWOOLE_EVENT_READ)) {
                         if (Event::del($fd)) {
-
                             return false;
                         }
                     }
@@ -173,9 +172,8 @@ class SwooleEvent implements EventInterface
             case self::EV_WRITE:
                 if (\is_resource($fd)) {
                     $key = (int) $fd;
-                    if (Event::isset($fd, SWOOLE_EVENT_WRITE)){
+                    if (Event::isset($fd, SWOOLE_EVENT_WRITE)) {
                         if (Event::del($fd)) {
-
                             return false;
                         }
                     }

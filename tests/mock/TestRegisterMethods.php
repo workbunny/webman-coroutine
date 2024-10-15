@@ -22,4 +22,3 @@ class TestRegisterMethods
         return true;
     }
 }
-

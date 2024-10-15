@@ -9,8 +9,10 @@ namespace Workbunny\WebmanCoroutine\Utils\Pool;
 
 use WeakReference;
 use Workbunny\WebmanCoroutine\Exceptions\PoolException;
-use Workerman\Worker;
+
 use function Workbunny\WebmanCoroutine\wait_for;
+
+use Workerman\Worker;
 
 class Pool
 {
@@ -78,6 +80,7 @@ class Pool
         foreach (range(1, $count) as $i) {
             self::$pools[$name][$i] = new Pool($name, $i, $element, $clone);
         }
+
         return self::$pools[$name];
     }
 
@@ -95,12 +98,14 @@ class Pool
         if ($pools instanceof Pool) {
             $pools->setForce($force);
             unset(self::$pools[$name][$index]);
+
             return;
         }
         if (is_array($pools)) {
             foreach ($pools as $i => $p) {
                 $p->setForce($force);
                 unset(self::$pools[$name][$i]);
+
                 return;
             }
         }
@@ -116,6 +121,7 @@ class Pool
     public static function get(string $name, ?int $index): Pool|array|null
     {
         $pools = self::$pools[$name] ?? [];
+
         return $index !== null ? ($pools[$index] ?? null) : $pools;
     }
 
@@ -134,6 +140,7 @@ class Pool
                 return $pool;
             }
         }
+
         return null;
     }
 
@@ -150,10 +157,12 @@ class Pool
         $pool = null;
         wait_for(function () use (&$pool, $name) {
             $pool = self::idle($name);
+
             return $pool !== null;
         }, $timeout);
         try {
             $pool->setIdle(false);
+
             return call_user_func($closure, $pool);
         } finally {
             $pool->setIdle(true);
@@ -184,6 +193,7 @@ class Pool
                 $copy[$key] = $value;
             }
         }
+
         return $copy;
     }
 
@@ -200,7 +210,7 @@ class Pool
         if (static::get($name, $index)) {
             throw new PoolException("Pool $name#$index already exists. ", -2);
         }
-        $this->_name  = $name;
+        $this->_name = $name;
         $this->_index = $index;
         $this->_clone = $clone;
         $this->setForce(false);
@@ -333,5 +343,4 @@ class Pool
             }
         }
     }
-
 }

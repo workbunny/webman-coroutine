@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace Workbunny\WebmanCoroutine\Handlers;
 
 use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
+
 use function Workbunny\WebmanCoroutine\package_installed;
 
 /**

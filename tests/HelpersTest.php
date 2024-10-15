@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Workbunny\Tests;
 
 use Workbunny\Tests\mock\TestHandler;
+
+use function Workbunny\WebmanCoroutine\event_loop;
+
 use Workbunny\WebmanCoroutine\Factory;
 
 use function Workbunny\WebmanCoroutine\is_coroutine_env;
 use function Workbunny\WebmanCoroutine\package_installed;
 use function Workbunny\WebmanCoroutine\wait_for;
-use function Workbunny\WebmanCoroutine\event_loop;
 
 /**
  * @runTestsInSeparateProcesses
