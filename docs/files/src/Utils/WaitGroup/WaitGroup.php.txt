@@ -41,7 +41,7 @@ class WaitGroup
         Factory::WORKBUNNY_SWOOLE   => SwooleWaitGroup::class,
         Factory::REVOLT_FIBER       => RevoltWaitGroup::class,
         Factory::RIPPLE_FIBER       => RippleWaitGroup::class,
-        Factory::RIPPLE_FIBER_5     => RippleWaitGroup::class
+        Factory::RIPPLE_FIBER_5     => RippleWaitGroup::class,
     ];
 
     /**
@@ -75,6 +75,7 @@ class WaitGroup
     /**
      * 代理调用WaitGroupInterface方法
      *
+     * @codeCoverageIgnore 系统魔术方法，忽略覆盖
      * @param string $name
      * @param array $arguments
      * @return mixed

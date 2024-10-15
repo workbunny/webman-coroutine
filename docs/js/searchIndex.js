@@ -121,6 +121,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Workbunny-WebmanCoroutine-Events-SwowEvent.html#method_getTimerCount"
         },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Events\\SwowEvent\u003A\u003A\u0024debug",
+            "name": "debug",
+            "summary": "",
+            "url": "classes/Workbunny-WebmanCoroutine-Events-SwowEvent.html#property_debug"
+        },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Exceptions\\EventLoopException",
             "name": "EventLoopException",
             "summary": "\u4E8B\u4EF6\u5FAA\u73AF\u5F02\u5E38",
@@ -216,10 +221,10 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Workbunny-WebmanCoroutine-Factory.html#constant_WORKBUNNY_SWOOLE"
         },                {
-            "fqsen": "\\Workbunny\\WebmanCoroutine\\Factory\u003A\u003ARIPPLE_FIBER",
-            "name": "RIPPLE_FIBER",
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Factory\u003A\u003ARIPPLE_FIBER_4",
+            "name": "RIPPLE_FIBER_4",
             "summary": "",
-            "url": "classes/Workbunny-WebmanCoroutine-Factory.html#constant_RIPPLE_FIBER"
+            "url": "classes/Workbunny-WebmanCoroutine-Factory.html#constant_RIPPLE_FIBER_4"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Factory\u003A\u003ARIPPLE_FIBER_5",
             "name": "RIPPLE_FIBER_5",
@@ -235,6 +240,11 @@ Search.appendIndex(
             "name": "WORKERMAN_DEFAULT",
             "summary": "",
             "url": "classes/Workbunny-WebmanCoroutine-Factory.html#constant_WORKERMAN_DEFAULT"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Factory\u003A\u003ARIPPLE_FIBER",
+            "name": "RIPPLE_FIBER",
+            "summary": "",
+            "url": "classes/Workbunny-WebmanCoroutine-Factory.html#constant_RIPPLE_FIBER"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\DefaultHandler",
             "name": "DefaultHandler",
@@ -255,6 +265,11 @@ Search.appendIndex(
             "name": "waitFor",
             "summary": "\u7B49\u5F85\u76F4\u5230\u56DE\u8C03\u8FD4\u56DEtrue",
             "url": "classes/Workbunny-WebmanCoroutine-Handlers-DefaultHandler.html#method_waitFor"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\DefaultHandler\u003A\u003A\u0024debug",
+            "name": "debug",
+            "summary": "\u6D4B\u8BD5\u7528\uFF0C\u4E3A\u4FDD\u8BC1\u8986\u76D6\u751F\u6210\u65F6\u4E0D\u4F1A\u65E0\u9650\u7B49\u5F85",
+            "url": "classes/Workbunny-WebmanCoroutine-Handlers-DefaultHandler.html#property_debug"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\HandlerInterface",
             "name": "HandlerInterface",
@@ -1310,11 +1325,6 @@ Search.appendIndex(
             "name": "setConnectionCoroutine",
             "summary": "\u8BBE\u7F6E\u8FDE\u63A5\u521B\u5EFA\/\u5173\u95ED\u534F\u7A0B\u5316",
             "url": "classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_setConnectionCoroutine"
-        },                {
-            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Worker\\ServerMethods\u003A\u003AsetConnectionOnMessageWait\u0028\u0029",
-            "name": "setConnectionOnMessageWait",
-            "summary": "\u8BBE\u7F6E\u8FDE\u63A5on\u0020message\u662F\u5426\u7B49\u5F85",
-            "url": "classes/Workbunny-WebmanCoroutine-Utils-Worker-ServerMethods.html#method_setConnectionOnMessageWait"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Worker\\ServerMethods\u003A\u003A__init__serverMethods\u0028\u0029",
             "name": "__init__serverMethods",

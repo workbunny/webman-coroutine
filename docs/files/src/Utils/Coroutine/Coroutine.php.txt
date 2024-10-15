@@ -77,6 +77,7 @@ class Coroutine
     /**
      * 代理调用WaitGroupInterface方法
      *
+     * @codeCoverageIgnore 系统魔术调用，不需要覆盖
      * @param string $name
      * @param array $arguments
      * @return mixed

@@ -20,8 +20,8 @@ trait RegisterMethods
      */
     public static function register(string $key, mixed $value): ?bool
     {
-        if (!self::$_handlers[$key] ?? null) {
-            if ($value = self::registerVerify($value)) {
+        if (!(self::$_handlers[$key] ?? null)) {
+            if ($value = static::registerVerify($value)) {
                 self::$_handlers[$key] = $value;
 
                 return true;
@@ -77,6 +77,6 @@ trait RegisterMethods
      */
     public static function getHandler(null|string $key): mixed
     {
-        return $key === null ? self::$_handlers : self::$_handlers[$key] ?? null;
+        return $key === null ? self::$_handlers : (self::$_handlers[$key] ?? null);
     }
 }

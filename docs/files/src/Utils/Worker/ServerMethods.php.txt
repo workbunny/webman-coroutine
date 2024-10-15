@@ -38,13 +38,6 @@ trait ServerMethods
     protected bool $_connectionCoroutine = false;
 
     /**
-     * 连接请求响应等待
-     *
-     * @var bool
-     */
-    protected bool $_connectionOnMessageWait = true;
-
-    /**
      * 父类的onConnect
      *
      * @var callable|null
@@ -130,16 +123,6 @@ trait ServerMethods
     }
 
     /**
-     * 设置连接on message是否等待
-     *
-     * @param bool $connectionOnMessageWait
-     */
-    public function setConnectionOnMessageWait(bool $connectionOnMessageWait): void
-    {
-        $this->_connectionOnMessageWait = $connectionOnMessageWait;
-    }
-
-    /**
      * 初始化服务
      *
      * @return void
@@ -151,30 +134,49 @@ trait ServerMethods
         // 代理onConnect
         if ($this->onConnect) {
             $this->_parentOnConnect = $this->onConnect;
-            $this->onConnect = function (ConnectionInterface $connection) use ($connectionCoroutine) {
+            $this->onConnect = function (...$params) use ($connectionCoroutine) {
                 // 协程化连接创建
                 if ($connectionCoroutine) {
-                    new Coroutine(function () use ($connection) {
-                        call_user_func($this->getParentOnConnect(), $connection);
+                    $wattGroup = new WaitGroup();
+                    $wattGroup->add();
+                    new Coroutine(function () use ($wattGroup, $params) {
+                        try {
+                            call_user_func($this->getParentOnConnect(), ...$params);
+                        } finally {
+                            $wattGroup->done();
+                        }
                     });
+                    $wattGroup->wait();
                 } else {
-                    call_user_func($this->getParentOnConnect(), $connection);
+                    call_user_func($this->getParentOnConnect(), ...$params);
+                }
+                if (is_object($connection = $params[0] ?? null)) {
+                    static::$_connectionCoroutineCount[spl_object_hash($connection)] = 0;
                 }
             };
         }
         // 代理onClose
         if ($this->onClose) {
             $this->_parentOnClose = $this->onClose;
-            $this->onClose = function (ConnectionInterface $connection) use ($connectionCoroutine) {
+            $this->onClose = function (...$params) use ($connectionCoroutine) {
                 // 协程化连接关闭
                 if ($connectionCoroutine) {
-                    new Coroutine(function () use ($connection) {
-                        call_user_func($this->getParentOnClose(), $connection);
+                    $wattGroup = new WaitGroup();
+                    $wattGroup->add();
+                    new Coroutine(function () use ($wattGroup, $params) {
+                        try {
+                            call_user_func($this->getParentOnClose(), ...$params);
+                        } finally {
+                            $wattGroup->done();
+                        }
                     });
+                    $wattGroup->wait();
                 } else {
-                    call_user_func($this->getParentOnClose(), $connection);
+                    call_user_func($this->getParentOnClose(), ...$params);
                 }
-                self::unsetConnectionCoroutineCount(spl_object_hash($connection), true);
+                if (is_object($connection = $params[0] ?? null)) {
+                    static::unsetConnectionCoroutineCount(spl_object_hash($connection), true);
+                }
             };
         }
         // 保证只调用一次
@@ -193,21 +195,18 @@ trait ServerMethods
                     });
                 }
                 $waitGroup = new WaitGroup();
-                $waitGroup->add();
                 // 协程创建
+                $waitGroup->add();
+                static::$_connectionCoroutineCount[$connectionId]++;
                 new Coroutine(function () use (&$res, $waitGroup, $params, $connectionId) {
                     try {
                         $res = call_user_func($this->getParentOnMessage(), ...$params);
                     } finally {
-                        self::$_connectionCoroutineCount[$connectionId]--;
-                        self::unsetConnectionCoroutineCount($connectionId);
+                        static::$_connectionCoroutineCount[$connectionId]--;
+                        static::unsetConnectionCoroutineCount($connectionId);
                         $waitGroup->done();
                     }
                 });
-                self::$_connectionCoroutineCount[$connectionId] =
-                    (isset(self::$_connectionCoroutineCount[$connectionId])
-                        ? self::$_connectionCoroutineCount[$connectionId] + 1
-                        : 1);
                 // 等待
                 $waitGroup->wait();
 

@@ -9,7 +9,7 @@ use Workerman\Worker;
 trait HandlerMethods
 {
     /**
-     * 为了测试可以mock
+     * @codeCoverageIgnore 为了测试可以mock
      *
      * @return string
      */

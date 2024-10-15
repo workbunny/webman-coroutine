@@ -9,6 +9,7 @@ namespace Workbunny\WebmanCoroutine;
 
 use Webman\App;
 use Webman\Http\Request;
+use Workbunny\WebmanCoroutine\Exceptions\WorkerException;
 use Workbunny\WebmanCoroutine\Handlers\HandlerInterface;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Coroutine;
 use Workbunny\WebmanCoroutine\Utils\WaitGroup\WaitGroup;
@@ -57,12 +58,16 @@ class CoroutineWebServer extends App
     /** @inheritdoc  */
     public function onWorkerStart($worker)
     {
-        if (!\config('plugin.workbunny.webman-coroutine.app.enable', false)) {
+        if (!config('plugin.workbunny.webman-coroutine.app.enable', false)) {
             return;
         }
         parent::onWorkerStart($worker);
         /** @var HandlerInterface $handler */
         $handler = Factory::getCurrentHandler();
+        if (!$handler) {
+            $className = $worker::class;
+            throw new WorkerException("Please run Factory::init or set $className::\$EventLoopClass = event_loop(). ");
+        }
         $handler::initEnv();
     }
 
@@ -76,8 +81,8 @@ class CoroutineWebServer extends App
      */
     public function onWorkerStop($worker, ...$params)
     {
-        if (is_callable($call = [parent::class, 'onWorkerStop'])) {
-            call_user_func($call, $worker, ...$params);
+        if (method_exists(parent::class, 'onWorkerStop')) {
+            parent::onWorkerStop($worker, ...$params);
         }
     }
 
@@ -95,12 +100,13 @@ class CoroutineWebServer extends App
         if (!is_object($connection)) {
             return;
         }
-        if (is_callable($call = [parent::class, 'onConnect'])) {
+        if (method_exists(parent::class, 'onConnect')) {
             // 协程化创建连接
-            new Coroutine(function () use ($call, $connection, $params) {
-                call_user_func($call, $connection, ...$params);
+            new Coroutine(function () use ($connection, $params) {
+                parent::onConnect($connection, ...$params);
             });
         }
+        self::$_connectionCoroutineCount[spl_object_hash($connection)] = 0;
     }
 
     /**
@@ -117,10 +123,10 @@ class CoroutineWebServer extends App
         if (!is_object($connection)) {
             return;
         }
-        if (is_callable($call = [parent::class, 'onClose'])) {
+        if (method_exists(parent::class, 'onClose')) {
             // 协程化关闭连接
-            new Coroutine(function () use ($call, $connection, $params) {
-                call_user_func($call, $connection, ...$params);
+            new Coroutine(function () use ($connection, $params) {
+                parent::onClose($connection, ...$params);
             });
         }
         self::unsetConnectionCoroutineCount(spl_object_hash($connection), true);
@@ -143,7 +149,7 @@ class CoroutineWebServer extends App
         $params = func_get_args();
         $res = null;
         // 检测协程数
-        if (($consumerCount = \config('plugin.workbunny.webman-coroutine.app.consumer_count', 0)) > 0) {
+        if (($consumerCount = config('plugin.workbunny.webman-coroutine.app.consumer_count', 0)) > 0) {
             // 等待协程回收
             wait_for(function () use ($connectionId, $consumerCount) {
                 return self::getConnectionCoroutineCount($connectionId) <= $consumerCount;
@@ -152,24 +158,26 @@ class CoroutineWebServer extends App
 
         $waitGroup = new WaitGroup();
         $waitGroup->add();
+        // 计数 ++
+        self::$_connectionCoroutineCount[$connectionId] =
+            isset(self::$_connectionCoroutineCount[$connectionId])
+                ? (self::$_connectionCoroutineCount[$connectionId] + 1)
+                : 1;
         // 请求消费协程
         new Coroutine(function () use (&$res, $waitGroup, $params, $connectionId) {
             try {
                 $res = parent::onMessage(...$params);
             } finally {
-                // 计数 --
-                self::$_connectionCoroutineCount[$connectionId]--;
-                // 尝试回收
-                self::unsetConnectionCoroutineCount($connectionId);
+                if (isset(self::$_connectionCoroutineCount[$connectionId])) {
+                    // 计数 --
+                    self::$_connectionCoroutineCount[$connectionId]--;
+                    // 尝试回收
+                    self::unsetConnectionCoroutineCount($connectionId);
+                }
                 // wg完成
                 $waitGroup->done();
             }
         });
-        // 计数 ++
-        self::$_connectionCoroutineCount[$connectionId] =
-            (isset(self::$_connectionCoroutineCount[$connectionId])
-                ? self::$_connectionCoroutineCount[$connectionId] + 1
-                : 1);
         // 等待
         $waitGroup->wait();
 
