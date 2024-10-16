@@ -50,6 +50,17 @@ class PoolTest extends TestCase
         return false;
     }
 
+    public function testPoolAppendException()
+    {
+        $element = new stdClass();
+        $element->property = 'value';
+        Pool::create($name = __METHOD__, 1, $element);
+        $index = 1;
+        $this->expectException(PoolException::class);
+        $this->expectExceptionMessage("Pool $name#$index already exists. ");
+        Pool::append(__METHOD__, $index, $element);
+    }
+
     public function testCreatePoolWithStdClass()
     {
         $element = new stdClass();

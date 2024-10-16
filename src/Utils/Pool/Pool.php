@@ -22,6 +22,11 @@ class Pool
     protected static array $pools = [];
 
     /**
+     * @var bool[]
+     */
+    protected static array $poolIsClone = [];
+
+    /**
      * 名称
      *
      * @var string
@@ -64,7 +69,7 @@ class Pool
     protected bool $_force;
 
     /**
-     * 创建
+     * 初始化
      *
      * @param string $name 区域
      * @param int $count 区域索引
@@ -74,14 +79,55 @@ class Pool
      */
     public static function create(string $name, int $count, mixed $element, bool $clone = true): array
     {
-        if (static::get($name, null)) {
+        // 占位
+        static::init($name, $clone);
+        // 追加
+        foreach (range(1, $count) as $i) {
+            static::append($name, $i, $element);
+        }
+        return self::$pools[$name];
+    }
+
+    /**
+     * 区域/区域对象是否存在
+     *
+     * @param string $name
+     * @param int|null $index
+     * @return bool
+     */
+    public static function exists(string $name, ?int $index): bool
+    {
+        return $index === null ? isset(self::$pools[$name]) : isset(self::$pools[$name][$index]);
+    }
+
+    /**
+     * 初始化占位
+     *
+     * @param string $name
+     * @param bool $clone
+     * @return void
+     */
+    public static function init(string $name, bool $clone = true): void
+    {
+        if (static::exists($name, null)) {
             throw new PoolException("Pools $name already exists. ", -1);
         }
-        foreach (range(1, $count) as $i) {
-            self::$pools[$name][$i] = new Pool($name, $i, $element, $clone);
-        }
+        self::$pools[$name] = [];
+        self::$poolIsClone[$name] = $clone;
+    }
 
-        return self::$pools[$name];
+    /**
+     * 追加
+     *
+     * @param string $name
+     * @param int $index
+     * @param mixed $element
+     * @return void
+     */
+    public static function append(string $name, int $index, mixed $element): void
+    {
+        $clone = self::$poolIsClone[$name] ?? false;
+        self::$pools[$name][$index] = new Pool($name, $index, $element, $clone);
     }
 
     /**
