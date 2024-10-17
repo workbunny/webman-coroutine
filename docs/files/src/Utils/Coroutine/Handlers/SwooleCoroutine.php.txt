@@ -33,6 +33,10 @@ class SwooleCoroutine implements CoroutineInterface
                 $this->_id = $id;
                 break;
             }
+            // 保证协程切换
+            // @codeCoverageIgnoreStart
+            sleep(0);
+            // @codeCoverageIgnoreEnd
         }
     }
 

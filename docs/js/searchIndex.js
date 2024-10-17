@@ -928,8 +928,23 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Pool\u003A\u003Acreate\u0028\u0029",
             "name": "create",
-            "summary": "\u521B\u5EFA",
+            "summary": "\u521D\u59CB\u5316",
             "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_create"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Pool\u003A\u003Aexists\u0028\u0029",
+            "name": "exists",
+            "summary": "\u533A\u57DF\/\u533A\u57DF\u5BF9\u8C61\u662F\u5426\u5B58\u5728",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_exists"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Pool\u003A\u003Ainit\u0028\u0029",
+            "name": "init",
+            "summary": "\u521D\u59CB\u5316\u5360\u4F4D",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_init"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Pool\u003A\u003Aappend\u0028\u0029",
+            "name": "append",
+            "summary": "\u8FFD\u52A0",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_append"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Pool\u003A\u003Adestroy\u0028\u0029",
             "name": "destroy",

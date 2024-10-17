@@ -170,11 +170,18 @@
 <dd>析构等待销毁</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_append">append()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>追加</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_create">create()</a>
     <span>
                                 &nbsp;: array&lt;string|int, <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html"><abbr title="\Workbunny\WebmanCoroutine\Utils\Pool\Pool">Pool</abbr></a>&gt;    </span>
 </dt>
-<dd>创建</dd>
+<dd>初始化</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_destroy">destroy()</a>
@@ -182,6 +189,13 @@
                                 &nbsp;: void    </span>
 </dt>
 <dd>回收</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_exists">exists()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>区域/区域对象是否存在</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_get">get()</a>
@@ -217,6 +231,13 @@
                                 &nbsp;: <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html"><abbr title="\Workbunny\WebmanCoroutine\Utils\Pool\Pool">Pool</abbr></a>|null    </span>
 </dt>
 <dd>获取空闲池</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_init">init()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>初始化占位</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_isClone">isClone()</a>
@@ -295,9 +316,9 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Pool/Pool.php"><a href="files/src-utils-pool-pool.html"><abbr title="src/Utils/Pool/Pool.php">Pool.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">208</span>
+    <span class="phpdocumentor-element-found-in__line">254</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.208" class="phpdocumentor-element-found-in__source" data-line="208" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.254" class="phpdocumentor-element-found-in__source" data-line="254" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">构造</p>
@@ -370,9 +391,9 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Pool/Pool.php"><a href="files/src-utils-pool-pool.html"><abbr title="src/Utils/Pool/Pool.php">Pool.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">237</span>
+    <span class="phpdocumentor-element-found-in__line">283</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.237" class="phpdocumentor-element-found-in__source" data-line="237" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.283" class="phpdocumentor-element-found-in__source" data-line="283" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">析构等待销毁</p>
@@ -398,6 +419,66 @@
             -public
                                     -static                    "
 >
+    <h4 class="phpdocumentor-element__name" id="method_append">
+        append()
+        <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_append" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Pool/Pool.php"><a href="files/src-utils-pool-pool.html"><abbr title="src/Utils/Pool/Pool.php">Pool.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">127</span>
+
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.127" class="phpdocumentor-element-found-in__source" data-line="127" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
+    </aside>
+
+        <p class="phpdocumentor-summary">追加</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">append</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$name</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$index</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$element</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$name</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$index</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$element</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+    
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                    -static                    "
+>
     <h4 class="phpdocumentor-element__name" id="method_create">
         create()
         <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_create" class="headerlink"><i class="fas fa-link"></i></a>
@@ -406,12 +487,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Pool/Pool.php"><a href="files/src-utils-pool-pool.html"><abbr title="src/Utils/Pool/Pool.php">Pool.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">75</span>
+    <span class="phpdocumentor-element-found-in__line">80</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.75" class="phpdocumentor-element-found-in__source" data-line="75" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.80" class="phpdocumentor-element-found-in__source" data-line="80" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
     </aside>
 
-        <p class="phpdocumentor-summary">创建</p>
+        <p class="phpdocumentor-summary">初始化</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -485,9 +566,9 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Pool/Pool.php"><a href="files/src-utils-pool-pool.html"><abbr title="src/Utils/Pool/Pool.php">Pool.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">95</span>
+    <span class="phpdocumentor-element-found-in__line">141</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.95" class="phpdocumentor-element-found-in__source" data-line="95" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.141" class="phpdocumentor-element-found-in__source" data-line="141" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">回收</p>
@@ -537,6 +618,63 @@
             -public
                                     -static                    "
 >
+    <h4 class="phpdocumentor-element__name" id="method_exists">
+        exists()
+        <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_exists" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Pool/Pool.php"><a href="files/src-utils-pool-pool.html"><abbr title="src/Utils/Pool/Pool.php">Pool.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">98</span>
+
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.98" class="phpdocumentor-element-found-in__source" data-line="98" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
+    </aside>
+
+        <p class="phpdocumentor-summary">区域/区域对象是否存在</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">exists</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$name</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$index</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$name</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$index</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int|null</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                    -static                    "
+>
     <h4 class="phpdocumentor-element__name" id="method_get">
         get()
         <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_get" class="headerlink"><i class="fas fa-link"></i></a>
@@ -545,9 +683,9 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Pool/Pool.php"><a href="files/src-utils-pool-pool.html"><abbr title="src/Utils/Pool/Pool.php">Pool.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">121</span>
+    <span class="phpdocumentor-element-found-in__line">167</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.121" class="phpdocumentor-element-found-in__source" data-line="121" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.167" class="phpdocumentor-element-found-in__source" data-line="167" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">获取</p>
@@ -602,9 +740,9 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Pool/Pool.php"><a href="files/src-utils-pool-pool.html"><abbr title="src/Utils/Pool/Pool.php">Pool.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">269</span>
+    <span class="phpdocumentor-element-found-in__line">315</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.269" class="phpdocumentor-element-found-in__source" data-line="269" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.315" class="phpdocumentor-element-found-in__source" data-line="315" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">获取元素</p>
@@ -642,9 +780,9 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Pool/Pool.php"><a href="files/src-utils-pool-pool.html"><abbr title="src/Utils/Pool/Pool.php">Pool.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">259</span>
+    <span class="phpdocumentor-element-found-in__line">305</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.259" class="phpdocumentor-element-found-in__source" data-line="259" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.305" class="phpdocumentor-element-found-in__source" data-line="305" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">所在区域的索引</p>
@@ -682,9 +820,9 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Pool/Pool.php"><a href="files/src-utils-pool-pool.html"><abbr title="src/Utils/Pool/Pool.php">Pool.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">249</span>
+    <span class="phpdocumentor-element-found-in__line">295</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.249" class="phpdocumentor-element-found-in__source" data-line="249" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.295" class="phpdocumentor-element-found-in__source" data-line="295" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">获取所在区域名称</p>
@@ -722,9 +860,9 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Pool/Pool.php"><a href="files/src-utils-pool-pool.html"><abbr title="src/Utils/Pool/Pool.php">Pool.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">134</span>
+    <span class="phpdocumentor-element-found-in__line">180</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.134" class="phpdocumentor-element-found-in__source" data-line="134" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.180" class="phpdocumentor-element-found-in__source" data-line="180" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">获取空闲池</p>
@@ -762,6 +900,59 @@
         class="phpdocumentor-element
             -method
             -public
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_init">
+        init()
+        <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_init" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Pool/Pool.php"><a href="files/src-utils-pool-pool.html"><abbr title="src/Utils/Pool/Pool.php">Pool.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">110</span>
+
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.110" class="phpdocumentor-element-found-in__source" data-line="110" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
+    </aside>
+
+        <p class="phpdocumentor-summary">初始化占位</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">init</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$name</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$clone</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">true</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$name</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$clone</span>
+                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">true</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+    
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
                                                         "
 >
     <h4 class="phpdocumentor-element__name" id="method_isClone">
@@ -772,9 +963,9 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Pool/Pool.php"><a href="files/src-utils-pool-pool.html"><abbr title="src/Utils/Pool/Pool.php">Pool.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">279</span>
+    <span class="phpdocumentor-element-found-in__line">325</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.279" class="phpdocumentor-element-found-in__source" data-line="279" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.325" class="phpdocumentor-element-found-in__source" data-line="325" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">是否是深拷贝</p>
@@ -812,9 +1003,9 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Pool/Pool.php"><a href="files/src-utils-pool-pool.html"><abbr title="src/Utils/Pool/Pool.php">Pool.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">310</span>
+    <span class="phpdocumentor-element-found-in__line">356</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.310" class="phpdocumentor-element-found-in__source" data-line="310" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.356" class="phpdocumentor-element-found-in__source" data-line="356" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">是否强制回收</p>
@@ -852,9 +1043,9 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Pool/Pool.php"><a href="files/src-utils-pool-pool.html"><abbr title="src/Utils/Pool/Pool.php">Pool.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">289</span>
+    <span class="phpdocumentor-element-found-in__line">335</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.289" class="phpdocumentor-element-found-in__source" data-line="289" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.335" class="phpdocumentor-element-found-in__source" data-line="335" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">是否闲置</p>
@@ -892,9 +1083,9 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Pool/Pool.php"><a href="files/src-utils-pool-pool.html"><abbr title="src/Utils/Pool/Pool.php">Pool.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">321</span>
+    <span class="phpdocumentor-element-found-in__line">367</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.321" class="phpdocumentor-element-found-in__source" data-line="321" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.367" class="phpdocumentor-element-found-in__source" data-line="367" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">设置强制回收</p>
@@ -938,9 +1129,9 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Pool/Pool.php"><a href="files/src-utils-pool-pool.html"><abbr title="src/Utils/Pool/Pool.php">Pool.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">300</span>
+    <span class="phpdocumentor-element-found-in__line">346</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.300" class="phpdocumentor-element-found-in__source" data-line="300" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.346" class="phpdocumentor-element-found-in__source" data-line="346" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">设置状态</p>
@@ -984,9 +1175,9 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Pool/Pool.php"><a href="files/src-utils-pool-pool.html"><abbr title="src/Utils/Pool/Pool.php">Pool.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">332</span>
+    <span class="phpdocumentor-element-found-in__line">378</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.332" class="phpdocumentor-element-found-in__source" data-line="332" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.378" class="phpdocumentor-element-found-in__source" data-line="378" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">等待至闲置</p>
@@ -1032,9 +1223,9 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Pool/Pool.php"><a href="files/src-utils-pool-pool.html"><abbr title="src/Utils/Pool/Pool.php">Pool.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">155</span>
+    <span class="phpdocumentor-element-found-in__line">201</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.155" class="phpdocumentor-element-found-in__source" data-line="155" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#source-view.201" class="phpdocumentor-element-found-in__source" data-line="201" data-modal="source-view" data-src="files/src/Utils/Pool/Pool.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">等待空闲并执行</p>
@@ -1199,13 +1390,16 @@
                 <ul class="phpdocumentor-list -clean">
                                             <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method___construct">__construct()</a></li>
                                             <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method___destruct">__destruct()</a></li>
+                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_append">append()</a></li>
                                             <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_create">create()</a></li>
                                             <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_destroy">destroy()</a></li>
+                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_exists">exists()</a></li>
                                             <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_get">get()</a></li>
                                             <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_getElement">getElement()</a></li>
                                             <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_getIndex">getIndex()</a></li>
                                             <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_getName">getName()</a></li>
                                             <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_idle">idle()</a></li>
+                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_init">init()</a></li>
                                             <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_isClone">isClone()</a></li>
                                             <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_isForce">isForce()</a></li>
                                             <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Pool.html#method_isIdle">isIdle()</a></li>
