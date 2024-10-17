@@ -17,12 +17,6 @@ use Workerman\Events\EventInterface;
 
 class SwooleEvent implements EventInterface
 {
-    /** @var int[] All listeners for read event. */
-    protected array $_reads = [];
-
-    /** @var int[] All listeners for write event. */
-    protected array $_writes = [];
-
     /** @var callable[] Event listeners of signal. */
     protected array $_signals = [];
 
@@ -185,7 +179,6 @@ class SwooleEvent implements EventInterface
         }
         // 退出event loop
         Event::exit();
-        $this->_reads = $this->_writes = [];
     }
 
     /** @inheritdoc  */
