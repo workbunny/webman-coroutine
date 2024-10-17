@@ -103,8 +103,8 @@ composer require workbunny/webman-coroutine
 |  -  | [Installation and Configuration](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/install.md)  |
 |  -  |    [`workerman` Environment](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/workerman.md)    |
 |  -  |        [`webman` Framework](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/webman.md)        |
-|  -  |      [Explanation of `Utils`](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/utils.md)       |
-|  -  |              [Custom Extensions](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/custom.md)               |
+|  -  |     [Explanation of `Utils`](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/utils-en.md)     |
+|  -  |        [Custom Extensions](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/custom.md)         |
 
 ## Participate in Development
 
