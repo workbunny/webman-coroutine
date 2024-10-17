@@ -94,37 +94,21 @@ class SwooleEvent implements EventInterface
 
                 return $timerId;
             case EventInterface::EV_READ:
-                if (\is_resource($fd)) {
-                    if (
-                        ($this->_reads[$key = (int) $fd] ?? null) or
-                        Event::isset($fd, SWOOLE_EVENT_READ)
-                    ) {
-                        $this->del($fd, EventInterface::EV_READ);
-                    }
-                    if ($res = Event::add($fd, $func, null, SWOOLE_EVENT_READ)) {
-                        $this->_reads[$key] = 1;
-                    }
-
-                    return (bool) $res;
+                if (!\is_resource($fd)) {
+                    return false;
                 }
 
-                return false;
-            case self::EV_WRITE:
-                if (\is_resource($fd)) {
-                    if (
-                        ($this->_writes[$key = (int) $fd] ?? null) or
-                        Event::isset($fd, SWOOLE_EVENT_WRITE)
-                    ) {
-                        $this->del($fd, EventInterface::EV_WRITE);
-                    }
-                    if ($res = Event::add($fd, null, $func, SWOOLE_EVENT_WRITE)) {
-                        $this->_writes[$key] = 1;
-                    }
-
-                    return (bool) $res;
+                return Event::isset($fd, SWOOLE_EVENT_READ | SWOOLE_EVENT_WRITE)
+                    ? Event::set($fd, $func, null, SWOOLE_EVENT_READ | SWOOLE_EVENT_WRITE)
+                    : Event::add($fd, $func, null, SWOOLE_EVENT_READ);
+            case EventInterface::EV_WRITE:
+                if (!\is_resource($fd)) {
+                    return false;
                 }
 
-                return false;
+                return Event::isset($fd, SWOOLE_EVENT_READ | SWOOLE_EVENT_WRITE)
+                    ? Event::set($fd, null, $func, SWOOLE_EVENT_READ | SWOOLE_EVENT_WRITE)
+                    : Event::add($fd, null, $func, SWOOLE_EVENT_WRITE);
             default:
                 return null;
         }
@@ -134,7 +118,7 @@ class SwooleEvent implements EventInterface
     public function del($fd, $flag)
     {
         switch ($flag) {
-            case self::EV_SIGNAL:
+            case EventInterface::EV_SIGNAL:
                 if ($this->_signals[$fd] ?? null) {
                     if (Process::signal($fd, null)) {
                         unset($this->_signals[$fd]);
@@ -144,8 +128,8 @@ class SwooleEvent implements EventInterface
                 }
 
                 return false;
-            case self::EV_TIMER:
-            case self::EV_TIMER_ONCE:
+            case EventInterface::EV_TIMER:
+            case EventInterface::EV_TIMER_ONCE:
                 if ($id = $this->_timer[$fd] ?? null) {
                     if ($id === true or Timer::clear($id)) {
                         unset($this->_timer[$fd]);
@@ -155,34 +139,24 @@ class SwooleEvent implements EventInterface
                 }
 
                 return false;
-            case self::EV_READ:
-                if (\is_resource($fd)) {
-                    $key = (int) $fd;
-                    if (Event::isset($fd, SWOOLE_EVENT_READ)) {
-                        if (Event::del($fd)) {
-                            return false;
-                        }
-                    }
-                    unset($this->_reads[$key]);
-
-                    return true;
+            case EventInterface::EV_READ:
+                if (!\is_resource($fd)) {
+                    return false;
                 }
 
-                return false;
-            case self::EV_WRITE:
-                if (\is_resource($fd)) {
-                    $key = (int) $fd;
-                    if (Event::isset($fd, SWOOLE_EVENT_WRITE)) {
-                        if (Event::del($fd)) {
-                            return false;
-                        }
-                    }
-                    unset($this->_writes[$key]);
-
-                    return true;
+                if (!Event::isset($fd, SWOOLE_EVENT_WRITE)) {
+                    return Event::del($fd);
+                }
+                return Event::set($fd, null, null, SWOOLE_EVENT_WRITE);
+            case EventInterface::EV_WRITE:
+                if (!\is_resource($fd)) {
+                    return false;
                 }
 
-                return false;
+                if (!Event::isset($fd, SWOOLE_EVENT_READ)) {
+                    return Event::del($fd);
+                }
+                return Event::set($fd, null, null, SWOOLE_EVENT_READ);
             default:
                 return null;
         }
