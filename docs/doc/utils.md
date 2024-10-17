@@ -291,7 +291,7 @@
   // 为mysql占位
   Pool::init('mysql', false);
   // 为普通对象占位
-  Pool::init('mysql', false);
+  Pool::init('normal-object', false);
   // ...其他
   
   // 此时Pool仅仅只是占位
