@@ -1,3 +1,5 @@
+#### 中文 | [English](README_en.md)
+
 <p align="center"><img width="260px" src="https://chaz6chez.cn/images/workbunny-logo.png" alt="workbunny"></p>
 
 **<p align="center">workbunny/webman-coroutine</p>**
@@ -27,13 +29,13 @@
 
 ### 目的
 
-- 提供 workerman/webman 多样的基础协程事件库，兼容支持`workerman 4.x`和`workerman 5.x`的协程驱动
+- 提供 `workerman`/`webman` 多样的基础协程事件库，兼容支持`workerman 4.x`和`workerman 5.x`的协程驱动
   - [revolt/PHP-fiber](https://github.com/revoltphp/event-loop)
   - [swow](https://github.com/swow/swow)
   - [swoole](https://github.com/swoole/swoole-src)
   - [ripple](https://github.com/cloudtay/ripple)
   
-- 提供 workerman/webman 统一的协程开发工具，兼容非协程环境
+- 提供 `workerman`/`webman` 统一的协程开发工具，兼容非协程环境
   - 协程通道：[Utils/Channel](https://github.com/workbunny/webman-coroutine/tree/main/src/Utils/Channel)
   - 协程等待：[Utils/WaitGroup](https://github.com/workbunny/webman-coroutine/tree/main/src/Utils/WaitGroup)
   - 协程：[Utils/Coroutine](https://github.com/workbunny/webman-coroutine/tree/main/src/Utils/Coroutine)
@@ -42,9 +44,9 @@
 
 ### 愿景
 
-1. 在 workerman/webman 开发环境下，提供一套简单的协程工具包，降低心智负担。
-2. 在 workerman/webman 开发环境下，尝试实现一套兼容协程与非协程开发的方案，让方案选择和方案逃离更简单，避免更多的焦虑。
-3. 在 workerman/webman 开发环境下，尽可能实现对官方组件的非侵入的协程化改造`(虽然很难，但也想试试)`。
+1. 在 `workerman`/`webman` 开发环境下，提供一套简单的协程工具包，降低认知负荷。
+2. 在 `workerman`/`webman` 开发环境下，尝试实现一套兼容协程与非协程开发的方案，让选择和摆脱方案更简单，避免更多的焦虑。
+3. 在 `workerman`/`webman` 开发环境下，尽可能实现对官方组件的无侵入式协程化改造`(虽然很难，但也想试试)`。
 4. 希望在代码的实现上能够给更多PHP开发带来一些帮助，甚至灵感。
 
 ## 安装
