@@ -222,7 +222,8 @@
   
   // 等待获取normal-object区域闲置的source对象，获取到时，执行回调
   // 由于拷贝，回调执行后不会修改原有source对象的id
-  Pool::waitForIdle('normal-object', function ($sourceObject) {
+  Pool::waitForIdle('normal-object', function (Pool $pool) {
+    $sourceObject = $pool->getElement();
     $sourceObject->id = 2;
   });
   // 输出 1
@@ -230,7 +231,8 @@
   
   // 获取区域索引为1的对象，等待闲置时执行回调
   $source1 = Pool::get('normal-object', 1);
-  $source1->wait(function ($sourceObject) {
+  $source1->wait(function (Pool $pool) {
+    $sourceObject = $pool->getElement();
     $sourceObject->id = 3;
   });
   // 输出 1
@@ -266,7 +268,8 @@
 
   // 等待获取normal-object区域闲置的source对象，获取到时，执行回调
   // 超时时间10秒，如果超时则抛出TimeoutException
-  Pool::waitForIdle('normal-object', function ($source) {
+  Pool::waitForIdle('normal-object', function (Pool $pool) {
+    $sourceObject = $pool->getElement();
     $source->id = 2;
   }, 10);
   
@@ -275,5 +278,46 @@
   > Tips:
   > - 可用于为资源对象的操作加锁，避免协程间的竞争状态
   > - `waitForIdle`在协程环境下当前线程非阻塞，非协程环境下当前线程阻塞，基建使用`wait_for()`函数实现
+
+- 占位初始化、动态池化
+
+  > 在`webman`框架的控制器使用的时候，存在会被多次调用，`Pool::create()`方法多次创建重复区域会抛出异常，那么我们可以如下使用
+  - 在`bootstrap.php`中占位初始化
+  ```php
+  use Workbunny\WebmanCoroutine\Utils\Pool\Pool;
+  
+  // 为redis占位
+  Pool::init('redis', false);
+  // 为mysql占位
+  Pool::init('mysql', false);
+  // 为普通对象占位
+  Pool::init('mysql', false);
+  // ...其他
+  
+  // 此时Pool仅仅只是占位
+  ```
+  - 然后在对应的逻辑区域追加对象，动态池化
+  ```php
+  use Workbunny\WebmanCoroutine\Utils\Pool\Pool;
+  
+  $pools = Pool::get('redis');
+  // 根据配置池大小判断是否需要追加，假设你存在这样的配置
+  if (count($pools) < config('redis.pool_size')) {
+    // 新建redis连接
+    $redis = new RedisManager();
+    // 追加一个redis连接对象，资源类型不用clone
+    Pool::append('redis', (int)array_key_last($pools) + 1, $redis, false);
+  }
+  
+  // 等待闲置redis
+  $res = Pool::waitForIdle('redis', function (Pool $pool) {
+    $redis = $pool->getElement();
+    return $redis->client()->set('key', 'value');
+  });
+  
+  // 其他逻辑
+  
+  // ...
+  ```
 
 - 更多使用，TODO
