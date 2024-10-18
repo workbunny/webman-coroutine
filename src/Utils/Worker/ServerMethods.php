@@ -7,6 +7,9 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Utils\Worker;
 
+use Workbunny\WebmanCoroutine\Exceptions\WorkerException;
+use Workbunny\WebmanCoroutine\Factory;
+use Workbunny\WebmanCoroutine\Handlers\HandlerInterface;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Coroutine;
 use Workbunny\WebmanCoroutine\Utils\WaitGroup\WaitGroup;
 
@@ -131,6 +134,20 @@ trait ServerMethods
     {
         // 确保协程化开关只被调用一次
         $connectionCoroutine = $this->_connectionCoroutine;
+        $parentOnWorkerStart = $this->onWorkerStart;
+        $this->onWorkerStart = function (...$params) use ($parentOnWorkerStart) {
+            if ($parentOnWorkerStart) {
+                call_user_func($parentOnWorkerStart, ...$params);
+            }
+            // 加载环境
+            /** @var HandlerInterface $handler */
+            $handler = Factory::getCurrentHandler();
+            if (!$handler) {
+                $className = $this::class;
+                throw new WorkerException("Please run Factory::init or set $className::\$EventLoopClass = event_loop(). ");
+            }
+            $handler::initEnv();
+        };
         // 代理onConnect
         if ($this->onConnect) {
             $this->_parentOnConnect = $this->onConnect;

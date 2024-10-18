@@ -40,9 +40,13 @@ class ServerTest extends TestCase
         $this->assertNull($worker->getParentOnClose());
         $this->assertNull($worker->getParentOnMessage());
 
-        $reflectionMethod = new \ReflectionMethod(AbstractWorker::class, 'initWorkers');
-        $reflectionMethod->setAccessible(true);
-        $reflectionMethod->invoke(null);
+        // init
+        $reflection = new \ReflectionClass(AbstractWorker::class);
+        $init = $reflection->getMethod('initWorkers');
+        $init->invoke(null);
+        // onWorkerStart
+        $start = $reflection->getProperty('onWorkerStart');
+        call_user_func($start->getValue($worker), $worker);
 
         $this->assertEquals($onMessage, $worker->getParentOnMessage());
         $this->assertEquals($onConnect, $worker->getParentOnConnect());
@@ -81,9 +85,13 @@ class ServerTest extends TestCase
         $this->assertNull($worker->getParentOnClose());
         $this->assertNull($worker->getParentOnMessage());
 
-        $reflectionMethod = new \ReflectionMethod(AbstractWorker::class, 'initWorkers');
-        $reflectionMethod->setAccessible(true);
-        $reflectionMethod->invoke(null);
+        // init
+        $reflection = new \ReflectionClass(AbstractWorker::class);
+        $init = $reflection->getMethod('initWorkers');
+        $init->invoke(null);
+        // onWorkerStart
+        $start = $reflection->getProperty('onWorkerStart');
+        call_user_func($start->getValue($worker), $worker);
 
         $this->assertEquals($onMessage, $worker->getParentOnMessage());
         $this->assertEquals($onConnect, $worker->getParentOnConnect());
@@ -123,9 +131,13 @@ class ServerTest extends TestCase
         $this->assertNull($worker->getParentOnClose());
         $this->assertNull($worker->getParentOnMessage());
 
-        $reflectionMethod = new \ReflectionMethod(AbstractWorker::class, 'initWorkers');
-        $reflectionMethod->setAccessible(true);
-        $reflectionMethod->invoke(null);
+        // init
+        $reflection = new \ReflectionClass(AbstractWorker::class);
+        $init = $reflection->getMethod('initWorkers');
+        $init->invoke(null);
+        // onWorkerStart
+        $start = $reflection->getProperty('onWorkerStart');
+        call_user_func($start->getValue($worker), $worker);
 
         $this->assertEquals($onMessage, $worker->getParentOnMessage());
         $this->assertEquals($onConnect, $worker->getParentOnConnect());
@@ -172,6 +184,8 @@ class ServerTest extends TestCase
     {
         $worker = new Server();
         //        $worker::$eventLoopClass = event_loop();
+        $worker->onWorkerStart = function () {
+        };
         $worker->onConnect = function () {
         };
         $worker->onClose = function () {
@@ -179,13 +193,20 @@ class ServerTest extends TestCase
         $worker->onMessage = function () {
         };
 
-        $this->expectException(WorkerException::class);
         $this->assertNull($worker->getParentOnConnect());
         $this->assertNull($worker->getParentOnClose());
         $this->assertNull($worker->getParentOnMessage());
+        // init
+        $reflection = new \ReflectionClass(AbstractWorker::class);
+        $init = $reflection->getMethod('initWorkers');
+        $init->invoke(null);
 
-        $reflectionMethod = new \ReflectionMethod(AbstractWorker::class, 'initWorkers');
-        $reflectionMethod->setAccessible(true);
-        $reflectionMethod->invoke(null);
+        // onWorkerStart 阶段抛出异常
+        $className = $worker::class;
+        $this->expectException(WorkerException::class);
+        $this->expectExceptionMessage("Please run Factory::init or set $className::\$EventLoopClass = event_loop().");
+        // onWorkerStart
+        $start = $reflection->getProperty('onWorkerStart');
+        call_user_func($start->getValue($worker), $worker);
     }
 }

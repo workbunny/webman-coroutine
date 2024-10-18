@@ -30,9 +30,13 @@ class WorkerTest extends TestCase
         $this->assertNull($worker->getParentOnWorkerStart());
         $this->assertNull($worker->getParentOnWorkerStop());
 
-        $reflectionMethod = new \ReflectionMethod(AbstractWorker::class, 'initWorkers');
-        $reflectionMethod->setAccessible(true);
-        $reflectionMethod->invoke(null);
+        // init
+        $reflection = new \ReflectionClass(AbstractWorker::class);
+        $init = $reflection->getMethod('initWorkers');
+        $init->invoke(null);
+        // onWorkerStart
+        $start = $reflection->getProperty('onWorkerStart');
+        call_user_func($start->getValue($worker), $worker);
 
         $this->assertEquals($onWorkerStart, $worker->getParentOnWorkerStart());
         $this->assertEquals($onWorkerStop, $worker->getParentOnWorkerStop());
@@ -52,9 +56,13 @@ class WorkerTest extends TestCase
         $this->assertNull($worker->getParentOnWorkerStart());
         $this->assertNull($worker->getParentOnWorkerStop());
 
-        $reflectionMethod = new \ReflectionMethod(AbstractWorker::class, 'initWorkers');
-        $reflectionMethod->setAccessible(true);
-        $reflectionMethod->invoke(null);
+        // init
+        $reflection = new \ReflectionClass(AbstractWorker::class);
+        $init = $reflection->getMethod('initWorkers');
+        $init->invoke(null);
+        // onWorkerStart
+        $start = $reflection->getProperty('onWorkerStart');
+        call_user_func($start->getValue($worker), $worker);
 
         $this->assertEquals($onWorkerStart, $worker->getParentOnWorkerStart());
         $this->assertEquals($onWorkerStop, $worker->getParentOnWorkerStop());
@@ -76,12 +84,19 @@ class WorkerTest extends TestCase
         $worker->onWorkerStop = function () {
         };
 
-        $this->expectException(WorkerException::class);
         $this->assertNull($worker->getParentOnWorkerStart());
         $this->assertNull($worker->getParentOnWorkerStop());
 
-        $reflectionMethod = new \ReflectionMethod(AbstractWorker::class, 'initWorkers');
-        $reflectionMethod->setAccessible(true);
-        $reflectionMethod->invoke(null);
+        // init
+        $reflection = new \ReflectionClass(AbstractWorker::class);
+        $init = $reflection->getMethod('initWorkers');
+        $init->invoke(null);
+
+        $className = $worker::class;
+        $this->expectException(WorkerException::class);
+        $this->expectExceptionMessage("Please run Factory::init or set $className::\$EventLoopClass = event_loop().");
+        // onWorkerStart
+        $start = $reflection->getProperty('onWorkerStart');
+        call_user_func($start->getValue($worker), $worker);
     }
 }

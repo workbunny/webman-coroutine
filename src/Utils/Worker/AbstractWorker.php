@@ -18,14 +18,6 @@ abstract class AbstractWorker extends Worker
     protected static function initWorkers()
     {
         foreach (static::$_workers as $worker) {
-            // 加载环境
-            /** @var HandlerInterface $handler */
-            $handler = Factory::getCurrentHandler();
-            if (!$handler) {
-                $className = $worker::class;
-                throw new WorkerException("Please run Factory::init or set $className::\$EventLoopClass = event_loop(). ");
-            }
-            $handler::initEnv();
             // 加载__init__开头的初始化方法
             $traits = class_uses($worker, false);
             foreach ($traits as $trait) {
