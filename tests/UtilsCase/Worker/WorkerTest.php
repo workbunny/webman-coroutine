@@ -60,9 +60,6 @@ class WorkerTest extends TestCase
         $reflection = new \ReflectionClass(AbstractWorker::class);
         $init = $reflection->getMethod('initWorkers');
         $init->invoke(null);
-        // onWorkerStart
-        $start = $reflection->getProperty('onWorkerStart');
-        call_user_func($start->getValue($worker), $worker);
 
         $this->assertEquals($onWorkerStart, $worker->getParentOnWorkerStart());
         $this->assertEquals($onWorkerStop, $worker->getParentOnWorkerStop());

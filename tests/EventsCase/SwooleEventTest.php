@@ -235,29 +235,24 @@ class SwooleEventTest extends TestCase
         $result = $swooleEvent->add('123', EventInterface::EV_READ, function () {
             echo 'Read event error';
         });
-
         $this->assertFalse($result);
-        // add
+        // Event::add
         $stream = fopen('php://memory', 'r+');
         $result = $swooleEvent->add($stream, EventInterface::EV_READ, function () {
             echo 'Read event1';
         });
-
         $this->assertTrue($result);
-        // set
+        // Event::set
+        $eventMock->shouldReceive('isset')->andReturn(true);
         $stream2 = fopen('php://memory', 'r+');
         $result = $swooleEvent->add($stream2, EventInterface::EV_READ, function () {
             echo 'Read event2';
         });
-
         $this->assertTrue($result);
-        // del
+
+        // ----
+
         $eventMock->shouldReceive('del')->andReturn(true);
-        $eventMock->shouldReceive('isset')->andReturn(true);
-
-        $result = $swooleEvent->del($stream, EventInterface::EV_READ);
-        $this->assertTrue($result);
-        // del set
         $eventMock->shouldReceive('set')->andReturnUsing(function ($stream, $readCallback, $writeCallback, $event) {
             $this->assertTrue(is_resource($stream));
             $this->assertTrue(is_int($event));
@@ -266,7 +261,13 @@ class SwooleEventTest extends TestCase
 
             return true;
         });
+        // Event::del
         $eventMock->shouldReceive('isset')->andReturn(false);
+        $result = $swooleEvent->del($stream, EventInterface::EV_READ);
+        $this->assertTrue($result);
+        // Event::set
+        $eventMock->shouldReceive('isset')->andReturn(false);
+
 
         $result = $swooleEvent->del($stream2, EventInterface::EV_READ);
         $this->assertTrue($result);
@@ -297,33 +298,31 @@ class SwooleEventTest extends TestCase
 
             return true;
         });
+
         $eventMock->shouldReceive('isset')->andReturn(false);
         // false
         $result = $swooleEvent->add('321', EventInterface::EV_WRITE, function () {
             echo 'Write event error';
         });
-
         $this->assertFalse($result);
-        // add
+        // Event::add
+        $eventMock->shouldReceive('isset')->andReturn(false);
         $stream = fopen('php://memory', 'w+');
         $result = $swooleEvent->add($stream, EventInterface::EV_WRITE, function () {
             echo 'Write event1';
         });
         $this->assertTrue($result);
-        // set
+        // Event::set
+        $eventMock->shouldReceive('isset')->andReturn(true);
         $stream2 = fopen('php://memory', 'w+');
         $result = $swooleEvent->add($stream2, EventInterface::EV_WRITE, function () {
             echo 'Write event2';
         });
-
         $this->assertTrue($result);
-        // del
+
+        // -----
+
         $eventMock->shouldReceive('del')->andReturn(true);
-        $eventMock->shouldReceive('isset')->andReturn(true);
-
-        $result = $swooleEvent->del($stream, EventInterface::EV_WRITE);
-        $this->assertTrue($result);
-        // del set
         $eventMock->shouldReceive('set')->andReturnUsing(function ($stream, $readCallback, $writeCallback, $event) {
             $this->assertTrue(is_resource($stream));
             $this->assertTrue(is_int($event));
@@ -332,8 +331,12 @@ class SwooleEventTest extends TestCase
 
             return true;
         });
+        // Event::del
         $eventMock->shouldReceive('isset')->andReturn(false);
-
+        $result = $swooleEvent->del($stream, EventInterface::EV_WRITE);
+        $this->assertTrue($result);
+        // Event::set
+        $eventMock->shouldReceive('isset')->andReturn(true);
         $result = $swooleEvent->del($stream, EventInterface::EV_WRITE);
         $this->assertTrue($result);
         // false
