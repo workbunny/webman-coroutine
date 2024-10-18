@@ -300,19 +300,20 @@
   ```php
   use Workbunny\WebmanCoroutine\Utils\Pool\Pool;
   
-  $pools = Pool::get('redis');
+  $pools = Pool::get('redis', null);
   // 根据配置池大小判断是否需要追加，假设你存在这样的配置
   if (count($pools) < config('redis.pool_size')) {
-    // 新建redis连接
-    $redis = new RedisManager();
-    // 追加一个redis连接对象，资源类型不用clone
-    Pool::append('redis', (int)array_key_last($pools) + 1, $redis, false);
+      /** 新建redis连接 */
+      $config = config('redis');
+      $redis = new \Illuminate\Redis\RedisManager('', 'phpredis', $config);
+      /** 追加一个redis连接对象，资源类型不用clone */
+      Pool::append('redis', (int)array_key_last($pools) + 1, $redis, false);
   }
   
   // 等待闲置redis
   $res = Pool::waitForIdle('redis', function (Pool $pool) {
     $redis = $pool->getElement();
-    return $redis->client()->set('key', 'value');
+    return $redis->client()->set('key', 'value');·
   });
   
   // 其他逻辑
