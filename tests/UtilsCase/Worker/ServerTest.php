@@ -43,6 +43,7 @@ class ServerTest extends TestCase
         // init
         $reflection = new \ReflectionClass(AbstractWorker::class);
         $init = $reflection->getMethod('initWorkers');
+        $init->setAccessible(true);
         $init->invoke(null);
         // onWorkerStart
         $start = $reflection->getProperty('onWorkerStart');
@@ -88,6 +89,7 @@ class ServerTest extends TestCase
         // init
         $reflection = new \ReflectionClass(AbstractWorker::class);
         $init = $reflection->getMethod('initWorkers');
+        $init->setAccessible(true);
         $init->invoke(null);
         // onWorkerStart
         $start = $reflection->getProperty('onWorkerStart');
@@ -134,6 +136,7 @@ class ServerTest extends TestCase
         // init
         $reflection = new \ReflectionClass(AbstractWorker::class);
         $init = $reflection->getMethod('initWorkers');
+        $init->setAccessible(true);
         $init->invoke(null);
         // onWorkerStart
         $start = $reflection->getProperty('onWorkerStart');
@@ -199,6 +202,7 @@ class ServerTest extends TestCase
         // init
         $reflection = new \ReflectionClass(AbstractWorker::class);
         $init = $reflection->getMethod('initWorkers');
+        $init->setAccessible(true);
         $init->invoke(null);
 
         // onWorkerStart 阶段抛出异常

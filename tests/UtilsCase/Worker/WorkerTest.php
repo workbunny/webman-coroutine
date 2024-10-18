@@ -33,6 +33,7 @@ class WorkerTest extends TestCase
         // init
         $reflection = new \ReflectionClass(AbstractWorker::class);
         $init = $reflection->getMethod('initWorkers');
+        $init->setAccessible(true);
         $init->invoke(null);
         // onWorkerStart
         $start = $reflection->getProperty('onWorkerStart');
@@ -59,6 +60,7 @@ class WorkerTest extends TestCase
         // init
         $reflection = new \ReflectionClass(AbstractWorker::class);
         $init = $reflection->getMethod('initWorkers');
+        $init->setAccessible(true);
         $init->invoke(null);
 
         $this->assertEquals($onWorkerStart, $worker->getParentOnWorkerStart());
@@ -87,6 +89,7 @@ class WorkerTest extends TestCase
         // init
         $reflection = new \ReflectionClass(AbstractWorker::class);
         $init = $reflection->getMethod('initWorkers');
+        $init->setAccessible(true);
         $init->invoke(null);
 
         $className = $worker::class;
