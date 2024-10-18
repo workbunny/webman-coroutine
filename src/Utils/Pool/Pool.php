@@ -10,6 +10,7 @@ namespace Workbunny\WebmanCoroutine\Utils\Pool;
 use WeakReference;
 use Workbunny\WebmanCoroutine\Exceptions\PoolException;
 
+use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
 use function Workbunny\WebmanCoroutine\wait_for;
 
 use Workerman\Worker;
@@ -191,14 +192,14 @@ class Pool
     }
 
     /**
-     * 等待空闲并执行
+     * 获取空闲池
      *
-     * @param string $name 池区域
-     * @param \Closure $closure 被执行函数 = function (Pool $pool) {}
-     * @param int $timeout 超时时间
-     * @return mixed
+     * @param string $name
+     * @param int $timeout
+     * @return Pool
+     * @throws TimeoutException
      */
-    public static function waitForIdle(string $name, \Closure $closure, int $timeout = -1): mixed
+    public static function getIdle(string $name, int $timeout = -1): Pool
     {
         $pool = null;
         wait_for(function () use (&$pool, $name) {
@@ -206,12 +207,28 @@ class Pool
 
             return $pool !== null;
         }, $timeout);
-        try {
-            $pool->setIdle(false);
+        $pool->setIdle(false);
+        return $pool;
+    }
 
+    /**
+     * 等待空闲并执行
+     *
+     * @param string $name 池区域
+     * @param \Closure $closure 被执行函数 = function (Pool $pool) {}
+     * @param int $timeout 超时时间
+     * @return mixed
+     * @throws TimeoutException
+     */
+    public static function waitForIdle(string $name, \Closure $closure, int $timeout = -1): mixed
+    {
+        try {
+            $pool = static::getIdle($name, $timeout);
             return call_user_func($closure, $pool);
         } finally {
-            $pool->setIdle(true);
+            if (isset($pool)) {
+                $pool->setIdle(true);
+            }
         }
     }
 
