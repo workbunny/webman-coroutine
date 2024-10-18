@@ -198,7 +198,7 @@
   - `zval` can be simply understood as the PHP stack
 - Objects and other data in PHP are represented by `zheap` in C, essentially also residing on the C heap
   - In simple terms: with `$a=new stdClass()`, `$a` and the address of `new stdClass()` are stored in `zval`, while `new stdClass()` is stored in `zheap`
-  - `zheap` can be simply understood as the PHP heap
+  - `zheap` can be simply understood as the PHP heap. It is a memory block allocated by the Zend memory allocator. `zheap` refers to all structures allocated by the memory allocator, such as `zend_object`.
   - For more on PHP heap data recovery strategies, refer to the PHP official documentation on GC and use functions starting with gc for operations
 - Stacked coroutines will automatically manage register information and stack data for the context, but heap data is **not concurrently safe** in coroutines
 - Object pools provide deep copy operations for PHP heap data with `partial support`
