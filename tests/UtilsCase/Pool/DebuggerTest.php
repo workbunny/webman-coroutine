@@ -38,7 +38,7 @@ class DebuggerTest extends TestCase
                 ]
             ]
         ];
-        $result = Debugger::run($array);
+        $result = Debugger::validate($array);
         $this->assertTrue($result);
 
         // array has object
@@ -52,10 +52,10 @@ class DebuggerTest extends TestCase
                 ]
             ]
         ];
-        $result = Debugger::run($array);
+        $result = Debugger::validate($array);
         $this->assertTrue($result);
         // double check
-        $result = Debugger::run($array);
+        $result = Debugger::validate($array);
         $this->assertTrue($result);
 
         // map
@@ -69,7 +69,7 @@ class DebuggerTest extends TestCase
                 ]
             ]
         ];
-        $result = Debugger::run($array);
+        $result = Debugger::validate($array);
         $this->assertTrue($result);
 
         // map has object
@@ -83,10 +83,10 @@ class DebuggerTest extends TestCase
                 ]
             ]
         ];
-        $result = Debugger::run($array);
+        $result = Debugger::validate($array);
         $this->assertTrue($result);
         // double check
-        $result = Debugger::run($array);
+        $result = Debugger::validate($array);
         $this->assertTrue($result);
     }
 
@@ -104,7 +104,7 @@ class DebuggerTest extends TestCase
             ]
         ];
         try {
-            Debugger::run($array);
+            Debugger::validate($array);
         } catch (PoolDebuggerException $e) {
             $this->assertEquals(Debugger::ERROR_TYPE_RESOURCE, $e->getCode());
             $this->assertEquals('Value can not be cloned [resource]. ', $e->getMessage());
@@ -122,7 +122,7 @@ class DebuggerTest extends TestCase
             ]
         ];
         try {
-            Debugger::run($array);
+            Debugger::validate($array);
         } catch (PoolDebuggerException $e) {
             $this->assertEquals(Debugger::ERROR_TYPE_RESOURCE, $e->getCode());
             $this->assertEquals('Value can not be cloned [resource]. ', $e->getMessage());
@@ -142,14 +142,14 @@ class DebuggerTest extends TestCase
             ]
         ];
         try {
-            Debugger::run($array);
+            Debugger::validate($array);
         } catch (PoolDebuggerException $e) {
             $this->assertEquals(Debugger::ERROR_TYPE_RESOURCE, $e->getCode());
             $this->assertEquals('Value can not be cloned [resource]. ', $e->getMessage());
         }
         try {
             // 在$object生命周期二次调用走缓存
-            Debugger::run($array);
+            Debugger::validate($array);
         } catch (PoolDebuggerException $e) {
             $this->assertEquals(Debugger::ERROR_TYPE_RESOURCE, $e->getCode());
             $this->assertEquals('Value can not be cloned [resource]. ', $e->getMessage());
@@ -169,14 +169,14 @@ class DebuggerTest extends TestCase
             ]
         ];
         try {
-            Debugger::run($array);
+            Debugger::validate($array);
         } catch (PoolDebuggerException $e) {
             $this->assertEquals(Debugger::ERROR_TYPE_RESOURCE, $e->getCode());
             $this->assertEquals('Value can not be cloned [resource]. ', $e->getMessage());
         }
         try {
             // 在$object生命周期二次调用走缓存
-            Debugger::run($array);
+            Debugger::validate($array);
         } catch (PoolDebuggerException $e) {
             $this->assertEquals(Debugger::ERROR_TYPE_RESOURCE, $e->getCode());
             $this->assertEquals('Value can not be cloned [resource]. ', $e->getMessage());
@@ -188,26 +188,26 @@ class DebuggerTest extends TestCase
         // object
         $object = new stdClass();
         $object->prop = 'value';
-        $result = Debugger::run($object);
+        $result = Debugger::validate($object);
         $this->assertTrue($result);
 
         // object->array
         $object = new stdClass();
         $object->prop = [1, 2, 3];
-        $result = Debugger::run($object);
+        $result = Debugger::validate($object);
         $this->assertTrue($result);
 
         // object->self
         $object = new stdClass();
         $object->self = $object;
-        $result = Debugger::run($object);
+        $result = Debugger::validate($object);
         $this->assertTrue($result);
 
         // object->object
         $object = new stdClass();
         $object2 = new stdClass();
         $object->self = $object2;
-        $result = Debugger::run($object);
+        $result = Debugger::validate($object);
         $this->assertTrue($result);
     }
 
@@ -217,14 +217,14 @@ class DebuggerTest extends TestCase
         $object = new stdClass();
         $object->prop = [1, fopen('php://memory', 'w+'), 3];
         try {
-            Debugger::run($object);
+            Debugger::validate($object);
         } catch (PoolDebuggerException $e) {
             $this->assertEquals(Debugger::ERROR_TYPE_RESOURCE, $e->getCode());
             $this->assertEquals('Value can not be cloned [resource]. ', $e->getMessage());
         }
         try {
             // 在$object生命周期二次调用走缓存
-            Debugger::run($object);
+            Debugger::validate($object);
         } catch (PoolDebuggerException $e) {
             $this->assertEquals(Debugger::ERROR_TYPE_RESOURCE, $e->getCode());
             $this->assertEquals('Value can not be cloned [resource]. ', $e->getMessage());
@@ -234,14 +234,14 @@ class DebuggerTest extends TestCase
         $object = new stdClass();
         $object->prop = fopen('php://memory', 'w+');
         try {
-            Debugger::run($object);
+            Debugger::validate($object);
         } catch (PoolDebuggerException $e) {
             $this->assertEquals(Debugger::ERROR_TYPE_RESOURCE, $e->getCode());
             $this->assertEquals('Value can not be cloned [resource]. ', $e->getMessage());
         }
         try {
             // 在$object生命周期二次调用走缓存
-            Debugger::run($object);
+            Debugger::validate($object);
         } catch (PoolDebuggerException $e) {
             $this->assertEquals(Debugger::ERROR_TYPE_RESOURCE, $e->getCode());
             $this->assertEquals('Value can not be cloned [resource]. ', $e->getMessage());
@@ -253,14 +253,14 @@ class DebuggerTest extends TestCase
         $object2->resouce = fopen('php://memory', 'w+');
         $object->prop = $object2;
         try {
-            Debugger::run($object);
+            Debugger::validate($object);
         } catch (PoolDebuggerException $e) {
             $this->assertEquals(Debugger::ERROR_TYPE_RESOURCE, $e->getCode());
             $this->assertEquals('Value can not be cloned [resource]. ', $e->getMessage());
         }
         try {
             // 在$object生命周期二次调用走缓存
-            Debugger::run($object);
+            Debugger::validate($object);
         } catch (PoolDebuggerException $e) {
             $this->assertEquals(Debugger::ERROR_TYPE_RESOURCE, $e->getCode());
             $this->assertEquals('Value can not be cloned [resource]. ', $e->getMessage());
@@ -273,50 +273,50 @@ class DebuggerTest extends TestCase
         $object = new class {
             public static $string = '1';
         };
-        $res = Debugger::run($object);
+        $res = Debugger::validate($object);
         $this->assertTrue($res);
         // $object二次调用走缓存
-        $res = Debugger::run($object);
+        $res = Debugger::validate($object);
         $this->assertTrue($res);
 
         // int
         $object = new class {
             public static $int = 1;
         };
-        $res = Debugger::run($object);
+        $res = Debugger::validate($object);
         $this->assertTrue($res);
         // $object二次调用走缓存
-        $res = Debugger::run($object);
+        $res = Debugger::validate($object);
         $this->assertTrue($res);
 
         // float
         $object = new class {
             public static $float = 1.1;
         };
-        $res = Debugger::run($object);
+        $res = Debugger::validate($object);
         $this->assertTrue($res);
         // $object二次调用走缓存
-        $res = Debugger::run($object);
+        $res = Debugger::validate($object);
         $this->assertTrue($res);
 
         // bool
         $object = new class {
             public static $bool = true;
         };
-        $res = Debugger::run($object);
+        $res = Debugger::validate($object);
         $this->assertTrue($res);
         // $object二次调用走缓存
-        $res = Debugger::run($object);
+        $res = Debugger::validate($object);
         $this->assertTrue($res);
 
         // null
         $object = new class {
             public static $null = null;
         };
-        $res = Debugger::run($object);
+        $res = Debugger::validate($object);
         $this->assertTrue($res);
         // $object二次调用走缓存
-        $res = Debugger::run($object);
+        $res = Debugger::validate($object);
         $this->assertTrue($res);
     }
 
@@ -327,7 +327,7 @@ class DebuggerTest extends TestCase
             public static $arr = [1, 2, 3];
         };
         try {
-            Debugger::run($object);
+            Debugger::validate($object);
         } catch (PoolDebuggerException $e) {
             $this->assertEquals(Debugger::ERROR_TYPE_STATIC_ARRAY, $e->getCode());
             $this->assertEquals('Value can not be cloned [static array]. ', $e->getMessage());
@@ -343,7 +343,7 @@ class DebuggerTest extends TestCase
             }
         };
         try {
-            Debugger::run($object);
+            Debugger::validate($object);
         } catch (PoolDebuggerException $e) {
             $this->assertEquals(Debugger::ERROR_TYPE_RESOURCE, $e->getCode());
             $this->assertEquals('Value can not be cloned [resource]. ', $e->getMessage());
@@ -354,7 +354,7 @@ class DebuggerTest extends TestCase
     {
         // string
         try {
-            Debugger::run('123');
+            Debugger::validate('123');
         } catch (PoolDebuggerException $e) {
             $this->assertEquals(Debugger::ERROR_TYPE_NORMAL, $e->getCode());
             $this->assertEquals('Value can not be cloned [string]. ', $e->getMessage());
@@ -362,7 +362,7 @@ class DebuggerTest extends TestCase
 
         // int
         try {
-            Debugger::run(1);
+            Debugger::validate(1);
         } catch (PoolDebuggerException $e) {
             $this->assertEquals(Debugger::ERROR_TYPE_NORMAL, $e->getCode());
             $this->assertEquals('Value can not be cloned [integer]. ', $e->getMessage());
@@ -370,7 +370,7 @@ class DebuggerTest extends TestCase
 
         // float
         try {
-            Debugger::run(1.1);
+            Debugger::validate(1.1);
         } catch (PoolDebuggerException $e) {
             $this->assertEquals(Debugger::ERROR_TYPE_NORMAL, $e->getCode());
             $this->assertEquals('Value can not be cloned [double]. ', $e->getMessage());
@@ -378,14 +378,14 @@ class DebuggerTest extends TestCase
 
         // boolean
         try {
-            Debugger::run(true);
+            Debugger::validate(true);
         } catch (PoolDebuggerException $e) {
             $this->assertEquals(Debugger::ERROR_TYPE_NORMAL, $e->getCode());
             $this->assertEquals('Value can not be cloned [boolean]. ', $e->getMessage());
         }
 
         try {
-            Debugger::run(null);
+            Debugger::validate(null);
         } catch (PoolDebuggerException $e) {
             $this->assertEquals(Debugger::ERROR_TYPE_NORMAL, $e->getCode());
             $this->assertEquals('Value can not be cloned [NULL]. ', $e->getMessage());
@@ -397,7 +397,7 @@ class DebuggerTest extends TestCase
         $object = new stdClass();
         $object->prop = 'value';
 
-        Debugger::run($object);
+        Debugger::validate($object);
         $seen = Debugger::getSeen();
         $this->assertNotEquals(0, $seen->count());
 

@@ -67,7 +67,7 @@ class Debugger
      * @param mixed $value
      * @return bool
      */
-    public static function run(mixed $value): bool
+    public static function validate(mixed $value): bool
     {
         $debugger = new static();
         $res = $debugger->cloneValidate($value);
