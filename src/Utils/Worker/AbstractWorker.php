@@ -7,9 +7,6 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Utils\Worker;
 
-use Workbunny\WebmanCoroutine\Exceptions\WorkerException;
-use Workbunny\WebmanCoroutine\Factory;
-use Workbunny\WebmanCoroutine\Handlers\HandlerInterface;
 use Workerman\Worker;
 
 abstract class AbstractWorker extends Worker

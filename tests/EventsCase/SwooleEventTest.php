@@ -101,8 +101,6 @@ class SwooleEventTest extends TestCase
             echo 'Timer triggered';
         });
         $this->assertEquals(1, $result);
-
-
     }
 
     public function testAddOnceTimer()
@@ -268,7 +266,6 @@ class SwooleEventTest extends TestCase
         // Event::set
         $eventMock->shouldReceive('isset')->andReturn(false);
 
-
         $result = $swooleEvent->del($stream2, EventInterface::EV_READ);
         $this->assertTrue($result);
         // false
@@ -371,7 +368,7 @@ class SwooleEventTest extends TestCase
             $this->assertTrue(is_int($id));
         });
         $eventMock->shouldReceive('listCoroutines')->andReturn([
-            1, 2
+            1, 2,
         ]);
 
         $swooleEvent->destroy();

@@ -22,6 +22,7 @@ class DebuggerTest extends TestCase
         if ($depth <= 0) {
             return [];
         }
+
         return ['level' => $depth, 'next' => $this->_generateNestedArray($depth - 1)];
     }
 
@@ -34,9 +35,9 @@ class DebuggerTest extends TestCase
             [
                 3.1,
                 [
-                    4
-                ]
-            ]
+                    4,
+                ],
+            ],
         ];
         $result = Debugger::validate($array);
         $this->assertTrue($result);
@@ -48,9 +49,9 @@ class DebuggerTest extends TestCase
             [
                 3.1,
                 [
-                    4
-                ]
-            ]
+                    4,
+                ],
+            ],
         ];
         $result = Debugger::validate($array);
         $this->assertTrue($result);
@@ -65,9 +66,9 @@ class DebuggerTest extends TestCase
             'c' => [
                 3.1,
                 [
-                    'd' => 4
-                ]
-            ]
+                    'd' => 4,
+                ],
+            ],
         ];
         $result = Debugger::validate($array);
         $this->assertTrue($result);
@@ -79,9 +80,9 @@ class DebuggerTest extends TestCase
             'c' => [
                 3.1,
                 [
-                    'd' => 4
-                ]
-            ]
+                    'd' => 4,
+                ],
+            ],
         ];
         $result = Debugger::validate($array);
         $this->assertTrue($result);
@@ -99,9 +100,9 @@ class DebuggerTest extends TestCase
             [
                 3.1,
                 [
-                    4
-                ]
-            ]
+                    4,
+                ],
+            ],
         ];
         try {
             Debugger::validate($array);
@@ -117,9 +118,9 @@ class DebuggerTest extends TestCase
             [
                 fopen('php://memory', 'w+'),
                 [
-                    4
-                ]
-            ]
+                    4,
+                ],
+            ],
         ];
         try {
             Debugger::validate($array);
@@ -137,9 +138,9 @@ class DebuggerTest extends TestCase
             [
                 $object,
                 [
-                    4
-                ]
-            ]
+                    4,
+                ],
+            ],
         ];
         try {
             Debugger::validate($array);
@@ -164,9 +165,9 @@ class DebuggerTest extends TestCase
             [
                 $object,
                 [
-                    4
-                ]
-            ]
+                    4,
+                ],
+            ],
         ];
         try {
             Debugger::validate($array);
@@ -270,7 +271,7 @@ class DebuggerTest extends TestCase
     public function testCloneValidateWithObjectStaticProperty()
     {
         // string
-        $object = new class {
+        $object = new class () {
             public static $string = '1';
         };
         $res = Debugger::validate($object);
@@ -280,7 +281,7 @@ class DebuggerTest extends TestCase
         $this->assertTrue($res);
 
         // int
-        $object = new class {
+        $object = new class () {
             public static $int = 1;
         };
         $res = Debugger::validate($object);
@@ -290,7 +291,7 @@ class DebuggerTest extends TestCase
         $this->assertTrue($res);
 
         // float
-        $object = new class {
+        $object = new class () {
             public static $float = 1.1;
         };
         $res = Debugger::validate($object);
@@ -300,7 +301,7 @@ class DebuggerTest extends TestCase
         $this->assertTrue($res);
 
         // bool
-        $object = new class {
+        $object = new class () {
             public static $bool = true;
         };
         $res = Debugger::validate($object);
@@ -310,7 +311,7 @@ class DebuggerTest extends TestCase
         $this->assertTrue($res);
 
         // null
-        $object = new class {
+        $object = new class () {
             public static $null = null;
         };
         $res = Debugger::validate($object);
@@ -323,7 +324,7 @@ class DebuggerTest extends TestCase
     public function testCloneValidateWithObjectStaticPropertyException()
     {
         // array
-        $object = new class {
+        $object = new class () {
             public static $arr = [1, 2, 3];
         };
         try {
@@ -334,7 +335,7 @@ class DebuggerTest extends TestCase
         }
 
         // resource
-        $object = new class {
+        $object = new class () {
             public static $resource = null;
 
             public function __construct()
