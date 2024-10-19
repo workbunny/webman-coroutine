@@ -64,8 +64,9 @@ class CoroutineWebServer extends App
         if (!config('plugin.workbunny.webman-coroutine.app.enable', false)) {
             return;
         }
+        // 标记停止信号为false
         $this->_stopSignal = false;
-        parent::onWorkerStart($worker);
+        // 环境检查及初始化
         /** @var HandlerInterface $handler */
         $handler = Factory::getCurrentHandler();
         if (!$handler) {
@@ -73,6 +74,8 @@ class CoroutineWebServer extends App
             throw new WorkerException("Please run Factory::init or set $className::\$EventLoopClass = event_loop(). ");
         }
         $handler::initEnv();
+        // 父类初始化
+        parent::onWorkerStart($worker);
     }
 
     /**
@@ -89,14 +92,16 @@ class CoroutineWebServer extends App
             parent::onWorkerStop($worker, ...$params);
         }
         if (config('plugin.workbunny.webman-coroutine.app.wait_for_close', false)) {
-            Worker::safeEcho('CoroutineWebServer start waiting for close connections...');
+            $classname = self::class;
+            Worker::safeEcho("[$classname] Wait for close start. ");
+            Worker::safeEcho("[$classname] Current remaining connections: " . count(self::getConnectionCoroutineCount()));
             // 标记停止信号
             $this->_stopSignal = true;
+            // 等待协程消费者消费完毕
             wait_for(function () {
-                // 等待协程消费者消费完毕
                 return empty(self::$_connectionCoroutineCount);
             });
-            Worker::safeEcho('CoroutineWebServer end waiting for close connections...');
+            Worker::safeEcho("[$classname] Wait for close success. ");
         }
     }
 
