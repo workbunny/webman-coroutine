@@ -7,6 +7,9 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Utils\Worker;
 
+use Workbunny\WebmanCoroutine\Exceptions\WorkerException;
+use Workbunny\WebmanCoroutine\Factory;
+use Workbunny\WebmanCoroutine\Handlers\HandlerInterface;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Coroutine;
 use Workbunny\WebmanCoroutine\Utils\WaitGroup\WaitGroup;
 
@@ -46,6 +49,15 @@ trait WorkerMethods
         // start
         $this->_parentOnWorkerStart = $this->onWorkerStart;
         $this->onWorkerStart = function (\Workerman\Worker $worker) {
+            // 加载环境
+            /** @var HandlerInterface $handler */
+            $handler = Factory::getCurrentHandler();
+            if (!$handler) {
+                $className = $this::class;
+                throw new WorkerException("Please run Factory::init or set $className::\$EventLoopClass = event_loop(). ");
+            }
+            $handler::initEnv();
+            // 执行
             $waitGroup = new WaitGroup();
             $waitGroup->add();
             new Coroutine(function () use ($worker, $waitGroup) {
