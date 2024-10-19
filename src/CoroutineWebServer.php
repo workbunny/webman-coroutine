@@ -173,6 +173,10 @@ class CoroutineWebServer extends App
         if (!is_object($connection)) {
             return null;
         }
+        if ($this->_stopSignal) {
+            $connection->close();
+            return null;
+        }
         $connectionId = spl_object_hash($connection);
         $params = func_get_args();
         $res = null;
