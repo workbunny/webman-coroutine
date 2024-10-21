@@ -334,6 +334,22 @@ class DebuggerTest extends TestCase
             $this->assertEquals('Value can not be cloned [static array]. ', $e->getMessage());
         }
 
+        // object
+        $object = new class () {
+            public static $object = null;
+
+            public function __construct()
+            {
+                self::$object = new stdClass();
+            }
+        };
+        try {
+            Debugger::validate($object);
+        } catch (PoolDebuggerException $e) {
+            $this->assertEquals(Debugger::ERROR_TYPE_STATIC_OBJECT, $e->getCode());
+            $this->assertEquals('Value can not be cloned [static object]. ', $e->getMessage());
+        }
+
         // resource
         $object = new class () {
             public static $resource = null;

@@ -13,15 +13,17 @@ use Workbunny\WebmanCoroutine\Exceptions\PoolDebuggerException;
 
 class Debugger
 {
-    public const ERROR_TYPE_NON = 1;
-    public const ERROR_TYPE_NORMAL = 0;
-    public const ERROR_TYPE_STATIC_ARRAY = -1;
+    public const ERROR_TYPE_NON = 0;
+    public const ERROR_TYPE_NORMAL = -1;
     public const ERROR_TYPE_RESOURCE = -2;
+    public const ERROR_TYPE_STATIC_ARRAY = -101;
+    public const ERROR_TYPE_STATIC_OBJECT = -102;
 
     protected static array $_errorMap = [
-        self::ERROR_TYPE_STATIC_ARRAY => 'static array',
-        self::ERROR_TYPE_RESOURCE     => 'resource',
-        self::ERROR_TYPE_NORMAL       => 'normal',
+        self::ERROR_TYPE_STATIC_OBJECT => 'static object',
+        self::ERROR_TYPE_STATIC_ARRAY  => 'static array',
+        self::ERROR_TYPE_RESOURCE      => 'resource',
+        self::ERROR_TYPE_NORMAL        => 'normal',
     ];
 
     /**
@@ -108,12 +110,22 @@ class Debugger
                         }
                         // 静态属性
                         if ($property->isStatic()) {
-                            switch ($type = gettype($v)) {
+                            switch (gettype($v)) {
                                 // 静态数组不可控，所以返回异常
                                 case 'array':
+                                    // weak map 临时保存避免生命周期内的重复检查
+                                    static::$_seen->offsetSet($value, static::ERROR_TYPE_STATIC_ARRAY);
                                     throw new PoolDebuggerException(
                                         'Value can not be cloned [static array]. ',
                                         static::ERROR_TYPE_STATIC_ARRAY
+                                    );
+                                    // 静态对象不可控，所以返回异常
+                                case 'object':
+                                    // weak map 临时保存避免生命周期内的重复检查
+                                    static::$_seen->offsetSet($value, static::ERROR_TYPE_STATIC_OBJECT);
+                                    throw new PoolDebuggerException(
+                                        'Value can not be cloned [static object]. ',
+                                        static::ERROR_TYPE_STATIC_OBJECT
                                     );
                                     // 资源不可拷贝，所以返回异常
                                 case 'resource':
