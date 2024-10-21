@@ -161,6 +161,38 @@ class ServerTest extends TestCase
         call_user_func($worker->onClose, $connection);
     }
 
+    public function testServerSetConnectionCoroutineUdpConnection()
+    {
+        Factory::init(Factory::WORKERMAN_DEFAULT);
+        $worker = new Server();
+        $worker->setConnectionCoroutine(true);
+        $worker->onMessage = $onMessage = function ($connection, $data) {
+            echo "testServerSetConnectionCoroutine->onMessage\n";
+        };
+
+        $this->assertNull($worker->getParentOnMessage());
+
+        // init
+        $reflection = new \ReflectionClass(AbstractWorker::class);
+        $init = $reflection->getMethod('initWorkers');
+        $init->setAccessible(true);
+        $init->invoke(null);
+        // onWorkerStart
+        $start = $reflection->getProperty('onWorkerStart');
+        call_user_func($start->getValue($worker), $worker);
+
+        $this->assertEquals($onMessage, $worker->getParentOnMessage());
+
+        $connection = Mockery::mock(ConnectionInterface::class);
+
+        $this->expectOutputString( "testServerSetConnectionCoroutine->onMessage\n");
+
+        $this->assertFalse(isset($worker::getConnectionCoroutineCount()[$id = spl_object_hash($connection)]));
+        call_user_func($worker->onMessage, $connection, 'aaa');
+        $this->assertEquals(0, $worker::getConnectionCoroutineCount($id));
+        $this->assertFalse(isset($worker::getConnectionCoroutineCount()[$id]));
+    }
+
     public function testServerUnsetConnectionCoroutineByForce()
     {
         Factory::init(Factory::WORKERMAN_DEFAULT);
