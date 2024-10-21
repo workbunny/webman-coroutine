@@ -13,10 +13,15 @@ use Workbunny\WebmanCoroutine\Exceptions\PoolDebuggerException;
 
 class Debugger
 {
+    /** @var int 无错误 */
     public const ERROR_TYPE_NON = 0;
+    /** @var int 标量不可clone错误 */
     public const ERROR_TYPE_NORMAL = -1;
+    /** @var int 资源不可clone错误 */
     public const ERROR_TYPE_RESOURCE = -2;
+    /** @var int 静态数组不可clone错误 */
     public const ERROR_TYPE_STATIC_ARRAY = -101;
+    /** @var int 静态对象不可clone错误 */
     public const ERROR_TYPE_STATIC_OBJECT = -102;
 
     protected static array $_errorMap = [

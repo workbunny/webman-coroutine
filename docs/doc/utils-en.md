@@ -214,42 +214,73 @@
 
   ```php
   use Workbunny\WebmanCoroutine\Utils\Pool\Pool;
+
   $source = new class {
     public $id = 1;
-  }
-  // Pooled copies of 2 source objects are placed in the area named normal-object, with the area index starting from 1.
+  };
+
+  // Pool two copies of the source object into the "normal-object" region, starting with index 1
   Pool::create('normal-object', 2, $source, true);
-  
-  // At this point, there are three source objects in the heap data, with two source objects residing in the normal-object region of the pool.
-  
-  // Wait for an idle source object in the normal-object region, and execute the callback when one is available
-  // Due to copying, the original source object's ID will not be modified after the callback execution
+
+  // At this point, there are three source objects in the heap, with two in the "normal-object" region of the Pool
+
+  // Wait to acquire an idle source object from the "normal-object" region and execute the callback
+  // Due to the copy, the original source object's id will not be modified after callback execution
   Pool::waitForIdle('normal-object', function (Pool $pool) {
     $sourceObject = $pool->getElement();
     $sourceObject->id = 2;
   });
-  // echo 1
+
+  // Output 1
   echo $source->id;
-  
-  // Retrieve the object with index 1 from the region and execute the callback when idle
+
+  // Acquire the object at index 1 in the region and wait for it to become idle before executing the callback
   $source1 = Pool::get('normal-object', 1);
   $source1->wait(function (Pool $pool) {
     $sourceObject = $pool->getElement();
     $sourceObject->id = 3;
   });
-  // echo 1
+
+  // Output 1
   echo $source->id;
-  // echo 3
+  // Output 3
   echo $source1->id;
-  
-  // Retrieve the currently idle object, and return null if none is available
+
+  // Get the current idle object, returns null if none is available
   $source1 = Pool::idle('normal-object');
-  
-  // Destroy the object with index 1 in the region
+  try {
+    $source1?->setIdle(false);
+    // Execute some operations
+  } finally {
+    // Release
+    $source1?->setIdle(true);
+  }
+
+  // Wait to acquire an idle object and lock it
+  $source1 = Pool::getIdle('normal-object');
+  try {
+    // Execute some operations
+  } finally {
+    // Release
+    $source1->setIdle(true);
+  }
+
+  // Wait for up to 10 seconds to acquire an idle object and lock it
+  $source1 = Pool::getIdle('normal-object', 10);
+  try {
+    // Execute some operations
+  } finally {
+    // Release
+    $source1->setIdle(true);
+  }
+
+  // Destroy the object at index 1 in the region
   Pool::destroy('normal-object', 1);
-  // Force destroy the object with index 2 in the region
-  Pool::destroy('normal-object', 2， true);
-  // Destroy all objects in the normal-object region 
+
+  // Forcefully destroy the object at index 2 in the region
+  Pool::destroy('normal-object', 2, true);
+
+  // Destroy all objects in the "normal-object" region
   Pool::destroy('normal-object');
   ```
   > Tips:
@@ -322,5 +353,43 @@
   
   // ...
   ```
+
+- Debugger Assistant
+
+  > Due to the special nature of some data, they may be unsafe in a coroutine environment. 
+  > Therefore, some debugging assistants are provided to check whether the data has potential risks and insecurities.
+
+  - Object has a static array property
+  ```php
+  $object = new class () {
+    public static $arr = [1, 2, 3];
+  };
+  try {
+    Debugger::validate($object);
+  } catch (PoolDebuggerException $e) {
+    // $e->getCode() = Debugger::ERROR_TYPE_STATIC_ARRAY
+    // $e->getMessage() = 'Value can not be cloned [static array]. '
+  }
+  ```
+
+  - Object has a static object property
+  ```php
+  $object = new class () {
+    public static $object = null;
+
+    public function __construct()
+    {
+       self::$object = new stdClass();
+    }
+  };
+  try {
+    Debugger::validate($object);
+  } catch (PoolDebuggerException $e) {
+    // $e->getCode() = Debugger::ERROR_TYPE_STATIC_OBJECT
+    // $e->getMessage() = 'Value can not be cloned [static object]. '
+  }
+  ```
+
+  - For more usage, please refer to the test case `tests/UtilsCase/Pool/DebuggerTest.php`
 
 - more，TODO

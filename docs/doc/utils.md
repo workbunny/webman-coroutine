@@ -217,7 +217,6 @@
   }
   // 池化拷贝2个source的对象，放入名为normal-object的区域，区域索引以1开始
   Pool::create('normal-object', 2, $source, true);
-  
   // 此时堆数据中存在三个source对象，其中Pool池的normal-object区域存在两个source对象
   
   // 等待获取normal-object区域闲置的source对象，获取到时，执行回调
@@ -242,6 +241,31 @@
   
   // 获取当前闲置对象，未获取到时返回null
   $source1 = Pool::idle('normal-object');
+  try {
+    $source1?->setIdle(false);
+    // do something
+  } finally {
+    // 释放
+    $source1?->setIdle(true);
+  }
+  
+  // 等待获取限制对象，并对获取到的对象加锁
+  $source1 = Pool::getIdle('normal-object');
+  try {
+    // do something
+  } finally {
+    // 释放
+    $source1->setIdle(true);
+  }
+  
+  // 等待10秒，获取限制对象，并对获取到的对象加锁
+  $source1 = Pool::getIdle('normal-object', 10);
+  try {
+    // do something
+  } finally {
+    // 释放
+    $source1->setIdle(true);
+  }
   
   // 销毁区域索引为1的对象
   Pool::destroy('normal-object', 1);
@@ -320,5 +344,42 @@
   
   // ...
   ```
+  
+- Debugger助手
+
+  > 由于一些数据的特殊性，导致他们可能在协程环境中是不安全的，所以提供了一些调试助手，可以查看该数据是否存在隐患和不安全
+
+  - 对象存在静态数组属性
+  ```php
+  $object = new class () {
+    public static $arr = [1, 2, 3];
+  };
+  try {
+    Debugger::validate($object);
+  } catch (PoolDebuggerException $e) {
+    // $e->getCode() = Debugger::ERROR_TYPE_STATIC_ARRAY
+    // $e->getMessage() = 'Value can not be cloned [static array]. '
+  }
+  ```
+
+  - 对象存在静态对象属性
+  ```php
+  $object = new class () {
+    public static $object = null;
+
+    public function __construct()
+    {
+       self::$object = new stdClass();
+    }
+  };
+  try {
+    Debugger::validate($object);
+  } catch (PoolDebuggerException $e) {
+    // $e->getCode() = Debugger::ERROR_TYPE_STATIC_OBJECT
+    // $e->getMessage() = 'Value can not be cloned [static object]. '
+  }
+  ```
+
+  - 更多用法请参考测试用例 `tests/UtilsCase/Pool/DebuggerTest.php`
 
 - 更多使用，TODO
