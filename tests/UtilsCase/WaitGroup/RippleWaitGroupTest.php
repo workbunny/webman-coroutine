@@ -41,14 +41,24 @@ class RippleWaitGroupTest extends TestCase
 
     public function testWait()
     {
+        $suspensionMock = Mockery::mock('alias:\Revolt\EventLoop\Suspension');
+        $suspensionMock->shouldReceive('resume')->andReturnNull();
+        $suspensionMock->shouldReceive('suspend')->andReturnNull();
         $partialMock = Mockery::mock(RippleWaitGroup::class, [1])->makePartial();
         $partialMock->add();
         $partialMock->shouldAllowMockingProtectedMethods()->shouldReceive('_sleep')->andReturnNull();
+        $partialMock->shouldAllowMockingProtectedMethods()->shouldReceive('_getSuspension')->andReturn($suspensionMock);
+
 
         $partialMock->done();
         $partialMock->wait();
         $this->assertEquals(0, $partialMock->count());
 
+        $partialMock->shouldAllowMockingProtectedMethods()->shouldReceive('_delay')->andReturnUsing(function ($callback, $timeout) {
+            $this->assertEquals(1, $timeout);
+            $callback();
+            return 'delayEventId';
+        });
         $partialMock->add();
         $partialMock->wait(1);
         $this->assertEquals(1, $partialMock->count());

@@ -8,9 +8,6 @@ use Mockery;
 use Workbunny\Tests\TestCase;
 use Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers\SwowWaitGroup;
 
-/**
- * @runTestsInSeparateProcesses
- */
 class SwowWaitGroupTest extends TestCase
 {
     protected int $_count = 0;
@@ -25,13 +22,9 @@ class SwowWaitGroupTest extends TestCase
     public function testAdd()
     {
         $swowMock = Mockery::mock('alias:Swow\Sync\WaitGroup');
-        $swowMock->shouldReceive('add')->with(1)->andReturnUsing(function () {
+        $swowMock->shouldReceive('add')->with(1)->andReturnUsing(function ($delta) {
             // 模拟增加计数
-            $this->_count++;
-        });
-        $swowMock->shouldReceive('count')->with(1)->andReturnUsing(function () {
-            // 模拟增加计数
-            return $this->_count;
+            $this->_count += $delta;
         });
 
         $wg = new SwowWaitGroup();
@@ -47,17 +40,13 @@ class SwowWaitGroupTest extends TestCase
     public function testDone()
     {
         $swowMock = Mockery::mock('alias:Swow\Sync\WaitGroup');
-        $swowMock->shouldReceive('add')->with(1)->andReturnUsing(function () {
+        $swowMock->shouldReceive('add')->with(1)->andReturnUsing(function ($delta) {
             // 模拟增加计数
-            $this->_count++;
+            $this->_count += $delta;
         });
         $swowMock->shouldReceive('done')->andReturnUsing(function () {
             // 模拟减少计数
             $this->_count--;
-        });
-        $swowMock->shouldReceive('count')->with(1)->andReturnUsing(function () {
-            // 模拟增加计数
-            return $this->_count;
         });
 
         $wg = new SwowWaitGroup();
@@ -74,13 +63,9 @@ class SwowWaitGroupTest extends TestCase
     public function testCount()
     {
         $swowMock = Mockery::mock('alias:Swow\Sync\WaitGroup');
-        $swowMock->shouldReceive('add')->with(1)->andReturnUsing(function () {
+        $swowMock->shouldReceive('add')->with(1)->andReturnUsing(function ($delta) {
             // 模拟增加计数
-            $this->_count++;
-        });
-        $swowMock->shouldReceive('count')->with(1)->andReturnUsing(function () {
-            // 模拟增加计数
-            return $this->_count;
+            $this->_count += $delta;
         });
         $wg = new SwowWaitGroup();
         $reflection = new \ReflectionClass($wg);
@@ -96,17 +81,13 @@ class SwowWaitGroupTest extends TestCase
     public function testWait()
     {
         $swowMock = Mockery::mock('alias:Swow\Sync\WaitGroup');
-        $swowMock->shouldReceive('add')->with(1)->andReturnUsing(function () {
+        $swowMock->shouldReceive('add')->with(1)->andReturnUsing(function ($delta) {
             // 模拟增加计数
-            $this->_count++;
+            $this->_count += $delta;
         });
         $swowMock->shouldReceive('done')->andReturnUsing(function () {
             // 模拟减少计数
             $this->_count--;
-        });
-        $swowMock->shouldReceive('count')->with(1)->andReturnUsing(function () {
-            // 模拟增加计数
-            return $this->_count;
         });
         $swowMock->shouldReceive('wait')->with(-1)->andReturnNull();
 
