@@ -7,17 +7,15 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers;
 
-use Swoole\Coroutine\WaitGroup;
-
 class SwooleWaitGroup implements WaitGroupInterface
 {
-    /** @var WaitGroup  */
-    protected WaitGroup $_waitGroup;
+    /** @var int */
+    protected int $_count;
 
     /** @inheritdoc  */
     public function __construct()
     {
-        $this->_waitGroup = new WaitGroup();
+        $this->_count = 0;
     }
 
     /** @inheritdoc  */
@@ -30,32 +28,47 @@ class SwooleWaitGroup implements WaitGroupInterface
                     $this->done();
                 }
             }
-        } catch (\Throwable) {}
+        } finally {
+            $this->_count = 0;
+        }
     }
 
     /** @inheritdoc  */
     public function add(int $delta = 1): bool
     {
-        $this->_waitGroup->add($delta);
+        $this->_count++;
+
         return true;
     }
 
     /** @inheritdoc  */
     public function done(): bool
     {
-        $this->_waitGroup->done();
+        $this->_count--;
+
         return true;
     }
 
     /** @inheritdoc  */
     public function count(): int
     {
-        return $this->_waitGroup->count();
+        return $this->_count;
     }
 
     /** @inheritdoc  */
-    public function wait(int $timeout = -1): void
+    public function wait(int|float $timeout = -1): void
     {
-        $this->_waitGroup->wait($timeout > 0 ? (int)($timeout * 1000) : $timeout);
+        $starTime = microtime(true);
+        $endTime = $starTime + max($timeout, 0);
+        while (1) {
+            $now = microtime(true);
+            if ($endTime !== $starTime and $now >= $endTime) {
+                return;
+            }
+            if ($this->_count <= 0) {
+                return;
+            }
+            usleep(0);
+        }
     }
 }
