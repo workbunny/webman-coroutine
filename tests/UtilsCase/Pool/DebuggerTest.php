@@ -11,6 +11,7 @@ use Workbunny\WebmanCoroutine\Utils\Pool\Debugger;
 
 class DebuggerTest extends TestCase
 {
+    protected static ?\WeakMap $seen = null;
     protected function tearDown(): void
     {
         parent::tearDown();
@@ -411,15 +412,31 @@ class DebuggerTest extends TestCase
 
     public function testSeenMechanism()
     {
-        $object = new stdClass();
-        $object->prop = 'value';
+        $this->expectOutputString(
+            "construct\n"
+            . "1\n"
+            . "destruct\n"
+            . "0\n"
+            . "over\n"
+        );
+        $object = new class
+        {
+            protected $prop = 'value';
 
+            public function __construct()
+            {
+                echo "construct\n";
+            }
+
+            public function __destruct()
+            {
+                echo "destruct\n";
+            }
+        };
         Debugger::validate($object);
-        $seen = Debugger::getSeen();
-        $this->assertNotEquals(0, $seen->count());
-
+        echo Debugger::getSeen()->count() . "\n";
         unset($object);
-
-        $this->assertEquals(0, $seen->count());
+        echo Debugger::getSeen()->count() . "\n";
+        echo "over\n";
     }
 }
