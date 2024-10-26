@@ -40,16 +40,16 @@ class RippleChannel implements ChannelInterface
     /** @inheritdoc  */
     public function pop(int|float $timeout = -1): mixed
     {
-        $time = microtime(true);
+        $time = hrtime(true);
         while (1) {
             if (!$this->isEmpty()) {
                 return $this->_queue->dequeue();
             } else {
                 // timeout
-                if ($timeout > 0 and microtime(true) - $time >= $timeout) {
+                if ($timeout > 0 and hrtime(true) - $time >= $timeout) {
                     return false;
                 }
-                $this->_sleep($timeout);
+                $this->_sleep(rand(0,1) / 1000);
             }
         }
     }
@@ -57,7 +57,7 @@ class RippleChannel implements ChannelInterface
     /** @inheritdoc */
     public function push(mixed $data, int|float $timeout = -1): bool
     {
-        $time = microtime(true);
+        $time = hrtime(true);
         while (1) {
             if (!$this->isFull()) {
                 $this->_queue->enqueue($data);
@@ -65,10 +65,10 @@ class RippleChannel implements ChannelInterface
                 return true;
             } else {
                 // timeout
-                if ($timeout > 0 and microtime(true) - $time >= $timeout) {
+                if ($timeout > 0 and hrtime(true) - $time >= $timeout) {
                     return false;
                 }
-                $this->_sleep($timeout);
+                $this->_sleep(rand(0,1) / 1000);
             }
         }
     }

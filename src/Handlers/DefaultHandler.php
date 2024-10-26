@@ -41,24 +41,35 @@ class DefaultHandler implements HandlerInterface
     {
     }
 
-    /** @inheritdoc  */
-    public static function waitFor(?\Closure $closure = null, float|int $timeout = -1): void
+    /** @inheritdoc */
+    public static function waitFor(?\Closure $closure = null, float|int $timeout = -1, string $event = 'main'): void
     {
-        $time = microtime(true);
+        $time = hrtime(true);
         while (true) {
             if ($closure and call_user_func($closure) === true) {
                 return;
             }
-            if ($timeout > 0 && microtime(true) - $time >= $timeout) {
+            if ($timeout > 0 && hrtime(true) - $time >= $timeout) {
                 throw new TimeoutException("Timeout after $timeout seconds.");
             }
             // 测试用，为保证覆盖生成时不会无限等待
             // @codeCoverageIgnoreStart
-            if (static::$debug and microtime(true) - $time >= 20) {
+            if (static::$debug and hrtime(true) - $time >= 20) {
                 return;
             }
             // @codeCoverageIgnoreEnd
-            sleep(0);
+            static::sleep();
         }
+    }
+
+    /** @inheritDoc */
+    public static function arouse(string $event = 'main'): void
+    {
+    }
+
+    /** @inheritDoc */
+    public static function sleep(float|int $timeout = 0): void
+    {
+        usleep(max((int)$timeout * 1000 * 1000, 0));
     }
 }
