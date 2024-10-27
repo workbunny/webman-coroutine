@@ -39,40 +39,29 @@ class SwooleHandler implements HandlerInterface
     }
 
     /** @inheritdoc */
-    public static function waitFor(?\Closure $closure = null, float|int $timeout = -1, string $event = 'main'): void
+    public static function waitFor(?\Closure $action = null, float|int $timeout = -1, ?string $event = null): void
     {
-        if (!(static::$_suspensions[$event] ?? null)) {
-            // 创建协程
-            static::$_suspensions[$event] = Coroutine::getCid();
-            // 创建1ms的repeat事件去恢复协程
-            $eventId = Timer::tick(1, static function () use ($event, &$eventId) {
-                if ($suspension = static::$_suspensions[$event] ?? null) {
-                    Coroutine::resume($suspension);
-                } else {
-                    Timer::clear($eventId);
-                }
-            });
-            $time = hrtime(true);
-            // 挂起
-            Coroutine::suspend();
-            try {
-                // 被检查的回调
-                if ($closure and call_user_func($closure) === true) {
+        $time = hrtime(true);
+        try {
+            while (true) {
+                if ($action and call_user_func($action) === true) {
                     return;
                 }
-                // 超时检查
                 if ($timeout > 0 and hrtime(true) - $time >= $timeout) {
                     throw new TimeoutException("Timeout after $timeout seconds.");
                 }
-            } finally {
-                // 回收协程
-                unset(static::$_suspensions[$event]);
+                // 随机协程睡眠0-2ms，避免过多的协程切换
+                static::sleep(rand(0, 2) / 1000, $event);
+            }
+        } finally {
+            if ($event) {
+                static::wakeup($event);
             }
         }
     }
 
     /** @inheritDoc */
-    public static function arouse(string $event = 'main'): void
+    public static function wakeup(string $event): void
     {
         if ($suspension = static::$_suspensions[$event] ?? null) {
             Coroutine::resume($suspension);
@@ -80,28 +69,36 @@ class SwooleHandler implements HandlerInterface
     }
 
     /** @inheritDoc */
-    public static function sleep(float|int $timeout = 0): void
+    public static function sleep(float|int $timeout = 0, ?string $event = null): void
     {
-        $suspension = Coroutine::getCid();
-        // 毫秒及以上
-        if (($interval = (int) ($timeout * 1000)) >= 1) {
-            Timer::after($interval, function () use ($suspension) {
-                Coroutine::resume($suspension);
-            });
-        }
-        // 毫秒以下
-        else {
-            $start = hrtime(true);
-            Event::defer($fuc = static function () use (&$fuc, $suspension, $timeout, $start) {
-                if (hrtime(true) - $start >= $timeout) {
+        try {
+            $suspension = Coroutine::getCid();
+            if ($event) {
+                static::$_suspensions[$event] = $suspension;
+            }
+            // 毫秒及以上
+            if (($interval = (int) ($timeout * 1000)) >= 1) {
+                Timer::after($interval, function () use ($suspension) {
                     Coroutine::resume($suspension);
-                } else {
-                    Event::defer($fuc);
-                }
-            });
+                });
+            }
+            // 毫秒以下
+            else {
+                $start = hrtime(true);
+                $timeout = max($timeout, 0);
+                Event::defer($fuc = static function () use (&$fuc, $suspension, $timeout, $start) {
+                    if (hrtime(true) - $start >= $timeout) {
+                        Coroutine::resume($suspension);
+                    } else {
+                        Event::defer($fuc);
+                    }
+                });
+            }
+            Coroutine::suspend();
+        } finally {
+            if ($event) {
+                unset(static::$_suspensions[$event]);
+            }
         }
-        Coroutine::suspend();
-//        // 使用usleep实现
-//        usleep(max((int)($timeout * 1000 * 1000), 0));
     }
 }

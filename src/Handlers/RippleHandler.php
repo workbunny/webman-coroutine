@@ -44,40 +44,29 @@ class RippleHandler implements HandlerInterface
     }
 
     /** @inheritdoc */
-    public static function waitFor(?\Closure $closure = null, float|int $timeout = -1, string $event = 'main'): void
+    public static function waitFor(?\Closure $action = null, float|int $timeout = -1, ?string $event = null): void
     {
-        if (!(static::$_suspensions[$event] ?? null)) {
-            // 创建协程
-            static::$_suspensions[$event] = $suspension = static::_getSuspension();
-            // 创建1ms的repeat事件去恢复协程
-            $eventId = static::_repeat(static function () use ($event, &$eventId) {
-                if ($suspension = static::$_suspensions[$event] ?? null) {
-                    $suspension->suspend();
-                } else {
-                    static::_cancel($eventId);
-                }
-            }, 0.001);
-            $time = hrtime(true);
-            // 挂起
-            $suspension->suspend();
-            try {
-                // 被检查的回调
-                if ($closure and call_user_func($closure) === true) {
+        $time = hrtime(true);
+        try {
+            while (true) {
+                if ($action and call_user_func($action) === true) {
                     return;
                 }
-                // 超时检查
                 if ($timeout > 0 and hrtime(true) - $time >= $timeout) {
                     throw new TimeoutException("Timeout after $timeout seconds.");
                 }
-            } finally {
-                // 回收协程
-                unset(static::$_suspensions[$event]);
+                // 随机协程睡眠0-2ms，避免过多的协程切换
+                static::sleep(rand(0, 2) / 1000, $event);
+            }
+        } finally {
+            if ($event) {
+                static::wakeup($event);
             }
         }
     }
 
     /** @inheritDoc */
-    public static function arouse(string $event = 'main'): void
+    public static function wakeup(string $event): void
     {
         if ($suspension = static::$_suspensions[$event] ?? null) {
             $suspension->resume();
@@ -85,11 +74,37 @@ class RippleHandler implements HandlerInterface
     }
 
     /** @inheritDoc */
-    public static function sleep(int|float $timeout = 0): void
+    public static function sleep(int|float $timeout = 0, ?string $event = null): void
     {
-        // @codeCoverageIgnoreStart
-        \Co\sleep(max($timeout, 0));
-        // @codeCoverageIgnoreEnd
+        try {
+            $suspension = static::_getSuspension();
+            if ($event) {
+                static::$_suspensions[$event] = $suspension;
+            }
+            // 毫秒及以上
+            if ($timeout >= 0.01) {
+                static::_delay(static function () use ($suspension) {
+                    $suspension?->resume();
+                }, (float) $timeout);
+            }
+            // 毫秒以下
+            else {
+                $start = hrtime(true);
+                $timeout = max($timeout, 0);
+                static::_defer($fuc = static function () use (&$fuc, $suspension, $timeout, $start) {
+                    if (hrtime(true) - $start >= $timeout) {
+                        $suspension?->resume();
+                    } else {
+                        static::_defer($fuc);
+                    }
+                });
+            }
+            $suspension->suspend();
+        } finally {
+            if ($event) {
+                unset(static::$_suspensions[$event]);
+            }
+        }
     }
 
     /**
@@ -99,6 +114,27 @@ class RippleHandler implements HandlerInterface
     protected static function _getSuspension(): Suspension
     {
         return \Co\getSuspension();
+    }
+
+    /**
+     * @codeCoverageIgnore 用于测试mock，忽略覆盖
+     * @param \Closure $closure
+     * @param int|float $timeout
+     * @return string
+     */
+    protected static function _delay(\Closure $closure, int|float $timeout): string
+    {
+        return \Co\delay($closure, max($timeout, 0.1));
+    }
+
+    /**
+     * @codeCoverageIgnore 用于测试mock，忽略覆盖
+     * @param \Closure $closure
+     * @return string
+     */
+    protected static function _defer(\Closure $closure): string
+    {
+        return \Co\defer($closure);
     }
 
     /**

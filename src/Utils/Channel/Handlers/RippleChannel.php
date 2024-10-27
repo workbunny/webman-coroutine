@@ -7,6 +7,8 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Utils\Channel\Handlers;
 
+use Workbunny\WebmanCoroutine\Handlers\RevoltHandler;
+
 class RippleChannel implements ChannelInterface
 {
     /** @var \SplQueue */
@@ -27,16 +29,6 @@ class RippleChannel implements ChannelInterface
     {
     }
 
-    /**
-     * @codeCoverageIgnore 用于测试mock，忽略覆盖
-     * @param int|float $second
-     * @return void
-     */
-    protected function _sleep(int|float $second): void
-    {
-        \Co\sleep(max($second, 0));
-    }
-
     /** @inheritdoc  */
     public function pop(int|float $timeout = -1): mixed
     {
@@ -49,7 +41,7 @@ class RippleChannel implements ChannelInterface
                 if ($timeout > 0 and hrtime(true) - $time >= $timeout) {
                     return false;
                 }
-                $this->_sleep(rand(0,1) / 1000);
+                RevoltHandler::sleep(rand(0,1) / 1000);
             }
         }
     }
@@ -68,7 +60,7 @@ class RippleChannel implements ChannelInterface
                 if ($timeout > 0 and hrtime(true) - $time >= $timeout) {
                     return false;
                 }
-                $this->_sleep(rand(0,1) / 1000);
+                RevoltHandler::sleep(rand(0,1) / 1000);
             }
         }
     }

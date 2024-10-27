@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Handlers;
 
+use Throwable;
 use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
 
 /**
@@ -15,47 +16,45 @@ use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
 interface HandlerInterface
 {
     /**
-     * 用于判断当前环境是否可用
+     * 协程环境是否可用
      *
-     * @return bool 返回是否可用
+     * @return bool
      */
     public static function isAvailable(): bool;
 
     /**
-     * 用于环境加载初始化
+     * 协程环境初始化加载
      *
      * @return void
      */
     public static function initEnv(): void;
 
     /**
-     * 等待直到回调返回true
-     *  - 可以用于数据改变的监听
-     *  - 使用 @link static::arouse() 唤醒对应暂停事件，用于模拟事件回调
+     * 协程等待
      *
-     * @param \Closure|null $closure 返回true或抛出异常则跳出等待
-     * @param int|float $timeout 单位：秒| -1：不限制等待时间
-     * @param string $event 暂停事件名称
+     * @param \Closure|null $action true|Throwable 都会跳出等待
+     * @param int|float $timeout 单位：秒，< 0不限制等待时间
+     * @param string|null $event 唤醒事件名
      * @return void
-     * @throws TimeoutException
+     * @throws TimeoutException 超时抛出
      */
-    public static function waitFor(?\Closure $closure = null, int|float $timeout = -1, string $event = 'main'): void;
+    public static function waitFor(?\Closure $action = null, int|float $timeout = -1, ?string $event = null): void;
 
 
     /**
-     * 唤醒暂停事件
-     *  - 用于唤醒 @link static::waitFor() 及时触达
+     * 协程唤醒
      *
-     * @param string $event 暂停事件名称
+     * @param string $event 唤醒事件名
      * @return void
      */
-    public static function arouse(string $event = 'main'): void;
+    public static function wakeup(string $event): void;
 
     /**
-     * 协程出让等待
+     * 协程睡眠
      *
      * @param int|float $timeout
+     * @param string|null $event 唤醒事件名
      * @return void
      */
-    public static function sleep(int|float $timeout = 0): void;
+    public static function sleep(int|float $timeout = 0, ?string $event = null): void;
 }

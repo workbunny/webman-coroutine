@@ -9,6 +9,7 @@ namespace Workbunny\WebmanCoroutine\Handlers;
 
 use Swow\Channel;
 use Swow\ChannelException;
+use Swow\Coroutine;
 use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
 use Workerman\Events\EventInterface;
 use Workerman\Worker;
@@ -21,7 +22,7 @@ class SwowHandler implements HandlerInterface
     use HandlerMethods;
 
     /**
-     * @var Channel[]
+     * @var Coroutine[]
      */
     protected static array $_suspensions = [];
 
@@ -41,52 +42,55 @@ class SwowHandler implements HandlerInterface
     }
 
     /** @inheritdoc */
-    public static function waitFor(?\Closure $closure = null, float|int $timeout = -1, string $event = 'main'): void
+    public static function waitFor(?\Closure $action = null, float|int $timeout = -1, ?string $event = null): void
     {
-        if (!(static::$_suspensions[$event] ?? null)) {
-            // 创建通道
-            static::$_suspensions[$event] = $channel = new Channel();
-            // 创建1ms的repeat事件去恢复通道
-            $timerId = Worker::$globalEvent->add(0.001, EventInterface::EV_TIMER, static function () use (&$timerId, $event) {
-                if ($channel = static::$_suspensions[$event]) {
-                    $channel->push(1);
-                } else {
-                    Worker::$globalEvent->del($timerId, EventInterface::EV_TIMER);
-                }
-            });
-            $time = hrtime(true);
-            try {
-                // 利用channel阻塞，挂起
-                $channel->pop($timeout);
-            } catch (ChannelException) {}
-            try {
-                // 被检查的回调
-                if ($closure and call_user_func($closure) === true) {
+        $time = hrtime(true);
+        try {
+            while (true) {
+                if ($action and call_user_func($action) === true) {
                     return;
                 }
-                // 超时检查
                 if ($timeout > 0 and hrtime(true) - $time >= $timeout) {
                     throw new TimeoutException("Timeout after $timeout seconds.");
                 }
-            } finally {
-                // 回收
-                static::$_suspensions[$event]?->close();
-                unset(static::$_suspensions[$event]);
+                // 随机协程睡眠0-2ms，避免过多的协程切换
+                static::sleep(rand(0, 2) / 1000, $event);
+            }
+        } finally {
+            if ($event) {
+                static::wakeup($event);
             }
         }
     }
 
     /** @inheritDoc */
-    public static function arouse(string $event = 'main'): void
+    public static function wakeup(string $event): void
     {
-        if ($channel = static::$_suspensions[$event]) {
-            $channel->push(1);
+        if ($suspension = static::$_suspensions[$event] ?? null) {
+            if ($suspension->isAvailable()) {
+                $suspension?->resume();
+            }
         }
     }
 
     /** @inheritDoc */
-    public static function sleep(float|int $timeout = 0): void
+    public static function sleep(float|int $timeout = 0, ?string $event = null): void
     {
-        usleep(max((int)($timeout * 1000 * 1000), 0));
+        try {
+            $suspension = Coroutine::getCurrent();
+            if ($event) {
+                static::$_suspensions[$event] = $suspension;
+            }
+            Worker::$globalEvent->add(max($timeout, 0), EventInterface::EV_TIMER_ONCE, static function () use ($suspension, $event) {
+                if ($suspension->isAvailable()) {
+                    $suspension?->resume();
+                }
+            });
+            Coroutine::yield();
+        } finally {
+            if ($event) {
+                unset(static::$_suspensions[$event]);
+            }
+        }
     }
 }
