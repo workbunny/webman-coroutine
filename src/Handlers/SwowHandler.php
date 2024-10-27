@@ -82,7 +82,7 @@ class SwowHandler implements HandlerInterface
                 static::$_suspensions[$event] = $suspension;
             }
             Worker::$globalEvent->add(max($timeout, 0), EventInterface::EV_TIMER_ONCE, static function () use ($suspension, $event) {
-                if ($suspension->isAvailable()) {
+                if ($suspension?->isAvailable()) {
                     $suspension?->resume();
                 }
             });
