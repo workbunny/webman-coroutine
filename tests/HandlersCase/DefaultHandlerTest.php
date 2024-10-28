@@ -47,4 +47,25 @@ class DefaultHandlerTest extends TestCase
 
         $this->assertFalse($return);
     }
+
+    public function testSleep()
+    {
+        DefaultHandler::sleep();
+        $this->assertTrue(true);
+
+        DefaultHandler::sleep(0.001);
+        $this->assertTrue(true);
+
+        DefaultHandler::sleep(0.000001);
+        $this->assertTrue(true);
+
+        DefaultHandler::sleep(event: __METHOD__);
+        $this->assertTrue(true);
+    }
+
+    public function testWakeup()
+    {
+        DefaultHandler::wakeup(__METHOD__);
+        $this->assertTrue(true);
+    }
 }
