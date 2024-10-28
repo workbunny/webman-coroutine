@@ -38,6 +38,11 @@ class Debugger
      */
     protected static ?WeakMap $_seen = null;
 
+    /**
+     * 估算内存占用缓存
+     *
+     * @var array<int, int> <spl_object_id, size>
+     */
     protected static array $_estimateCache = [];
 
     /**
@@ -48,6 +53,16 @@ class Debugger
         if (!static::$_seen) {
             static::$_seen = new WeakMap();
         }
+    }
+
+    /**
+     * 清理估算缓存
+     *
+     * @return void
+     */
+    public static function estimateCacheClear(): void
+    {
+        static::$_estimateCache = [];
     }
 
     /**
@@ -76,11 +91,10 @@ class Debugger
      * @param mixed $value
      * @return bool
      */
-    public static function validate(mixed $value): bool
+    public static function validate(mixed &$value): bool
     {
         $debugger = new static();
         $res = $debugger->cloneValidate($value);
-        unset($debugger);
         return $res->getReturn();
     }
 
@@ -90,15 +104,14 @@ class Debugger
      * @param mixed $value
      * @return int
      */
-    public static function estimate(mixed $value): int
+    public static function estimate(mixed &$value): int
     {
         $debugger = new static();
         $totalSize = 0;
         foreach ($debugger->valueEstimate($value) as $size) {
             $totalSize += $size;
         }
-        static::$_estimateCache = [];
-        unset($debugger);
+        static::estimateCacheClear();
         return $totalSize;
     }
 
@@ -109,7 +122,7 @@ class Debugger
      * @param int $level 递归层级，无需使用
      * @return Generator
      */
-    public function cloneValidate(mixed $value, int $level = 0): Generator
+    public function cloneValidate(mixed &$value, int $level = 0): Generator
     {
         switch ($type = gettype($value)) {
             // 数组循环检查
@@ -224,35 +237,31 @@ class Debugger
      * @param int $level 递归层级，无需使用
      * @return Generator
      */
-    public function valueEstimate(mixed $value, int $level = 0): Generator
+    public function valueEstimate(mixed &$value, int $level = 0): Generator
     {
         switch (gettype($value)) {
             // 数组循环检查
             case 'array':
-                $id = spl_object_id((object)$value);
-                if (!isset(static::$_estimateCache[$id])) {
-                    // 初始估值
-                    $size = 7 * 8;
-                    foreach ($value as $k => $v) {
+                $isIndexArray = ($value === [] or array_keys($value) === range(0, count($value) - 1));
+                // 初始估值
+                $size = 7 * 8;
+                foreach ($value as $k => $v) {
+                    if (!$isIndexArray) {
                         foreach ($this->valueEstimate($k, $level - 1) as $subSize) {
                             $size += $subSize;
                         }
-                        foreach ($this->valueEstimate($v, $level - 1) as $subSize) {
-                            $size += $subSize;
-                        }
                     }
-                    static::$_estimateCache[$id] = $size;
-                    yield $size;
-                } else {
-                    yield 0;
+                    foreach ($this->valueEstimate($v, $level - 1) as $subSize) {
+                        $size += $subSize;
+                    }
                 }
+                yield $size;
                 break;
 
             // 对象递归检查
             case 'object':
                 $id = spl_object_id($value);
                 if (!isset(static::$_estimateCache[$id])) {
-
                     // 初始估值
                     $size = 10 * 8;
                     // 利用反射检查属性
@@ -281,6 +290,7 @@ class Debugger
                 $id = (int)$value;
                 if (!isset(static::$_estimateCache[$id])) {
                     $size = match (get_resource_type($value)) {
+                        // @codeCoverageIgnoreStart
                         // 从源码获得
                         'stream' => 1024,        // 流资源（文件句柄、网络流）
                         'curl' => 2048,          // cURL资源
@@ -308,6 +318,7 @@ class Debugger
 
                         // 默认大小
                         default => 64,           // 其他资源类型
+                        // @codeCoverageIgnoreEnd
                     };
                     static::$_estimateCache[$id] = $size;
                     yield $size;
