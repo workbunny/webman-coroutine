@@ -232,7 +232,7 @@ class Debugger
                 $id = spl_object_id((object)$value);
                 if (!isset(static::$_estimateCache[$id])) {
                     // 初始估值
-                    $size = 4 * 8;
+                    $size = 7 * 8;
                     foreach ($value as $k => $v) {
                         foreach ($this->valueEstimate($k, $level - 1) as $subSize) {
                             $size += $subSize;
@@ -252,6 +252,7 @@ class Debugger
             case 'object':
                 $id = spl_object_id($value);
                 if (!isset(static::$_estimateCache[$id])) {
+
                     // 初始估值
                     $size = 10 * 8;
                     // 利用反射检查属性
