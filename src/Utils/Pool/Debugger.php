@@ -111,7 +111,6 @@ class Debugger
         foreach ($debugger->valueEstimate($value) as $size) {
             $totalSize += $size;
         }
-        static::estimateCacheClear();
         return $totalSize;
     }
 
@@ -261,7 +260,7 @@ class Debugger
             // 对象递归检查
             case 'object':
                 $id = spl_object_id($value);
-                if (!isset(static::$_estimateCache[$id])) {
+                if (!($size = static::$_estimateCache[$id] ?? null)) {
                     // 初始估值
                     $size = 10 * 8;
                     // 利用反射检查属性
@@ -281,14 +280,14 @@ class Debugger
                     static::$_estimateCache[$id] = $size;
                     yield $size;
                 } else {
-                    yield 0;
+                    yield $level >= 0 ? $size : 0;
                 }
                 break;
 
             // 资源
             case 'resource':
                 $id = (int)$value;
-                if (!isset(static::$_estimateCache[$id])) {
+                if (!($size = static::$_estimateCache[$id] ?? null)) {
                     $size = match (get_resource_type($value)) {
                         // @codeCoverageIgnoreStart
                         // 从源码获得
@@ -323,7 +322,7 @@ class Debugger
                     static::$_estimateCache[$id] = $size;
                     yield $size;
                 } else {
-                    yield 0;
+                    yield $level >=0 ? $size : 0;
                 }
                 break;
 
