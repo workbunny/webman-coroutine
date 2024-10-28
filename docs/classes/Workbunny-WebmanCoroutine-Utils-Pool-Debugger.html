@@ -155,13 +155,13 @@
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#constant_ERROR_TYPE_NON">ERROR_TYPE_NON</a>
     <span>
-        &nbsp;= 1                            </span>
+        &nbsp;= 0                            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#constant_ERROR_TYPE_NORMAL">ERROR_TYPE_NORMAL</a>
     <span>
-        &nbsp;= 0                            </span>
+        &nbsp;= -1                            </span>
 </dt>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
@@ -173,7 +173,13 @@
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#constant_ERROR_TYPE_STATIC_ARRAY">ERROR_TYPE_STATIC_ARRAY</a>
     <span>
-        &nbsp;= -1                            </span>
+        &nbsp;= -101                            </span>
+</dt>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#constant_ERROR_TYPE_STATIC_OBJECT">ERROR_TYPE_STATIC_OBJECT</a>
+    <span>
+        &nbsp;= -102                            </span>
 </dt>
 
     </dl>
@@ -208,6 +214,20 @@
 <dd>删除弱引用缓存</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#method_estimate">estimate()</a>
+    <span>
+                                &nbsp;: int    </span>
+</dt>
+<dd>估算内存占用</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#method_estimateCacheClear">estimateCacheClear()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>清理估算缓存</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#method_getSeen">getSeen()</a>
     <span>
                                 &nbsp;: <abbr title="\WeakMap">WeakMap</abbr>|null    </span>
@@ -220,6 +240,13 @@
                                 &nbsp;: bool    </span>
 </dt>
 <dd>检查是否可拷贝</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#method_valueEstimate">valueEstimate()</a>
+    <span>
+                                &nbsp;: <abbr title="\Generator">Generator</abbr>    </span>
+</dt>
+<dd>估算数据的内存占用大小 [字节]</dd>
 
     </dl>
 
@@ -242,23 +269,25 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Pool/Debugger.php"><a href="files/src-utils-pool-debugger.html"><abbr title="src/Utils/Pool/Debugger.php">Debugger.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">16</span>
+    <span class="phpdocumentor-element-found-in__line">17</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#source-view.16" class="phpdocumentor-element-found-in__source" data-line="16" data-modal="source-view" data-src="files/src/Utils/Pool/Debugger.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#source-view.17" class="phpdocumentor-element-found-in__source" data-line="17" data-modal="source-view" data-src="files/src/Utils/Pool/Debugger.php.txt"></a>
     </aside>
 
     
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
+        <span class="phpdocumentor-signature__type">int</span>
     <span class="phpdocumentor-signature__name">ERROR_TYPE_NON</span>
-    = <span class="phpdocumentor-signature__default-value">1</span>
+    = <span class="phpdocumentor-signature__default-value">0</span>
 </code>
 
 
     
-    
+        <section class="phpdocumentor-description"><p>无错误</p>
+</section>
+
     
 
     
@@ -274,23 +303,25 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Pool/Debugger.php"><a href="files/src-utils-pool-debugger.html"><abbr title="src/Utils/Pool/Debugger.php">Debugger.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">17</span>
+    <span class="phpdocumentor-element-found-in__line">19</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#source-view.17" class="phpdocumentor-element-found-in__source" data-line="17" data-modal="source-view" data-src="files/src/Utils/Pool/Debugger.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#source-view.19" class="phpdocumentor-element-found-in__source" data-line="19" data-modal="source-view" data-src="files/src/Utils/Pool/Debugger.php.txt"></a>
     </aside>
 
     
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
+        <span class="phpdocumentor-signature__type">int</span>
     <span class="phpdocumentor-signature__name">ERROR_TYPE_NORMAL</span>
-    = <span class="phpdocumentor-signature__default-value">0</span>
+    = <span class="phpdocumentor-signature__default-value">-1</span>
 </code>
 
 
     
-    
+        <section class="phpdocumentor-description"><p>标量不可clone错误</p>
+</section>
+
     
 
     
@@ -306,23 +337,25 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Pool/Debugger.php"><a href="files/src-utils-pool-debugger.html"><abbr title="src/Utils/Pool/Debugger.php">Debugger.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">19</span>
+    <span class="phpdocumentor-element-found-in__line">21</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#source-view.19" class="phpdocumentor-element-found-in__source" data-line="19" data-modal="source-view" data-src="files/src/Utils/Pool/Debugger.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#source-view.21" class="phpdocumentor-element-found-in__source" data-line="21" data-modal="source-view" data-src="files/src/Utils/Pool/Debugger.php.txt"></a>
     </aside>
 
     
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
+        <span class="phpdocumentor-signature__type">int</span>
     <span class="phpdocumentor-signature__name">ERROR_TYPE_RESOURCE</span>
     = <span class="phpdocumentor-signature__default-value">-2</span>
 </code>
 
 
     
-    
+        <section class="phpdocumentor-description"><p>资源不可clone错误</p>
+</section>
+
     
 
     
@@ -338,23 +371,59 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Pool/Debugger.php"><a href="files/src-utils-pool-debugger.html"><abbr title="src/Utils/Pool/Debugger.php">Debugger.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">18</span>
+    <span class="phpdocumentor-element-found-in__line">23</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#source-view.18" class="phpdocumentor-element-found-in__source" data-line="18" data-modal="source-view" data-src="files/src/Utils/Pool/Debugger.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#source-view.23" class="phpdocumentor-element-found-in__source" data-line="23" data-modal="source-view" data-src="files/src/Utils/Pool/Debugger.php.txt"></a>
     </aside>
 
     
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">mixed</span>
+        <span class="phpdocumentor-signature__type">int</span>
     <span class="phpdocumentor-signature__name">ERROR_TYPE_STATIC_ARRAY</span>
-    = <span class="phpdocumentor-signature__default-value">-1</span>
+    = <span class="phpdocumentor-signature__default-value">-101</span>
 </code>
 
 
     
+        <section class="phpdocumentor-description"><p>静态数组不可clone错误</p>
+</section>
+
     
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_ERROR_TYPE_STATIC_OBJECT">
+        ERROR_TYPE_STATIC_OBJECT
+        <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#constant_ERROR_TYPE_STATIC_OBJECT" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Pool/Debugger.php"><a href="files/src-utils-pool-debugger.html"><abbr title="src/Utils/Pool/Debugger.php">Debugger.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">25</span>
+
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#source-view.25" class="phpdocumentor-element-found-in__source" data-line="25" data-modal="source-view" data-src="files/src/Utils/Pool/Debugger.php.txt"></a>
+    </aside>
+
+    
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">int</span>
+    <span class="phpdocumentor-signature__name">ERROR_TYPE_STATIC_OBJECT</span>
+    = <span class="phpdocumentor-signature__default-value">-102</span>
+</code>
+
+
+    
+        <section class="phpdocumentor-description"><p>静态对象不可clone错误</p>
+</section>
+
     
 
     
@@ -384,9 +453,9 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Pool/Debugger.php"><a href="files/src-utils-pool-debugger.html"><abbr title="src/Utils/Pool/Debugger.php">Debugger.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">37</span>
+    <span class="phpdocumentor-element-found-in__line">51</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#source-view.37" class="phpdocumentor-element-found-in__source" data-line="37" data-modal="source-view" data-src="files/src/Utils/Pool/Debugger.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#source-view.51" class="phpdocumentor-element-found-in__source" data-line="51" data-modal="source-view" data-src="files/src/Utils/Pool/Debugger.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">构造函数</p>
@@ -420,16 +489,16 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Pool/Debugger.php"><a href="files/src-utils-pool-debugger.html"><abbr title="src/Utils/Pool/Debugger.php">Debugger.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">84</span>
+    <span class="phpdocumentor-element-found-in__line">124</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#source-view.84" class="phpdocumentor-element-found-in__source" data-line="84" data-modal="source-view" data-src="files/src/Utils/Pool/Debugger.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#source-view.124" class="phpdocumentor-element-found-in__source" data-line="124" data-modal="source-view" data-src="files/src/Utils/Pool/Debugger.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">检查是否可拷贝</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">cloneValidate</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$value</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$level</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Generator">Generator</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">cloneValidate</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__reference-operator">&amp;</span><span class="phpdocumentor-signature__argument__name">$value</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$level</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Generator">Generator</abbr></span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -479,9 +548,9 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Pool/Debugger.php"><a href="files/src-utils-pool-debugger.html"><abbr title="src/Utils/Pool/Debugger.php">Debugger.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">59</span>
+    <span class="phpdocumentor-element-found-in__line">83</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#source-view.59" class="phpdocumentor-element-found-in__source" data-line="59" data-modal="source-view" data-src="files/src/Utils/Pool/Debugger.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#source-view.83" class="phpdocumentor-element-found-in__source" data-line="83" data-modal="source-view" data-src="files/src/Utils/Pool/Debugger.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">删除弱引用缓存</p>
@@ -489,6 +558,92 @@
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
             <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">delSeen</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+    
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_estimate">
+        estimate()
+        <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#method_estimate" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Pool/Debugger.php"><a href="files/src-utils-pool-debugger.html"><abbr title="src/Utils/Pool/Debugger.php">Debugger.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">107</span>
+
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#source-view.107" class="phpdocumentor-element-found-in__source" data-line="107" data-modal="source-view" data-src="files/src/Utils/Pool/Debugger.php.txt"></a>
+    </aside>
+
+        <p class="phpdocumentor-summary">估算内存占用</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">estimate</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__reference-operator">&amp;</span><span class="phpdocumentor-signature__argument__name">$value</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$value</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">int</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_estimateCacheClear">
+        estimateCacheClear()
+        <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#method_estimateCacheClear" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Pool/Debugger.php"><a href="files/src-utils-pool-debugger.html"><abbr title="src/Utils/Pool/Debugger.php">Debugger.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">63</span>
+
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#source-view.63" class="phpdocumentor-element-found-in__source" data-line="63" data-modal="source-view" data-src="files/src/Utils/Pool/Debugger.php.txt"></a>
+    </aside>
+
+        <p class="phpdocumentor-summary">清理估算缓存</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">estimateCacheClear</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -515,9 +670,9 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Pool/Debugger.php"><a href="files/src-utils-pool-debugger.html"><abbr title="src/Utils/Pool/Debugger.php">Debugger.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">49</span>
+    <span class="phpdocumentor-element-found-in__line">73</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#source-view.49" class="phpdocumentor-element-found-in__source" data-line="49" data-modal="source-view" data-src="files/src/Utils/Pool/Debugger.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#source-view.73" class="phpdocumentor-element-found-in__source" data-line="73" data-modal="source-view" data-src="files/src/Utils/Pool/Debugger.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">获取弱引用缓存</p>
@@ -555,16 +710,16 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Pool/Debugger.php"><a href="files/src-utils-pool-debugger.html"><abbr title="src/Utils/Pool/Debugger.php">Debugger.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">70</span>
+    <span class="phpdocumentor-element-found-in__line">94</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#source-view.70" class="phpdocumentor-element-found-in__source" data-line="70" data-modal="source-view" data-src="files/src/Utils/Pool/Debugger.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#source-view.94" class="phpdocumentor-element-found-in__source" data-line="94" data-modal="source-view" data-src="files/src/Utils/Pool/Debugger.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">检查是否可拷贝</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">validate</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$value</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">validate</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__reference-operator">&amp;</span><span class="phpdocumentor-signature__argument__name">$value</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -588,6 +743,65 @@
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">bool</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_valueEstimate">
+        valueEstimate()
+        <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#method_valueEstimate" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Utils/Pool/Debugger.php"><a href="files/src-utils-pool-debugger.html"><abbr title="src/Utils/Pool/Debugger.php">Debugger.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">239</span>
+
+            <a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#source-view.239" class="phpdocumentor-element-found-in__source" data-line="239" data-modal="source-view" data-src="files/src/Utils/Pool/Debugger.php.txt"></a>
+    </aside>
+
+        <p class="phpdocumentor-summary">估算数据的内存占用大小 [字节]</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">valueEstimate</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__reference-operator">&amp;</span><span class="phpdocumentor-signature__argument__name">$value</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$level</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Generator">Generator</abbr></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$value</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$level</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">0</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>递归层级，无需使用</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Generator">Generator</abbr></span>
             </section>
 
 </article>
@@ -707,6 +921,7 @@
                                                     <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#constant_ERROR_TYPE_NORMAL">ERROR_TYPE_NORMAL</a></li>
                                                     <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#constant_ERROR_TYPE_RESOURCE">ERROR_TYPE_RESOURCE</a></li>
                                                     <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#constant_ERROR_TYPE_STATIC_ARRAY">ERROR_TYPE_STATIC_ARRAY</a></li>
+                                                    <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#constant_ERROR_TYPE_STATIC_OBJECT">ERROR_TYPE_STATIC_OBJECT</a></li>
                                             </ul>
                 </li>
             
@@ -717,8 +932,11 @@
                                             <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#method___construct">__construct()</a></li>
                                             <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#method_cloneValidate">cloneValidate()</a></li>
                                             <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#method_delSeen">delSeen()</a></li>
+                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#method_estimate">estimate()</a></li>
+                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#method_estimateCacheClear">estimateCacheClear()</a></li>
                                             <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#method_getSeen">getSeen()</a></li>
                                             <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#method_validate">validate()</a></li>
+                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#method_valueEstimate">valueEstimate()</a></li>
                                     </ul>
             </li>
                     </ul>

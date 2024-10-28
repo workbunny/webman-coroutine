@@ -7,12 +7,15 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers;
 
-use Workbunny\WebmanCoroutine\Handlers\RevoltHandler;
+use Revolt\EventLoop\Suspension;
+use Revolt\EventLoop;
 
 class RevoltWaitGroup implements WaitGroupInterface
 {
     /** @var int */
     protected int $_count;
+
+    protected ?Suspension $_suspension = null;
 
     /** @inheritdoc  */
     public function __construct()
@@ -32,6 +35,7 @@ class RevoltWaitGroup implements WaitGroupInterface
             }
         } finally {
             $this->_count = 0;
+            $this->_suspension = null;
         }
     }
 
@@ -47,6 +51,9 @@ class RevoltWaitGroup implements WaitGroupInterface
     public function done(): bool
     {
         $this->_count--;
+        if ($this->_count <= 0) {
+            $this->_suspension?->resume();
+        }
 
         return true;
     }
@@ -60,15 +67,12 @@ class RevoltWaitGroup implements WaitGroupInterface
     /** @inheritdoc  */
     public function wait(int|float $timeout = -1): void
     {
-        $time = microtime(true);
-        while (1) {
-            if ($timeout > 0 and microtime(true) - $time >= $timeout) {
-                return;
-            }
-            if ($this->_count <= 0) {
-                return;
-            }
-            RevoltHandler::sleep(max($timeout, 0));
+        $this->_suspension = EventLoop::getSuspension();
+        if ($timeout > 0) {
+            EventLoop::delay($timeout, function () {
+                $this->_suspension?->resume();
+            });
         }
+        $this->_suspension->suspend();
     }
 }

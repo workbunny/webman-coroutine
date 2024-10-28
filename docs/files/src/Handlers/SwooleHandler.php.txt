@@ -40,7 +40,7 @@ class SwooleHandler implements HandlerInterface
             if ($timeout > 0 && microtime(true) - $time >= $timeout) {
                 throw new TimeoutException("Timeout after $timeout seconds.");
             }
-            usleep(max((int) ($timeout * 1000 * 1000), 0));
+            usleep(0);
         }
     }
 }

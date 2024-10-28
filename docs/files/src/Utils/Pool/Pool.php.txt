@@ -9,8 +9,8 @@ namespace Workbunny\WebmanCoroutine\Utils\Pool;
 
 use WeakReference;
 use Workbunny\WebmanCoroutine\Exceptions\PoolException;
-
 use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
+
 use function Workbunny\WebmanCoroutine\wait_for;
 
 use Workerman\Worker;
@@ -86,6 +86,7 @@ class Pool
         foreach (range(1, $count) as $i) {
             static::append($name, $i, $element);
         }
+
         return self::$pools[$name];
     }
 
@@ -208,6 +209,7 @@ class Pool
             return $pool !== null;
         }, $timeout);
         $pool->setIdle(false);
+
         return $pool;
     }
 
@@ -224,6 +226,7 @@ class Pool
     {
         try {
             $pool = static::getIdle($name, $timeout);
+
             return call_user_func($closure, $pool);
         } finally {
             if (isset($pool)) {

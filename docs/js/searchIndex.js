@@ -941,6 +941,11 @@ Search.appendIndex(
             "summary": "\u6784\u9020\u51FD\u6570",
             "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#method___construct"
         },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Debugger\u003A\u003AestimateCacheClear\u0028\u0029",
+            "name": "estimateCacheClear",
+            "summary": "\u6E05\u7406\u4F30\u7B97\u7F13\u5B58",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#method_estimateCacheClear"
+        },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Debugger\u003A\u003AgetSeen\u0028\u0029",
             "name": "getSeen",
             "summary": "\u83B7\u53D6\u5F31\u5F15\u7528\u7F13\u5B58",
@@ -956,10 +961,20 @@ Search.appendIndex(
             "summary": "\u68C0\u67E5\u662F\u5426\u53EF\u62F7\u8D1D",
             "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#method_validate"
         },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Debugger\u003A\u003Aestimate\u0028\u0029",
+            "name": "estimate",
+            "summary": "\u4F30\u7B97\u5185\u5B58\u5360\u7528",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#method_estimate"
+        },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Debugger\u003A\u003AcloneValidate\u0028\u0029",
             "name": "cloneValidate",
             "summary": "\u68C0\u67E5\u662F\u5426\u53EF\u62F7\u8D1D",
             "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#method_cloneValidate"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Debugger\u003A\u003AvalueEstimate\u0028\u0029",
+            "name": "valueEstimate",
+            "summary": "\u4F30\u7B97\u6570\u636E\u7684\u5185\u5B58\u5360\u7528\u5927\u5C0F\u0020\u005B\u5B57\u8282\u005D",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#method_valueEstimate"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Debugger\u003A\u003AERROR_TYPE_NON",
             "name": "ERROR_TYPE_NON",
@@ -971,15 +986,20 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#constant_ERROR_TYPE_NORMAL"
         },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Debugger\u003A\u003AERROR_TYPE_RESOURCE",
+            "name": "ERROR_TYPE_RESOURCE",
+            "summary": "",
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#constant_ERROR_TYPE_RESOURCE"
+        },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Debugger\u003A\u003AERROR_TYPE_STATIC_ARRAY",
             "name": "ERROR_TYPE_STATIC_ARRAY",
             "summary": "",
             "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#constant_ERROR_TYPE_STATIC_ARRAY"
         },                {
-            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Debugger\u003A\u003AERROR_TYPE_RESOURCE",
-            "name": "ERROR_TYPE_RESOURCE",
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Debugger\u003A\u003AERROR_TYPE_STATIC_OBJECT",
+            "name": "ERROR_TYPE_STATIC_OBJECT",
             "summary": "",
-            "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#constant_ERROR_TYPE_RESOURCE"
+            "url": "classes/Workbunny-WebmanCoroutine-Utils-Pool-Debugger.html#constant_ERROR_TYPE_STATIC_OBJECT"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Utils\\Pool\\Pool",
             "name": "Pool",
