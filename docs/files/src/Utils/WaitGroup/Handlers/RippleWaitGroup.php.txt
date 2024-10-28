@@ -7,10 +7,18 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers;
 
+use Closure;
+use Revolt\EventLoop\Suspension;
+
 class RippleWaitGroup implements WaitGroupInterface
 {
     /** @var int */
     protected int $_count;
+
+    /**
+     * @var Suspension|null
+     */
+    protected ?Suspension $_suspension = null;
 
     /** @inheritdoc  */
     public function __construct()
@@ -30,6 +38,7 @@ class RippleWaitGroup implements WaitGroupInterface
             }
         } finally {
             $this->_count = 0;
+            $this->_suspension = null;
         }
     }
 
@@ -45,6 +54,9 @@ class RippleWaitGroup implements WaitGroupInterface
     public function done(): bool
     {
         $this->_count--;
+        if ($this->_count <= 0) {
+            $this->_suspension?->resume();
+        }
 
         return true;
     }
@@ -58,25 +70,32 @@ class RippleWaitGroup implements WaitGroupInterface
     /** @inheritdoc  */
     public function wait(int|float $timeout = -1): void
     {
-        $time = microtime(true);
-        while (1) {
-            if ($timeout > 0 and microtime(true) - $time >= $timeout) {
-                return;
-            }
-            if ($this->_count <= 0) {
-                return;
-            }
-            $this->_sleep(0);
+        $this->_suspension = $this->_getSuspension();
+        if ($timeout > 0) {
+            $this->_delay(function () {
+                $this->_suspension?->resume();
+            }, $timeout);
         }
+        $this->_suspension->suspend();
     }
 
     /**
-     * @codeCoverageIgnore 测试mock，忽略覆盖
-     * @param int|float $second
-     * @return void
+     * @codeCoverageIgnore 用于测试mock，忽略覆盖
+     * @param Closure $closure
+     * @param int|float $timeout
+     * @return string
      */
-    protected function _sleep(int|float $second): void
+    protected function _delay(Closure $closure, int|float $timeout): string
     {
-        \Co\sleep(max($second, 0));
+        return \Co\delay($closure, max($timeout, 0.1));
+    }
+
+    /**
+     * @codeCoverageIgnore 用于测试mock，忽略覆盖
+     * @return Suspension
+     */
+    protected function _getSuspension(): Suspension
+    {
+        return \Co\getSuspension();
     }
 }

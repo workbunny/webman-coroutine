@@ -82,7 +82,7 @@ class SwooleEvent implements EventInterface
                             // @codeCoverageIgnoreEnd
                         }
                     });
-                    $res = is_int($res) ? (string)$res : false;
+                    $res = is_int($res) ? (string) $res : false;
                 }
 
                 if ($res === false) {
@@ -95,7 +95,6 @@ class SwooleEvent implements EventInterface
                 return $timerId;
             case EventInterface::EV_READ:
                 if (!\is_resource($fd)) {
-
                     return false;
                 }
 
@@ -104,7 +103,6 @@ class SwooleEvent implements EventInterface
                     : Event::add($fd, $func, null, SWOOLE_EVENT_READ);
             case EventInterface::EV_WRITE:
                 if (!\is_resource($fd)) {
-
                     return false;
                 }
 
@@ -148,23 +146,20 @@ class SwooleEvent implements EventInterface
                 return false;
             case EventInterface::EV_READ:
                 if (!\is_resource($fd)) {
-
                     return false;
                 }
 
                 if (!Event::isset($fd, SWOOLE_EVENT_WRITE)) {
-
                     return Event::del($fd);
                 }
+
                 return Event::set($fd, null, null, SWOOLE_EVENT_WRITE);
             case EventInterface::EV_WRITE:
                 if (!\is_resource($fd)) {
-
                     return false;
                 }
 
                 if (!Event::isset($fd, SWOOLE_EVENT_READ)) {
-
                     return Event::del($fd);
                 }
 

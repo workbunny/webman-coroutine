@@ -48,7 +48,7 @@ class RevoltHandler implements HandlerInterface
             if ($timeout > 0 && microtime(true) - $time >= $timeout) {
                 throw new TimeoutException("Timeout after $timeout seconds.");
             }
-            RevoltHandler::sleep($timeout);
+            RevoltHandler::sleep(0);
         }
     }
 

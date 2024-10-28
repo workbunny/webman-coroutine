@@ -11,11 +11,11 @@ use Workbunny\WebmanCoroutine\Utils\Pool\Debugger;
 
 class DebuggerTest extends TestCase
 {
-    protected static ?\WeakMap $seen = null;
     protected function tearDown(): void
     {
         parent::tearDown();
         Debugger::delSeen();
+        Debugger::estimateCacheClear();
     }
 
     protected function _generateNestedArray($depth): array
@@ -371,39 +371,44 @@ class DebuggerTest extends TestCase
     public function testCloneValidateException()
     {
         // string
+        $value = '123';
         try {
-            Debugger::validate('123');
+            Debugger::validate($value);
         } catch (PoolDebuggerException $e) {
             $this->assertEquals(Debugger::ERROR_TYPE_NORMAL, $e->getCode());
             $this->assertEquals('Value can not be cloned [string]. ', $e->getMessage());
         }
 
         // int
+        $value = 1;
         try {
-            Debugger::validate(1);
+            Debugger::validate($value);
         } catch (PoolDebuggerException $e) {
             $this->assertEquals(Debugger::ERROR_TYPE_NORMAL, $e->getCode());
             $this->assertEquals('Value can not be cloned [integer]. ', $e->getMessage());
         }
 
         // float
+        $value = 1.1;
         try {
-            Debugger::validate(1.1);
+            Debugger::validate($value);
         } catch (PoolDebuggerException $e) {
             $this->assertEquals(Debugger::ERROR_TYPE_NORMAL, $e->getCode());
             $this->assertEquals('Value can not be cloned [double]. ', $e->getMessage());
         }
 
         // boolean
+        $value = true;
         try {
-            Debugger::validate(true);
+            Debugger::validate($value);
         } catch (PoolDebuggerException $e) {
             $this->assertEquals(Debugger::ERROR_TYPE_NORMAL, $e->getCode());
             $this->assertEquals('Value can not be cloned [boolean]. ', $e->getMessage());
         }
 
+        $value = null;
         try {
-            Debugger::validate(null);
+            Debugger::validate($value);
         } catch (PoolDebuggerException $e) {
             $this->assertEquals(Debugger::ERROR_TYPE_NORMAL, $e->getCode());
             $this->assertEquals('Value can not be cloned [NULL]. ', $e->getMessage());
@@ -438,5 +443,108 @@ class DebuggerTest extends TestCase
         unset($object);
         echo Debugger::getSeen()->count() . "\n";
         echo "over\n";
+    }
+
+    public function testArrayEstimation()
+    {
+        $arrayBase = 56;
+
+        $array = [
+            1,
+            2,
+        ];
+        $this->assertTrue(($arrayBase + (2 * PHP_INT_SIZE)) == Debugger::estimate($array));
+        Debugger::estimateCacheClear();
+
+        $array = [
+            1.2,
+            2.3,
+        ];
+        $this->assertTrue(($arrayBase + (2 * 8)) == Debugger::estimate($array));
+        Debugger::estimateCacheClear();
+
+        $array = [
+            '123',
+            '456',
+        ];
+        $this->assertTrue(($arrayBase + 6) == Debugger::estimate($array));
+        Debugger::estimateCacheClear();
+
+        $array = [
+            true,
+            false,
+        ];
+        $this->assertTrue(($arrayBase + 2) == Debugger::estimate($array));
+        Debugger::estimateCacheClear();
+
+        $array = [
+            null,
+            null,
+        ];
+        $this->assertTrue(($arrayBase + 0) === Debugger::estimate($array));
+        Debugger::estimateCacheClear();
+
+        $array = [
+            new stdClass(),
+            new stdClass(),
+        ];
+        $this->assertTrue(($arrayBase + (8 * 10 * 2)) == Debugger::estimate($array));
+        Debugger::estimateCacheClear();
+
+        $array = [
+            [1]
+        ];
+        $this->assertTrue(($arrayBase * 2) <= Debugger::estimate($array));
+        Debugger::estimateCacheClear();
+
+        $array = [
+            'abc' => 123,
+            'def' => 456,
+        ];
+        $this->assertTrue(($arrayBase + (3 * 2 + 8 * 2)) == Debugger::estimate($array));
+        Debugger::estimateCacheClear();
+
+        $resource1 = fopen('php://memory', 'r');
+        $resource2 = $resource1;
+        $array = [
+            $resource1, $resource2
+        ];
+        $this->assertTrue(($arrayBase + 1024) == Debugger::estimate($array));
+        Debugger::estimateCacheClear();
+    }
+
+    public function testObjectEstimation()
+    {
+        $objectBase = 80;
+        $object = new stdClass();
+        $object->a = 'test';
+        $object->b = new stdClass();
+        $object->c = new stdClass();
+        $this->assertTrue(($objectBase * 3 + 4) == Debugger::estimate($object));
+        Debugger::estimateCacheClear();
+
+        $object = new stdClass();
+        $object->a = 'test';
+        $object->b = $obj = new stdClass();
+        $object->c = $obj;
+        $this->assertTrue(($objectBase * 2 + 4) == Debugger::estimate($object));
+        Debugger::estimateCacheClear();
+
+        $object = new stdClass();
+        $object->a = 'test';
+        $obj = new stdClass();
+        $obj->a = $obj;
+        $object->b = $obj;
+        $this->assertTrue(($objectBase * 2 + 4) == Debugger::estimate($object));
+        Debugger::estimateCacheClear();
+    }
+
+    public function testResourceEstimation()
+    {
+        $resource = fopen('php://memory', 'r');
+        $this->assertTrue(1024 == Debugger::estimate($resource));
+        $resource2 = $resource;
+        $this->assertTrue(1024 == Debugger::estimate($resource2));
+        fclose($resource);
     }
 }

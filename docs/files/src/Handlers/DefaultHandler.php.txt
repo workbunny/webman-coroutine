@@ -58,7 +58,7 @@ class DefaultHandler implements HandlerInterface
                 return;
             }
             // @codeCoverageIgnoreEnd
-            sleep(max(intval($timeout), 0));
+            sleep(0);
         }
     }
 }
