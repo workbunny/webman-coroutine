@@ -71,34 +71,36 @@ class SwooleHandler implements HandlerInterface
     /** @inheritDoc */
     public static function sleep(float|int $timeout = 0, ?string $event = null): void
     {
-        try {
-            $suspension = Coroutine::getCid();
-            if ($event) {
-                static::$_suspensions[$event] = $suspension;
-            }
-            // 毫秒及以上
-            if (($interval = (int) ($timeout * 1000)) >= 1) {
-                Timer::after($interval, function () use ($suspension) {
-                    Coroutine::resume($suspension);
-                });
-            }
-            // 毫秒以下
-            else {
-                $start = hrtime(true);
-                $timeout = max($timeout, 0);
-                Event::defer($fuc = static function () use (&$fuc, $suspension, $timeout, $start) {
-                    if (hrtime(true) - $start >= $timeout) {
+        Coroutine::create(function (float|int $timeout, ?string $event) {
+            try {
+                $suspension = Coroutine::getCid();
+                if ($event) {
+                    static::$_suspensions[$event] = $suspension;
+                }
+                // 毫秒及以上
+                if (($interval = (int) ($timeout * 1000)) >= 1) {
+                    Timer::after($interval, function () use ($suspension) {
                         Coroutine::resume($suspension);
-                    } else {
-                        Event::defer($fuc);
-                    }
-                });
+                    });
+                }
+                // 毫秒以下
+                else {
+                    $start = hrtime(true);
+                    $timeout = max($timeout, 0);
+                    Event::defer($fuc = static function () use (&$fuc, $suspension, $timeout, $start) {
+                        if (hrtime(true) - $start >= $timeout) {
+                            Coroutine::resume($suspension);
+                        } else {
+                            Event::defer($fuc);
+                        }
+                    });
+                }
+                Coroutine::suspend();
+            } finally {
+                if ($event) {
+                    unset(static::$_suspensions[$event]);
+                }
             }
-            Coroutine::suspend();
-        } finally {
-            if ($event) {
-                unset(static::$_suspensions[$event]);
-            }
-        }
+        }, $timeout, $event);
     }
 }
