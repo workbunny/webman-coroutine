@@ -8,7 +8,7 @@ declare(strict_types=1);
 namespace Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers;
 
 use Closure;
-use Psc\Core\Coroutine\Promise;
+use Ripple\Promise;
 use Revolt\EventLoop\Suspension;
 
 class RippleCoroutine implements CoroutineInterface

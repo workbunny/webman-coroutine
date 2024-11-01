@@ -42,7 +42,7 @@ class RippleCoroutineTest extends TestCase
                 });
 
                 // 模拟返回
-                return Mockery::mock('alias:Psc\Core\Coroutine\Promise');
+                return Mockery::mock('alias:Ripple\Promise');
             });
 
         // 模拟构造函数执行
@@ -98,7 +98,7 @@ class RippleCoroutineTest extends TestCase
                 });
 
                 // 模拟返回
-                return Mockery::mock('alias:Psc\Core\Coroutine\Promise');
+                return Mockery::mock('alias:Ripple\Promise');
             });
 
         // 模拟构造函数执行
@@ -132,7 +132,7 @@ class RippleCoroutineTest extends TestCase
                 });
 
                 // 模拟返回
-                return Mockery::mock('alias:Psc\Core\Coroutine\Promise');
+                return Mockery::mock('alias:Ripple\Promise');
             });
 
         // 模拟构造函数执行
@@ -161,7 +161,7 @@ class RippleCoroutineTest extends TestCase
                 });
 
                 // 模拟返回
-                return Mockery::mock('alias:Psc\Core\Coroutine\Promise');
+                return Mockery::mock('alias:Ripple\Promise');
             });
 
         // 模拟构造函数执行
