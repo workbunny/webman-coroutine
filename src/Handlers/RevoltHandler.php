@@ -51,7 +51,7 @@ class RevoltHandler implements HandlerInterface
                 if ($action and call_user_func($action) === true) {
                     return;
                 }
-                if ($timeout > 0 and hrtime(true) - $time >= $timeout) {
+                if ($timeout > 0 and (hrtime(true) - $time) / 1e9 >= $timeout) {
                     throw new TimeoutException("Timeout after $timeout seconds.");
                 }
                 // 随机协程睡眠0-2ms，避免过多的协程切换
@@ -91,7 +91,7 @@ class RevoltHandler implements HandlerInterface
                 $start = hrtime(true);
                 $timeout = max($timeout, 0);
                 EventLoop::defer($fuc = static function () use (&$fuc, $suspension, $timeout, $start) {
-                    if (hrtime(true) - $start >= $timeout) {
+                    if ((hrtime(true) - $start) / 1e9 >= $timeout) {
                         $suspension?->resume();
                     } else {
                         EventLoop::defer($fuc);

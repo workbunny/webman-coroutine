@@ -136,25 +136,4 @@ class RippleHandler implements HandlerInterface
     {
         return \Co\defer($closure);
     }
-
-    /**
-     * @codeCoverageIgnore 用于测试mock，忽略覆盖
-     * @param \Closure $closure
-     * @param int|float $timeout
-     * @return string
-     */
-    protected static function _repeat(\Closure $closure, int|float $timeout): string
-    {
-        return \Co\repeat($closure, $timeout);
-    }
-
-    /**
-     * @codeCoverageIgnore 用于测试mock，忽略覆盖
-     * @param string $eventId
-     * @return void
-     */
-    protected static function _cancel(string $eventId): void
-    {
-        \Co\cancel($eventId);
-    }
 }

@@ -46,12 +46,14 @@ class RevoltHandlerTest extends TestCase
             $closure();
         });
 
+        // success
         $return = false;
         RevoltHandler::waitFor(function () use (&$return) {
-            return $return = true;
+            return ($return = true);
         });
         $this->assertTrue($return);
 
+        // success with sleep
         $return = false;
         RevoltHandler::waitFor(function () use (&$return) {
             sleep(1);
@@ -60,20 +62,32 @@ class RevoltHandlerTest extends TestCase
         });
         $this->assertTrue($return);
 
-        // 模拟超时
-        $this->expectException(TimeoutException::class);
+        // success with event
         $return = false;
         RevoltHandler::waitFor(function () use (&$return) {
+            sleep(1);
+
+            $return = true;
+            RevoltHandler::wakeup(__METHOD__);
+            return $return;
+        }, event: __METHOD__);
+        $this->assertTrue($return);
+
+        // timeout in loop
+        $this->expectException(TimeoutException::class);
+        RevoltHandler::waitFor(function () {
+
             return false;
         }, 1);
-        $this->assertFalse($return);
 
-        // 模拟毫秒以下超时
+        // timeout not loop
         $this->expectException(TimeoutException::class);
-        RevoltHandler::waitFor(function () use (&$return) {
+        // 模拟超时
+        RevoltHandler::waitFor(function () {
+            sleep(2);
+
             return false;
-        }, 0.00099);
-        $this->assertFalse($return);
+        }, 0.1);
     }
 
     /**
@@ -94,9 +108,22 @@ class RevoltHandlerTest extends TestCase
             $closure();
         });
 
-        RevoltHandler::sleep(1);
-        RevoltHandler::sleep(0.00099);
-        RevoltHandler::sleep(0);
+        RevoltHandler::sleep();
+        $this->assertTrue(true);
+
+        RevoltHandler::sleep(0.001);
+        $this->assertTrue(true);
+
+        RevoltHandler::sleep(0.000001);
+        $this->assertTrue(true);
+
+        RevoltHandler::sleep(event: __METHOD__);
+        $this->assertTrue(true);
+    }
+
+    public function testWakeup()
+    {
+        RevoltHandler::wakeup(__METHOD__);
         $this->assertTrue(true);
     }
 }

@@ -23,12 +23,14 @@ class DefaultHandlerTest extends TestCase
 
     public function testWaitFor()
     {
+        // success
         $return = false;
         DefaultHandler::waitFor(function () use (&$return) {
             return ($return = true);
         });
         $this->assertTrue($return);
 
+        // success with sleep
         $return = false;
         DefaultHandler::waitFor(function () use (&$return) {
             sleep(1);
@@ -37,15 +39,32 @@ class DefaultHandlerTest extends TestCase
         });
         $this->assertTrue($return);
 
+        // success with event
+        $return = false;
+        DefaultHandler::waitFor(function () use (&$return) {
+            sleep(1);
+
+            $return = true;
+            DefaultHandler::wakeup(__METHOD__);
+            return $return;
+        }, event: __METHOD__);
+        $this->assertTrue($return);
+
+        // timeout in loop
+        $this->expectException(TimeoutException::class);
+        DefaultHandler::waitFor(function () {
+
+            return false;
+        }, 1);
+
+        // timeout not loop
         $this->expectException(TimeoutException::class);
         // 模拟超时
-        DefaultHandler::waitFor(function () use (&$return) {
+        DefaultHandler::waitFor(function () {
             sleep(2);
 
             return false;
         }, 0.1);
-
-        $this->assertFalse($return);
     }
 
     public function testSleep()

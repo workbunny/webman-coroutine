@@ -50,19 +50,21 @@ class DefaultHandler implements HandlerInterface
                 if ($action and call_user_func($action) === true) {
                     return;
                 }
-                if ($timeout > 0 and hrtime(true) - $time >= $timeout) {
+                if ($timeout > 0 and ((hrtime(true) - $time) / 1e9 >= $timeout)) {
                     throw new TimeoutException("Timeout after $timeout seconds.");
                 }
                 // 测试用，为保证覆盖生成时不会无限等待
                 // @codeCoverageIgnoreStart
-                if (static::$debug and hrtime(true) - $time >= 20) {
+                if (static::$debug and ((hrtime(true) - $time) / 1e9 >= 20)) {
                     return;
                 }
                 // @codeCoverageIgnoreEnd
                 static::sleep();
             }
         } finally {
-            static::wakeup($event);
+            if ($event) {
+                static::wakeup($event);
+            }
         }
     }
 

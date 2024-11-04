@@ -58,4 +58,41 @@ class RippleHandlerTest extends TestCase
         }, 1);
         $this->assertFalse($return);
     }
+
+    /**
+     * @return void
+     */
+    public function testSleep()
+    {
+        $suspensionMock = Mockery::mock('alias:\Revolt\EventLoop\Suspension');
+        $suspensionMock->shouldReceive('resume')->andReturnNull();
+        $suspensionMock->shouldReceive('suspend')->andReturnNull();
+
+        $eventLoopMock = Mockery::mock('alias:\Revolt\EventLoop');
+        $eventLoopMock->shouldReceive('getSuspension')->andReturn($suspensionMock);
+        $eventLoopMock->shouldReceive('defer')->andReturnUsing(function ($closure) {
+            $closure();
+        });
+        $eventLoopMock->shouldReceive('delay')->andReturnUsing(function ($timeout, $closure) {
+            $closure();
+        });
+
+        RevoltHandler::sleep();
+        $this->assertTrue(true);
+
+        RevoltHandler::sleep(0.001);
+        $this->assertTrue(true);
+
+        RevoltHandler::sleep(0.000001);
+        $this->assertTrue(true);
+
+        RevoltHandler::sleep(event: __METHOD__);
+        $this->assertTrue(true);
+    }
+
+    public function testWakeup()
+    {
+        RippleHandler::wakeup(__METHOD__);
+        $this->assertTrue(true);
+    }
 }
