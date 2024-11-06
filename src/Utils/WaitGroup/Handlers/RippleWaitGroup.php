@@ -7,18 +7,13 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers;
 
-use Closure;
-use Revolt\EventLoop\Suspension;
+use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
+use Workbunny\WebmanCoroutine\Handlers\RippleHandler;
 
 class RippleWaitGroup implements WaitGroupInterface
 {
     /** @var int */
     protected int $_count;
-
-    /**
-     * @var Suspension|null
-     */
-    protected ?Suspension $_suspension = null;
 
     /** @inheritdoc  */
     public function __construct()
@@ -38,7 +33,6 @@ class RippleWaitGroup implements WaitGroupInterface
             }
         } finally {
             $this->_count = 0;
-            $this->_suspension = null;
         }
     }
 
@@ -55,7 +49,7 @@ class RippleWaitGroup implements WaitGroupInterface
     {
         $this->_count--;
         if ($this->_count <= 0) {
-            $this->_suspension?->resume();
+            RippleHandler::wakeup(spl_object_hash($this));
         }
 
         return true;
@@ -70,32 +64,9 @@ class RippleWaitGroup implements WaitGroupInterface
     /** @inheritdoc  */
     public function wait(int|float $timeout = -1): void
     {
-        $this->_suspension = $this->_getSuspension();
-        if ($timeout > 0) {
-            $this->_delay(function () {
-                $this->_suspension?->resume();
-            }, $timeout);
+        RippleHandler::sleep($timeout, spl_object_hash($this));
+        if ($this->count() > 0) {
+            throw new TimeoutException("Timeout after $timeout seconds [WaitGroup]. ");
         }
-        $this->_suspension->suspend();
-    }
-
-    /**
-     * @codeCoverageIgnore 用于测试mock，忽略覆盖
-     * @param Closure $closure
-     * @param int|float $timeout
-     * @return string
-     */
-    protected function _delay(Closure $closure, int|float $timeout): string
-    {
-        return \Co\delay($closure, max($timeout, 0.1));
-    }
-
-    /**
-     * @codeCoverageIgnore 用于测试mock，忽略覆盖
-     * @return Suspension
-     */
-    protected function _getSuspension(): Suspension
-    {
-        return \Co\getSuspension();
     }
 }
