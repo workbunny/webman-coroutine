@@ -51,6 +51,7 @@ interface HandlerInterface
 
     /**
      * 协程睡眠
+     *  - $event !== null && $timeout < 0 时，将阻塞当前协程，直到被唤醒
      *
      * @param int|float $timeout
      * @param string|null $event 唤醒事件名

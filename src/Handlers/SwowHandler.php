@@ -80,6 +80,10 @@ class SwowHandler implements HandlerInterface
             $suspension = Coroutine::getCurrent();
             if ($event) {
                 static::$_suspensions[$event] = $suspension;
+                if ($timeout < 0) {
+                    Coroutine::yield();
+                    return;
+                }
             }
             Worker::$globalEvent->add(max($timeout, 0), EventInterface::EV_TIMER_ONCE, static function () use ($suspension, $event) {
                 if ($suspension?->isAvailable()) {
