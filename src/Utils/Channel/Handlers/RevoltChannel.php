@@ -32,37 +32,33 @@ class RevoltChannel implements ChannelInterface
     /** @inheritdoc  */
     public function pop(int|float $timeout = -1): mixed
     {
-        $time = hrtime(true);
-        while (1) {
-            if (!$this->isEmpty()) {
-                return $this->_queue->dequeue();
-            } else {
-                // timeout
-                if ($timeout > 0 and hrtime(true) - $time >= $timeout) {
-                    return false;
-                }
-                RevoltHandler::sleep(rand(0,1) / 1000);
-            }
-        }
+        $eventId = spl_object_hash($this);
+        // 等待空闲
+        RevoltHandler::waitFor(function () {
+            return !$this->isEmpty();
+        }, event: "$eventId.pop");
+        // 读取数据
+        $res = $this->_queue->dequeue();
+        // 唤醒push事件
+        RevoltHandler::wakeup("$eventId.push");
+
+        return $res;
     }
 
     /** @inheritdoc */
     public function push(mixed $data, int|float $timeout = -1): bool
     {
-        $time = hrtime(true);
-        while (1) {
-            if (!$this->isFull()) {
-                $this->_queue->enqueue($data);
+        $eventId = spl_object_hash($this);
+        // 等待空闲
+        RevoltHandler::waitFor(function () {
+            return !$this->isFull();
+        }, event: "$eventId.push");
+        // 放入队列
+        $this->_queue->enqueue($data);
+        // 唤醒pop事件
+        RevoltHandler::wakeup("$eventId.pop");
 
-                return true;
-            } else {
-                // timeout
-                if ($timeout > 0 and hrtime(true) - $time >= $timeout) {
-                    return false;
-                }
-                RevoltHandler::sleep(rand(0,1) / 1000);
-            }
-        }
+        return true;
     }
 
     /** @inheritdoc  */
