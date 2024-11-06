@@ -164,20 +164,24 @@ class CoroutineWebServer extends App
                 ? (self::$_connectionCoroutineCount[$connectionId] + 1)
                 : 1;
         // 请求消费协程
-        new Coroutine(function () use (&$res, $waitGroup, $params, $connectionId) {
-            try {
-                $res = parent::onMessage(...$params);
-            } finally {
-                if (isset(self::$_connectionCoroutineCount[$connectionId])) {
-                    // 计数 --
-                    self::$_connectionCoroutineCount[$connectionId]--;
-                    // 尝试回收
-                    self::unsetConnectionCoroutineCount($connectionId);
+        try {
+            new Coroutine(function () use (&$res, $waitGroup, $params, $connectionId) {
+                try {
+                    $res = parent::onMessage(...$params);
+                } finally {
+                    if (isset(self::$_connectionCoroutineCount[$connectionId])) {
+                        // 计数 --
+                        self::$_connectionCoroutineCount[$connectionId]--;
+                        // 尝试回收
+                        self::unsetConnectionCoroutineCount($connectionId);
+                    }
+                    // wg完成
+                    $waitGroup->done();
                 }
-                // wg完成
-                $waitGroup->done();
-            }
-        });
+            });
+        } finally {
+            $waitGroup->done();
+        }
         // 等待
         $waitGroup->wait();
 
