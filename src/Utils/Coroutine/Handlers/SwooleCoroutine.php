@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers;
 
 use Swoole\Coroutine;
+use Workbunny\WebmanCoroutine\Handlers\SwooleHandler;
 
 class SwooleCoroutine implements CoroutineInterface
 {
@@ -22,10 +23,10 @@ class SwooleCoroutine implements CoroutineInterface
     public function __construct(\Closure $func)
     {
         while (1) {
-            if ($id = Coroutine::create(function () use (&$id, $func) {
+            if ($id = Coroutine::create(function () use ($func) {
                 try {
-                    $this->_id = $id;
-                    call_user_func($func, $id);
+                    $this->_id = Coroutine::getCid();
+                    call_user_func($func, $this->_id);
                 } finally {
                     $this->_id = null;
                 }
@@ -34,9 +35,7 @@ class SwooleCoroutine implements CoroutineInterface
                 break;
             }
             // 保证协程切换
-            // @codeCoverageIgnoreStart
-            sleep(0);
-            // @codeCoverageIgnoreEnd
+            SwooleHandler::sleep(rand(0, 2) / 1000);
         }
     }
 
