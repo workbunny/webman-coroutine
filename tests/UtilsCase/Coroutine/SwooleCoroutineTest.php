@@ -6,6 +6,7 @@ namespace Workbunny\Tests\UtilsCase\Coroutine;
 
 use Mockery;
 use Workbunny\Tests\TestCase;
+use Workbunny\WebmanCoroutine\Handlers\SwooleHandler;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\SwooleCoroutine;
 
 class SwooleCoroutineTest extends TestCase
@@ -16,6 +17,11 @@ class SwooleCoroutineTest extends TestCase
         Mockery::close();
     }
 
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     * @return void
+     */
     public function testConstruct()
     {
         $executed = false;
@@ -28,9 +34,8 @@ class SwooleCoroutineTest extends TestCase
         // mock 协程创建
         $callback = null;
         $coroutineMock = Mockery::mock('alias:Swoole\Coroutine');
-        $coroutineMock->shouldReceive('create')->andReturnUsing(function ($closure) use (&$callback, &$executed) {
+        $coroutineMock->shouldReceive('create')->once()->andReturnUsing(function ($closure) use (&$callback, &$executed) {
             $callback = $closure;
-
             return 123;
         });
         $coroutineMock->shouldReceive('getCid')->andReturn(123);
@@ -49,6 +54,22 @@ class SwooleCoroutineTest extends TestCase
         $this->assertNull($coroutine->origin());
         $this->assertNull($coroutine->id());
         $this->assertEquals(123, $id);
+
+        // 模拟创建失败，触发sleep协程切换
+        $eventLoopMock = Mockery::mock('alias:' . SwooleHandler::class);
+        $eventLoopMock->shouldReceive('sleep')->andReturnNull();
+        $i = 0;
+        $coroutineMock->shouldReceive('create')->andReturnUsing(function ($closure) use (&$i) {
+            $i ++;
+            if ($i > 1) {
+                return 123;
+            }
+
+            return false;
+        });
+        // 构造
+        new SwooleCoroutine($func);
+        $this->assertTrue(true);
     }
 
     public function testDestruct()

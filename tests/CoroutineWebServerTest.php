@@ -10,6 +10,8 @@ use ReflectionMethod;
 use support\Request;
 use Workbunny\WebmanCoroutine\CoroutineWebServer;
 
+use Workerman\Connection\TcpConnection;
+use Workerman\Connection\UdpConnection;
 use function Workbunny\WebmanCoroutine\event_loop;
 
 use Workbunny\WebmanCoroutine\Exceptions\WorkerException;
@@ -18,6 +20,7 @@ use Workerman\Worker;
 
 /**
  * @runTestsInSeparateProcesses
+ * @preserveGlobalState disabled
  */
 class CoroutineWebServerTest extends TestCase
 {
@@ -110,7 +113,8 @@ class CoroutineWebServerTest extends TestCase
 
     public function testOnWorkerStop()
     {
-        $worker = Mockery::mock('alias:Workerman\Worker');
+        $worker = Mockery::mock('Workerman\Worker')->makePartial();
+        $worker::$eventLoopClass = event_loop();
         $mockClass = new class () {
             public function onWorkerStop(Worker $worker, ...$params)
             {
@@ -125,6 +129,41 @@ class CoroutineWebServerTest extends TestCase
         $this->assertTrue($res);
         $logger = Mockery::mock('alias:Monolog\Logger');
         $server = new CoroutineWebServer(Request::class, $logger, '', '');
+        $server->onWorkerStop($worker, 'one', 'two');
+        $this->assertTrue(true);
+    }
+
+    public function testOnWorkerStopWaitForClose()
+    {
+        $worker = Mockery::mock('Workerman\Worker')->makePartial();
+        $worker::$eventLoopClass = event_loop();
+        $worker->shouldReceive('safeEcho')->andReturnNull();
+        $mockClass = new class () {
+            public function onWorkerStop(Worker $worker, ...$params)
+            {
+                TestCase::assertEquals('one', $params[0] ?? null);
+                TestCase::assertEquals('two', $params[1] ?? null);
+            }
+        };
+        // 替换Webman\App类，用于测试
+        $res = class_alias(get_class($mockClass), 'Webman\App', false);
+        $this->assertTrue($res);
+        $logger = Mockery::mock('alias:Monolog\Logger');
+        $server = new CoroutineWebServer(Request::class, $logger, '', '');
+
+        set_config('plugin.workbunny.webman-coroutine.app.wait_for_close', -1);
+        $server->onWorkerStop($worker, 'one', 'two');
+        $this->assertTrue(true);
+
+        set_config('plugin.workbunny.webman-coroutine.app.wait_for_close', 1);
+        $server->onWorkerStop($worker, 'one', 'two');
+        $this->assertTrue(true);
+
+        set_config('plugin.workbunny.webman-coroutine.app.wait_for_close', 0.1);
+        $reflection = new ReflectionClass(CoroutineWebServer::class);
+        $property = $reflection->getProperty('_connectionCoroutineCount');
+        $property->setAccessible(true);
+        $property->setValue($server, ['1' => 1]);
         $server->onWorkerStop($worker, 'one', 'two');
         $this->assertTrue(true);
     }
@@ -155,6 +194,38 @@ class CoroutineWebServerTest extends TestCase
 
         // 非object
         $server->onConnect('123');
+        $this->assertTrue(true);
+    }
+
+    public function testOnConnectOnStopSignal()
+    {
+        $request = $this->createMock(Request::class);
+        $server = Mockery::mock(CoroutineWebServer::class)->makePartial();
+
+        // TCP
+        $connection = Mockery::mock(TcpConnection::class);
+        $connection->shouldReceive('pauseRecv')->once()->andReturnUsing(function () {
+            $this->assertTrue(true);
+        });
+        $reflectionClass = new ReflectionClass(CoroutineWebServer::class);
+        $property = $reflectionClass->getProperty('_stopSignal');
+        $property->setAccessible(true);
+        $property->setValue($server, true);
+        $reflectionMethod = $reflectionClass->getMethod('onConnect');
+        $reflectionMethod->invoke($server, $connection, $request);
+        $this->assertTrue(true);
+
+        // TCP
+        $connection = Mockery::mock( UdpConnection::class);
+        $connection->shouldReceive('close')->once()->andReturnUsing(function () {
+            $this->assertTrue(true);
+        });
+        $reflectionClass = new ReflectionClass(CoroutineWebServer::class);
+        $property = $reflectionClass->getProperty('_stopSignal');
+        $property->setAccessible(true);
+        $property->setValue($server, true);
+        $reflectionMethod = $reflectionClass->getMethod('onConnect');
+        $reflectionMethod->invoke($server, $connection, $request);
         $this->assertTrue(true);
     }
 
@@ -210,6 +281,24 @@ class CoroutineWebServerTest extends TestCase
         $reflectionMethod->invoke($server, $connection, $request);
         // 测试非connectionInterface
         $reflectionMethod->invoke($server, 'not connectionInterface', $request);
+        $this->assertTrue(true);
+    }
+
+    public function testOnMessageOnStopSignal()
+    {
+        $request = $this->createMock(Request::class);
+        $server = Mockery::mock(CoroutineWebServer::class)->makePartial();
+        // mock server class
+        $connection = Mockery::mock('alias:' . ConnectionInterface::class);
+        $connection->shouldReceive('close')->once()->andReturnUsing(function () {
+            $this->assertTrue(true);
+        });
+        $reflectionClass = new ReflectionClass(CoroutineWebServer::class);
+        $property = $reflectionClass->getProperty('_stopSignal');
+        $property->setAccessible(true);
+        $property->setValue($server, true);
+        $reflectionMethod = $reflectionClass->getMethod('onMessage');
+        $reflectionMethod->invoke($server, $connection, $request);
         $this->assertTrue(true);
     }
 }

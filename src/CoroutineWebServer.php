@@ -9,6 +9,7 @@ namespace Workbunny\WebmanCoroutine;
 
 use Webman\App;
 use Webman\Http\Request;
+use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
 use Workbunny\WebmanCoroutine\Exceptions\WorkerException;
 use Workbunny\WebmanCoroutine\Handlers\HandlerInterface;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Coroutine;
@@ -91,17 +92,28 @@ class CoroutineWebServer extends App
         if (method_exists(parent::class, 'onWorkerStop')) {
             parent::onWorkerStop($worker, ...$params);
         }
-        if (config('plugin.workbunny.webman-coroutine.app.wait_for_close', false)) {
+        if (($timeout = config('plugin.workbunny.webman-coroutine.app.wait_for_close', 0)) !== 0) {
             $classname = self::class;
+            // @codeCoverageIgnoreStart
             Worker::safeEcho("[$classname] Wait for close start. ");
             Worker::safeEcho("[$classname] Current remaining connections: " . count(self::getConnectionCoroutineCount()));
+            // @codeCoverageIgnoreEnd
             // 标记停止信号
             $this->_stopSignal = true;
-            // 等待协程消费者消费完毕
-            wait_for(function () {
-                return empty(self::$_connectionCoroutineCount);
-            });
+            try {
+                // 等待协程消费者消费完毕
+                wait_for(function () {
+                    return empty(self::$_connectionCoroutineCount);
+                }, timeout: $timeout);
+            } catch (TimeoutException) {
+                $count = count(self::$_connectionCoroutineCount);
+                // @codeCoverageIgnoreStart
+                Worker::safeEcho("[$classname] Wait for close timeout [connection count: $count]. ");
+                // @codeCoverageIgnoreEnd
+            }
+            // @codeCoverageIgnoreStart
             Worker::safeEcho("[$classname] Wait for close success. ");
+            // @codeCoverageIgnoreEnd
         }
     }
 
