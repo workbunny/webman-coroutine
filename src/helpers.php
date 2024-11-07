@@ -33,17 +33,18 @@ function event_loop(?string $expectEventLoopClass = null): string
  * @see HandlerInterface::waitFor()
  * @param \Closure|null $action 等待回调
  * @param float|int $timeout 超时时间
+ * @param string|null $event 协程事件名
  * @return void
  * @throws TimeoutException
  */
-function wait_for(?\Closure $action, float|int $timeout = -1): void
+function wait_for(?\Closure $action, float|int $timeout = -1, null|string $event = null): void
 {
     if (($handler = Factory::getCurrentHandler()) === null) {
         Factory::init(null);
         /** @var HandlerInterface $handler */
         $handler = Factory::getCurrentHandler();
     }
-    $handler::waitFor($action, $timeout);
+    $handler::waitFor($action, $timeout, $event);
 }
 
 /**
@@ -54,7 +55,7 @@ function wait_for(?\Closure $action, float|int $timeout = -1): void
  * @param string|null $event 协程事件名
  * @return void
  */
-function sleep(float|int $timeout = 0, ?string $event = null): void
+function sleep(float|int $timeout = 0, null|string $event = null): void
 {
     if (($handler = Factory::getCurrentHandler()) === null) {
         Factory::init(null);

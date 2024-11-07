@@ -19,7 +19,8 @@ class RevoltHandlerTest extends TestCase
 
     public function testIsAvailable()
     {
-        $this->markTestSkipped('Skipped. ');
+        RevoltHandler::isAvailable();
+        $this->assertTrue(true);
     }
 
     public function testInitEnv()
@@ -114,15 +115,28 @@ class RevoltHandlerTest extends TestCase
         RevoltHandler::sleep(0.001);
         $this->assertTrue(true);
 
-        RevoltHandler::sleep(0.000001);
+        RevoltHandler::sleep(0.0009);
         $this->assertTrue(true);
 
         RevoltHandler::sleep(event: __METHOD__);
+        $this->assertTrue(true);
+
+        RevoltHandler::sleep(-1, event: __METHOD__);
         $this->assertTrue(true);
     }
 
     public function testWakeup()
     {
+        RevoltHandler::wakeup(__METHOD__);
+        $this->assertTrue(true);
+
+        $suspensionMock = Mockery::mock('alias:\Revolt\EventLoop\Suspension');
+        $suspensionMock->shouldReceive('resume')->andReturnNull();
+        $reflection = new \ReflectionClass(RevoltHandler::class);
+        $property = $reflection->getProperty('_suspensions');
+        $property->setAccessible(true);
+        $property->setValue(null, [__METHOD__ => $suspensionMock]);
+
         RevoltHandler::wakeup(__METHOD__);
         $this->assertTrue(true);
     }

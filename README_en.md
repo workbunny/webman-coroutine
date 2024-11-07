@@ -61,8 +61,7 @@ Install via composer:
 composer require workbunny/webman-coroutine
 ```
 
-## Description
-### Directory
+## Directory
 
 ```
 |-- config                       # webman configuration files
@@ -101,6 +100,7 @@ composer require workbunny/webman-coroutine
 | API |                         [Fucntion-APIs](https://workbunny.github.io/webman-coroutine/)                         |
 | Tutorial  | [Introduction to PHP Coroutine](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/coroutine.md) |
 |  -  | [Installation and Configuration](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/install.md)  |
+|  -  |     [Helper Functions](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/helpers.md)     |
 |  -  |    [`workerman` Environment](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/workerman.md)    |
 |  -  |        [`webman` Framework](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/webman.md)        |
 |  -  |     [Explanation of `Utils`](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/utils-en.md)     |

@@ -75,10 +75,16 @@ class DefaultHandlerTest extends TestCase
         DefaultHandler::sleep(0.001);
         $this->assertTrue(true);
 
-        DefaultHandler::sleep(0.000001);
+        DefaultHandler::sleep(0.0009);
+        $this->assertTrue(true);
+
+        DefaultHandler::sleep();
         $this->assertTrue(true);
 
         DefaultHandler::sleep(event: __METHOD__);
+        $this->assertTrue(true);
+
+        DefaultHandler::sleep(-1, event: __METHOD__);
         $this->assertTrue(true);
     }
 

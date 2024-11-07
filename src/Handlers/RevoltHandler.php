@@ -55,7 +55,7 @@ class RevoltHandler implements HandlerInterface
                     throw new TimeoutException("Timeout after $timeout seconds.");
                 }
                 // 随机协程睡眠0-2ms，避免过多的协程切换
-                static::sleep(rand(0, 2) / 1000, $event);
+                static::sleep($event ? $timeout : (rand(0, 2) / 1000), $event);
             }
         } finally {
             if ($event) {

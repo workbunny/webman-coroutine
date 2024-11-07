@@ -49,7 +49,8 @@ class RippleWaitGroup implements WaitGroupInterface
     {
         $this->_count--;
         if ($this->_count <= 0) {
-            RippleHandler::wakeup(spl_object_hash($this));
+            $eventId = spl_object_hash($this);
+            RippleHandler::wakeup("waitGroup.wait.$eventId");
         }
 
         return true;
@@ -64,7 +65,8 @@ class RippleWaitGroup implements WaitGroupInterface
     /** @inheritdoc  */
     public function wait(int|float $timeout = -1): void
     {
-        RippleHandler::sleep($timeout, spl_object_hash($this));
+        $eventId = spl_object_hash($this);
+        RippleHandler::sleep($timeout, "waitGroup.wait.$eventId");
         if ($this->count() > 0) {
             throw new TimeoutException("Timeout after $timeout seconds [WaitGroup]. ");
         }

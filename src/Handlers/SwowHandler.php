@@ -7,8 +7,6 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Handlers;
 
-use Swow\Channel;
-use Swow\ChannelException;
 use Swow\Coroutine;
 use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
 use Workerman\Events\EventInterface;
@@ -50,7 +48,7 @@ class SwowHandler implements HandlerInterface
                 if ($action and call_user_func($action) === true) {
                     return;
                 }
-                if ($timeout > 0 and hrtime(true) - $time >= $timeout) {
+                if ($timeout > 0 and (hrtime(true) - $time) / 1e9 >= $timeout) {
                     throw new TimeoutException("Timeout after $timeout seconds.");
                 }
                 // 随机协程睡眠0-2ms，避免过多的协程切换
@@ -85,10 +83,14 @@ class SwowHandler implements HandlerInterface
                     return;
                 }
             }
-            Worker::$globalEvent->add(max($timeout, 0), EventInterface::EV_TIMER_ONCE, static function () use ($suspension, $event) {
-                if ($suspension?->isAvailable()) {
-                    $suspension?->resume();
-                }
+            Coroutine::run(function () use ($timeout, $suspension): void
+            {
+                usleep((int) ($timeout * 1000 * 1000));
+                \call_user_func(function ($suspension) {
+                    if ($suspension?->isAvailable()) {
+                        $suspension?->resume();
+                    }
+                }, $suspension);
             });
             Coroutine::yield();
         } finally {

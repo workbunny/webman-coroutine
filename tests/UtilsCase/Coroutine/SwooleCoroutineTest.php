@@ -33,6 +33,7 @@ class SwooleCoroutineTest extends TestCase
 
             return 123;
         });
+        $coroutineMock->shouldReceive('getCid')->andReturn(123);
         // 构造
         $coroutine = new SwooleCoroutine($func);
 
@@ -64,6 +65,7 @@ class SwooleCoroutineTest extends TestCase
 
             return 123;
         });
+        $coroutineMock->shouldReceive('getCid')->andReturn(123);
         // 构造
         $coroutine = new SwooleCoroutine($func);
         // 模拟构造后发生协程执行
@@ -89,6 +91,7 @@ class SwooleCoroutineTest extends TestCase
 
             return 123;
         });
+        $coroutineMock->shouldReceive('getCid')->andReturn(123);
         // 构造
         $coroutine = new SwooleCoroutine($func);
 
@@ -113,6 +116,7 @@ class SwooleCoroutineTest extends TestCase
 
             return 123;
         });
+        $coroutineMock->shouldReceive('getCid')->andReturn(123);
         // 构造
         $coroutine = new SwooleCoroutine($func);
 

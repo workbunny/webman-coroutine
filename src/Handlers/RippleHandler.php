@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Handlers;
 
-use Revolt\EventLoop;
 use Revolt\EventLoop\Suspension;
 use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
 
@@ -52,11 +51,11 @@ class RippleHandler implements HandlerInterface
                 if ($action and call_user_func($action) === true) {
                     return;
                 }
-                if ($timeout > 0 and hrtime(true) - $time >= $timeout) {
+                if ($timeout > 0 and (hrtime(true) - $time) / 1e9 >= $timeout) {
                     throw new TimeoutException("Timeout after $timeout seconds.");
                 }
                 // 随机协程睡眠0-2ms，避免过多的协程切换
-                static::sleep(rand(0, 2) / 1000, $event);
+                static::sleep($event ? $timeout : (rand(0, 2) / 1000), $event);
             }
         } finally {
             if ($event) {
@@ -77,7 +76,7 @@ class RippleHandler implements HandlerInterface
     public static function sleep(int|float $timeout = 0, ?string $event = null): void
     {
         try {
-            $suspension = static::_getSuspension();
+            $suspension = \Co\getSuspension();
             if ($event) {
                 static::$_suspensions[$event] = $suspension;
                 if ($timeout < 0) {
@@ -87,7 +86,7 @@ class RippleHandler implements HandlerInterface
             }
             // 毫秒及以上
             if ($timeout >= 0.01) {
-                static::_delay(static function () use ($suspension) {
+                \Co\delay(static function () use ($suspension) {
                     $suspension?->resume();
                 }, (float) $timeout);
             }
@@ -95,11 +94,11 @@ class RippleHandler implements HandlerInterface
             else {
                 $start = hrtime(true);
                 $timeout = max($timeout, 0);
-                static::_defer($fuc = static function () use (&$fuc, $suspension, $timeout, $start) {
-                    if (hrtime(true) - $start >= $timeout) {
+                \Co\defer($fuc = static function () use (&$fuc, $suspension, $timeout, $start) {
+                    if ((hrtime(true) - $start) / 1e9 >= $timeout) {
                         $suspension?->resume();
                     } else {
-                        static::_defer($fuc);
+                        \Co\defer($fuc);
                     }
                 });
             }
@@ -109,35 +108,5 @@ class RippleHandler implements HandlerInterface
                 unset(static::$_suspensions[$event]);
             }
         }
-    }
-
-    /**
-     * @codeCoverageIgnore 用于测试mock，忽略覆盖
-     * @return Suspension
-     */
-    protected static function _getSuspension(): Suspension
-    {
-        return \Co\getSuspension();
-    }
-
-    /**
-     * @codeCoverageIgnore 用于测试mock，忽略覆盖
-     * @param \Closure $closure
-     * @param int|float $timeout
-     * @return string
-     */
-    protected static function _delay(\Closure $closure, int|float $timeout): string
-    {
-        return \Co\delay($closure, max($timeout, 0.1));
-    }
-
-    /**
-     * @codeCoverageIgnore 用于测试mock，忽略覆盖
-     * @param \Closure $closure
-     * @return string
-     */
-    protected static function _defer(\Closure $closure): string
-    {
-        return \Co\defer($closure);
     }
 }

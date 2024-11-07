@@ -153,7 +153,7 @@ class CoroutineWebServer extends App
             // 等待协程回收
             wait_for(function () use ($connectionId, $consumerCount) {
                 return self::getConnectionCoroutineCount($connectionId) <= $consumerCount;
-            });
+            }, event: "coroutineWebServer.consumer.wait");
         }
 
         $waitGroup = new WaitGroup();
@@ -174,6 +174,8 @@ class CoroutineWebServer extends App
                         self::$_connectionCoroutineCount[$connectionId]--;
                         // 尝试回收
                         self::unsetConnectionCoroutineCount($connectionId);
+                        // 通知等待
+                        wakeup("coroutineWebServer.consumer.wait");
                     }
                     // wg完成
                     $waitGroup->done();

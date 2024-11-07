@@ -66,4 +66,16 @@ class HelpersTest extends TestCase
         });
         $this->assertTrue($return);
     }
+
+    public function testSleep()
+    {
+        \Workbunny\WebmanCoroutine\sleep();
+        $this->assertTrue(true);
+    }
+
+    public function testWakeup()
+    {
+        \Workbunny\WebmanCoroutine\wakeup(__METHOD__);
+        $this->assertTrue(true);
+    }
 }

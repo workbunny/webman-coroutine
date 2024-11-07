@@ -33,9 +33,6 @@
     "psr-4": {
       "Workbunny\\WebmanCoroutine\\": "src"
     },
-    "classmap": [
-      "src/"
-    ],
     "files": [
       "src/helpers.php"
     ]

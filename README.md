@@ -57,9 +57,7 @@
 composer require workbunny/webman-coroutine
 ```
 
-## 说明
-
-### 目录
+## 目录
 
 ```
 |-- config                       # webman 配置文件
@@ -82,15 +80,6 @@ composer require workbunny/webman-coroutine
 |-- helpers.php                  # 入口助手          
 ```
 
-### 助手函数
-
-- `event_loop()` 用于自动判断当前环境适合的event loop和协程驱动
-    > 环境的自动判定按照`Factory::$_handlers`的顺序择先加载
-- `package_installed` 用于判定当前环境是否安装对应composer包
-- `wait_for` 用于进程非阻塞地等待对应条件执行（一般是子协程执行结果）
-- `is_coroutine_env` 用于判断当前环境是否为workbunny协程环境
-    > 安装workbunny/webman-coroutine后自动会注册环境变量`WORKBUNNY_COROUTINE=1`
-
 ## 文档
 
 | 目录  |                                               地址                                               |
@@ -98,6 +87,7 @@ composer require workbunny/webman-coroutine
 | API |                 [Fucntion-APIs](https://workbunny.github.io/webman-coroutine/)                 |
 | 教程  |   [PHP 协程入门](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/coroutine.md)    |
 |  -  |      [安装及配置](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/install.md)      |
+|  -  |      [助手函数](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/helpers.md)       |
 |  -  | [`workerman`环境](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/workerman.md) |
 |  -  |    [`webman`框架](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/webman.md)    |
 |  -  |     [`Utils`说明](https://github.com/workbunny/webman-coroutine/tree/main/docs/doc/utils.md)     |

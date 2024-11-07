@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Utils\Channel\Handlers;
 
+use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
 use Workbunny\WebmanCoroutine\Handlers\RevoltHandler;
 
 class RevoltChannel implements ChannelInterface
@@ -33,14 +34,18 @@ class RevoltChannel implements ChannelInterface
     public function pop(int|float $timeout = -1): mixed
     {
         $eventId = spl_object_hash($this);
-        // 等待空闲
-        RevoltHandler::waitFor(function () {
-            return !$this->isEmpty();
-        }, event: "$eventId.pop");
+        try {
+            // 等待空闲
+            RevoltHandler::waitFor(function () {
+                return !$this->isEmpty();
+            }, timeout: $timeout, event: "channel.pop.$eventId");
+        } catch (TimeoutException) {
+            return false;
+        }
         // 读取数据
         $res = $this->_queue->dequeue();
         // 唤醒push事件
-        RevoltHandler::wakeup("$eventId.push");
+        RevoltHandler::wakeup("channel.push.$eventId");
 
         return $res;
     }
@@ -49,14 +54,19 @@ class RevoltChannel implements ChannelInterface
     public function push(mixed $data, int|float $timeout = -1): bool
     {
         $eventId = spl_object_hash($this);
-        // 等待空闲
-        RevoltHandler::waitFor(function () {
-            return !$this->isFull();
-        }, event: "$eventId.push");
+        try {
+            // 等待空闲
+            RevoltHandler::waitFor(function () {
+                return !$this->isFull();
+            }, timeout: $timeout, event: "channel.push.$eventId");
+        } catch (TimeoutException) {
+
+            return false;
+        }
         // 放入队列
         $this->_queue->enqueue($data);
         // 唤醒pop事件
-        RevoltHandler::wakeup("$eventId.pop");
+        RevoltHandler::wakeup("channel.pop.$eventId");
 
         return true;
     }

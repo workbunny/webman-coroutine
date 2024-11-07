@@ -49,7 +49,8 @@ class RevoltWaitGroup implements WaitGroupInterface
     {
         $this->_count--;
         if ($this->_count <= 0) {
-            RevoltHandler::wakeup(spl_object_hash($this));
+            $eventId = spl_object_hash($this);
+            RevoltHandler::wakeup("waitGroup.wait.$eventId");
         }
 
         return true;
@@ -64,7 +65,8 @@ class RevoltWaitGroup implements WaitGroupInterface
     /** @inheritdoc  */
     public function wait(int|float $timeout = -1): void
     {
-        RevoltHandler::sleep($timeout, spl_object_hash($this));
+        $eventId = spl_object_hash($this);
+        RevoltHandler::sleep($timeout, "waitGroup.wait.$eventId");
         if ($this->count() > 0) {
             throw new TimeoutException("Timeout after $timeout seconds [WaitGroup]. ");
         }
