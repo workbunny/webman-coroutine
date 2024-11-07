@@ -11,6 +11,7 @@ use Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers\SwooleWaitGroup;
 class SwooleWaitGroupTest extends TestCase
 {
     protected int $_count = 0;
+
     protected function tearDown(): void
     {
         parent::tearDown();

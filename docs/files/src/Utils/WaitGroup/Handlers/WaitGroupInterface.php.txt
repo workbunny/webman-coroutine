@@ -7,6 +7,8 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers;
 
+use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
+
 interface WaitGroupInterface
 {
     /**
@@ -46,6 +48,7 @@ interface WaitGroupInterface
      *
      * @param int|float $timeout 单位：秒
      * @return void
+     * @throws TimeoutException
      */
     public function wait(int|float $timeout = -1): void;
 }

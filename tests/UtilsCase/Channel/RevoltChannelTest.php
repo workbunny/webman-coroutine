@@ -6,8 +6,14 @@ namespace Workbunny\Tests\UtilsCase\Channel;
 
 use Mockery;
 use Workbunny\Tests\TestCase;
+use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
+use Workbunny\WebmanCoroutine\Handlers\RevoltHandler;
 use Workbunny\WebmanCoroutine\Utils\Channel\Handlers\RevoltChannel;
 
+/**
+ * @runTestsInSeparateProcesses
+ * @preserveGlobalState disabled
+ */
 class RevoltChannelTest extends TestCase
 {
     protected function tearDown(): void
@@ -58,41 +64,48 @@ class RevoltChannelTest extends TestCase
         $this->assertTrue($channel->isEmpty());
     }
 
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     * @return void
+     */
     public function testPushWithTimeout()
     {
-        $suspensionMock = Mockery::mock('alias:\Revolt\EventLoop\Suspension');
-        $suspensionMock->shouldReceive('resume')->andReturnNull();
-        $suspensionMock->shouldReceive('suspend')->andReturnNull();
-
-        $eventLoopMock = Mockery::mock('alias:\Revolt\EventLoop');
-        $eventLoopMock->shouldReceive('getSuspension')->andReturn($suspensionMock);
-        $eventLoopMock->shouldReceive('defer')->andReturnUsing(function ($closure) {
-            $closure();
+        $eventLoopMock = Mockery::mock('alias:' . RevoltHandler::class);
+        $eventLoopMock->shouldReceive('waitFor')->once()->andReturnUsing(function ($closure, $timeout, $event) {
+            return true;
         });
-        $eventLoopMock->shouldReceive('delay')->andReturnUsing(function ($timeout, $closure) {
-            $closure();
+        $eventLoopMock->shouldReceive('wakeup')->once()->andReturnUsing(function ($event) {
+            return true;
         });
         $channel = new RevoltChannel(1);
         $channel->push('test');
 
+        $eventLoopMock->shouldReceive('waitFor')->once()->andReturnUsing(function ($closure, $timeout, $event) {
+            $this->assertTrue(str_starts_with($event, 'channel.push.'));
+            $this->assertEquals(1, $timeout);
+            $this->assertFalse(call_user_func($closure));
+            throw new TimeoutException('Timeout after 1 seconds.');
+        });
         $this->assertFalse($channel->push('test2', 1));
     }
 
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     * @return void
+     */
     public function testPopWithTimeout()
     {
-        $suspensionMock = Mockery::mock('alias:\Revolt\EventLoop\Suspension');
-        $suspensionMock->shouldReceive('resume')->andReturnNull();
-        $suspensionMock->shouldReceive('suspend')->andReturnNull();
-
-        $eventLoopMock = Mockery::mock('alias:\Revolt\EventLoop');
-        $eventLoopMock->shouldReceive('getSuspension')->andReturn($suspensionMock);
-        $eventLoopMock->shouldReceive('defer')->andReturnUsing(function ($closure) {
-            $closure();
-        });
-        $eventLoopMock->shouldReceive('delay')->andReturnUsing(function ($timeout, $closure) {
-            $closure();
-        });
         $channel = new RevoltChannel(1);
+
+        $eventLoopMock = Mockery::mock('alias:' . RevoltHandler::class);
+        $eventLoopMock->shouldReceive('waitFor')->andReturnUsing(function ($closure, $timeout, $event) {
+            $this->assertTrue(str_starts_with($event, 'channel.pop.'));
+            $this->assertEquals(1, $timeout);
+            $this->assertFalse(call_user_func($closure));
+            throw new TimeoutException('Timeout after 1 seconds.');
+        });
 
         $this->assertFalse($channel->pop(1));
     }

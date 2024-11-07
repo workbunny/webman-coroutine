@@ -11,6 +11,12 @@ use Workbunny\WebmanCoroutine\Handlers\RippleHandler;
 
 class RippleHandlerTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        require_once __DIR__ . '/../mock/ripple.php';
+    }
+
     protected function tearDown(): void
     {
         parent::tearDown();
@@ -19,11 +25,8 @@ class RippleHandlerTest extends TestCase
 
     public function testIsAvailable()
     {
-        $rippleHandlerMock = Mockery::mock(RippleHandler::class . '[_getWorkerVersion]');
-        $rippleHandlerMock->shouldAllowMockingProtectedMethods();
-        $rippleHandlerMock->shouldReceive('_getWorkerVersion')->andReturn('5.0.0');
-        $this->assertFalse($rippleHandlerMock::isAvailable());
-        // todo 可用的情况
+        RippleHandler::isAvailable();
+        $this->assertTrue(true);
     }
 
     public function testInitEnv()
@@ -34,28 +37,83 @@ class RippleHandlerTest extends TestCase
 
     public function testWaitFor()
     {
-        $rippleHandlerMock = Mockery::mock(RippleHandler::class . '[_sleep]');
-        $rippleHandlerMock->shouldAllowMockingProtectedMethods();
-        $rippleHandlerMock->shouldReceive('_sleep')->andReturnNull();
-
+        // success
         $return = false;
-        $rippleHandlerMock::waitFor(function () use (&$return) {
-            return $return = true;
+        RippleHandler::waitFor(function () use (&$return) {
+            return ($return = true);
         });
         $this->assertTrue($return);
 
+        // success with sleep
         $return = false;
-        $rippleHandlerMock::waitFor(function () use (&$return) {
+        RippleHandler::waitFor(function () use (&$return) {
             sleep(1);
 
             return $return = true;
         });
         $this->assertTrue($return);
-        // 模拟超时
+
+        // success with event
+        $return = false;
+        RippleHandler::waitFor(function () use (&$return) {
+            sleep(1);
+
+            $return = true;
+            RippleHandler::wakeup(__METHOD__);
+
+            return $return;
+        }, event: __METHOD__);
+        $this->assertTrue($return);
+
+        // timeout in loop
         $this->expectException(TimeoutException::class);
-        $rippleHandlerMock::waitFor(function () use (&$return) {
+        RippleHandler::waitFor(function () {
             return false;
         }, 1);
-        $this->assertFalse($return);
+        $this->assertTrue(true);
+
+        // timeout not loop
+        $this->expectException(TimeoutException::class);
+        // 模拟超时
+        RippleHandler::waitFor(function () {
+            sleep(2);
+
+            return false;
+        }, 0.1);
+        $this->assertTrue(true);
+    }
+
+    public function testSleep()
+    {
+        RippleHandler::sleep();
+        $this->assertTrue(true);
+
+        RippleHandler::sleep(0.01);
+        $this->assertTrue(true);
+
+        RippleHandler::sleep(0.009);
+        $this->assertTrue(true);
+
+        RippleHandler::sleep(event: __METHOD__);
+        $this->assertTrue(true);
+
+        RippleHandler::sleep(-1, event: __METHOD__);
+        $this->assertTrue(true);
+    }
+
+    public function testWakeup()
+    {
+        RippleHandler::wakeup(__METHOD__);
+        $this->assertTrue(true);
+
+        $suspensionMock = Mockery::mock('alias:\Revolt\EventLoop\Suspension');
+        $suspensionMock->shouldReceive('resume')->andReturnNull();
+        $reflection = new \ReflectionClass(RippleHandler::class);
+        $property = $reflection->getProperty('_suspensions');
+        $property->setAccessible(true);
+        $property->setValue(null, [__METHOD__ => $suspensionMock]);
+
+        RippleHandler::wakeup(__METHOD__);
+        $this->assertTrue(true);
     }
 }

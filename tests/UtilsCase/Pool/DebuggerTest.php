@@ -424,8 +424,7 @@ class DebuggerTest extends TestCase
             . "0\n"
             . "over\n"
         );
-        $object = new class
-        {
+        $object = new class () {
             protected $prop = 'value';
 
             public function __construct()

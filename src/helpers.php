@@ -28,24 +28,58 @@ function event_loop(?string $expectEventLoopClass = null): string
 }
 
 /**
- * 等待回调执行返回true
+ * 协程等待
  *
- *  - 用于主协程等待子协程执行
- *
- * @param \Closure|null $closure
- * @param float|int $timeout
+ * @see HandlerInterface::waitFor()
+ * @param \Closure|null $action 等待回调
+ * @param float|int $timeout 超时时间
+ * @param string|null $event 协程事件名
  * @return void
- * @link HandlerInterface::waitFor()
  * @throws TimeoutException
  */
-function wait_for(?\Closure $closure, float|int $timeout = -1): void
+function wait_for(?\Closure $action, float|int $timeout = -1, null|string $event = null): void
 {
     if (($handler = Factory::getCurrentHandler()) === null) {
         Factory::init(null);
         /** @var HandlerInterface $handler */
         $handler = Factory::getCurrentHandler();
     }
-    $handler::waitFor($closure, $timeout);
+    $handler::waitFor($action, $timeout, $event);
+}
+
+/**
+ * 协程睡眠
+ *
+ * @see HandlerInterface::sleep()
+ * @param float|int $timeout
+ * @param string|null $event 协程事件名
+ * @return void
+ */
+function sleep(float|int $timeout = 0, null|string $event = null): void
+{
+    if (($handler = Factory::getCurrentHandler()) === null) {
+        Factory::init(null);
+        /** @var HandlerInterface $handler */
+        $handler = Factory::getCurrentHandler();
+    }
+    $handler::sleep($timeout, $event);
+}
+
+/**
+ * 协程唤醒
+ *
+ * @see HandlerInterface::wakeup()
+ * @param string $event 协程事件名
+ * @return void
+ */
+function wakeup(string $event): void
+{
+    if (($handler = Factory::getCurrentHandler()) === null) {
+        Factory::init(null);
+        /** @var HandlerInterface $handler */
+        $handler = Factory::getCurrentHandler();
+    }
+    $handler::wakeup($event);
 }
 
 /**

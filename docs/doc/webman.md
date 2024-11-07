@@ -11,6 +11,7 @@ webman开发框架下除了协程工具外还会根据框架插件加载策略�
 - enable : (true/false), 是否启用协程webServer
 - port : (int), 协程webServer默认端口
 - consumer_count : (int), 每个connection的消费者数量
+- wait_for_close : (int|float), 是否等待连接关闭再退出, -1:无限等待 >0:等待指定时间 0:不等待
 
 #### process.php
 

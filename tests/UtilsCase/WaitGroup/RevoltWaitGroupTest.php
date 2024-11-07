@@ -6,6 +6,8 @@ namespace Workbunny\Tests\UtilsCase\WaitGroup;
 
 use Mockery;
 use Workbunny\Tests\TestCase;
+use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
+use Workbunny\WebmanCoroutine\Handlers\RevoltHandler;
 use Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers\RevoltWaitGroup;
 
 class RevoltWaitGroupTest extends TestCase
@@ -23,8 +25,17 @@ class RevoltWaitGroupTest extends TestCase
         $this->assertEquals(1, $wg->count());
     }
 
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     * @return void
+     */
     public function testDone()
     {
+        $eventLoopMock = Mockery::mock('alias:' . RevoltHandler::class);
+        $eventLoopMock->shouldReceive('wakeup')->once()->andReturnUsing(function ($event) {
+            $this->assertTrue(str_starts_with($event, 'waitGroup.wait.'));
+        });
         $wg = new RevoltWaitGroup();
         $wg->add();
         $this->assertTrue($wg->done());
@@ -39,19 +50,19 @@ class RevoltWaitGroupTest extends TestCase
         $this->assertEquals(1, $wg->count());
     }
 
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     * @return void
+     */
     public function testWait()
     {
-        $suspensionMock = Mockery::mock('alias:\Revolt\EventLoop\Suspension');
-        $suspensionMock->shouldReceive('resume')->andReturnNull();
-        $suspensionMock->shouldReceive('suspend')->andReturnNull();
-
-        $eventLoopMock = Mockery::mock('alias:\Revolt\EventLoop');
-        $eventLoopMock->shouldReceive('getSuspension')->andReturn($suspensionMock);
-        $eventLoopMock->shouldReceive('defer')->andReturnUsing(function ($closure) {
-            $closure();
+        $eventLoopMock = Mockery::mock('alias:' . RevoltHandler::class);
+        $eventLoopMock->shouldReceive('sleep')->once()->andReturnUsing(function ($timeout, $event) {
+            $this->assertTrue(str_starts_with($event, 'waitGroup.wait.'));
         });
-        $eventLoopMock->shouldReceive('delay')->andReturnUsing(function ($timeout, $closure) {
-            $closure();
+        $eventLoopMock->shouldReceive('wakeup')->andReturnUsing(function ($event) {
+            $this->assertTrue(str_starts_with($event, 'waitGroup.wait.'));
         });
         $wg = new RevoltWaitGroup();
         $wg->add();
@@ -59,6 +70,10 @@ class RevoltWaitGroupTest extends TestCase
         $wg->wait();
         $this->assertEquals(0, $wg->count());
 
+        $eventLoopMock->shouldReceive('sleep')->once()->andReturnUsing(function ($timeout, $event) {
+            $this->assertTrue(str_starts_with($event, 'waitGroup.wait.'));
+        });
+        $this->expectException(TimeoutException::class);
         $wg->add();
         $wg->wait(1);
         $this->assertEquals(1, $wg->count());

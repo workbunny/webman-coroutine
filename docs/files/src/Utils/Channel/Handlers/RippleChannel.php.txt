@@ -7,6 +7,9 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Utils\Channel\Handlers;
 
+use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
+use Workbunny\WebmanCoroutine\Handlers\RippleHandler;
+
 class RippleChannel implements ChannelInterface
 {
     /** @var \SplQueue */
@@ -27,50 +30,44 @@ class RippleChannel implements ChannelInterface
     {
     }
 
-    /**
-     * @codeCoverageIgnore 用于测试mock，忽略覆盖
-     * @param int|float $second
-     * @return void
-     */
-    protected function _sleep(int|float $second): void
-    {
-        \Co\sleep(max($second, 0));
-    }
-
     /** @inheritdoc  */
     public function pop(int|float $timeout = -1): mixed
     {
-        $time = microtime(true);
-        while (1) {
-            if (!$this->isEmpty()) {
-                return $this->_queue->dequeue();
-            } else {
-                // timeout
-                if ($timeout > 0 and microtime(true) - $time >= $timeout) {
-                    return false;
-                }
-                $this->_sleep($timeout);
-            }
+        $eventId = spl_object_hash($this);
+        try {
+            // 等待空闲
+            RippleHandler::waitFor(function () {
+                return !$this->isEmpty();
+            }, timeout: $timeout, event: "channel.pop.$eventId");
+        } catch (TimeoutException) {
+            return false;
         }
+        // 读取数据
+        $res = $this->_queue->dequeue();
+        // 唤醒push事件
+        RippleHandler::wakeup("channel.push.$eventId");
+
+        return $res;
     }
 
     /** @inheritdoc */
     public function push(mixed $data, int|float $timeout = -1): bool
     {
-        $time = microtime(true);
-        while (1) {
-            if (!$this->isFull()) {
-                $this->_queue->enqueue($data);
-
-                return true;
-            } else {
-                // timeout
-                if ($timeout > 0 and microtime(true) - $time >= $timeout) {
-                    return false;
-                }
-                $this->_sleep($timeout);
-            }
+        $eventId = spl_object_hash($this);
+        try {
+            // 等待空闲
+            RippleHandler::waitFor(function () {
+                return !$this->isFull();
+            }, timeout: $timeout, event: "channel.push.$eventId");
+        } catch (TimeoutException) {
+            return false;
         }
+        // 放入队列
+        $this->_queue->enqueue($data);
+        // 唤醒pop事件
+        RippleHandler::wakeup("channel.pop.$eventId");
+
+        return true;
     }
 
     /** @inheritdoc  */

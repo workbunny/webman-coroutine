@@ -18,10 +18,18 @@ class TestHandler implements HandlerInterface
         echo 'initEnv';
     }
 
-    public static function waitFor(?\Closure $closure = null, float|int $timeout = -1): void
+    public static function waitFor(?\Closure $action = null, float|int $timeout = -1, ?string $event = null): void
     {
-        if ($closure) {
-            call_user_func($closure);
+        if ($action) {
+            call_user_func($action);
         }
+    }
+
+    public static function wakeup(string $event): void
+    {
+    }
+
+    public static function sleep(float|int $timeout = 0, ?string $event = null): void
+    {
     }
 }

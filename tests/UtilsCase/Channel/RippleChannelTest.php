@@ -6,6 +6,8 @@ namespace Workbunny\Tests\UtilsCase\Channel;
 
 use Mockery;
 use Workbunny\Tests\TestCase;
+use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
+use Workbunny\WebmanCoroutine\Handlers\RippleHandler;
 use Workbunny\WebmanCoroutine\Utils\Channel\Handlers\RippleChannel;
 
 class RippleChannelTest extends TestCase
@@ -58,20 +60,49 @@ class RippleChannelTest extends TestCase
         $this->assertTrue($channel->isEmpty());
     }
 
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     * @return void
+     */
     public function testPushWithTimeout()
     {
-        $partialMock = Mockery::mock('Workbunny\WebmanCoroutine\Utils\Channel\Handlers\RippleChannel', [1])->makePartial();
-        $partialMock->push('test');
-        $partialMock->shouldAllowMockingProtectedMethods()->shouldReceive('_sleep')->andReturnNull();
+        $eventLoopMock = Mockery::mock('alias:' . RippleHandler::class);
+        $eventLoopMock->shouldReceive('waitFor')->once()->andReturnUsing(function ($closure, $timeout, $event) {
+            return true;
+        });
+        $eventLoopMock->shouldReceive('wakeup')->once()->andReturnUsing(function ($event) {
+            return true;
+        });
+        $channel = new RippleChannel(1);
+        $channel->push('test');
 
-        $this->assertFalse($partialMock->push('test2', 1));
+        $eventLoopMock->shouldReceive('waitFor')->once()->andReturnUsing(function ($closure, $timeout, $event) {
+            $this->assertTrue(str_starts_with($event, 'channel.push.'));
+            $this->assertEquals(1, $timeout);
+            $this->assertFalse(call_user_func($closure));
+            throw new TimeoutException('Timeout after 1 seconds.');
+        });
+        $this->assertFalse($channel->push('test2', 1));
     }
 
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     * @return void
+     */
     public function testPopWithTimeout()
     {
-        $partialMock = Mockery::mock('Workbunny\WebmanCoroutine\Utils\Channel\Handlers\RippleChannel', [])->makePartial();
-        $partialMock->shouldAllowMockingProtectedMethods()->shouldReceive('_sleep')->andReturnNull();
+        $channel = new RippleChannel(1);
 
-        $this->assertFalse($partialMock->pop(1));
+        $eventLoopMock = Mockery::mock('alias:' . RippleHandler::class);
+        $eventLoopMock->shouldReceive('waitFor')->andReturnUsing(function ($closure, $timeout, $event) {
+            $this->assertTrue(str_starts_with($event, 'channel.pop.'));
+            $this->assertEquals(1, $timeout);
+            $this->assertFalse(call_user_func($closure));
+            throw new TimeoutException('Timeout after 1 seconds.');
+        });
+
+        $this->assertFalse($channel->pop(1));
     }
 }

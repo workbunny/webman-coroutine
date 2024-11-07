@@ -7,15 +7,13 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers;
 
-use Revolt\EventLoop\Suspension;
-use Revolt\EventLoop;
+use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
+use Workbunny\WebmanCoroutine\Handlers\RevoltHandler;
 
 class RevoltWaitGroup implements WaitGroupInterface
 {
     /** @var int */
     protected int $_count;
-
-    protected ?Suspension $_suspension = null;
 
     /** @inheritdoc  */
     public function __construct()
@@ -35,7 +33,6 @@ class RevoltWaitGroup implements WaitGroupInterface
             }
         } finally {
             $this->_count = 0;
-            $this->_suspension = null;
         }
     }
 
@@ -52,7 +49,8 @@ class RevoltWaitGroup implements WaitGroupInterface
     {
         $this->_count--;
         if ($this->_count <= 0) {
-            $this->_suspension?->resume();
+            $eventId = spl_object_hash($this);
+            RevoltHandler::wakeup("waitGroup.wait.$eventId");
         }
 
         return true;
@@ -67,12 +65,10 @@ class RevoltWaitGroup implements WaitGroupInterface
     /** @inheritdoc  */
     public function wait(int|float $timeout = -1): void
     {
-        $this->_suspension = EventLoop::getSuspension();
-        if ($timeout > 0) {
-            EventLoop::delay($timeout, function () {
-                $this->_suspension?->resume();
-            });
+        $eventId = spl_object_hash($this);
+        RevoltHandler::sleep($timeout, "waitGroup.wait.$eventId");
+        if ($this->count() > 0) {
+            throw new TimeoutException("Timeout after $timeout seconds [WaitGroup]. ");
         }
-        $this->_suspension->suspend();
     }
 }

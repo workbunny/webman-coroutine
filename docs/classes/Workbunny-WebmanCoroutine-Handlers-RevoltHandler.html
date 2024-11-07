@@ -180,20 +180,29 @@
     <span>
                                 &nbsp;: bool    </span>
 </dt>
-<dd>用于判断当前环境是否可用</dd>
+<dd>协程环境是否可用</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Workbunny-WebmanCoroutine-Handlers-RevoltHandler.html#method_sleep">sleep()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
+<dd>协程睡眠
+ - $event !== null &amp;&amp; $timeout &lt; 0 时，将阻塞当前协程，直到被唤醒</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Workbunny-WebmanCoroutine-Handlers-RevoltHandler.html#method_waitFor">waitFor()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd>等待直到回调返回true</dd>
+<dd>协程等待</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Workbunny-WebmanCoroutine-Handlers-RevoltHandler.html#method_wakeup">wakeup()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>协程唤醒</dd>
 
     </dl>
 
@@ -223,9 +232,9 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Handlers/RevoltHandler.php"><a href="files/src-handlers-revolthandler.html"><abbr title="src/Handlers/RevoltHandler.php">RevoltHandler.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">36</span>
+    <span class="phpdocumentor-element-found-in__line">41</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Handlers-RevoltHandler.html#source-view.36" class="phpdocumentor-element-found-in__source" data-line="36" data-modal="source-view" data-src="files/src/Handlers/RevoltHandler.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Handlers-RevoltHandler.html#source-view.41" class="phpdocumentor-element-found-in__source" data-line="41" data-modal="source-view" data-src="files/src/Handlers/RevoltHandler.php.txt"></a>
     </aside>
 
         <p class="phpdocumentor-summary">ripple handler无需初始化</p>
@@ -273,12 +282,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Handlers/RevoltHandler.php"><a href="files/src-handlers-revolthandler.html"><abbr title="src/Handlers/RevoltHandler.php">RevoltHandler.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">23</span>
+    <span class="phpdocumentor-element-found-in__line">28</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Handlers-RevoltHandler.html#source-view.23" class="phpdocumentor-element-found-in__source" data-line="23" data-modal="source-view" data-src="files/src/Handlers/RevoltHandler.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Handlers-RevoltHandler.html#source-view.28" class="phpdocumentor-element-found-in__source" data-line="28" data-modal="source-view" data-src="files/src/Handlers/RevoltHandler.php.txt"></a>
     </aside>
 
-        <p class="phpdocumentor-summary">用于判断当前环境是否可用</p>
+        <p class="phpdocumentor-summary">协程环境是否可用</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -310,10 +319,6 @@
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">bool</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>返回是否可用</p>
-</section>
-
             </section>
 
 </article>
@@ -331,15 +336,17 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Handlers/RevoltHandler.php"><a href="files/src-handlers-revolthandler.html"><abbr title="src/Handlers/RevoltHandler.php">RevoltHandler.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">59</span>
+    <span class="phpdocumentor-element-found-in__line">76</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Handlers-RevoltHandler.html#source-view.59" class="phpdocumentor-element-found-in__source" data-line="59" data-modal="source-view" data-src="files/src/Handlers/RevoltHandler.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Handlers-RevoltHandler.html#source-view.76" class="phpdocumentor-element-found-in__source" data-line="76" data-modal="source-view" data-src="files/src/Handlers/RevoltHandler.php.txt"></a>
     </aside>
 
-    
+        <p class="phpdocumentor-summary">协程睡眠
+ - $event !== null &amp;&amp; $timeout &lt; 0 时，将阻塞当前协程，直到被唤醒</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">sleep</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int|float&nbsp;</span><span class="phpdocumentor-signature__argument__name">$second</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">sleep</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">int|float&nbsp;</span><span class="phpdocumentor-signature__argument__name">$timeout</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$event</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -348,17 +355,38 @@
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$second</span>
+                <span class="phpdocumentor-signature__argument__name">$timeout</span>
                 : <span class="phpdocumentor-signature__argument__return-type">int|float</span>
-                            </dt>
+                 = <span class="phpdocumentor-signature__argument__default-value">0</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>单位：秒</p>
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$event</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>唤醒事件名</p>
 </section>
 
             </dd>
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Workbunny-WebmanCoroutine-Handlers-RevoltHandler.html#method_sleep#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">inheritDoc</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
 
     
 
@@ -378,16 +406,16 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Handlers/RevoltHandler.php"><a href="files/src-handlers-revolthandler.html"><abbr title="src/Handlers/RevoltHandler.php">RevoltHandler.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">41</span>
+    <span class="phpdocumentor-element-found-in__line">46</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Handlers-RevoltHandler.html#source-view.41" class="phpdocumentor-element-found-in__source" data-line="41" data-modal="source-view" data-src="files/src/Handlers/RevoltHandler.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Handlers-RevoltHandler.html#source-view.46" class="phpdocumentor-element-found-in__source" data-line="46" data-modal="source-view" data-src="files/src/Handlers/RevoltHandler.php.txt"></a>
     </aside>
 
-        <p class="phpdocumentor-summary">等待直到回调返回true</p>
+        <p class="phpdocumentor-summary">协程等待</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">waitFor</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Closure">Closure</abbr>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$closure</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">float|int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$timeout</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">-1</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">waitFor</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Closure">Closure</abbr>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$action</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">float|int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$timeout</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">-1</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$event</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -396,11 +424,11 @@
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$closure</span>
+                <span class="phpdocumentor-signature__argument__name">$action</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Closure">Closure</abbr>|null</span>
                  = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>返回true或抛出异常则跳出等待</p>
+                    <section class="phpdocumentor-description"><p>true|Throwable 都会跳出等待</p>
 </section>
 
             </dd>
@@ -409,7 +437,16 @@
                 : <span class="phpdocumentor-signature__argument__return-type">float|int</span>
                  = <span class="phpdocumentor-signature__argument__default-value">-1</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>单位：秒| -1：不限制等待时间</p>
+                    <section class="phpdocumentor-description"><p>单位：秒，&lt; 0不限制等待时间</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$event</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>唤醒事件名</p>
 </section>
 
             </dd>
@@ -424,6 +461,68 @@
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">inheritdoc</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_wakeup">
+        wakeup()
+        <a href="classes/Workbunny-WebmanCoroutine-Handlers-RevoltHandler.html#method_wakeup" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Handlers/RevoltHandler.php"><a href="files/src-handlers-revolthandler.html"><abbr title="src/Handlers/RevoltHandler.php">RevoltHandler.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">68</span>
+
+            <a href="classes/Workbunny-WebmanCoroutine-Handlers-RevoltHandler.html#source-view.68" class="phpdocumentor-element-found-in__source" data-line="68" data-modal="source-view" data-src="files/src/Handlers/RevoltHandler.php.txt"></a>
+    </aside>
+
+        <p class="phpdocumentor-summary">协程唤醒</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">wakeup</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$event</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$event</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>唤醒事件名</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Workbunny-WebmanCoroutine-Handlers-RevoltHandler.html#method_wakeup#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">inheritDoc</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
@@ -552,6 +651,7 @@
                                             <li class=""><a href="classes/Workbunny-WebmanCoroutine-Handlers-RevoltHandler.html#method_isAvailable">isAvailable()</a></li>
                                             <li class=""><a href="classes/Workbunny-WebmanCoroutine-Handlers-RevoltHandler.html#method_sleep">sleep()</a></li>
                                             <li class=""><a href="classes/Workbunny-WebmanCoroutine-Handlers-RevoltHandler.html#method_waitFor">waitFor()</a></li>
+                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-Handlers-RevoltHandler.html#method_wakeup">wakeup()</a></li>
                                     </ul>
             </li>
                     </ul>

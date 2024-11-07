@@ -273,8 +273,18 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\DefaultHandler\u003A\u003AwaitFor\u0028\u0029",
             "name": "waitFor",
-            "summary": "\u7B49\u5F85\u76F4\u5230\u56DE\u8C03\u8FD4\u56DEtrue",
+            "summary": "\u534F\u7A0B\u7B49\u5F85",
             "url": "classes/Workbunny-WebmanCoroutine-Handlers-DefaultHandler.html#method_waitFor"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\DefaultHandler\u003A\u003Awakeup\u0028\u0029",
+            "name": "wakeup",
+            "summary": "\u534F\u7A0B\u5524\u9192",
+            "url": "classes/Workbunny-WebmanCoroutine-Handlers-DefaultHandler.html#method_wakeup"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\DefaultHandler\u003A\u003Asleep\u0028\u0029",
+            "name": "sleep",
+            "summary": "\u534F\u7A0B\u7761\u7720\n\u0020\u002D\u0020\u0024event\u0020\u0021\u003D\u003D\u0020null\u0020\u0026\u0026\u0020\u0024timeout\u0020\u003C\u00200\u0020\u65F6\uFF0C\u5C06\u963B\u585E\u5F53\u524D\u534F\u7A0B\uFF0C\u76F4\u5230\u88AB\u5524\u9192",
+            "url": "classes/Workbunny-WebmanCoroutine-Handlers-DefaultHandler.html#method_sleep"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\DefaultHandler\u003A\u003A\u0024debug",
             "name": "debug",
@@ -288,18 +298,28 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\HandlerInterface\u003A\u003AisAvailable\u0028\u0029",
             "name": "isAvailable",
-            "summary": "\u7528\u4E8E\u5224\u65AD\u5F53\u524D\u73AF\u5883\u662F\u5426\u53EF\u7528",
+            "summary": "\u534F\u7A0B\u73AF\u5883\u662F\u5426\u53EF\u7528",
             "url": "classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#method_isAvailable"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\HandlerInterface\u003A\u003AinitEnv\u0028\u0029",
             "name": "initEnv",
-            "summary": "\u7528\u4E8E\u73AF\u5883\u52A0\u8F7D\u521D\u59CB\u5316",
+            "summary": "\u534F\u7A0B\u73AF\u5883\u521D\u59CB\u5316\u52A0\u8F7D",
             "url": "classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#method_initEnv"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\HandlerInterface\u003A\u003AwaitFor\u0028\u0029",
             "name": "waitFor",
-            "summary": "\u7B49\u5F85\u76F4\u5230\u56DE\u8C03\u8FD4\u56DEtrue",
+            "summary": "\u534F\u7A0B\u7B49\u5F85",
             "url": "classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#method_waitFor"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\HandlerInterface\u003A\u003Awakeup\u0028\u0029",
+            "name": "wakeup",
+            "summary": "\u534F\u7A0B\u5524\u9192",
+            "url": "classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#method_wakeup"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\HandlerInterface\u003A\u003Asleep\u0028\u0029",
+            "name": "sleep",
+            "summary": "\u534F\u7A0B\u7761\u7720\n\u0020\u002D\u0020\u0024event\u0020\u0021\u003D\u003D\u0020null\u0020\u0026\u0026\u0020\u0024timeout\u0020\u003C\u00200\u0020\u65F6\uFF0C\u5C06\u963B\u585E\u5F53\u524D\u534F\u7A0B\uFF0C\u76F4\u5230\u88AB\u5524\u9192",
+            "url": "classes/Workbunny-WebmanCoroutine-Handlers-HandlerInterface.html#method_sleep"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\HandlerMethods",
             "name": "HandlerMethods",
@@ -313,7 +333,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\RevoltHandler\u003A\u003AisAvailable\u0028\u0029",
             "name": "isAvailable",
-            "summary": "\u7528\u4E8E\u5224\u65AD\u5F53\u524D\u73AF\u5883\u662F\u5426\u53EF\u7528",
+            "summary": "\u534F\u7A0B\u73AF\u5883\u662F\u5426\u53EF\u7528",
             "url": "classes/Workbunny-WebmanCoroutine-Handlers-RevoltHandler.html#method_isAvailable"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\RevoltHandler\u003A\u003AinitEnv\u0028\u0029",
@@ -323,12 +343,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\RevoltHandler\u003A\u003AwaitFor\u0028\u0029",
             "name": "waitFor",
-            "summary": "\u7B49\u5F85\u76F4\u5230\u56DE\u8C03\u8FD4\u56DEtrue",
+            "summary": "\u534F\u7A0B\u7B49\u5F85",
             "url": "classes/Workbunny-WebmanCoroutine-Handlers-RevoltHandler.html#method_waitFor"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\RevoltHandler\u003A\u003Awakeup\u0028\u0029",
+            "name": "wakeup",
+            "summary": "\u534F\u7A0B\u5524\u9192",
+            "url": "classes/Workbunny-WebmanCoroutine-Handlers-RevoltHandler.html#method_wakeup"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\RevoltHandler\u003A\u003Asleep\u0028\u0029",
             "name": "sleep",
-            "summary": "",
+            "summary": "\u534F\u7A0B\u7761\u7720\n\u0020\u002D\u0020\u0024event\u0020\u0021\u003D\u003D\u0020null\u0020\u0026\u0026\u0020\u0024timeout\u0020\u003C\u00200\u0020\u65F6\uFF0C\u5C06\u963B\u585E\u5F53\u524D\u534F\u7A0B\uFF0C\u76F4\u5230\u88AB\u5524\u9192",
             "url": "classes/Workbunny-WebmanCoroutine-Handlers-RevoltHandler.html#method_sleep"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\RippleHandler",
@@ -338,7 +363,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\RippleHandler\u003A\u003AisAvailable\u0028\u0029",
             "name": "isAvailable",
-            "summary": "\u7528\u4E8E\u5224\u65AD\u5F53\u524D\u73AF\u5883\u662F\u5426\u53EF\u7528",
+            "summary": "\u534F\u7A0B\u73AF\u5883\u662F\u5426\u53EF\u7528",
             "url": "classes/Workbunny-WebmanCoroutine-Handlers-RippleHandler.html#method_isAvailable"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\RippleHandler\u003A\u003AinitEnv\u0028\u0029",
@@ -348,8 +373,18 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\RippleHandler\u003A\u003AwaitFor\u0028\u0029",
             "name": "waitFor",
-            "summary": "\u7B49\u5F85\u76F4\u5230\u56DE\u8C03\u8FD4\u56DEtrue",
+            "summary": "\u534F\u7A0B\u7B49\u5F85",
             "url": "classes/Workbunny-WebmanCoroutine-Handlers-RippleHandler.html#method_waitFor"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\RippleHandler\u003A\u003Awakeup\u0028\u0029",
+            "name": "wakeup",
+            "summary": "\u534F\u7A0B\u5524\u9192",
+            "url": "classes/Workbunny-WebmanCoroutine-Handlers-RippleHandler.html#method_wakeup"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\RippleHandler\u003A\u003Asleep\u0028\u0029",
+            "name": "sleep",
+            "summary": "\u534F\u7A0B\u7761\u7720\n\u0020\u002D\u0020\u0024event\u0020\u0021\u003D\u003D\u0020null\u0020\u0026\u0026\u0020\u0024timeout\u0020\u003C\u00200\u0020\u65F6\uFF0C\u5C06\u963B\u585E\u5F53\u524D\u534F\u7A0B\uFF0C\u76F4\u5230\u88AB\u5524\u9192",
+            "url": "classes/Workbunny-WebmanCoroutine-Handlers-RippleHandler.html#method_sleep"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\RippleWorkerman5Handler",
             "name": "RippleWorkerman5Handler",
@@ -358,18 +393,13 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\RippleWorkerman5Handler\u003A\u003AisAvailable\u0028\u0029",
             "name": "isAvailable",
-            "summary": "\u7528\u4E8E\u5224\u65AD\u5F53\u524D\u73AF\u5883\u662F\u5426\u53EF\u7528",
+            "summary": "\u534F\u7A0B\u73AF\u5883\u662F\u5426\u53EF\u7528",
             "url": "classes/Workbunny-WebmanCoroutine-Handlers-RippleWorkerman5Handler.html#method_isAvailable"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\RippleWorkerman5Handler\u003A\u003AinitEnv\u0028\u0029",
             "name": "initEnv",
             "summary": "ripple\u0020handler\u65E0\u9700\u521D\u59CB\u5316",
             "url": "classes/Workbunny-WebmanCoroutine-Handlers-RippleWorkerman5Handler.html#method_initEnv"
-        },                {
-            "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\RippleWorkerman5Handler\u003A\u003AwaitFor\u0028\u0029",
-            "name": "waitFor",
-            "summary": "\u7B49\u5F85\u76F4\u5230\u56DE\u8C03\u8FD4\u56DEtrue",
-            "url": "classes/Workbunny-WebmanCoroutine-Handlers-RippleWorkerman5Handler.html#method_waitFor"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\SwooleHandler",
             "name": "SwooleHandler",
@@ -378,18 +408,28 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\SwooleHandler\u003A\u003AisAvailable\u0028\u0029",
             "name": "isAvailable",
-            "summary": "\u7528\u4E8E\u5224\u65AD\u5F53\u524D\u73AF\u5883\u662F\u5426\u53EF\u7528",
+            "summary": "\u534F\u7A0B\u73AF\u5883\u662F\u5426\u53EF\u7528",
             "url": "classes/Workbunny-WebmanCoroutine-Handlers-SwooleHandler.html#method_isAvailable"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\SwooleHandler\u003A\u003AinitEnv\u0028\u0029",
             "name": "initEnv",
-            "summary": "\u7528\u4E8E\u73AF\u5883\u52A0\u8F7D\u521D\u59CB\u5316",
+            "summary": "\u534F\u7A0B\u73AF\u5883\u521D\u59CB\u5316\u52A0\u8F7D",
             "url": "classes/Workbunny-WebmanCoroutine-Handlers-SwooleHandler.html#method_initEnv"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\SwooleHandler\u003A\u003AwaitFor\u0028\u0029",
             "name": "waitFor",
-            "summary": "\u7B49\u5F85\u76F4\u5230\u56DE\u8C03\u8FD4\u56DEtrue",
+            "summary": "\u534F\u7A0B\u7B49\u5F85",
             "url": "classes/Workbunny-WebmanCoroutine-Handlers-SwooleHandler.html#method_waitFor"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\SwooleHandler\u003A\u003Awakeup\u0028\u0029",
+            "name": "wakeup",
+            "summary": "\u534F\u7A0B\u5524\u9192",
+            "url": "classes/Workbunny-WebmanCoroutine-Handlers-SwooleHandler.html#method_wakeup"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\SwooleHandler\u003A\u003Asleep\u0028\u0029",
+            "name": "sleep",
+            "summary": "\u534F\u7A0B\u7761\u7720\n\u0020\u002D\u0020\u0024event\u0020\u0021\u003D\u003D\u0020null\u0020\u0026\u0026\u0020\u0024timeout\u0020\u003C\u00200\u0020\u65F6\uFF0C\u5C06\u963B\u585E\u5F53\u524D\u534F\u7A0B\uFF0C\u76F4\u5230\u88AB\u5524\u9192",
+            "url": "classes/Workbunny-WebmanCoroutine-Handlers-SwooleHandler.html#method_sleep"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\SwooleWorkerman5Handler",
             "name": "SwooleWorkerman5Handler",
@@ -398,7 +438,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\SwooleWorkerman5Handler\u003A\u003AisAvailable\u0028\u0029",
             "name": "isAvailable",
-            "summary": "\u7528\u4E8E\u5224\u65AD\u5F53\u524D\u73AF\u5883\u662F\u5426\u53EF\u7528",
+            "summary": "\u534F\u7A0B\u73AF\u5883\u662F\u5426\u53EF\u7528",
             "url": "classes/Workbunny-WebmanCoroutine-Handlers-SwooleWorkerman5Handler.html#method_isAvailable"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\SwowHandler",
@@ -408,7 +448,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\SwowHandler\u003A\u003AisAvailable\u0028\u0029",
             "name": "isAvailable",
-            "summary": "\u7528\u4E8E\u5224\u65AD\u5F53\u524D\u73AF\u5883\u662F\u5426\u53EF\u7528",
+            "summary": "\u534F\u7A0B\u73AF\u5883\u662F\u5426\u53EF\u7528",
             "url": "classes/Workbunny-WebmanCoroutine-Handlers-SwowHandler.html#method_isAvailable"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\SwowHandler\u003A\u003AinitEnv\u0028\u0029",
@@ -418,8 +458,18 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\SwowHandler\u003A\u003AwaitFor\u0028\u0029",
             "name": "waitFor",
-            "summary": "\u7B49\u5F85\u76F4\u5230\u56DE\u8C03\u8FD4\u56DEtrue",
+            "summary": "\u534F\u7A0B\u7B49\u5F85",
             "url": "classes/Workbunny-WebmanCoroutine-Handlers-SwowHandler.html#method_waitFor"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\SwowHandler\u003A\u003Awakeup\u0028\u0029",
+            "name": "wakeup",
+            "summary": "\u534F\u7A0B\u5524\u9192",
+            "url": "classes/Workbunny-WebmanCoroutine-Handlers-SwowHandler.html#method_wakeup"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\SwowHandler\u003A\u003Asleep\u0028\u0029",
+            "name": "sleep",
+            "summary": "\u534F\u7A0B\u7761\u7720\n\u0020\u002D\u0020\u0024event\u0020\u0021\u003D\u003D\u0020null\u0020\u0026\u0026\u0020\u0024timeout\u0020\u003C\u00200\u0020\u65F6\uFF0C\u5C06\u963B\u585E\u5F53\u524D\u534F\u7A0B\uFF0C\u76F4\u5230\u88AB\u5524\u9192",
+            "url": "classes/Workbunny-WebmanCoroutine-Handlers-SwowHandler.html#method_sleep"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\SwowWorkerman5Handler",
             "name": "SwowWorkerman5Handler",
@@ -428,7 +478,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\Handlers\\SwowWorkerman5Handler\u003A\u003AisAvailable\u0028\u0029",
             "name": "isAvailable",
-            "summary": "\u7528\u4E8E\u5224\u65AD\u5F53\u524D\u73AF\u5883\u662F\u5426\u53EF\u7528",
+            "summary": "\u534F\u7A0B\u73AF\u5883\u662F\u5426\u53EF\u7528",
             "url": "classes/Workbunny-WebmanCoroutine-Handlers-SwowWorkerman5Handler.html#method_isAvailable"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\event_loop\u0028\u0029",
@@ -438,8 +488,18 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\wait_for\u0028\u0029",
             "name": "wait_for",
-            "summary": "\u7B49\u5F85\u56DE\u8C03\u6267\u884C\u8FD4\u56DEtrue",
+            "summary": "\u534F\u7A0B\u7B49\u5F85",
             "url": "namespaces/workbunny-webmancoroutine.html#function_wait_for"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\sleep\u0028\u0029",
+            "name": "sleep",
+            "summary": "\u534F\u7A0B\u7761\u7720",
+            "url": "namespaces/workbunny-webmancoroutine.html#function_sleep"
+        },                {
+            "fqsen": "\\Workbunny\\WebmanCoroutine\\wakeup\u0028\u0029",
+            "name": "wakeup",
+            "summary": "\u534F\u7A0B\u5524\u9192",
+            "url": "namespaces/workbunny-webmancoroutine.html#function_wakeup"
         },                {
             "fqsen": "\\Workbunny\\WebmanCoroutine\\package_installed\u0028\u0029",
             "name": "package_installed",

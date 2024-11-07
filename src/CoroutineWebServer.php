@@ -9,11 +9,13 @@ namespace Workbunny\WebmanCoroutine;
 
 use Webman\App;
 use Webman\Http\Request;
+use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
 use Workbunny\WebmanCoroutine\Exceptions\WorkerException;
 use Workbunny\WebmanCoroutine\Handlers\HandlerInterface;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Coroutine;
 use Workbunny\WebmanCoroutine\Utils\WaitGroup\WaitGroup;
 use Workerman\Connection\ConnectionInterface;
+use Workerman\Connection\TcpConnection;
 use Workerman\Worker;
 
 /**
@@ -27,6 +29,8 @@ class CoroutineWebServer extends App
      * @var int[]
      */
     protected static array $_connectionCoroutineCount = [];
+
+    protected bool $_stopSignal = false;
 
     /**
      * 获取连接的协程计数
@@ -61,7 +65,9 @@ class CoroutineWebServer extends App
         if (!config('plugin.workbunny.webman-coroutine.app.enable', false)) {
             return;
         }
-        parent::onWorkerStart($worker);
+        // 标记停止信号为false
+        $this->_stopSignal = false;
+        // 环境检查及初始化
         /** @var HandlerInterface $handler */
         $handler = Factory::getCurrentHandler();
         if (!$handler) {
@@ -69,6 +75,8 @@ class CoroutineWebServer extends App
             throw new WorkerException("Please run Factory::init or set $className::\$EventLoopClass = event_loop(). ");
         }
         $handler::initEnv();
+        // 父类初始化
+        parent::onWorkerStart($worker);
     }
 
     /**
@@ -83,6 +91,29 @@ class CoroutineWebServer extends App
     {
         if (method_exists(parent::class, 'onWorkerStop')) {
             parent::onWorkerStop($worker, ...$params);
+        }
+        if (($timeout = config('plugin.workbunny.webman-coroutine.app.wait_for_close', 0)) !== 0) {
+            $classname = self::class;
+            // @codeCoverageIgnoreStart
+            Worker::safeEcho("[$classname] Wait for close start. ");
+            Worker::safeEcho("[$classname] Current remaining connections: " . count(self::getConnectionCoroutineCount()));
+            // @codeCoverageIgnoreEnd
+            // 标记停止信号
+            $this->_stopSignal = true;
+            try {
+                // 等待协程消费者消费完毕
+                wait_for(function () {
+                    return empty(self::$_connectionCoroutineCount);
+                }, timeout: $timeout);
+            } catch (TimeoutException) {
+                $count = count(self::$_connectionCoroutineCount);
+                // @codeCoverageIgnoreStart
+                Worker::safeEcho("[$classname] Wait for close timeout [connection count: $count]. ");
+                // @codeCoverageIgnoreEnd
+            }
+            // @codeCoverageIgnoreStart
+            Worker::safeEcho("[$classname] Wait for close success. ");
+            // @codeCoverageIgnoreEnd
         }
     }
 
@@ -105,6 +136,16 @@ class CoroutineWebServer extends App
             new Coroutine(function () use ($connection, $params) {
                 parent::onConnect($connection, ...$params);
             });
+        }
+        // 当存在停止信号的时候就暂停接收连接消息
+        if ($this->_stopSignal) {
+            if ($connection instanceof TcpConnection) {
+                $connection->pauseRecv();
+            } else {
+                $connection->close();
+            }
+
+            return;
         }
         self::$_connectionCoroutineCount[spl_object_hash($connection)] = 0;
     }
@@ -145,6 +186,11 @@ class CoroutineWebServer extends App
         if (!is_object($connection)) {
             return null;
         }
+        if ($this->_stopSignal) {
+            $connection->close();
+
+            return null;
+        }
         $connectionId = spl_object_hash($connection);
         $params = func_get_args();
         $res = null;
@@ -153,7 +199,7 @@ class CoroutineWebServer extends App
             // 等待协程回收
             wait_for(function () use ($connectionId, $consumerCount) {
                 return self::getConnectionCoroutineCount($connectionId) <= $consumerCount;
-            });
+            }, event: 'coroutineWebServer.consumer.wait');
         }
 
         $waitGroup = new WaitGroup();
@@ -164,20 +210,26 @@ class CoroutineWebServer extends App
                 ? (self::$_connectionCoroutineCount[$connectionId] + 1)
                 : 1;
         // 请求消费协程
-        new Coroutine(function () use (&$res, $waitGroup, $params, $connectionId) {
-            try {
-                $res = parent::onMessage(...$params);
-            } finally {
-                if (isset(self::$_connectionCoroutineCount[$connectionId])) {
-                    // 计数 --
-                    self::$_connectionCoroutineCount[$connectionId]--;
-                    // 尝试回收
-                    self::unsetConnectionCoroutineCount($connectionId);
+        try {
+            new Coroutine(function () use (&$res, $waitGroup, $params, $connectionId) {
+                try {
+                    $res = parent::onMessage(...$params);
+                } finally {
+                    if (isset(self::$_connectionCoroutineCount[$connectionId])) {
+                        // 计数 --
+                        self::$_connectionCoroutineCount[$connectionId]--;
+                        // 尝试回收
+                        self::unsetConnectionCoroutineCount($connectionId);
+                        // 通知等待
+                        wakeup('coroutineWebServer.consumer.wait');
+                    }
+                    // wg完成
+                    $waitGroup->done();
                 }
-                // wg完成
-                $waitGroup->done();
-            }
-        });
+            });
+        } finally {
+            $waitGroup->done();
+        }
         // 等待
         $waitGroup->wait();
 

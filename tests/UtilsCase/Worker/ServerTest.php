@@ -185,7 +185,7 @@ class ServerTest extends TestCase
 
         $connection = Mockery::mock(ConnectionInterface::class);
 
-        $this->expectOutputString( "testServerSetConnectionCoroutine->onMessage\n");
+        $this->expectOutputString("testServerSetConnectionCoroutine->onMessage\n");
 
         $this->assertFalse(isset($worker::getConnectionCoroutineCount()[$id = spl_object_hash($connection)]));
         call_user_func($worker->onMessage, $connection, 'aaa');

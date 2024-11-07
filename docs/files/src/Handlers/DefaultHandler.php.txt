@@ -41,24 +41,44 @@ class DefaultHandler implements HandlerInterface
     {
     }
 
-    /** @inheritdoc  */
-    public static function waitFor(?\Closure $closure = null, float|int $timeout = -1): void
+    /** @inheritdoc */
+    public static function waitFor(?\Closure $action = null, float|int $timeout = -1, ?string $event = null): void
     {
-        $time = microtime(true);
-        while (true) {
-            if ($closure and call_user_func($closure) === true) {
-                return;
+        $time = hrtime(true);
+        try {
+            while (true) {
+                if ($action and call_user_func($action) === true) {
+                    return;
+                }
+                if ($timeout > 0 and ((hrtime(true) - $time) / 1e9 >= $timeout)) {
+                    throw new TimeoutException("Timeout after $timeout seconds.");
+                }
+                // 测试用，为保证覆盖生成时不会无限等待
+                // @codeCoverageIgnoreStart
+                if (static::$debug and ((hrtime(true) - $time) / 1e9 >= 20)) {
+                    return;
+                }
+                // @codeCoverageIgnoreEnd
+                static::sleep();
             }
-            if ($timeout > 0 && microtime(true) - $time >= $timeout) {
-                throw new TimeoutException("Timeout after $timeout seconds.");
+        } finally {
+            if ($event) {
+                static::wakeup($event);
             }
-            // 测试用，为保证覆盖生成时不会无限等待
-            // @codeCoverageIgnoreStart
-            if (static::$debug and microtime(true) - $time >= 20) {
-                return;
-            }
-            // @codeCoverageIgnoreEnd
-            sleep(0);
         }
+    }
+
+    /** @inheritDoc */
+    public static function wakeup(string $event): void
+    {
+    }
+
+    /** @inheritDoc
+     * @param float|int $timeout
+     * @param string|null $event
+     */
+    public static function sleep(float|int $timeout = 0, ?string $event = null): void
+    {
+        usleep(max((int)$timeout * 1000 * 1000, 0));
     }
 }

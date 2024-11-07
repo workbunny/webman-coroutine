@@ -6,6 +6,8 @@ namespace Workbunny\Tests\UtilsCase\WaitGroup;
 
 use Mockery;
 use Workbunny\Tests\TestCase;
+use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
+use Workbunny\WebmanCoroutine\Handlers\RippleHandler;
 use Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers\RippleWaitGroup;
 
 class RippleWaitGroupTest extends TestCase
@@ -14,6 +16,7 @@ class RippleWaitGroupTest extends TestCase
     {
         parent::tearDown();
         Mockery::close();
+        require_once __DIR__ . '/../../mock/ripple.php';
     }
 
     public function testAdd()
@@ -23,8 +26,17 @@ class RippleWaitGroupTest extends TestCase
         $this->assertEquals(1, $wg->count());
     }
 
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     * @return void
+     */
     public function testDone()
     {
+        $eventLoopMock = Mockery::mock('alias:' . RippleHandler::class);
+        $eventLoopMock->shouldReceive('wakeup')->once()->andReturnUsing(function ($event) {
+            $this->assertTrue(str_starts_with($event, 'waitGroup.wait.'));
+        });
         $wg = new RippleWaitGroup();
         $wg->add();
         $this->assertTrue($wg->done());
@@ -39,28 +51,32 @@ class RippleWaitGroupTest extends TestCase
         $this->assertEquals(1, $wg->count());
     }
 
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     * @return void
+     */
     public function testWait()
     {
-        $suspensionMock = Mockery::mock('alias:\Revolt\EventLoop\Suspension');
-        $suspensionMock->shouldReceive('resume')->andReturnNull();
-        $suspensionMock->shouldReceive('suspend')->andReturnNull();
-        $partialMock = Mockery::mock(RippleWaitGroup::class, [1])->makePartial();
-        $partialMock->add();
-        $partialMock->shouldAllowMockingProtectedMethods()->shouldReceive('_sleep')->andReturnNull();
-        $partialMock->shouldAllowMockingProtectedMethods()->shouldReceive('_getSuspension')->andReturn($suspensionMock);
-
-
-        $partialMock->done();
-        $partialMock->wait();
-        $this->assertEquals(0, $partialMock->count());
-
-        $partialMock->shouldAllowMockingProtectedMethods()->shouldReceive('_delay')->andReturnUsing(function ($callback, $timeout) {
-            $this->assertEquals(1, $timeout);
-            $callback();
-            return 'delayEventId';
+        $eventLoopMock = Mockery::mock('alias:' . RippleHandler::class);
+        $eventLoopMock->shouldReceive('sleep')->once()->andReturnUsing(function ($timeout, $event) {
+            $this->assertTrue(str_starts_with($event, 'waitGroup.wait.'));
         });
-        $partialMock->add();
-        $partialMock->wait(1);
-        $this->assertEquals(1, $partialMock->count());
+        $eventLoopMock->shouldReceive('wakeup')->andReturnUsing(function ($event) {
+            $this->assertTrue(str_starts_with($event, 'waitGroup.wait.'));
+        });
+        $wg = new RippleWaitGroup();
+        $wg->add();
+        $wg->done();
+        $wg->wait();
+        $this->assertEquals(0, $wg->count());
+
+        $eventLoopMock->shouldReceive('sleep')->once()->andReturnUsing(function ($timeout, $event) {
+            $this->assertTrue(str_starts_with($event, 'waitGroup.wait.'));
+        });
+        $this->expectException(TimeoutException::class);
+        $wg->add();
+        $wg->wait(1);
+        $this->assertEquals(1, $wg->count());
     }
 }
