@@ -11,7 +11,7 @@ use Swoole\Coroutine\WaitGroup;
 
 class SwooleWaitGroup implements WaitGroupInterface
 {
-    /** @var WaitGroup  */
+    /** @var WaitGroup */
     protected WaitGroup $_waitGroup;
 
     /** @inheritdoc  */
@@ -30,13 +30,15 @@ class SwooleWaitGroup implements WaitGroupInterface
                     $this->done();
                 }
             }
-        } catch (\Throwable) {}
+        } catch (\Throwable) {
+        }
     }
 
     /** @inheritdoc  */
     public function add(int $delta = 1): bool
     {
         $this->_waitGroup->add($delta);
+
         return true;
     }
 
@@ -44,6 +46,7 @@ class SwooleWaitGroup implements WaitGroupInterface
     public function done(): bool
     {
         $this->_waitGroup->done();
+
         return true;
     }
 

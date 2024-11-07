@@ -79,6 +79,7 @@ class Debugger
         $debugger = new static();
         $res = $debugger->cloneValidate($value);
         unset($debugger);
+
         return $res->getReturn();
     }
 

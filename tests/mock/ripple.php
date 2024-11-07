@@ -1,6 +1,7 @@
 <?php
 
 namespace Co;
+
 use Mockery;
 
 /**
@@ -11,6 +12,7 @@ function getSuspension()
     $mock = Mockery::mock('alias:\Revolt\EventLoop\Suspension');
     $mock->shouldReceive('suspend')->andReturnNull();
     $mock->shouldReceive('resume')->andReturnNull();
+
     return $mock;
 }
 

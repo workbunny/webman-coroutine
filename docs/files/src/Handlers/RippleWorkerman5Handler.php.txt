@@ -7,14 +7,12 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Handlers;
 
-use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
-
 use function Workbunny\WebmanCoroutine\package_installed;
 
 /**
  * 基于Ripple插件的协程处理器，支持PHP-fiber
  */
-class RippleWorkerman5Handler implements HandlerInterface
+class RippleWorkerman5Handler extends RippleHandler
 {
     use HandlerMethods;
 
@@ -34,30 +32,5 @@ class RippleWorkerman5Handler implements HandlerInterface
      */
     public static function initEnv(): void
     {
-    }
-
-    /** @inheritdoc  */
-    public static function waitFor(?\Closure $closure = null, float|int $timeout = -1): void
-    {
-        $time = microtime(true);
-        while (true) {
-            if ($closure and call_user_func($closure) === true) {
-                return;
-            }
-            if ($timeout > 0 && microtime(true) - $time >= $timeout) {
-                throw new TimeoutException("Timeout after $timeout seconds.");
-            }
-            static::_sleep($timeout);
-        }
-    }
-
-    /**
-     * @codeCoverageIgnore mock忽略覆盖
-     * @param int|float $second
-     * @return void
-     */
-    protected static function _sleep(int|float $second): void
-    {
-        \Co\sleep(max($second, 0));
     }
 }

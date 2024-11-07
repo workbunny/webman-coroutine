@@ -9,8 +9,6 @@ namespace Workbunny\WebmanCoroutine\Handlers;
 
 use Swow\Coroutine;
 use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
-use Workerman\Events\EventInterface;
-use Workerman\Worker;
 
 /**
  *  基于swow实现的协程处理器
@@ -80,11 +78,11 @@ class SwowHandler implements HandlerInterface
                 static::$_suspensions[$event] = $suspension;
                 if ($timeout < 0) {
                     Coroutine::yield();
+
                     return;
                 }
             }
-            Coroutine::run(function () use ($timeout, $suspension): void
-            {
+            Coroutine::run(function () use ($timeout, $suspension): void {
                 usleep((int) ($timeout * 1000 * 1000));
                 \call_user_func(function ($suspension) {
                     if ($suspension?->isAvailable()) {

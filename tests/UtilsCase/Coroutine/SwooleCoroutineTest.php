@@ -36,6 +36,7 @@ class SwooleCoroutineTest extends TestCase
         $coroutineMock = Mockery::mock('alias:Swoole\Coroutine');
         $coroutineMock->shouldReceive('create')->once()->andReturnUsing(function ($closure) use (&$callback, &$executed) {
             $callback = $closure;
+
             return 123;
         });
         $coroutineMock->shouldReceive('getCid')->andReturn(123);
@@ -60,7 +61,7 @@ class SwooleCoroutineTest extends TestCase
         $eventLoopMock->shouldReceive('sleep')->andReturnNull();
         $i = 0;
         $coroutineMock->shouldReceive('create')->andReturnUsing(function ($closure) use (&$i) {
-            $i ++;
+            $i++;
             if ($i > 1) {
                 return 123;
             }

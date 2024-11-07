@@ -60,6 +60,7 @@ class RippleHandlerTest extends TestCase
 
             $return = true;
             RippleHandler::wakeup(__METHOD__);
+
             return $return;
         }, event: __METHOD__);
         $this->assertTrue($return);
@@ -67,7 +68,6 @@ class RippleHandlerTest extends TestCase
         // timeout in loop
         $this->expectException(TimeoutException::class);
         RippleHandler::waitFor(function () {
-
             return false;
         }, 1);
         $this->assertTrue(true);

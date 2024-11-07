@@ -7,7 +7,6 @@ namespace Workbunny\Tests\HandlersCase;
 use Mockery;
 use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
 use Workbunny\WebmanCoroutine\Handlers\SwowWorkerman5Handler as SwowHandler;
-use Workerman\Worker;
 
 class SwowWorkerman5HandlerTest extends SwowHandlerTest
 {
@@ -57,6 +56,7 @@ class SwowWorkerman5HandlerTest extends SwowHandlerTest
 
             $return = true;
             SwowHandler::wakeup(__METHOD__);
+
             return $return;
         }, event: __METHOD__);
         $this->assertTrue($return);
@@ -64,7 +64,6 @@ class SwowWorkerman5HandlerTest extends SwowHandlerTest
         // timeout in loop
         $this->expectException(TimeoutException::class);
         SwowHandler::waitFor(function () {
-
             return false;
         }, 1);
 

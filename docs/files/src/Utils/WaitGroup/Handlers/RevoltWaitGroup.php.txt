@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers;
 
+use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
 use Workbunny\WebmanCoroutine\Handlers\RevoltHandler;
 
 class RevoltWaitGroup implements WaitGroupInterface
@@ -47,6 +48,10 @@ class RevoltWaitGroup implements WaitGroupInterface
     public function done(): bool
     {
         $this->_count--;
+        if ($this->_count <= 0) {
+            $eventId = spl_object_hash($this);
+            RevoltHandler::wakeup("waitGroup.wait.$eventId");
+        }
 
         return true;
     }
@@ -60,15 +65,10 @@ class RevoltWaitGroup implements WaitGroupInterface
     /** @inheritdoc  */
     public function wait(int|float $timeout = -1): void
     {
-        $time = microtime(true);
-        while (1) {
-            if ($timeout > 0 and microtime(true) - $time >= $timeout) {
-                return;
-            }
-            if ($this->_count <= 0) {
-                return;
-            }
-            RevoltHandler::sleep(max($timeout, 0));
+        $eventId = spl_object_hash($this);
+        RevoltHandler::sleep($timeout, "waitGroup.wait.$eventId");
+        if ($this->count() > 0) {
+            throw new TimeoutException("Timeout after $timeout seconds [WaitGroup]. ");
         }
     }
 }

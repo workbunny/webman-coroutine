@@ -7,6 +7,9 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Utils\WaitGroup\Handlers;
 
+use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
+use Workbunny\WebmanCoroutine\Handlers\RippleHandler;
+
 class RippleWaitGroup implements WaitGroupInterface
 {
     /** @var int */
@@ -45,6 +48,10 @@ class RippleWaitGroup implements WaitGroupInterface
     public function done(): bool
     {
         $this->_count--;
+        if ($this->_count <= 0) {
+            $eventId = spl_object_hash($this);
+            RippleHandler::wakeup("waitGroup.wait.$eventId");
+        }
 
         return true;
     }
@@ -58,25 +65,10 @@ class RippleWaitGroup implements WaitGroupInterface
     /** @inheritdoc  */
     public function wait(int|float $timeout = -1): void
     {
-        $time = microtime(true);
-        while (1) {
-            if ($timeout > 0 and microtime(true) - $time >= $timeout) {
-                return;
-            }
-            if ($this->_count <= 0) {
-                return;
-            }
-            $this->_sleep(0);
+        $eventId = spl_object_hash($this);
+        RippleHandler::sleep($timeout, "waitGroup.wait.$eventId");
+        if ($this->count() > 0) {
+            throw new TimeoutException("Timeout after $timeout seconds [WaitGroup]. ");
         }
-    }
-
-    /**
-     * @codeCoverageIgnore 测试mock，忽略覆盖
-     * @param int|float $second
-     * @return void
-     */
-    protected function _sleep(int|float $second): void
-    {
-        \Co\sleep(max($second, 0));
     }
 }

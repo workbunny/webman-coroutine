@@ -12,6 +12,7 @@ use Workbunny\WebmanCoroutine\Utils\Pool\Debugger;
 class DebuggerTest extends TestCase
 {
     protected static ?\WeakMap $seen = null;
+
     protected function tearDown(): void
     {
         parent::tearDown();
@@ -419,8 +420,7 @@ class DebuggerTest extends TestCase
             . "0\n"
             . "over\n"
         );
-        $object = new class
-        {
+        $object = new class () {
             protected $prop = 'value';
 
             public function __construct()

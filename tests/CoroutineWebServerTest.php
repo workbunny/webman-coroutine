@@ -10,12 +10,12 @@ use ReflectionMethod;
 use support\Request;
 use Workbunny\WebmanCoroutine\CoroutineWebServer;
 
-use Workerman\Connection\TcpConnection;
-use Workerman\Connection\UdpConnection;
 use function Workbunny\WebmanCoroutine\event_loop;
 
 use Workbunny\WebmanCoroutine\Exceptions\WorkerException;
 use Workerman\Connection\ConnectionInterface;
+use Workerman\Connection\TcpConnection;
+use Workerman\Connection\UdpConnection;
 use Workerman\Worker;
 
 /**
@@ -216,7 +216,7 @@ class CoroutineWebServerTest extends TestCase
         $this->assertTrue(true);
 
         // TCP
-        $connection = Mockery::mock( UdpConnection::class);
+        $connection = Mockery::mock(UdpConnection::class);
         $connection->shouldReceive('close')->once()->andReturnUsing(function () {
             $this->assertTrue(true);
         });

@@ -60,7 +60,6 @@ class RevoltChannel implements ChannelInterface
                 return !$this->isFull();
             }, timeout: $timeout, event: "channel.push.$eventId");
         } catch (TimeoutException) {
-
             return false;
         }
         // 放入队列

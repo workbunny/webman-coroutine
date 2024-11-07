@@ -69,6 +69,7 @@ class SwooleHandlerTest extends TestCase
 
             $return = true;
             SwooleHandler::wakeup(__METHOD__);
+
             return $return;
         }, event: __METHOD__);
         $this->assertTrue($return);
@@ -76,7 +77,6 @@ class SwooleHandlerTest extends TestCase
         // timeout in loop
         $this->expectException(TimeoutException::class);
         SwooleHandler::waitFor(function () {
-
             return false;
         }, 1);
 

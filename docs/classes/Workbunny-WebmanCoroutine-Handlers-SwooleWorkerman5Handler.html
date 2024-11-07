@@ -166,21 +166,36 @@
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd>用于环境加载初始化</dd>
+<dd>协程环境初始化加载</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleWorkerman5Handler.html#method_isAvailable">isAvailable()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
-<dd>用于判断当前环境是否可用</dd>
+<dd>协程环境是否可用</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleHandler.html#method_sleep">sleep()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>协程睡眠
+ - $event !== null &amp;&amp; $timeout &lt; 0 时，将阻塞当前协程，直到被唤醒</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleHandler.html#method_waitFor">waitFor()</a>
     <span>
                                 &nbsp;: void    </span>
 </dt>
-<dd>等待直到回调返回true</dd>
+<dd>协程等待</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleHandler.html#method_wakeup">wakeup()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>协程唤醒</dd>
 
     </dl>
 
@@ -210,12 +225,12 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Handlers/SwooleHandler.php"><a href="files/src-handlers-swoolehandler.html"><abbr title="src/Handlers/SwooleHandler.php">SwooleHandler.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">27</span>
+    <span class="phpdocumentor-element-found-in__line">36</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleWorkerman5Handler.html#source-view.27" class="phpdocumentor-element-found-in__source" data-line="27" data-modal="source-view" data-src="files/src/Handlers/SwooleHandler.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleWorkerman5Handler.html#source-view.36" class="phpdocumentor-element-found-in__source" data-line="36" data-modal="source-view" data-src="files/src/Handlers/SwooleHandler.php.txt"></a>
     </aside>
 
-        <p class="phpdocumentor-summary">用于环境加载初始化</p>
+        <p class="phpdocumentor-summary">协程环境初始化加载</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -265,7 +280,7 @@
             <a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleWorkerman5Handler.html#source-view.18" class="phpdocumentor-element-found-in__source" data-line="18" data-modal="source-view" data-src="files/src/Handlers/SwooleWorkerman5Handler.php.txt"></a>
     </aside>
 
-        <p class="phpdocumentor-summary">用于判断当前环境是否可用</p>
+        <p class="phpdocumentor-summary">协程环境是否可用</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -297,12 +312,78 @@
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">bool</span>
-                    &mdash;
-                <section class="phpdocumentor-description"><p>返回是否可用</p>
-</section>
-
             </section>
 
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_sleep">
+        sleep()
+        <a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleHandler.html#method_sleep" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Handlers/SwooleHandler.php"><a href="files/src-handlers-swoolehandler.html"><abbr title="src/Handlers/SwooleHandler.php">SwooleHandler.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">74</span>
+
+            <a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleWorkerman5Handler.html#source-view.74" class="phpdocumentor-element-found-in__source" data-line="74" data-modal="source-view" data-src="files/src/Handlers/SwooleHandler.php.txt"></a>
+    </aside>
+
+        <p class="phpdocumentor-summary">协程睡眠
+ - $event !== null &amp;&amp; $timeout &lt; 0 时，将阻塞当前协程，直到被唤醒</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">sleep</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">float|int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$timeout</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">0</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$event</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$timeout</span>
+                : <span class="phpdocumentor-signature__argument__return-type">float|int</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">0</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$event</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>唤醒事件名</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleHandler.html#method_sleep#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">inheritDoc</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+
+    
 </article>
                     <article
         class="phpdocumentor-element
@@ -318,16 +399,16 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Handlers/SwooleHandler.php"><a href="files/src-handlers-swoolehandler.html"><abbr title="src/Handlers/SwooleHandler.php">SwooleHandler.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">33</span>
+    <span class="phpdocumentor-element-found-in__line">42</span>
 
-            <a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleWorkerman5Handler.html#source-view.33" class="phpdocumentor-element-found-in__source" data-line="33" data-modal="source-view" data-src="files/src/Handlers/SwooleHandler.php.txt"></a>
+            <a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleWorkerman5Handler.html#source-view.42" class="phpdocumentor-element-found-in__source" data-line="42" data-modal="source-view" data-src="files/src/Handlers/SwooleHandler.php.txt"></a>
     </aside>
 
-        <p class="phpdocumentor-summary">等待直到回调返回true</p>
+        <p class="phpdocumentor-summary">协程等待</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">waitFor</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Closure">Closure</abbr>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$closure</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">float|int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$timeout</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">-1</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">waitFor</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Closure">Closure</abbr>|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$action</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">float|int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$timeout</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">-1</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$event</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -336,11 +417,11 @@
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$closure</span>
+                <span class="phpdocumentor-signature__argument__name">$action</span>
                 : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\Closure">Closure</abbr>|null</span>
                  = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>返回true或抛出异常则跳出等待</p>
+                    <section class="phpdocumentor-description"><p>true|Throwable 都会跳出等待</p>
 </section>
 
             </dd>
@@ -349,7 +430,16 @@
                 : <span class="phpdocumentor-signature__argument__return-type">float|int</span>
                  = <span class="phpdocumentor-signature__argument__default-value">-1</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>单位：秒| -1：不限制等待时间</p>
+                    <section class="phpdocumentor-description"><p>单位：秒，&lt; 0不限制等待时间</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$event</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>唤醒事件名</p>
 </section>
 
             </dd>
@@ -364,6 +454,68 @@
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
                     <span class="phpdocumentor-tag__name">inheritdoc</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                             
+                                    </dd>
+                                            </dl>
+
+    
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_wakeup">
+        wakeup()
+        <a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleHandler.html#method_wakeup" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Handlers/SwooleHandler.php"><a href="files/src-handlers-swoolehandler.html"><abbr title="src/Handlers/SwooleHandler.php">SwooleHandler.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">64</span>
+
+            <a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleWorkerman5Handler.html#source-view.64" class="phpdocumentor-element-found-in__source" data-line="64" data-modal="source-view" data-src="files/src/Handlers/SwooleHandler.php.txt"></a>
+    </aside>
+
+        <p class="phpdocumentor-summary">协程唤醒</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">wakeup</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$event</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$event</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>唤醒事件名</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleHandler.html#method_wakeup#tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">inheritDoc</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
@@ -490,7 +642,9 @@
                 <ul class="phpdocumentor-list -clean">
                                             <li class=""><a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleHandler.html#method_initEnv">initEnv()</a></li>
                                             <li class=""><a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleWorkerman5Handler.html#method_isAvailable">isAvailable()</a></li>
+                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleHandler.html#method_sleep">sleep()</a></li>
                                             <li class=""><a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleHandler.html#method_waitFor">waitFor()</a></li>
+                                            <li class=""><a href="classes/Workbunny-WebmanCoroutine-Handlers-SwooleHandler.html#method_wakeup">wakeup()</a></li>
                                     </ul>
             </li>
                     </ul>

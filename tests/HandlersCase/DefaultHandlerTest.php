@@ -46,6 +46,7 @@ class DefaultHandlerTest extends TestCase
 
             $return = true;
             DefaultHandler::wakeup(__METHOD__);
+
             return $return;
         }, event: __METHOD__);
         $this->assertTrue($return);
@@ -53,7 +54,6 @@ class DefaultHandlerTest extends TestCase
         // timeout in loop
         $this->expectException(TimeoutException::class);
         DefaultHandler::waitFor(function () {
-
             return false;
         }, 1);
 

@@ -70,6 +70,7 @@ class RevoltHandlerTest extends TestCase
 
             $return = true;
             RevoltHandler::wakeup(__METHOD__);
+
             return $return;
         }, event: __METHOD__);
         $this->assertTrue($return);
@@ -77,7 +78,6 @@ class RevoltHandlerTest extends TestCase
         // timeout in loop
         $this->expectException(TimeoutException::class);
         RevoltHandler::waitFor(function () {
-
             return false;
         }, 1);
 
