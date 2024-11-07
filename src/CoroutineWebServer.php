@@ -14,6 +14,7 @@ use Workbunny\WebmanCoroutine\Handlers\HandlerInterface;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Coroutine;
 use Workbunny\WebmanCoroutine\Utils\WaitGroup\WaitGroup;
 use Workerman\Connection\ConnectionInterface;
+use Workerman\Connection\TcpConnection;
 use Workerman\Worker;
 
 /**
@@ -27,6 +28,8 @@ class CoroutineWebServer extends App
      * @var int[]
      */
     protected static array $_connectionCoroutineCount = [];
+
+    protected bool $_stopSignal = false;
 
     /**
      * 获取连接的协程计数
@@ -61,7 +64,9 @@ class CoroutineWebServer extends App
         if (!config('plugin.workbunny.webman-coroutine.app.enable', false)) {
             return;
         }
-        parent::onWorkerStart($worker);
+        // 标记停止信号为false
+        $this->_stopSignal = false;
+        // 环境检查及初始化
         /** @var HandlerInterface $handler */
         $handler = Factory::getCurrentHandler();
         if (!$handler) {
@@ -69,6 +74,8 @@ class CoroutineWebServer extends App
             throw new WorkerException("Please run Factory::init or set $className::\$EventLoopClass = event_loop(). ");
         }
         $handler::initEnv();
+        // 父类初始化
+        parent::onWorkerStart($worker);
     }
 
     /**
@@ -83,6 +90,18 @@ class CoroutineWebServer extends App
     {
         if (method_exists(parent::class, 'onWorkerStop')) {
             parent::onWorkerStop($worker, ...$params);
+        }
+        if (config('plugin.workbunny.webman-coroutine.app.wait_for_close', false)) {
+            $classname = self::class;
+            Worker::safeEcho("[$classname] Wait for close start. ");
+            Worker::safeEcho("[$classname] Current remaining connections: " . count(self::getConnectionCoroutineCount()));
+            // 标记停止信号
+            $this->_stopSignal = true;
+            // 等待协程消费者消费完毕
+            wait_for(function () {
+                return empty(self::$_connectionCoroutineCount);
+            });
+            Worker::safeEcho("[$classname] Wait for close success. ");
         }
     }
 
@@ -105,6 +124,15 @@ class CoroutineWebServer extends App
             new Coroutine(function () use ($connection, $params) {
                 parent::onConnect($connection, ...$params);
             });
+        }
+        // 当存在停止信号的时候就暂停接收连接消息
+        if ($this->_stopSignal) {
+            if ($connection instanceof TcpConnection) {
+                $connection->pauseRecv();
+            } else {
+                $connection->close();
+            }
+            return;
         }
         self::$_connectionCoroutineCount[spl_object_hash($connection)] = 0;
     }
@@ -143,6 +171,10 @@ class CoroutineWebServer extends App
     public function onMessage($connection, $request, ...$params)
     {
         if (!is_object($connection)) {
+            return null;
+        }
+        if ($this->_stopSignal) {
+            $connection->close();
             return null;
         }
         $connectionId = spl_object_hash($connection);

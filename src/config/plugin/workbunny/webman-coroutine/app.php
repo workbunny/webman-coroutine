@@ -22,4 +22,6 @@ return [
     'channel_size'   => 1,
     // request consumer 数量 0:无限
     'consumer_count' => 0,
+    // 等待连接关闭
+    'wait_for_close' => false,
 ];
