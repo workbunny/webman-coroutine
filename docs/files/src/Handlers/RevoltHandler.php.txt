@@ -81,6 +81,7 @@ class RevoltHandler implements HandlerInterface
                 static::$_suspensions[$event] = $suspension;
                 if ($timeout < 0) {
                     $suspension->suspend();
+
                     return;
                 }
             }

@@ -491,7 +491,7 @@ class DebuggerTest extends TestCase
         Debugger::estimateCacheClear();
 
         $array = [
-            [1]
+            [1],
         ];
         $this->assertTrue(($arrayBase * 2) <= Debugger::estimate($array));
         Debugger::estimateCacheClear();
@@ -506,7 +506,7 @@ class DebuggerTest extends TestCase
         $resource1 = fopen('php://memory', 'r');
         $resource2 = $resource1;
         $array = [
-            $resource1, $resource2
+            $resource1, $resource2,
         ];
         $this->assertTrue(($arrayBase + 1024) == Debugger::estimate($array));
         Debugger::estimateCacheClear();

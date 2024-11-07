@@ -12,7 +12,6 @@ use Swoole\Event;
 use Swoole\Runtime;
 use Swoole\Timer;
 use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
-use Workerman\Events\EventInterface;
 
 /**
  *  基于swoole实现的协程处理器
@@ -79,6 +78,7 @@ class SwooleHandler implements HandlerInterface
                 static::$_suspensions[$event] = $suspension;
                 if ($timeout < 0) {
                     Coroutine::suspend();
+
                     return;
                 }
             }

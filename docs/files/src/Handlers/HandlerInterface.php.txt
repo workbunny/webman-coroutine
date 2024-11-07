@@ -40,7 +40,6 @@ interface HandlerInterface
      */
     public static function waitFor(?\Closure $action = null, int|float $timeout = -1, ?string $event = null): void;
 
-
     /**
      * 协程唤醒
      *

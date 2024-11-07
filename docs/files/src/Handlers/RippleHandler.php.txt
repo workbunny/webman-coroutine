@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Handlers;
 
-use Revolt\EventLoop\Suspension;
 use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
 
 use function Workbunny\WebmanCoroutine\package_installed;
@@ -81,6 +80,7 @@ class RippleHandler implements HandlerInterface
                 static::$_suspensions[$event] = $suspension;
                 if ($timeout < 0) {
                     $suspension->suspend();
+
                     return;
                 }
             }

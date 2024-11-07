@@ -144,6 +144,7 @@ class CoroutineWebServer extends App
             } else {
                 $connection->close();
             }
+
             return;
         }
         self::$_connectionCoroutineCount[spl_object_hash($connection)] = 0;
@@ -187,6 +188,7 @@ class CoroutineWebServer extends App
         }
         if ($this->_stopSignal) {
             $connection->close();
+
             return null;
         }
         $connectionId = spl_object_hash($connection);
@@ -197,7 +199,7 @@ class CoroutineWebServer extends App
             // 等待协程回收
             wait_for(function () use ($connectionId, $consumerCount) {
                 return self::getConnectionCoroutineCount($connectionId) <= $consumerCount;
-            }, event: "coroutineWebServer.consumer.wait");
+            }, event: 'coroutineWebServer.consumer.wait');
         }
 
         $waitGroup = new WaitGroup();
@@ -219,7 +221,7 @@ class CoroutineWebServer extends App
                         // 尝试回收
                         self::unsetConnectionCoroutineCount($connectionId);
                         // 通知等待
-                        wakeup("coroutineWebServer.consumer.wait");
+                        wakeup('coroutineWebServer.consumer.wait');
                     }
                     // wg完成
                     $waitGroup->done();

@@ -79,6 +79,6 @@ class DefaultHandler implements HandlerInterface
      */
     public static function sleep(float|int $timeout = 0, ?string $event = null): void
     {
-        usleep(max((int)$timeout * 1000 * 1000, 0));
+        usleep(max((int) $timeout * 1000 * 1000, 0));
     }
 }
