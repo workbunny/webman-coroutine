@@ -22,7 +22,7 @@
 
 > 除了直接通过继承改名的方式实现新的事件驱动，也可以通过重载的方式实现为一个已存在的事件循环装在自定义协程处理器
 
-**以`Factory::WORKERMAN_SWOOLE`举例，默认的协程处理器约定了只能在workerman 5.x下剩下，假设我们想要在workerman 4.x环境下使用，那么就需要重载它的协程处理器**
+**以`Factory::WORKERMAN_SWOOLE`举例，默认的协程处理器约定了只能在workerman 5.x下使用，假设我们想要在workerman 4.x环境下使用，那么就需要重载它的协程处理器**
 
 1. 通过`Workbunny\WebmanCoroutine\Factory::unregister(Workbunny\WebmanCoroutine\Factory::WORKERMAN_SWOOLE)`注销预设的协程处理器
 2. 通过`Workbunny\WebmanCoroutine\Factory::register(Workbunny\WebmanCoroutine\Factory::WORKERMAN_SWOOLE, Workbunny\WebmanCoroutine\Handlers\SwooleHandler::class)`注册workerman 4.x可用的协程处理器
