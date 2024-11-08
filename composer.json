@@ -27,7 +27,8 @@
     "friendsofphp/php-cs-fixer": "^3.0",
     "symfony/var-dumper": "^6.0",
     "swoole/ide-helper": "^5.1",
-    "swow/swow": "^1.5"
+    "swow/swow": "^1.5",
+    "revolt/event-loop": "^1.0"
   },
   "autoload": {
     "psr-4": {

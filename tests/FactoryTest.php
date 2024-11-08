@@ -87,4 +87,10 @@ class FactoryTest extends TestCase
         $handlers = $property->getValue();
         $this->assertTrue($handlers[Factory::getCurrentEventLoop()] === Factory::getCurrentHandler());
     }
+
+    public function testCallStaticNonExistingMethod()
+    {
+        $this->expectException(\BadMethodCallException::class);
+        Factory::nonExistingMethod('nonExistingMethod', []);
+    }
 }

@@ -51,4 +51,10 @@ class RevoltCoroutine implements CoroutineInterface
     {
         return $this->_suspension ? spl_object_hash($this->_suspension) : null;
     }
+
+    /** @inheritdoc  */
+    public function kill(\Throwable $throwable): void
+    {
+        $this->_suspension?->throw($throwable);
+    }
 }

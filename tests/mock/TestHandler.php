@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace Workbunny\Tests\mock;
 
 use Workbunny\WebmanCoroutine\Handlers\HandlerInterface;
+use Workbunny\WebmanCoroutine\Handlers\HandlerMethods;
 
 class TestHandler implements HandlerInterface
 {
+    use HandlerMethods;
+
     public static function isAvailable(): bool
     {
         return true;
@@ -31,5 +34,10 @@ class TestHandler implements HandlerInterface
 
     public static function sleep(float|int $timeout = 0, ?string $event = null): void
     {
+    }
+
+    public static function kill(object|int|string $suspensionOrSuspensionId, string $message = 'kill', int $exitCode = 0): void
+    {
+        // TODO: Implement kill() method.
     }
 }

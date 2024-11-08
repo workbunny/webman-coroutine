@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace Workbunny\WebmanCoroutine\Handlers;
 
 use Revolt\EventLoop;
+use Workbunny\WebmanCoroutine\Exceptions\KilledException;
 use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
 
 use function Workbunny\WebmanCoroutine\package_installed;
@@ -77,6 +78,7 @@ class RevoltHandler implements HandlerInterface
     {
         try {
             $suspension = EventLoop::getSuspension();
+            static::_setSuspensionsWeakMap($suspension, spl_object_hash($suspension), $event, microtime(true));
             if ($event) {
                 static::$_suspensions[$event] = $suspension;
                 if ($timeout < 0) {
@@ -107,6 +109,25 @@ class RevoltHandler implements HandlerInterface
         } finally {
             if ($event) {
                 unset(static::$_suspensions[$event]);
+            }
+        }
+    }
+
+    /** @inheritdoc  */
+    public static function kill(object|int|string $suspensionOrSuspensionId, string $message = 'kill', int $exitCode = 0): void
+    {
+        if ($suspensionOrSuspensionId instanceof EventLoop\Suspension) {
+            $info = static::$_suspensionsWeakMap->offsetGet($suspensionOrSuspensionId);
+            $suspensionOrSuspensionId->throw(new KilledException($message, $exitCode, $info['event'] ?? null));
+        } else {
+            /**
+             * @var EventLoop\Suspension $object
+             * @var array $info
+             */
+            foreach (static::listSuspensionsWeakMap() as $object => $info) {
+                if ($info['id'] === $suspensionOrSuspensionId) {
+                    $object->throw(new KilledException($message, $exitCode, $info['event'] ?? null));
+                }
             }
         }
     }

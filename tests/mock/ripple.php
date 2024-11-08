@@ -5,9 +5,9 @@ namespace Co;
 use Mockery;
 
 /**
- * @return Revolt\EventLoop\Suspension
+ * @return \Revolt\EventLoop\Suspension
  */
-function getSuspension()
+function getSuspension(): \Revolt\EventLoop\Suspension
 {
     $mock = Mockery::mock('alias:\Revolt\EventLoop\Suspension');
     $mock->shouldReceive('suspend')->andReturnNull();

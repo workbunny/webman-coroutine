@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers;
 
 use Swoole\Coroutine;
+use Throwable;
 use Workbunny\WebmanCoroutine\Handlers\SwooleHandler;
 
 class SwooleCoroutine implements CoroutineInterface
@@ -17,9 +18,7 @@ class SwooleCoroutine implements CoroutineInterface
      */
     protected ?int $_id = null;
 
-    /** @inheritdoc
-     * @param \Closure $func
-     */
+    /** @inheritdoc */
     public function __construct(\Closure $func)
     {
         while (1) {
@@ -55,5 +54,14 @@ class SwooleCoroutine implements CoroutineInterface
     public function id(): ?int
     {
         return $this->_id;
+    }
+
+    /** @inheritdoc  */
+    public function kill(Throwable $throwable): void
+    {
+        if ($this->id()) {
+            // todo swoole目前没有throw方法，暂时只能静默退出
+            Coroutine::cancel($this->id());
+        }
     }
 }

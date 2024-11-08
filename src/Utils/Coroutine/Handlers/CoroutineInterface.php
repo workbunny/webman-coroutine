@@ -7,6 +7,8 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers;
 
+use Throwable;
+
 interface CoroutineInterface
 {
     /**
@@ -34,4 +36,12 @@ interface CoroutineInterface
      * @return string|int|null
      */
     public function id(): string|int|null;
+
+    /**
+     * 杀死协程
+     *
+     * @param Throwable $throwable 抛出的异常
+     * @return void
+     */
+    public function kill(Throwable $throwable): void;
 }

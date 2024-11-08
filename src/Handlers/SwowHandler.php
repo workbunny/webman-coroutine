@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace Workbunny\WebmanCoroutine\Handlers;
 
 use Swow\Coroutine;
+use Workbunny\WebmanCoroutine\Exceptions\KilledException;
 use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
 
 /**
@@ -74,6 +75,7 @@ class SwowHandler implements HandlerInterface
     {
         try {
             $suspension = Coroutine::getCurrent();
+            static::_setSuspensionsWeakMap($suspension, spl_object_hash($suspension), $event, microtime(true));
             if ($event) {
                 static::$_suspensions[$event] = $suspension;
                 if ($timeout < 0) {
@@ -84,9 +86,9 @@ class SwowHandler implements HandlerInterface
             }
             Coroutine::run(function () use ($timeout, $suspension): void {
                 usleep((int) ($timeout * 1000 * 1000));
-                \call_user_func(function ($suspension) {
-                    if ($suspension?->isAvailable()) {
-                        $suspension?->resume();
+                \call_user_func(function (Coroutine $suspension) {
+                    if ($suspension->isAvailable()) {
+                        $suspension->resume();
                     }
                 }, $suspension);
             });
@@ -94,6 +96,25 @@ class SwowHandler implements HandlerInterface
         } finally {
             if ($event) {
                 unset(static::$_suspensions[$event]);
+            }
+        }
+    }
+
+    /** @inheritdoc  */
+    public static function kill(object|int|string $suspensionOrSuspensionId, string $message = 'kill', int $exitCode = 0): void
+    {
+        if ($suspensionOrSuspensionId instanceof Coroutine) {
+            $info = static::$_suspensionsWeakMap->offsetGet($suspensionOrSuspensionId);
+            $suspensionOrSuspensionId->throw(new KilledException($message, $exitCode, $info['event'] ?? null));
+        } else {
+            /**
+             * @var Coroutine $object
+             * @var array $info
+             */
+            foreach (static::listSuspensionsWeakMap() as $object => $info) {
+                if ($info['id'] === $suspensionOrSuspensionId) {
+                    $object->throw(new KilledException($message, $exitCode, $info['event'] ?? null));
+                }
             }
         }
     }
