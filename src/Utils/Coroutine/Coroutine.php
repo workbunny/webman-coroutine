@@ -93,9 +93,9 @@ class Coroutine
      *
      * @return WeakMap<CoroutineInterface, float|int> [CoroutineInterface, 开始时间戳]
      */
-    public static function listCoroutinesWeakMap(): WeakMap
+    public static function getCoroutinesWeakMap(): WeakMap
     {
-        return static::$_coroutinesWeakMap ?: new WeakMap();
+        return static::$_coroutinesWeakMap = static::$_coroutinesWeakMap ?: new WeakMap();
     }
 
     /**
@@ -115,7 +115,7 @@ class Coroutine
              * @var CoroutineInterface $object
              * @var array $info
              */
-            foreach (static::listCoroutinesWeakMap() as $object => $info) {
+            foreach (static::getCoroutinesWeakMap() as $object => $info) {
                 if ($info['id'] === $coroutineOrCoroutineId) {
                     $object->kill(new KilledException($message, $exitCode));
                 }

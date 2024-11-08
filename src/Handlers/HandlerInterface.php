@@ -72,8 +72,8 @@ interface HandlerInterface
     /**
      * 获取所有挂起的对象
      *
-     * @return WeakMap|null
-     * @link HandlerMethods::listSuspensionsWeakMap()
+     * @return WeakMap
+     * @link HandlerMethods::getSuspensionsWeakMap()
      */
-    public static function listSuspensionsWeakMap(): ?WeakMap;
+    public static function getSuspensionsWeakMap(): WeakMap;
 }

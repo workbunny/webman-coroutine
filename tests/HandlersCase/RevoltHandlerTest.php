@@ -6,6 +6,7 @@ namespace Workbunny\Tests\HandlersCase;
 
 use Mockery;
 use Workbunny\Tests\TestCase;
+use Workbunny\WebmanCoroutine\Exceptions\KilledException;
 use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
 use Workbunny\WebmanCoroutine\Handlers\RevoltHandler;
 
@@ -138,6 +139,35 @@ class RevoltHandlerTest extends TestCase
         $property->setValue(null, [__METHOD__ => $suspensionMock]);
 
         RevoltHandler::wakeup(__METHOD__);
+        $this->assertTrue(true);
+    }
+
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     * @return void
+     */
+    public function testKill()
+    {
+        // mock
+        $suspensionMock = Mockery::mock('alias:\Revolt\EventLoop\Suspension');
+        $suspensionMock->shouldReceive('throw')->twice()->andReturnUsing(function ($exception) {
+            $this->assertInstanceOf(KilledException::class, $exception);
+        });
+        $this->assertEquals(0, RevoltHandler::getSuspensionsWeakMap()->count());
+        RevoltHandler::setSuspensionsWeakMap($suspensionMock, spl_object_hash($suspensionMock), __METHOD__, microtime(true));
+        $this->assertEquals(1, RevoltHandler::getSuspensionsWeakMap()->count());
+
+        // object
+        foreach (RevoltHandler::getSuspensionsWeakMap() as $object => $info) {
+            RevoltHandler::kill($object, __METHOD__, -1);
+        }
+        $this->assertTrue(true);
+
+        // string
+        foreach (RevoltHandler::getSuspensionsWeakMap() as $info) {
+            RevoltHandler::kill($info['id'], __METHOD__, -1);
+        }
         $this->assertTrue(true);
     }
 }

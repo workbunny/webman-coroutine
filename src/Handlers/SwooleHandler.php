@@ -83,7 +83,7 @@ class SwooleHandler implements HandlerInterface
             $object = new stdClass();
             $object->suspension = $suspension;
             $object->throw      = null;
-            static::_setSuspensionsWeakMap($object, $suspension, $event, microtime(true));
+            static::setSuspensionsWeakMap($object, $suspension, $event, microtime(true));
             if ($event) {
                 static::$_suspensions[$event] = $suspension;
                 if ($timeout < 0) {
@@ -133,15 +133,16 @@ class SwooleHandler implements HandlerInterface
     public static function kill(object|int|string $suspensionOrSuspensionId, string $message = 'kill', int $exitCode = 0): void
     {
         if ($suspensionOrSuspensionId instanceof stdClass) {
-            $info = static::$_suspensionsWeakMap->offsetGet($suspensionOrSuspensionId);
-            $suspensionOrSuspensionId->throw = new KilledException($message, $exitCode, $info['event'] ?? null);
-            Coroutine::resume($info['id']);
+            if ($info = static::getSuspensionsWeakMap()->offsetGet($suspensionOrSuspensionId)) {
+                $suspensionOrSuspensionId->throw = new KilledException($message, $exitCode, $info['event'] ?? null);
+                Coroutine::resume($info['id']);
+            }
         } else {
             /**
              * @var object{suspension:int, throw:Throwable} $object
              * @var array $info
              */
-            foreach (static::listSuspensionsWeakMap() as $object => $info) {
+            foreach (static::getSuspensionsWeakMap() as $object => $info) {
                 if ($info['id'] === $suspensionOrSuspensionId) {
                     $object->throw = new KilledException($message, $exitCode, $info['event'] ?? null);
                     Coroutine::resume($info['id']);

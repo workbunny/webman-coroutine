@@ -19,9 +19,9 @@ trait HandlerMethods
      *
      * @return WeakMap
      */
-    public static function listSuspensionsWeakMap(): WeakMap
+    public static function getSuspensionsWeakMap(): WeakMap
     {
-        return static::$_suspensionsWeakMap ?: new WeakMap();
+        return self::$_suspensionsWeakMap = static::$_suspensionsWeakMap ?: new WeakMap();
     }
 
     /**
@@ -33,10 +33,9 @@ trait HandlerMethods
      * @param float|int $startTime
      * @return void
      */
-    protected static function _setSuspensionsWeakMap(object $object, string|int $id, ?string $event, float|int $startTime): void
+    public static function setSuspensionsWeakMap(object $object, string|int $id, ?string $event, float|int $startTime): void
     {
-        static::$_suspensionsWeakMap = static::$_suspensionsWeakMap ?: new WeakMap;
-        static::$_suspensionsWeakMap->offsetSet($object, [
+        static::getSuspensionsWeakMap()->offsetSet($object, [
             'id'        => $id,
             'event'     => $event,
             'startTime' => $startTime

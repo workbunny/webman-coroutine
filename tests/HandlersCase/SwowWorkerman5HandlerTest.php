@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Workbunny\Tests\HandlersCase;
 
 use Mockery;
+use Workbunny\WebmanCoroutine\Exceptions\KilledException;
 use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
 use Workbunny\WebmanCoroutine\Handlers\SwowWorkerman5Handler as SwowHandler;
 
@@ -121,6 +122,35 @@ class SwowWorkerman5HandlerTest extends SwowHandlerTest
         $property->setValue(null, [__METHOD__ => $mock]);
 
         SwowHandler::wakeup(__METHOD__);
+        $this->assertTrue(true);
+    }
+
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     * @return void
+     */
+    public function testKill()
+    {
+        // mock
+        $suspensionMock = Mockery::mock('alias:\Swow\Coroutine');
+        $suspensionMock->shouldReceive('throw')->twice()->andReturnUsing(function ($exception) {
+            $this->assertInstanceOf(KilledException::class, $exception);
+        });
+        $this->assertEquals(0, SwowHandler::getSuspensionsWeakMap()->count());
+        SwowHandler::setSuspensionsWeakMap($suspensionMock, spl_object_hash($suspensionMock), __METHOD__, microtime(true));
+        $this->assertEquals(1, SwowHandler::getSuspensionsWeakMap()->count());
+
+        // object
+        foreach (SwowHandler::getSuspensionsWeakMap() as $object => $info) {
+            SwowHandler::kill($object, __METHOD__, -1);
+        }
+        $this->assertTrue(true);
+
+        // string
+        foreach (SwowHandler::getSuspensionsWeakMap() as $info) {
+            SwowHandler::kill($info['id'], __METHOD__, -1);
+        }
         $this->assertTrue(true);
     }
 }
