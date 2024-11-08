@@ -25,3 +25,8 @@ function defer(\Closure $closure)
 {
     call_user_func($closure);
 }
+
+function async(\Closure $closure)
+{
+    return Mockery::mock('alias:\Ripple\Promise');
+}

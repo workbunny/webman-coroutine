@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Workbunny\Tests\HandlersCase;
 
 use Mockery;
+use Workbunny\WebmanCoroutine\Exceptions\KilledException;
+use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
 use Workbunny\WebmanCoroutine\Handlers\RippleWorkerman5Handler as RippleHandler;
 
 class RippleWorkerman5HandlerTest extends RippleHandlerTest

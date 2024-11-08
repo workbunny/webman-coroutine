@@ -8,6 +8,7 @@ use Mockery;
 use Workbunny\Tests\TestCase;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Coroutine;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\CoroutineInterface;
+use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\DefaultCoroutine;
 
 class CoroutineTest extends TestCase
 {
@@ -86,5 +87,25 @@ class CoroutineTest extends TestCase
     {
         $result = Coroutine::unregisterExecute('some_key');
         $this->assertTrue($result);
+    }
+
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     * @return void
+     */
+    public function testKill()
+    {
+        $this->assertEquals(0, Coroutine::getCoroutinesWeakMap()->count());
+        $coroutine = new Coroutine($func = function () {});
+        $this->assertEquals(1, Coroutine::getCoroutinesWeakMap()->count());
+
+        Coroutine::kill($interface = $coroutine->getCoroutineInterface());
+
+        $this->assertInstanceOf(DefaultCoroutine::class, $interface);
+
+        // DefaultCoroutine在初始化时就执行，所以id为null，这里通过null来进行kill测试
+        Coroutine::kill(null);
+        $this->assertTrue(true);
     }
 }

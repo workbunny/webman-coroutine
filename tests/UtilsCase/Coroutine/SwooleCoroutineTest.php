@@ -6,6 +6,7 @@ namespace Workbunny\Tests\UtilsCase\Coroutine;
 
 use Mockery;
 use Workbunny\Tests\TestCase;
+use Workbunny\WebmanCoroutine\Exceptions\KilledException;
 use Workbunny\WebmanCoroutine\Handlers\SwooleHandler;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\SwooleCoroutine;
 
@@ -147,5 +148,19 @@ class SwooleCoroutineTest extends TestCase
         call_user_func($callback);
 
         $this->assertNull($coroutine->id());
+    }
+
+    public function testKill()
+    {
+        $suspensionMock = Mockery::mock('alias:Swoole\Coroutine');
+        $suspensionMock->shouldReceive('create')->once()->andReturn(123);
+        $suspensionMock->shouldReceive('cancel')->once()->andReturnUsing(function ($id) {
+            $this->assertEquals(123, $id);
+        });
+        $func = function () {
+            // 模拟闭包函数的执行
+        };
+        (new SwooleCoroutine($func))->kill(new KilledException());
+        $this->assertTrue(true);
     }
 }

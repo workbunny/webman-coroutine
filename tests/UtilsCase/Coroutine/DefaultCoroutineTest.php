@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Workbunny\Tests\UtilsCase\Coroutine;
 
 use Workbunny\Tests\TestCase;
+use Workbunny\WebmanCoroutine\Exceptions\KilledException;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\DefaultCoroutine;
 
 class DefaultCoroutineTest extends TestCase
@@ -40,5 +41,15 @@ class DefaultCoroutineTest extends TestCase
         $coroutine = new DefaultCoroutine($func);
         $this->assertNull($coroutine->id());
         $this->assertNull($coroutine->origin());
+    }
+
+    public function testKill()
+    {
+        $func = function () {
+            // 模拟闭包函数的执行
+        };
+        $coroutine = new DefaultCoroutine($func);
+        $coroutine->kill(new KilledException());
+        $this->assertTrue(true);
     }
 }

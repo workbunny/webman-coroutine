@@ -22,6 +22,7 @@ use Workbunny\WebmanCoroutine\Utils\RegisterMethods;
 /**
  * @method mixed origin()
  * @method string|int id()
+ * @method void kill(\Throwable $throwable)
  */
 class Coroutine
 {
@@ -76,6 +77,14 @@ class Coroutine
         $this->_interface = null;
     }
 
+    /**
+     * @return CoroutineInterface|null
+     */
+    public function getCoroutineInterface(): ?CoroutineInterface
+    {
+        return $this->_interface;
+    }
+
     /** @inheritdoc  */
     public static function registerVerify(mixed $value): false|string
     {
@@ -101,12 +110,12 @@ class Coroutine
     /**
      * 杀死协程
      *
-     * @param object|int|string $coroutineOrCoroutineId
+     * @param object|int|string|null $coroutineOrCoroutineId
      * @param string $message
      * @param int $exitCode
      * @return void
      */
-    public static function kill(object|int|string $coroutineOrCoroutineId, string $message = 'kill', int $exitCode = 0): void
+    public static function kill(object|int|string|null $coroutineOrCoroutineId, string $message = 'kill', int $exitCode = 0): void
     {
         if ($coroutineOrCoroutineId instanceof CoroutineInterface) {
             $coroutineOrCoroutineId->kill(new KilledException($message, $exitCode));
