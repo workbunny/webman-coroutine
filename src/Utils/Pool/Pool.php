@@ -14,6 +14,7 @@ use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
 use function Workbunny\WebmanCoroutine\wait_for;
 
 use Workerman\Worker;
+use function Workbunny\WebmanCoroutine\wakeup;
 
 class Pool
 {
@@ -203,11 +204,13 @@ class Pool
     public static function getIdle(string $name, int $timeout = -1): Pool
     {
         $pool = null;
+        // 使用pool.idle.$name事件等待空闲对象
         wait_for(function () use (&$pool, $name) {
             $pool = self::idle($name);
 
             return $pool !== null;
-        }, $timeout);
+        }, timeout: $timeout, event: "pool.idle.$name");
+        // 获取到的对象加锁
         $pool->setIdle(false);
 
         return $pool;
@@ -366,6 +369,14 @@ class Pool
     public function setIdle(bool $idle): void
     {
         $this->_idle = $idle;
+        if ($idle) {
+            $id = spl_object_hash($this);
+            $name = $this->getName();
+            // 唤醒pool.wait.$name.$id
+            wakeup("pool.wait.$name.$id");
+            // 唤醒pool.idle.$name
+            wakeup("pool.idle.$name");
+        }
     }
 
     /**
@@ -397,9 +408,12 @@ class Pool
      */
     public function wait(?\Closure $closure = null): void
     {
+        $id = spl_object_hash($this);
+        $name = $this->getName();
+        // 永久等待pool.wait.$name.$id唤醒事件
         wait_for(function () {
             return $this->isIdle();
-        });
+        }, timeout: -1, event: "pool.wait.$name.$id");
         if ($closure) {
             $this->setIdle(false);
             try {
