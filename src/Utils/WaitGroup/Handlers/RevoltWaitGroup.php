@@ -39,7 +39,7 @@ class RevoltWaitGroup implements WaitGroupInterface
     /** @inheritdoc  */
     public function add(int $delta = 1): bool
     {
-        $this->_count++;
+        $this->_count += max($delta, 1);
 
         return true;
     }

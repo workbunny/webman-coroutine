@@ -43,8 +43,8 @@ class SwowWaitGroup implements WaitGroupInterface
     /** @inheritdoc  */
     public function add(int $delta = 1): bool
     {
-        $this->_waitGroup->add($delta);
-        $this->_count++;
+        $this->_waitGroup->add($delta = max($delta, 1));
+        $this->_count += $delta;
 
         return true;
     }
