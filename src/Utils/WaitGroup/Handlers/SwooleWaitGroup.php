@@ -37,7 +37,7 @@ class SwooleWaitGroup implements WaitGroupInterface
     /** @inheritdoc  */
     public function add(int $delta = 1): bool
     {
-        $this->_waitGroup->add($delta);
+        $this->_waitGroup->add(max($delta, 1));
 
         return true;
     }
@@ -45,7 +45,9 @@ class SwooleWaitGroup implements WaitGroupInterface
     /** @inheritdoc  */
     public function done(): bool
     {
-        $this->_waitGroup->done();
+        if ($this->count() > 0) {
+            $this->_waitGroup->done();
+        }
 
         return true;
     }
