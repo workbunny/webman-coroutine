@@ -12,7 +12,6 @@ namespace Workbunny\WebmanCoroutine\Handlers;
  */
 class SwowWorkerman5Handler extends SwowHandler
 {
-    use HandlerMethods;
 
     /** @inheritdoc  */
     public static function isAvailable(): bool

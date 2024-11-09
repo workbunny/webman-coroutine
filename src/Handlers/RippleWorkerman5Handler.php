@@ -14,8 +14,6 @@ use function Workbunny\WebmanCoroutine\package_installed;
  */
 class RippleWorkerman5Handler extends RippleHandler
 {
-    use HandlerMethods;
-
     /** @inheritdoc  */
     public static function isAvailable(): bool
     {
