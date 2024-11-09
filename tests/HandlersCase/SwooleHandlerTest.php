@@ -91,9 +91,6 @@ class SwooleHandlerTest extends TestCase
         }, 0.1);
     }
 
-    /**
-     * @return void
-     */
     public function testSleep()
     {
         $timerMock = Mockery::mock('alias:Swoole\Timer');

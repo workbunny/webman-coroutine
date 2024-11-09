@@ -28,7 +28,8 @@ use Workbunny\WebmanCoroutine\Handlers\SwowWorkerman5Handler;
  * @method static void wakeup(string $event)
  * @method static void sleep(int|float $timeout = 0, ?string $event = null)
  * @method static void kill(object|int|string $suspensionOrSuspensionId, string $message = 'kill', int $exitCode = 0)
- * @method static null|WeakMap listSuspensionsWeakMap()
+ * @method static null|WeakMap getSuspensionsWeakMap()
+ * @method static void setSuspensionsWeakMap(object $object, string|int $id, ?string $event, float|int $startTime)
  */
 class Factory
 {

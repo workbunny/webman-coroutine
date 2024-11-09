@@ -89,7 +89,9 @@ class SwooleHandler implements HandlerInterface
                 if ($timeout < 0) {
                     Coroutine::suspend();
                     if ($object->throw instanceof Throwable) {
+                        // @codeCoverageIgnoreStart
                         throw $object->throw;
+                        // @codeCoverageIgnoreEnd
                     }
 
                     return;
@@ -119,7 +121,9 @@ class SwooleHandler implements HandlerInterface
             }
             Coroutine::suspend();
             if ($object->throw instanceof Throwable) {
+                // @codeCoverageIgnoreStart
                 throw $object->throw;
+                // @codeCoverageIgnoreEnd
             }
         } finally {
             if ($event) {
