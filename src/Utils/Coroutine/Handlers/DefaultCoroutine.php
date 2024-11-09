@@ -7,6 +7,8 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers;
 
+use Throwable;
+
 class DefaultCoroutine implements CoroutineInterface
 {
     /**
@@ -36,5 +38,10 @@ class DefaultCoroutine implements CoroutineInterface
     public function id(): ?string
     {
         return $this->id;
+    }
+
+    /** @inheritdoc  */
+    public function kill(Throwable $throwable): void
+    {
     }
 }

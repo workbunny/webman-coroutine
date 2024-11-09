@@ -93,4 +93,12 @@ class DefaultHandlerTest extends TestCase
         DefaultHandler::wakeup(__METHOD__);
         $this->assertTrue(true);
     }
+
+    public function testKill()
+    {
+        DefaultHandler::kill(new \stdClass());
+        $this->assertTrue(true);
+        DefaultHandler::kill(__METHOD__);
+        $this->assertTrue(true);
+    }
 }

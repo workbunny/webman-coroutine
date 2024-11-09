@@ -45,4 +45,10 @@ class SwowCoroutine implements CoroutineInterface
     {
         return $this->_coroutine?->getId();
     }
+
+    /** @inheritdoc  */
+    public function kill(\Throwable $throwable): void
+    {
+        $this->_coroutine?->throw($throwable);
+    }
 }

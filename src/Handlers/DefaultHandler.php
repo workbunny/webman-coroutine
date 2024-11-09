@@ -14,6 +14,8 @@ use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
  */
 class DefaultHandler implements HandlerInterface
 {
+    use HandlerMethods;
+
     /**
      * 测试用，为保证覆盖生成时不会无限等待
      *
@@ -73,12 +75,14 @@ class DefaultHandler implements HandlerInterface
     {
     }
 
-    /** @inheritDoc
-     * @param float|int $timeout
-     * @param string|null $event
-     */
+    /** @inheritDoc */
     public static function sleep(float|int $timeout = 0, ?string $event = null): void
     {
         usleep(max((int) $timeout * 1000 * 1000, 0));
+    }
+
+    /** @inheritdoc  */
+    public static function kill(object|int|string $suspensionOrSuspensionId, string $message = 'kill', int $exitCode = 0): void
+    {
     }
 }

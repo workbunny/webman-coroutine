@@ -39,12 +39,7 @@ function event_loop(?string $expectEventLoopClass = null): string
  */
 function wait_for(?\Closure $action, float|int $timeout = -1, null|string $event = null): void
 {
-    if (($handler = Factory::getCurrentHandler()) === null) {
-        Factory::init(null);
-        /** @var HandlerInterface $handler */
-        $handler = Factory::getCurrentHandler();
-    }
-    $handler::waitFor($action, $timeout, $event);
+    Factory::waitFor($action, $timeout, $event);
 }
 
 /**
@@ -57,12 +52,7 @@ function wait_for(?\Closure $action, float|int $timeout = -1, null|string $event
  */
 function sleep(float|int $timeout = 0, null|string $event = null): void
 {
-    if (($handler = Factory::getCurrentHandler()) === null) {
-        Factory::init(null);
-        /** @var HandlerInterface $handler */
-        $handler = Factory::getCurrentHandler();
-    }
-    $handler::sleep($timeout, $event);
+    Factory::sleep($timeout, $event);
 }
 
 /**
@@ -74,12 +64,7 @@ function sleep(float|int $timeout = 0, null|string $event = null): void
  */
 function wakeup(string $event): void
 {
-    if (($handler = Factory::getCurrentHandler()) === null) {
-        Factory::init(null);
-        /** @var HandlerInterface $handler */
-        $handler = Factory::getCurrentHandler();
-    }
-    $handler::wakeup($event);
+    Factory::wakeup($event);
 }
 
 /**

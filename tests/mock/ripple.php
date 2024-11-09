@@ -5,9 +5,9 @@ namespace Co;
 use Mockery;
 
 /**
- * @return Revolt\EventLoop\Suspension
+ * @return \Revolt\EventLoop\Suspension
  */
-function getSuspension()
+function getSuspension(): \Revolt\EventLoop\Suspension
 {
     $mock = Mockery::mock('alias:\Revolt\EventLoop\Suspension');
     $mock->shouldReceive('suspend')->andReturnNull();
@@ -24,4 +24,9 @@ function delay(\Closure $closure, float $timeout)
 function defer(\Closure $closure)
 {
     call_user_func($closure);
+}
+
+function async(\Closure $closure)
+{
+    return Mockery::mock('alias:\Ripple\Promise');
 }

@@ -8,6 +8,8 @@ declare(strict_types=1);
 namespace Workbunny\WebmanCoroutine\Utils\Coroutine;
 
 use Closure;
+use WeakMap;
+use Workbunny\WebmanCoroutine\Exceptions\KilledException;
 use Workbunny\WebmanCoroutine\Factory;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\CoroutineInterface;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\DefaultCoroutine;
@@ -20,10 +22,16 @@ use Workbunny\WebmanCoroutine\Utils\RegisterMethods;
 /**
  * @method mixed origin()
  * @method string|int id()
+ * @method void kill(\Throwable $throwable)
  */
 class Coroutine
 {
     use RegisterMethods;
+
+    /**
+     * @var WeakMap<CoroutineInterface, float|int>|null
+     */
+    protected static ?WeakMap $_coroutinesWeakMap = null;
 
     /**
      * @var CoroutineInterface|null
@@ -51,7 +59,14 @@ class Coroutine
      */
     public function __construct(Closure $func)
     {
+        // 创建协程
         $this->_interface = new (self::$_handlers[Factory::getCurrentEventLoop()] ?? DefaultCoroutine::class)($func);
+        // 注册协程
+        static::$_coroutinesWeakMap = static::$_coroutinesWeakMap ?: new WeakMap();
+        static::$_coroutinesWeakMap->offsetSet($this->_interface, [
+            'id'        => $this->_interface->id(),
+            'startTime' => microtime(true),
+        ]);
     }
 
     /**
@@ -60,6 +75,14 @@ class Coroutine
     public function __destruct()
     {
         $this->_interface = null;
+    }
+
+    /**
+     * @return CoroutineInterface|null
+     */
+    public function getCoroutineInterface(): ?CoroutineInterface
+    {
+        return $this->_interface;
     }
 
     /** @inheritdoc  */
@@ -72,6 +95,41 @@ class Coroutine
     public static function unregisterExecute(string $key): bool
     {
         return true;
+    }
+
+    /**
+     * 返回所有协程
+     *
+     * @return WeakMap<CoroutineInterface, float|int> [CoroutineInterface, 开始时间戳]
+     */
+    public static function getCoroutinesWeakMap(): WeakMap
+    {
+        return static::$_coroutinesWeakMap = static::$_coroutinesWeakMap ?: new WeakMap();
+    }
+
+    /**
+     * 杀死协程
+     *
+     * @param object|int|string|null $coroutineOrCoroutineId
+     * @param string $message
+     * @param int $exitCode
+     * @return void
+     */
+    public static function kill(object|int|string|null $coroutineOrCoroutineId, string $message = 'kill', int $exitCode = 0): void
+    {
+        if ($coroutineOrCoroutineId instanceof CoroutineInterface) {
+            $coroutineOrCoroutineId->kill(new KilledException($message, $exitCode));
+        } else {
+            /**
+             * @var CoroutineInterface $object
+             * @var array $info
+             */
+            foreach (static::getCoroutinesWeakMap() as $object => $info) {
+                if ($info['id'] === $coroutineOrCoroutineId) {
+                    $object->kill(new KilledException($message, $exitCode));
+                }
+            }
+        }
     }
 
     /**

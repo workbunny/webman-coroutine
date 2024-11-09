@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Workbunny\WebmanCoroutine;
 
+use WeakMap;
 use Workbunny\WebmanCoroutine\Events\SwooleEvent;
 use Workbunny\WebmanCoroutine\Events\SwowEvent;
 use Workbunny\WebmanCoroutine\Handlers\DefaultHandler;
@@ -20,7 +21,15 @@ use Workbunny\WebmanCoroutine\Handlers\SwowHandler;
 use Workbunny\WebmanCoroutine\Handlers\SwowWorkerman5Handler;
 
 /**
- *  工厂化启动器
+ * 工厂化启动器
+ * @method static void isAvailable()
+ * @method static void initEnv()
+ * @method static void waitFor(?\Closure $action = null, int|float $timeout = -1, ?string $event = null)
+ * @method static void wakeup(string $event)
+ * @method static void sleep(int|float $timeout = 0, ?string $event = null)
+ * @method static void kill(object|int|string $suspensionOrSuspensionId, string $message = 'kill', int $exitCode = 0)
+ * @method static null|WeakMap getSuspensionsWeakMap()
+ * @method static void setSuspensionsWeakMap(object $object, string|int $id, ?string $event, float|int $startTime)
  */
 class Factory
 {
@@ -47,7 +56,7 @@ class Factory
         self::WORKERMAN_SWOOLE  => SwooleWorkerman5Handler::class,
         self::WORKBUNNY_SWOOLE  => SwooleHandler::class,
         self::REVOLT_FIBER      => RevoltHandler::class,
-        self::RIPPLE_FIBER      => RippleHandler::class,
+        self::RIPPLE_FIBER_4    => RippleHandler::class,
         self::RIPPLE_FIBER_5    => RippleWorkerman5Handler::class,
     ];
 
@@ -166,5 +175,25 @@ class Factory
             // 赋值
             self::$_currentEventLoop = $eventLoopClass;
         }
+    }
+
+    /**
+     * 代理调用HandlerInterface方法
+     *
+     * @param string $name
+     * @param array $arguments
+     * @return mixed
+     */
+    public static function __callStatic(string $name, array $arguments)
+    {
+        if (($handler = Factory::getCurrentHandler()) === null) {
+            Factory::init(null);
+            /** @var HandlerInterface $handler */
+            $handler = Factory::getCurrentHandler();
+        }
+        if (method_exists($handler, $name)) {
+            return $handler::$name(...$arguments);
+        }
+        throw new \BadMethodCallException("Method $name not exists. ");
     }
 }

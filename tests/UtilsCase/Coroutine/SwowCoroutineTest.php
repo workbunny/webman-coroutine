@@ -6,6 +6,7 @@ namespace Workbunny\Tests\UtilsCase\Coroutine;
 
 use Mockery;
 use Workbunny\Tests\TestCase;
+use Workbunny\WebmanCoroutine\Exceptions\KilledException;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\SwowCoroutine;
 
 class SwowCoroutineTest extends TestCase
@@ -131,5 +132,19 @@ class SwowCoroutineTest extends TestCase
         call_user_func($callback);
 
         $this->assertNull($coroutine->id());
+    }
+
+    public function testKill()
+    {
+        $suspensionMock = Mockery::mock('alias:Swow\Coroutine');
+        $suspensionMock->shouldReceive('run')->once()->andReturnSelf();
+        $suspensionMock->shouldReceive('throw')->once()->andReturnUsing(function ($throwable) {
+            $this->assertInstanceOf(KilledException::class, $throwable);
+        });
+        $func = function () {
+            // 模拟闭包函数的执行
+        };
+        (new SwowCoroutine($func))->kill(new KilledException());
+        $this->assertTrue(true);
     }
 }

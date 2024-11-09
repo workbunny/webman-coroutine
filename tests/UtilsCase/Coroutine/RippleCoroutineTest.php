@@ -6,6 +6,8 @@ namespace Workbunny\Tests\UtilsCase\Coroutine;
 
 use Mockery;
 use Workbunny\Tests\TestCase;
+use Workbunny\WebmanCoroutine\Exceptions\KilledException;
+use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\RevoltCoroutine;
 use Workbunny\WebmanCoroutine\Utils\Coroutine\Handlers\RippleCoroutine;
 
 class RippleCoroutineTest extends TestCase
@@ -168,5 +170,46 @@ class RippleCoroutineTest extends TestCase
         $coroutine->__construct($func);
 
         $this->assertNull($coroutine->id());
+    }
+
+    /**
+     * @runInSeparateProcess
+     * @preserveGlobalState disabled
+     * @return void
+     */
+    public function testKill()
+    {
+        $suspensionMock = Mockery::mock('alias:Revolt\EventLoop\Suspension');
+        $suspensionMock->shouldReceive('throw')->once()->andReturnUsing(function ($throwable) {
+            $this->assertInstanceOf(KilledException::class, $throwable);
+        });
+        $func = function () {
+            // 模拟闭包函数的执行
+        };
+        // 模拟构造
+        $coroutine = Mockery::mock(RippleCoroutine::class)->makePartial();
+        $coroutine->shouldAllowMockingProtectedMethods()->shouldReceive('_getSuspension')
+            ->andReturn($suspensionMock);
+        $coroutine->shouldAllowMockingProtectedMethods()->shouldReceive('_async')
+            ->andReturnUsing(function ($closure) use ($coroutine, &$result, &$reject) {
+                // 模拟发生协程执行
+                call_user_func($closure, function ($res) use (&$result) {
+                    $result = $res;
+                }, function ($rj) use (&$reject) {
+                    $reject = $rj;
+                });
+
+                // 模拟返回
+                return Mockery::mock('alias:Ripple\Promise');
+            });
+        $coroutine->__construct($func);
+
+        $reflection = new \ReflectionClass(RippleCoroutine::class);
+        $property = $reflection->getProperty('_suspension');
+        $property->setAccessible(true);
+        $property->setValue($coroutine, $suspensionMock);
+
+        $coroutine->kill(new KilledException());
+        $this->assertTrue(true);
     }
 }

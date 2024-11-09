@@ -18,9 +18,7 @@ class RippleCoroutine implements CoroutineInterface
      */
     protected ?Suspension $_suspension = null;
 
-    /** @inheritdoc
-     * @param \Closure $func
-     */
+    /** @inheritdoc */
     public function __construct(Closure $func)
     {
         $this->_suspension = $this->_getSuspension();
@@ -56,6 +54,12 @@ class RippleCoroutine implements CoroutineInterface
     public function id(): ?string
     {
         return $this->_suspension ? spl_object_hash($this->_suspension) : null;
+    }
+
+    /** @inheritdoc  */
+    public function kill(\Throwable $throwable): void
+    {
+        $this->_suspension?->throw($throwable);
     }
 
     /**

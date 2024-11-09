@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace Workbunny\WebmanCoroutine\Handlers;
 
 use Throwable;
+use WeakMap;
 use Workbunny\WebmanCoroutine\Exceptions\TimeoutException;
 
 /**
@@ -57,4 +58,22 @@ interface HandlerInterface
      * @return void
      */
     public static function sleep(int|float $timeout = 0, ?string $event = null): void;
+
+    /**
+     * 协程强制终止
+     *
+     * @param object|int|string $suspensionOrSuspensionId
+     * @param string $message
+     * @param int $exitCode
+     * @return void
+     */
+    public static function kill(object|int|string $suspensionOrSuspensionId, string $message = 'kill', int $exitCode = 0): void;
+
+    /**
+     * 获取所有挂起的对象
+     *
+     * @return WeakMap
+     * @link HandlerMethods::getSuspensionsWeakMap()
+     */
+    public static function getSuspensionsWeakMap(): WeakMap;
 }
