@@ -52,8 +52,10 @@ class SwowWaitGroup implements WaitGroupInterface
     /** @inheritdoc  */
     public function done(): bool
     {
-        $this->_waitGroup->done();
-        $this->_count--;
+        if ($this->count() > 0) {
+            $this->_waitGroup->done();
+            $this->_count--;
+        }
 
         return true;
     }
