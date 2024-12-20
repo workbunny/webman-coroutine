@@ -12,7 +12,7 @@ use Workerman\Worker;
 abstract class AbstractWorker extends Worker
 {
     /** @inheritDoc */
-    protected static function initWorkers()
+    protected static function initWorkers(): void
     {
         foreach (static::$_workers as $worker) {
             // 加载__init__开头的初始化方法
