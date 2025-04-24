@@ -37,6 +37,7 @@ class Factory
     public const WORKBUNNY_SWOW = SwowEvent::class;
     public const WORKERMAN_SWOOLE = 'Workerman\Events\Swoole';
     public const WORKBUNNY_SWOOLE = SwooleEvent::class;
+    public const WORKERMAN_FIBER = 'Workerman\Events\Fiber';
     public const RIPPLE_FIBER_4 = 'Ripple\Driver\Workerman\Driver4';
     public const RIPPLE_FIBER_5 = 'Ripple\Driver\Workerman\Driver5';
     public const REVOLT_FIBER = 'Workerman\Events\Revolt';
@@ -55,6 +56,7 @@ class Factory
         self::WORKBUNNY_SWOW    => SwowHandler::class,
         self::WORKERMAN_SWOOLE  => SwooleWorkerman5Handler::class,
         self::WORKBUNNY_SWOOLE  => SwooleHandler::class,
+        self::WORKERMAN_FIBER   => RevoltHandler::class,
         self::REVOLT_FIBER      => RevoltHandler::class,
         self::RIPPLE_FIBER_4    => RippleHandler::class,
         self::RIPPLE_FIBER_5    => RippleWorkerman5Handler::class,
